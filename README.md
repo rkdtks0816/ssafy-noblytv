@@ -64,7 +64,7 @@
 
 ## ⚠️ commit 컨벤션
 
-** commmit, push 전에 pull 하는 습관을 들입시다! **
+**commmit, push 전에 pull 하는 습관을 들입시다!**
 
 > commit 컨벤션은 [gitmoji](https://gitmoji.dev/)
 > 와 [AngularJS Git Commit Message Conventions](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)을 참고했습니다.

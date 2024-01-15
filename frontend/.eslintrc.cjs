@@ -7,6 +7,7 @@ module.exports = {
     'airbnb/hooks', // React 훅 규칙
     'plugin:@typescript-eslint/recommended', // TypeScript ESLint 플러그인의 기본 권장 사항
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'prettier',
   ],
   parserOptions: {
     project: './frontend/tsconfig.eslint.json',

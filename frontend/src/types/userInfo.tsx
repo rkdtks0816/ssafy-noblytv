@@ -12,10 +12,10 @@ export interface FamilyUserInfo {
 }
 
 export interface UserInfo {
-  id: number;
+  name: string;
   userId: string;
   password: string;
-  name: string;
+  password2: string;
   phoneNumber: string;
   diseases: Disease[];
   birth: string;

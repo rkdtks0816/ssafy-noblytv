@@ -1,6 +1,6 @@
 # 프로젝트 흐름
 ## 기획
-  ![Alt text](/img//img/image-9.png)
+  ![Alt text](/img/image-9.png)
   - 개발 컨벤션
     - 팀 마다 꼭 정해야 하는 기준
       - 마치 한 명이 진행한 것처럼
@@ -15,16 +15,16 @@
       - 일관된 코드
     
   - 기술 스택 선정
-    ![Alt text](/img//img/image-10.png)
+    ![Alt text](/img/image-10.png)
     - 단순 나열 x
     - 버전까지 상세하게 작성
 
   - 기능 명세서
-    ![Alt text](/img//img/image-11.png)
+    ![Alt text](/img/image-11.png)
 
 ## 설계
   - 디자인 시스템
-    ![Alt text](/img//img/image-12.png)
+    ![Alt text](/img/image-12.png)
 
     - 파피콘 
       - ex) 빨간색 네모의 싸피 로고

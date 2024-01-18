@@ -93,3 +93,15 @@
 | 🚚     | rename   | 파일, 폴더명 수정 혹은 이동           |
 
 ## ⚠️ coding 컨벤션
+
+
+### frontend coding 컨벤션
+
+#### 소개
+본 항목은 프로젝트에 적용된 코딩 컨벤션과 관련 도구에 대한 안내를 제공합니다. 우리는 ESLint와 Prettier를 사용하여 코드 품질을 유지하고 일관된 코드 스타일을 보장합니다.
+
+#### ESLint
+- eslint-config-airbnb-typescript 를 통해 Airbnb의 TypeScript 스타일 가이드를 따릅니다
+
+#### Prettier
+- prettier를 통해 일관된 코드 스타일을 유지합니다.

@@ -1,7 +1,10 @@
-import Signup from './components/Signup';
+import Loading from './components/Loading';
 
 function App() {
-  return <Signup />;
+  return (
+    // <Signup />;
+    <Loading />
+  );
 }
 
 export default App;

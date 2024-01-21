@@ -99,8 +99,36 @@
 - 이 문제는 초음파 센서 문제로 생각되어, 초음파 센서를 바꿔서 다시 실행해볼 예정.
 
 ## 일기를 토대로 질문하기
-### 진행 방법
+
+### 진행 방법 및 오류
+
 1. Kakao API의 KoGPT를 이용하여 일기를 토대로 질문 생성.
-   * "'겨울'의 정의와 겨울과 관련된 규정 말해봐." 와 같이, 평소 대화에서 나누지 않을 주제의 질문이 나오거나, 이상한 답변이 나옴.
+   - "'겨울'의 정의와 겨울과 관련된 규정 말해봐." 와 같이, 평소 대화에서 나누지 않을 주제의 질문이 나오거나, 이상한 답변이 나옴.
 2. ChatGPT API를 이용하여 일기를 토대로 질문 생성.
-   * 진행중
+
+   - `npm i openai` 오류:
+
+     ![Alt text](img/image.png){: width="50"}
+
+   - `yarn add openai` 오류:
+
+     ![Alt text](img/image-1.png){: width="50"}
+
+   - `yarn --ignore-engines add openai`이후 `node chatGPT.js`오류:
+
+     ![Alt text](img/image-2.png){: width="50"}
+
+   - node version 업데이트 후 진행
+     ```
+     wget https://nodejs.org/dist/v17.9.1/node-v17.9.1-linux-arm64.tar.xz
+     tar -xJf node-v17.9.1-linux-arm64.tar.xz
+     cd node-v17.9.1-linux-arm64
+     sudo cp -R * /usr/local/
+     node -v
+     npm -v
+     ```
+     - node version update 후 `npm i openai`를 다시 진행하고 스크립트를 돌리자 잘 진행되었다.
+
+### 해결 여부
+
+- 해결

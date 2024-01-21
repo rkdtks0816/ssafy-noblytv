@@ -35,3 +35,65 @@
 - 미해결
 - 여러 자료를 검색해본 결과, lirc는 raspberry pi를 위한 module만 제공하고 있어서 Jetson nano에서는 실행 하지 못하는 것으로 추정
 - Jetson nano의 dtoverlay 설정을 찾아보는 중
+
+## 초음파 센서
+
+### 진행 방법
+
+1. 회로 연결
+   - dc - pin 2, gnd - pin 6, echo - pin 16, trig - pin 18
+2. 아래 코드를 `ultrasonic.py`로 저장 후 실행
+
+   ```python
+   import Jetson.GPIO as GPIO
+   import time
+
+   echo_pin = 16
+   trig_pin = 18
+
+   GPIO.setmode(GPIO.BOARD)
+
+   print("초음파 거리 측정기")
+
+   GPIO.setup(trig_pin, GPIO.OUT)
+   GPIO.setup(echo_pin, GPIO.IN)
+
+   GPIO.output(trig_pin, False)
+   print("초음파 출력 초기화")
+   time.sleep(2)
+
+   try:
+      while True:
+         GPIO.output(trig_pin, True)
+         time.sleep(0.00001)
+         GPIO.output(trig_pin, False)
+         start = time.time()
+         stop = time.time()
+
+         while GPIO.input(echo_pin) == 0:
+               start = time.time()
+               # print("echo start")
+
+         while GPIO.input(echo_pin) == 1:
+               stop = time.time()
+               # print("echo end")
+
+         check_time = stop - start
+         distance = check_time * 34300 / 2
+         print("Distance : %.1f cm" % distance)
+         time.sleep(0.4)
+
+   except KeyboardInterrupt:
+      GPIO.cleanup()
+      print("초음파 측정 종료")
+
+   ```
+
+### Error 내용
+
+- 한 물체를 가까이 가져다댈 경우, echo_pin의 출력이 0으로 고정되면서 측정이 멈춤
+
+### 해결 여부
+
+- 미해결
+- 이 문제는 초음파 센서 문제로 생각되어, 초음파 센서를 바꿔서 다시 실행해볼 예정.

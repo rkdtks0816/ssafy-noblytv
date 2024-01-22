@@ -1,5 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import Calendar from 'react-calendar';
+import Select from 'react-select';
+import Input from '../../components/input/Input';
+import Button from '../../components/button/Button';
+import Modal from '../../components/modal/Modal';
 
 // 이름 아이디 컴포넌트
 interface NameIdComponentProps {
@@ -8,12 +13,10 @@ interface NameIdComponentProps {
 function NameIdComponent({ onNext }: NameIdComponentProps) {
   return (
     <>
-      <input type="text" placeholder="이름" />
-      <input type="text" placeholder="아이디" />
+      <Input type="text" placeholder="이름" />
+      <Input type="text" placeholder="아이디" />
       {/* 이름/아이디 입력 필드 */}
-      <button type="submit" onClick={onNext}>
-        다음
-      </button>
+      <Button label="다음" buttontype="next" onClick={onNext} />
     </>
   );
 }
@@ -26,11 +29,46 @@ function PasswordComponent({ onNext }: PasswordComponentProps) {
   return (
     <>
       {/* 비밀번호 입력 필드 */}
-      <input type="password" placeholder="비밀번호" />
-      <input type="password" placeholder="비밀번호 확인" />
-      <button type="submit" onClick={onNext}>
-        다음
-      </button>
+      <Input type="password" placeholder="비밀번호" />
+      <Input type="password" placeholder="비밀번호 확인" />
+      <Button label="다음" buttontype="next" onClick={onNext} />
+    </>
+  );
+}
+
+// 생년월일 컴포넌트
+interface BirthdayComponentProps {
+  onNext: () => void;
+}
+
+function BirthdayComponent({ onNext }: BirthdayComponentProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+  const [selectedDate, setSelectedDate] = useState(new Date()); // 선택된 날짜 상태 관리
+
+  const toggleModal = () => setIsModalOpen(!isModalOpen); // 모달 토글 함수
+
+  const handleDateChange = (date: Date) => {
+    setSelectedDate(date);
+    toggleModal();
+  };
+
+  const dropdownOptions = [
+    { value: selectedDate, label: selectedDate.toLocaleDateString() },
+  ];
+
+  return (
+    <>
+      <Select
+        options={dropdownOptions}
+        value={dropdownOptions[0]} // 현재 선택된 옵션 설정
+        placeholder="생년월일 선택"
+        isSearchable={false}
+        onFocus={toggleModal}
+      />
+      <Modal isOpen={isModalOpen} onClose={toggleModal}>
+        <Calendar onChange={handleDateChange} value={selectedDate} />
+      </Modal>
+      <Button label="다음" buttontype="next" onClick={onNext} />
     </>
   );
 }
@@ -43,6 +81,9 @@ function SignUp() {
     if (step === 0) {
       navigate('/signup/password');
       setStep(1); // 다음 단계로 변경.
+    } else if (step === 1) {
+      navigate('/signup/birthday');
+      setStep(2);
     }
   };
 
@@ -52,6 +93,10 @@ function SignUp() {
       <Route
         path="password"
         element={<PasswordComponent onNext={nextStep} />}
+      />
+      <Route
+        path="birthday"
+        element={<BirthdayComponent onNext={nextStep} />}
       />
     </Routes>
   );

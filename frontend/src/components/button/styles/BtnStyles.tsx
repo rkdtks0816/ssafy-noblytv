@@ -17,7 +17,7 @@ const btnStyleTypes = {
   next: css`
     background-color: #eac164; //
     &:hover {
-      background-color: #c17b2d;
+      background-color: #eab364;
     }
   `,
 };

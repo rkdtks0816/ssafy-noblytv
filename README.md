@@ -127,3 +127,154 @@
   - 대문자와 밑줄을 사용한 **SNAKE_CASE**로 작성합니다.
 #### 1. asset 파일명
 - 소문자로 작성합니다.
+
+### BackEnd Naming Convention
+1. Java
+  - Naming
+    - 상수 : 대문자와 _(언더바)로 구성한다.
+      ```java
+      public int POSTAL_CODE_EXPRESSION = 1;
+      ```
+    - 변수명, 클래스명, 메서드명 : 영어, 숫자만을 사용한다.
+    - 패키지명 : 소문자를 사용하여 작성한다. 단어별 구분을 위해 대문자, _(언더바)를 섞지 않는다.
+      ```java
+      package com.navercorp.apigateway;
+      ```
+    - 클래스명, 인터페이스명에는 첫 번째 단어가 대문자인 CamelCase를 적용한다.
+      ```java
+      public class AccessToken {
+      ```
+    - 변수명, 메서드명은 첫 번째 단어 소문자 camelCase를 사용한다.
+      ```java
+      private int accessToken;
+      ```
+    - 테스트를 위한 클래스명은 Test를 마지막에 붙인다.
+      ```java
+      public class WeatherTest {
+      ```
+    - 어떤 역할을 하는 지 파악할 수 있도록 Naming을 정의한다.
+  - Declarations
+    - 한 줄에 한 문장
+      ```java
+      int base = 0;
+      int weight = 2;
+      ```
+    - 하나의 선언문에는 하나의 변수만
+      ```java
+      int base;
+      int weight;
+      ```
+    - 배열에서 대괄호는 타입 뒤에 선언한다.
+      ```java
+      String[] names;
+      ```
+    - long 타입의 숫자에는 마지막에 대문자 L을 붙인다.
+      ```java
+      long base = 54423234211L;
+      ```
+  - 들여쓰기
+    - 스페이스를 사용하지 않고 Tab을 이용하여 들여쓴다.
+    - IDE 내에서 1개의 탭은 4개의 스페이스와 같도록 설정한다.
+    - 클래스, 메서드, 제어문 등 코드 블럭이 생길 때마다 1단계를 더 들여쓴다.
+  - 중괄호
+    - 중괄호 사용 시 스페이스 1번 사용 후 시작 중괄호를 삽입하고, 종괄호를 마칠 때는 새 줄 삽입 후 중괄호를 닫는다.
+      ```java
+      public boolean isValidExpression(String exp) {
+
+          if (exp == null) {
+              return false;
+          }
+      }
+      ```
+    - 닫는 중괄호와 같은 줄에 else, catch, finally, while을 선언한다.
+      ```java
+      if (line.startWith(WARNING_PREFIX)) {
+          return LogPattern.WARN;
+      } else if (line.startWith(DANGER_PREFIX)) {
+          return LogPattern.NORMAL;
+      } else {
+          return LogPattern.NORMAL;
+      }
+      ```
+    - 내용이 없는 블럭을 선언할 때는 같은 줄에서 중괄호를 열고 닫는다.
+      ```java
+      public void close() {}
+      ```
+    - 조건, 반복문이 한 줄로 끝나도 중괄호는 필수로 사용한다.
+      ```java
+      if (exp == null) {
+          return false;
+      }
+      ```
+  - 줄바꿈
+    - package, import 선언문은 한 줄로 쓴다.
+  - 빈 줄
+    - package 선언 후에는 빈 줄을 한 줄 삽입한다.
+      ```java
+      package com.naver.lucy.util;
+
+      import java.util.Date;
+      ```
+    - 메서드 사이에는 빈 줄을 한 줄 삽입한다.
+      ```java
+      public void setId(int id) {
+          this.id = id;
+      }
+
+      public void setName(String name) {
+          this.name = name;
+      }
+      ```
+  - 공백
+    - 닫는 대괄호 뒤에 다른 선언이 올 경우에는 공백을 삽입한다.
+      ```java
+      int[] masks = new int[] {0, 1, 1};
+      ```
+    - 제어문 키워드와 여는 소괄호 사이에는 공백을 삽입한다.
+      ```java
+      if (maxLine > LIMITED) {
+          return false;
+      }
+      ```
+    - 식별자와 여는 소괄호 사이에는 공백을 삽입하지 않는다.
+      ```java
+      public StringProcessor() {} // 생성자
+
+      @Cached("local")
+      public String removeEndingDot(String original) {
+          assertNotNull(original);
+          ...
+      }
+      ```
+    - 반복문 내에서 구분을 위해 쓰는 세미콜론(;)에는 뒤에만 공백을 삽입한다.
+      ```java
+      for (int i = 0; i < length; i++) {
+          display(level, message, i)
+      }
+      ```
+    - 반복문과 삼항연산자 내에서 쓰는 콜론(:)의 앞 뒤에는 공백을 삽입한다.
+      ```java
+      for (Customer customer : visitedCustomers) {
+          AccessPattern pattern = isAbnormal(accessLog) ? AccessPattern.ABUSE : AccessPattern.NORMAL;
+          int grade = evaluate(customer, pattern);
+
+          switch (grade) {
+              case GOLD :
+                  sendSms(customer);
+              case SILVER :
+                  sendEmail(customer);
+              default :
+                  inreasePoint(customer)
+          }
+      }
+      ```
+    - 연산자를 사용할 시 앞 뒤에 공백을 삽입한다.
+  - 주석
+    - 코드 줄 바로 뒤에 주석을 붙일 때는 //을 사용하여 주석을 작성한다.
+    - 코드와 별개로 주석을 작성할 때는 예시와 같이 주석을 작성한다.
+      - 예시
+        ```java
+        /*
+        * 공백 후 주석 내용 시작
+        */
+        ```

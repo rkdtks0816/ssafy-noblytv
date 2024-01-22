@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useUserStore from '../store/User';
+import useUserStore from '../../store/user';
 
 function Signup() {
   const [name, setName] = useState('');

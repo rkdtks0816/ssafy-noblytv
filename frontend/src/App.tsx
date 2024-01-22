@@ -1,9 +1,15 @@
-import Loading from './components/login/Loading';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LogInPage from './pages/LogIn/LogInPage';
+import SignUpPage from './pages/LogIn/SignUpPage';
 
 function App() {
   return (
-    // <Signup />;
-    <Loading />
+    <Router>
+      <Routes>
+        <Route path="/" element={<LogInPage />} />
+        <Route path="/signup/*" element={<SignUpPage />} />
+      </Routes>
+    </Router>
   );
 }
 

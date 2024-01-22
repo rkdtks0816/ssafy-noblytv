@@ -1,5 +1,6 @@
 package BACKEND.project.controller;
 
+import BACKEND.project.domain.Medication;
 import BACKEND.project.domain.OldUserInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +13,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -32,11 +34,19 @@ public class OldUserJoinControllerTests {
 
     @BeforeEach
     public void setUp() {
+        String uniqueId = "testId" + System.currentTimeMillis();
         oldUserInfo = new OldUserInfo();
-        oldUserInfo.setUserId("testId");
+        oldUserInfo.setUserId(uniqueId);
         oldUserInfo.setUsername("testName");
         oldUserInfo.setBirth(LocalDate.of(1950, 1, 1));
         oldUserInfo.setSex("W");
+
+        Medication medication = new Medication();
+        medication.setMedicine("testMedicine");
+        medication.setMedicationTime(LocalTime.of(10, 0));
+        medication.setOldUser(oldUserInfo);
+
+        oldUserInfo.getMedications().add(medication);
     }
 
     @Test

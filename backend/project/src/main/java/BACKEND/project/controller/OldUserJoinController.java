@@ -1,30 +1,36 @@
 package BACKEND.project.controller;
 
 import BACKEND.project.domain.OldUserInfo;
+import BACKEND.project.domain.OldUserRegistrationDto;
 import BACKEND.project.service.OldUserJoinService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
-@RequestMapping("/users/old/join")
+@RequestMapping("/users/old")
 public class OldUserJoinController {
 
     private final OldUserJoinService oldUserJoinService;
-
-    @Autowired
     public OldUserJoinController(OldUserJoinService oldUserJoinService) {
         this.oldUserJoinService = oldUserJoinService;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<OldUserInfo> registerUser(@Valid @RequestBody OldUserInfo newUser) {
+    @PostMapping("/signup")
+    public ResponseEntity<OldUserInfo> registerUser(@Valid @RequestBody OldUserRegistrationDto newUser) {
         OldUserInfo registeredUser = oldUserJoinService.registerUser(newUser);
-        return ResponseEntity.ok(registeredUser);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(registeredUser.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(registeredUser);
     }
 }

@@ -1,6 +1,5 @@
 package BACKEND.project.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,12 +15,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
-public class OldUserInfo {
-
-    public enum Gender {
-        MALE,
-        FEMALE
-    }
+public class FamilyUserInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,33 +25,24 @@ public class OldUserInfo {
     @Column(nullable = false, unique = true, length = 50)
     private String userId;
 
-    @NotBlank(message = "이름은 필수입니다.")
-    @Column(nullable = false, length = 50)
-    private String username;
-
     @NotBlank(message = "비밀번호는 필수입니다.")
     @Column(nullable = false)
     private String password;
 
+    @NotBlank(message = "이름은 필수입니다.")
+    @Column(nullable = false, unique = true, length = 50)
+    private String username;
+
     private LocalDate birth;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Gender gender;
-
     @ToString.Exclude
+    @OneToMany(mappedBy = "familyUserInfo")
     @JsonManagedReference
-    @OneToMany(mappedBy = "oldUser", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Medication> medications = new ArrayList<>();
-
-    @ToString.Exclude
-    @OneToMany(mappedBy = "oldUserInfo")
-    @JsonBackReference
     private List<FamilyRelation> familyRelations = new ArrayList<>();
 
-    public List<String> getFamilyUserIds() {
+    public List<String> getOldUserIds() {
         return familyRelations.stream()
-                .map(familyRelation -> familyRelation.getFamilyUserInfo().getUserId())
+                .map(familyRelation -> familyRelation.getOldUserInfo().getUserId())
                 .collect(Collectors.toList());
     }
 }

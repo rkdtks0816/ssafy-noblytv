@@ -8,6 +8,7 @@ export default defineConfig({
     watch: {
       usePolling: true,
       interval: 100,
-    }
+    },
+    host: '0.0.0.0',
   }
 });

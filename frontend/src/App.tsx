@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import CommunityMain from "./pages/community/main";
+import HomeLayout from "./pages";
 
 // App 컴포넌트 내에서 라우터 설정
 function App() {
   return (
     <Router>
         <Routes>
-          <Route path="/" element={<CommunityMain />} />
+          <Route path="/" element={<HomeLayout />} />
         </Routes>
     </Router>
   );

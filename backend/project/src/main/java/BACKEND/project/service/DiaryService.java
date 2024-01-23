@@ -25,7 +25,6 @@ public class DiaryService {
                 .orElseThrow(() -> new NoSuchElementException("해당 노인 회원이 존재하지 않습니다."));
 
         Diary newDiary = new Diary();
-        newDiary.setDate(diaryDto.getDate());
         newDiary.setText(diaryDto.getText());
         newDiary.setOldUserInfo(oldUser);
 

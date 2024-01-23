@@ -36,7 +36,7 @@ public class OldUserInfo {
     @Column(nullable = false, unique = true)
     private String userId;
 
-    @NotBlank(message = "이름은 필수입니다.")
+    @NotBlank(message = "이름은 필수입니다")
     @Column(nullable = false, length = 50)
     private String username;
 

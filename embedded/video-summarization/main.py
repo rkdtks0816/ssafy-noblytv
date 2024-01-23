@@ -11,7 +11,7 @@ from moviepy.editor import VideoFileClip, concatenate_videoclips
 from v2021 import SummaryModel
 
 preprocessor = ViTImageProcessor.from_pretrained(
-    "google/vit-base-patch16-224", size=224, device='cuda'
+    "google/vit-base-patch16-224", size=224
 )
 
 SAMPLE_EVERY_SEC = 2
@@ -44,16 +44,8 @@ while cap.isOpened():
 
 features = preprocessor(images=frames, return_tensors="pt")["pixel_values"]
 
-print(features.shape)
-
-plt.figure(figsize=(10, 10))
-plt.imshow(features[0].numpy().transpose(1, 2, 0)[:, :, ::-1])
-
 model = SummaryModel.load_from_checkpoint('summary.ckpt')
-model.to('cuda')
 model.eval()
-
-features = features.to('cuda')
 
 y_pred = []
 
@@ -64,8 +56,6 @@ for frame in tqdm(features):
     y_pred.append(y_p.cpu().detach().numpy().squeeze())
 
 y_pred = np.array(y_pred)
-
-sns.displot(y_pred)
 
 def determine_threshold(th):
     global y_pred
@@ -87,9 +77,6 @@ while(total_secs < 15):
     THRESHOLD -= 0.001
     total_secs = determine_threshold(THRESHOLD)
 
-
-
-total_secs
 
 clip = VideoFileClip(video_path)
 

@@ -5,8 +5,9 @@ import MenuTitleS from '../../../components/app/styles/menu_title_style';
 import BackBtnS from '../../../components/app/styles/back_btn_style';
 import FlexBoxS from '../../../components/app/styles/flex_box_style';
 import FalseMsg from '../../../components/app/false_message';
+import TrueMsg from '../../../components/app/toggle_btn';
 
-function BgMain() {
+function NameId() {
   return (
     <div>
       <BgImgS>
@@ -22,15 +23,12 @@ function BgMain() {
             style={{ marginTop: '20px' }}
           />
           <FalseMsg falseMsgContents="아이디가 중복 됩니다." />
+          <TrueMsg trueMsgContents='사용가능한 아이디입니다.'></TrueMsg>
         </FlexBoxS>
-        <LargeBtn
-          pageUrl="/app"
-          largeBtnContents="다음"
-          style={{ marginBottom: '10vh' }}
-        />
+        <LargeBtn pageUrl='/app' largeBtnContents='다음' style={{marginBottom: '10vh'}}></LargeBtn>
       </BgImgS>
     </div>
   );
 }
 
-export default BgMain;
+export default NameId;

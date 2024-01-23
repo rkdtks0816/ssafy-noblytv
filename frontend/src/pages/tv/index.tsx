@@ -1,7 +1,7 @@
 import BgVideo from '../../components/tv/bg_video';
 import ChildModal from '../../components/tv/child_modal';
 
-function CommunityMain() {
+function TvLayout() {
   return (
     <div>
       <BgVideo />
@@ -10,4 +10,4 @@ function CommunityMain() {
   );
 }
 
-export default CommunityMain;
+export default TvLayout;

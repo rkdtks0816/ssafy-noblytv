@@ -74,4 +74,4 @@ function BgMain() {
   );
 }
 
-export default BgMain;
+export default SignIn;

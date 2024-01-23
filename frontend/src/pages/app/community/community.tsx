@@ -1,7 +1,7 @@
 import Header from '../../../components/app/header';
 import Footer from '../../../components/app/footer';
 
-function CommunityMain() {
+function Community() {
   return (
     <div>
       <Header />
@@ -10,4 +10,4 @@ function CommunityMain() {
   );
 }
 
-export default CommunityMain;
+export default Community;

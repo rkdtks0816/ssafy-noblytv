@@ -17,6 +17,8 @@ function App() {
         <Route path="/tv" element={<TvLayout />} />
         <Route path="/app/sign-in" element={<SignIn />} />
         <Route path="/app/sign-up/name-id" element={<NameId />} />
+          <Route path="/app/sign-up/pw" element={<PW />} />
+          <Route path="/app/sign-up/birthday" element={<Birthday />} />
         <Route path="/app/community" element={<Community />} />
       </Routes>
     </Router>

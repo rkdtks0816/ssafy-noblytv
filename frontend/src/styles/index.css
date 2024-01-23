@@ -1,0 +1,20 @@
+@font-face {
+  font-family: 'S-CoreDream-3Light';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  font-family: 'S-CoreDream-3Light', sans-serif;
+}
+
+/* CSS로 우클릭 비활성화 */
+img {
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-select: none; /* 일부 브라우저를 위한 대체 속성 */
+    -moz-user-select: none; /* Firefox를 위한 대체 속성 */
+    -ms-user-select: none; /* Internet Explorer를 위한 대체 속성 */
+    -webkit-touch-callout: none;
+  }
+  

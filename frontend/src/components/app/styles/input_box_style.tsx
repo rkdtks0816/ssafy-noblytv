@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-export const InputBoxS = styled.input`
+const InputBoxS = styled.input`
   width: 285px;
   height: 50px;
   padding-left: 15px;
 
-  background: #FFFFFF;
+  background: #ffffff;
   border: none;
   border-radius: 10px;
 
@@ -15,3 +15,5 @@ export const InputBoxS = styled.input`
   line-height: 2;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
 `;
+
+export default InputBoxS;

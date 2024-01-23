@@ -1,17 +1,19 @@
-import React from 'react';
-import { HeaderBgS, SeniorNameS, SeniorTitleS, NoticeIconS } from './styles/header_style';
+import {
+  HeaderBgS,
+  SeniorNameS,
+  SeniorTitleS,
+  NoticeIconS,
+} from './styles/header_style';
 
-
-const Header: React.FC = () => {
+function Header() {
   return (
     <div>
       <HeaderBgS>
         <SeniorNameS to="/select-senior">이세종</SeniorNameS>
         <SeniorTitleS>어르신</SeniorTitleS>
-        <NoticeIconS to='/alarm'></NoticeIconS>
+        <NoticeIconS to="/alarm" />
       </HeaderBgS>
     </div>
   );
-};
-
+}
 export default Header;

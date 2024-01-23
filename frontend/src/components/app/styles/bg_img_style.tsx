@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-export const BgImgS= styled.div`
+const BgImgS = styled.div`
   position: fixed;
   top: 0px;
   left: 0px;
   width: 100vw;
   height: 100vh;
-  
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -18,3 +18,5 @@ export const BgImgS= styled.div`
 
   z-index: -1;
 `;
+
+export default BgImgS;

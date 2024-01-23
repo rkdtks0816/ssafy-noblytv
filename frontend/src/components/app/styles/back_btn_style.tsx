@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const BackBtnS = styled(Link)`
+const BackBtnS = styled(Link)`
   position: fixed;
   top: 20px;
   left: 20px;
@@ -13,3 +13,5 @@ export const BackBtnS = styled(Link)`
   align-items: center; /* 세로 가운데 정렬 */
   justify-content: space-around; /* 가로 가운데 정렬 */
 `;
+
+export default BackBtnS;

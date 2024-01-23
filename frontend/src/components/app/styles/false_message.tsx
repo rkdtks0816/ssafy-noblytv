@@ -11,7 +11,7 @@ export const FalseMsgImgS = styled.div`
 
 export const FalseMsgContentsS = styled.div`
   margin-left: 5px;
-  color: #FF1F1F;
+  color: #ff1f1f;
   font-weight: 900;
   font-size: 15px;
   line-height: 2;

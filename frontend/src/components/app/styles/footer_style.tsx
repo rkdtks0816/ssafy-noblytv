@@ -24,14 +24,14 @@ export const FooterIconS = styled(Link)<FooterIconProps>`
   width: 40px;
   height: 40px;
 
-  background-image: url('src/assets/${props => props.footerIconUrl}.png');
+  background-image: url(src/assets/${props => props.footerIconUrl}.png);
   background-size: cover;
   background-repeat: no-repeat;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
-  
+
   text-decoration: none;
- 
+
   &:hover {
-    background-image: url('src/assets/${props => props.footerHoverIconUrl}.png');
+    background-image: url(src/assets/${props => props.footerHoverIconUrl}.png);
   }
 `;

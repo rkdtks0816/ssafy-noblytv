@@ -1,15 +1,13 @@
-import React from 'react';
-import { BgVideoS } from './styles/bg_video_styles';
+import BgVideoS from './styles/bg_video_styles';
 
-
-const BgVideo: React.FC = () => {
+function BgVideo() {
   return (
     <div>
       <BgVideoS controls>
-        <source src="src/assets/advertisement.mp4" type="video/mp4"></source>
+        <source src="src/assets/advertisement.mp4" type="video/mp4" />
       </BgVideoS>
     </div>
   );
-};
+}
 
 export default BgVideo;

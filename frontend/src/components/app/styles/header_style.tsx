@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const HeaderBgS= styled.div`
+export const HeaderBgS = styled.div`
   position: fixed;
   top: 0px;
   left: 0px;
@@ -9,7 +9,7 @@ export const HeaderBgS= styled.div`
   width: 100vw;
   height: 70px;
 
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
@@ -39,7 +39,6 @@ export const SeniorTitleS = styled.div`
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
-
 export const NoticeIconS = styled(Link)`
   width: 30px;
   height: 30px;
@@ -49,7 +48,7 @@ export const NoticeIconS = styled(Link)`
   background-size: cover; /* 이미지가 화면에 가득 차도록 조절 */
   background-repeat: no-repeat; /* 이미지 반복 없음 */
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
-  
+
   text-decoration: none;
 
   &:hover {

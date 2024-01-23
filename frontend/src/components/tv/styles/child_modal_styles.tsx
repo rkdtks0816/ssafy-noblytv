@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export const ChildModalBg= styled.div`
-  position: fixed; 
+export const ChildModalBg = styled.div`
+  position: fixed;
   right: -100vw;
   transition: right 1s ease-out;
   bottom: 5vh;
@@ -11,7 +11,7 @@ export const ChildModalBg= styled.div`
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
-  
+
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0px 0px 5vw 0.1vw #444444;
   backdrop-filter: blur(125px);
@@ -24,17 +24,17 @@ export const ChildModalBg= styled.div`
   color: #222222;
 `;
 
-export const ChildModalTitle= styled.div`
+export const ChildModalTitle = styled.div`
   margin: 4vh 0 0 3vw;
   font-size: 4vw;
 `;
 
-export const ChildModalContent= styled.div`
+export const ChildModalContent = styled.div`
   margin: 1vh 0 0 3vw;
   font-size: 3vw;
 `;
 
-export const ChildModalImg= styled.div`
+export const ChildModalImg = styled.div`
   margin: 0 auto;
   background: url('src/assets/child.png');
   background-size: contain;

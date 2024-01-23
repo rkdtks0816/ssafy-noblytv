@@ -18,7 +18,7 @@ public class OldUserRegistrationDto {
     @Size(max = 50, message = "이름은 50자 이내로 입력해주세요.")
     private String username;
 
-    @Past(message = "생년월일은 과거 날짜여야 합니다.")
+    @Past(message = "생년월일은 과거 날짜여야 합니다")
     private LocalDate birth;
 
     private OldUserInfo.LunarSolar lunarSolar;

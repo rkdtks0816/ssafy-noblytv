@@ -43,17 +43,18 @@ interface BirthdayComponentProps {
 
 function BirthdayComponent({ onNext }: BirthdayComponentProps) {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
-  const [selectedDate, setSelectedDate] = useState(new Date()); // 선택된 날짜 상태 관리
+  const [selectDay, setSelectDay] = useState(new Date()); // 선택된 날짜 상태 관리
 
   const toggleModal = () => setIsModalOpen(!isModalOpen); // 모달 토글 함수
 
-  const handleDateChange = (date: Date) => {
-    setSelectedDate(date);
-    toggleModal();
+  // 캘린더에서 날짜 선택 시 호출되는 함수
+  const handleDateChange = (newDate: Date) => {
+    setSelectDay(newDate); // 선택된 날짜로 상태 업데이트
+    toggleModal(); // 모달 닫기
   };
 
   const dropdownOptions = [
-    { value: selectedDate, label: selectedDate.toLocaleDateString() },
+    { value: selectDay, label: selectDay.toLocaleDateString() },
   ];
 
   return (
@@ -66,7 +67,10 @@ function BirthdayComponent({ onNext }: BirthdayComponentProps) {
         onFocus={toggleModal}
       />
       <Modal isOpen={isModalOpen} onClose={toggleModal}>
-        <Calendar onChange={handleDateChange} value={selectedDate} />
+        <Calendar
+          onChange={newdate => handleDateChange(newdate)}
+          value={selectDay}
+        />
       </Modal>
       <Button label="다음" buttontype="next" onClick={onNext} />
     </>

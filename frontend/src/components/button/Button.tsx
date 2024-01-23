@@ -8,7 +8,7 @@ interface ButtonProps {
 
 function Button({ label, buttontype, onClick }: ButtonProps) {
   return (
-    <BtnStyles buttonType={buttontype} onClick={onClick}>
+    <BtnStyles buttontype={buttontype} onClick={onClick}>
       {label}
     </BtnStyles>
   );

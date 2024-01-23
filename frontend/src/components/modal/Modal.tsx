@@ -8,8 +8,8 @@ interface ModalProps {
   onClose: () => void;
 }
 
-const ModalBackground = styled.div<{ isOpen: boolean }>`
-  display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
+const ModalBackground = styled.div<{ isopen: string | undefined }>`
+  display: ${({ isopen }) => (isopen === 'true' ? 'flex' : 'none')};
   position: fixed;
   top: 0;
   left: 0;
@@ -29,7 +29,7 @@ const ModalContainer = styled.div`
 
 function Modal({ isOpen, children, onClose }: ModalProps) {
   return (
-    <ModalBackground isOpen={isOpen} onClick={onClose}>
+    <ModalBackground isopen={isOpen ? 'true' : undefined} onClick={onClose}>
       <ModalContainer onClick={e => e.stopPropagation()}>
         {children}
       </ModalContainer>

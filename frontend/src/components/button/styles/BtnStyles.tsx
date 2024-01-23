@@ -23,7 +23,7 @@ const btnStyleTypes = {
 };
 
 type ButtonProps = {
-  buttonType: 'cancel' | 'confirm' | 'next';
+  buttontype: 'cancel' | 'confirm' | 'next';
 };
 
 const BtnStyles = styled.button<ButtonProps>`
@@ -35,7 +35,7 @@ const BtnStyles = styled.button<ButtonProps>`
   cursor: pointer;
 
   // buttonType의 props에 따라 btnStyleTypes 객체에서 해당 스타일을 선택하고 적용.
-  ${({ buttonType }) => btnStyleTypes[buttonType]}
+  ${({ buttontype: buttonType }) => btnStyleTypes[buttonType]}
 `;
 
 export default BtnStyles;

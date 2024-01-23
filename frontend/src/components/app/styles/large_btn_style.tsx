@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 const LargeBtnS = styled(Link)`
   width: 300px;
   height: 50px;
+  
+  cursor: pointer;
 
   background: #eac164;
   border: none;

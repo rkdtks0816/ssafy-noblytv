@@ -7,6 +7,8 @@ import {
 import TvLayout from './pages/tv';
 import SignIn from './pages/app/sign_in/sign_in';
 import NameId from './pages/app/sign_up/name_id';
+import PW from './pages/app/sign_up/pw';
+import Birthday from './pages/app/sign_up/birthday';
 import Community from './pages/app/community/community';
 // App 컴포넌트 내에서 라우터 설정
 function App() {

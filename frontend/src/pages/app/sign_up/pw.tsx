@@ -7,28 +7,22 @@ import FlexBoxS from '../../../components/app/styles/flex_box_style';
 import FalseMsg from '../../../components/app/false_message';
 import TrueMsg from '../../../components/app/true_message';
 
-function NameId() {
+function PW() {
   return (
     <div>
       <BgImgS>
         <FlexBoxS>
-          <BackBtnS to="/app/sign-in" />
+          <BackBtnS to='/app/sign-up/name-id' />
           <MenuTitleS>회원가입</MenuTitleS>
-          <InputBoxS
-            placeholder="이름을 입력하세요."
-            style={{ marginTop: '70px' }}
-          />
-          <InputBoxS
-            placeholder="아이디를 입력하세요."
-            style={{ marginTop: '20px' }}
-          />
-          <FalseMsg falseMsgContents="아이디가 중복 됩니다." />
-          <TrueMsg trueMsgContents='사용가능한 아이디입니다.'></TrueMsg>
+          <InputBoxS placeholder="비밀번호를 입력하세요." style={{marginTop: '70px'}} />
+          <TrueMsg trueMsgContents='사용가능한 비밀번호입니다.'></TrueMsg>
+          <InputBoxS placeholder="다시 한번 입력하세요." style={{marginTop: '20px'}} />
+          <FalseMsg falseMsgContents='비밀번호가 다릅니다.'></FalseMsg>
         </FlexBoxS>
-        <LargeBtn pageUrl='/app/sign-up/pw' largeBtnContents='다음' style={{marginBottom: '10vh'}}></LargeBtn>
+        <LargeBtn pageUrl='/app/sign-up/birthday' largeBtnContents='다음' style={{marginBottom: '10vh'}}></LargeBtn>
       </BgImgS>
     </div>
   );
-}
+};
 
-export default NameId;
+export default PW;

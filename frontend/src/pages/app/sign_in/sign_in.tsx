@@ -39,14 +39,14 @@ const SignUpS = styled(Link)`
   text-decoration: none;
 `;
 
-function BgMain() {
-  // 로그인 하기
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleLoginClick = () => {
-    // 로그인 로직 작성하고 로그인 버튼 클릭(onClick)시 해당 로직 실행 구현 필요.
-    // eslint-disable-next-line no-console
-    console.log('로그인');
-  };
+function SignIn() {
+  // // 로그인 하기
+  // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // const handleLoginClick = () => {
+  //   // 로그인 로직 작성하고 로그인 버튼 클릭(onClick)시 해당 로직 실행 구현 필요.
+  //   // eslint-disable-next-line no-console
+  //   console.log('로그인');
+  // };
 
   return (
     <div>

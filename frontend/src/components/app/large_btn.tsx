@@ -4,12 +4,13 @@ import { LargeBtnS } from './styles/large_btn_style';
 
 interface LargeBtnProps {
   largeBtnContents: string;
+  pageUrl: string;
   style?: CSSProperties; 
 }
 
-const LargeBtn: React.FC<LargeBtnProps> = ({ largeBtnContents, style }) => {
+const LargeBtn: React.FC<LargeBtnProps> = ({ largeBtnContents, pageUrl, style }) => {
   return (
-    <LargeBtnS style={style}>{largeBtnContents}</LargeBtnS>
+    <LargeBtnS to={pageUrl} style={style}>{largeBtnContents}</LargeBtnS>
   );
 };
 

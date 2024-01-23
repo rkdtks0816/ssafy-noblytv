@@ -1,5 +1,5 @@
 import React from 'react';
-import { FooterBgS, FooterIconS } from './styles/footer_styles';
+import { FooterBgS, FooterIconS } from './styles/footer_style';
 
 
 const Footer: React.FC = () => {

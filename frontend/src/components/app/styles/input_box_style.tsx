@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const InputBoxS = styled.input`
-  width: 300px;
+  width: 285px;
   height: 50px;
   padding-left: 15px;
 
@@ -9,10 +9,9 @@ export const InputBoxS = styled.input`
   border: none;
   border-radius: 10px;
 
-  font-family: 'BM HANNA_TTF';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 20px;
+  color: #888888;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 2;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
 `;

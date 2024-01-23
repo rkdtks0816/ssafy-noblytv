@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderBgS, SeniorNameS, SeniorTitleS, NoticeIconS } from './styles/header_styles';
+import { HeaderBgS, SeniorNameS, SeniorTitleS, NoticeIconS } from './styles/header_style';
 
 
 const Header: React.FC = () => {

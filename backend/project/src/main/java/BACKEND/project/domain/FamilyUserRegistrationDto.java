@@ -25,7 +25,4 @@ public class FamilyUserRegistrationDto {
     @NotBlank(message = "노인 사용자 아이디는 필수입니다.")
     @Size(max = 50, message = "아이디는 50자 이내로 입력해주세요.")
     private String oldUserId;
-
-    @NotBlank(message = "가족 관계 정보는 필수입니다.")
-    private String relationship;
 }

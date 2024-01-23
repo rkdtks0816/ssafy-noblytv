@@ -27,8 +27,4 @@ public class FamilyRelation {
     @JoinColumn(name = "familyuser_id")
     @JsonBackReference
     private FamilyUserInfo familyUserInfo;
-
-    @NotBlank(message = "가족 관계를 입력해주세요.")
-    @Column(nullable = false)
-    private String relationship;
 }

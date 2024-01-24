@@ -3,28 +3,30 @@ package BACKEND.project.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
-import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
-public class FamilyRelation {
+public class Diary {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "olduser_id")
-    private OldUserInfo oldUserInfo;
+    @CreationTimestamp
+    private LocalDate date;
+
+    @Column(length = 1000)
+    private String text;
 
     @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "familyuser_id")
     @JsonBackReference
-    private FamilyUserInfo familyUserInfo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "old_user_id")
+    private OldUserInfo oldUserInfo;
 }

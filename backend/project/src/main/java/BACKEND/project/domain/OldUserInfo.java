@@ -23,23 +23,27 @@ public class OldUserInfo {
         FEMALE
     }
 
+    public enum LunarSolar {
+        LUNAR,
+        SOLAR
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "아이디는 필수입니다.")
-    @Column(nullable = false, unique = true, length = 50)
+    @NotBlank()
+    @Column(nullable = false, unique = true)
     private String userId;
 
-    @NotBlank(message = "이름은 필수입니다.")
+    @NotBlank(message = "이름은 필수입니다")
     @Column(nullable = false, length = 50)
     private String username;
 
-    @NotBlank(message = "비밀번호는 필수입니다.")
-    @Column(nullable = false)
-    private String password;
-
     private LocalDate birth;
+
+    @Enumerated(EnumType.STRING)
+    private LunarSolar lunarSolar;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -60,4 +64,9 @@ public class OldUserInfo {
                 .map(familyRelation -> familyRelation.getFamilyUserInfo().getUserId())
                 .collect(Collectors.toList());
     }
+
+    @ToString.Exclude
+    @JsonManagedReference
+    @OneToMany(mappedBy = "oldUserInfo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Diary> diaries = new ArrayList<>();
 }

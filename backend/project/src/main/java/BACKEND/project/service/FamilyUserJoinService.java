@@ -49,7 +49,6 @@ public class FamilyUserJoinService {
         FamilyRelation familyRelation = new FamilyRelation();
         familyRelation.setOldUserInfo(oldUser);
         familyRelation.setFamilyUserInfo(registeredFamilyUser);
-        familyRelation.setRelationship(registrationDto.getRelationship());
         familyRelationRepository.save(familyRelation);
 
         // 가족 회원 정보에 노인 ID 추가

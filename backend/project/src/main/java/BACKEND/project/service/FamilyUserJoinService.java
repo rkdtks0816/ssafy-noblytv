@@ -29,20 +29,21 @@ public class FamilyUserJoinService {
     }
 
     @Transactional
-    public FamilyUserInfo registerFamilyUser(FamilyUserRegistrationDto registrationDto) {
+    public FamilyUserInfo registerFamilyUser(FamilyUserRegistrationDto familyUserRegistrationDto) {
         // 패스워드 인코딩
-        String encodedPassword = bCryptPasswordEncoder.encode(registrationDto.getPassword());
+        String encodedPassword = bCryptPasswordEncoder.encode(familyUserRegistrationDto.getPassword());
 
         // 가족 회원 정보 저장
         FamilyUserInfo newUser = new FamilyUserInfo();
-        newUser.setUserId(registrationDto.getUserId());
+        newUser.setUserId(familyUserRegistrationDto.getUserId());
         newUser.setPassword(encodedPassword);
-        newUser.setUsername(registrationDto.getUsername());
-        newUser.setBirth(registrationDto.getBirth());
+        newUser.setUsername(familyUserRegistrationDto.getUsername());
+        newUser.setBirth(familyUserRegistrationDto.getBirth());
+        newUser.setLunarSolar(familyUserRegistrationDto.getLunarSolar());
         FamilyUserInfo registeredFamilyUser = familyUserRepository.save(newUser);
 
         // 노인 회원 정보 조회
-        OldUserInfo oldUser = oldUserRepository.findByUserId(registrationDto.getOldUserId())
+        OldUserInfo oldUser = oldUserRepository.findByUserId(familyUserRegistrationDto.getOldUserId())
                 .orElseThrow(() -> new NoSuchElementException("해당 노인 회원이 존재하지 않습니다."));
 
         // 노인과 가족의 관계 저장

@@ -11,9 +11,6 @@ import java.util.List;
 @Data
 public class OldUserRegistrationDto {
 
-    @NotBlank(message = "아이디는 필수입니다.")
-    private String userId;
-
     @NotBlank(message = "이름은 필수입니다.")
     @Size(max = 50, message = "이름은 50자 이내로 입력해주세요.")
     private String username;

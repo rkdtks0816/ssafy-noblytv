@@ -8,7 +8,7 @@ client = OpenAI(
   api_key = "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"
 )
 
-msg = []
+msg = [{"role": "assistant", "content": "assistant는 할아버지의 7살 손주이다. 할아버지가 일기를 쓰면 그 일기 내용으로 할아버지에게 짧은 질문을 하나만 하고, 자연스럽게 짧은 대화를 이어간다. 이제 user가 일기를 쓸 것이다."}]
 
 def chat(text):
     user_turn = {"role": "user", "content": text}
@@ -23,9 +23,19 @@ def chat(text):
     return response_text
 
 def speak(text ,lang="ko", speed=False):
-    tts = gTTS(text=text, lang=lang , slow=speed)
-    tts.save("./tts.mp3")
-    os.system("mpg321 ./tts.mp3")
+    try:
+        tts = gTTS(text=text, lang=lang , slow=speed)
+        tts.save("./tts.mp3")
+        os.system("mpg321 ./tts.mp3")
+    except:
+        print("No text to speak")
+
+def summarize(text):
+    system_instruction = f"assistant는 user의 input을 bullet point로 3줄 요약해준다. user의 input은 노인이 쓴 일기이다. user의 input: {text}"
+    messages=[{"role": "assistant", "content": system_instruction}]
+    res = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
+    summary = res.choices[0].message.content
+    return summary
 
 r= sr.Recognizer()
 print("Running")
@@ -34,19 +44,47 @@ print("Running")
 # for i in range(p.get_device_count()):
 #     print(p.get_device_info_by_index(i))
 
-diary = input()
+with sr.Microphone(12) as source:
+    r.adjust_for_ambient_noise(source, duration=1)  # Adjust for ambient
+    print("Say something!")
+    audio=r.listen(source)
+print("Runnnnnn")
+
+diary = ""
+try:
+    with open("./audio_file.wav", "wb") as file:
+        file.write(audio.get_wav_data())
+except Exception:
+    print("Save Audio File Error")
+
+GOOGLE_CLOUD_SPEECH_CREDENTIALS = r"""./ssafy-stt-3b72dd53f9e1.json"""
+diary = r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS, language="ko")
+
+
 res = chat(diary)
+print(res)
 speak(res)
 
 while True:
     with sr.Microphone(12) as source:
-        r.adjust_for_ambient_noise(source, 1)  # Adjust for ambient
+        r.adjust_for_ambient_noise(source, duration=1)  # Adjust for ambient
         print("Say something!")
-        audio=r.listen(source, 10, 3)
+        audio=r.listen(source, 10, 5)
     print("Runnnnnn")
     try:
         data = r.recognize_google(audio, language='ko')
+        print(data)
         res = chat(data)
+        print(res)
         speak(res)
     except Exception:
+        print("End of Conversation")
         speak("대화를 종료합니다.")
+        break
+
+print()
+# TODO: 전체 일기 내용 DB로 전송
+print(f"diary: {diary}")
+print()
+# TODO: 일기 요약 내용 DB로 전송
+print(f"summarize: {summarize(diary)}")

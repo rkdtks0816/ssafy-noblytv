@@ -7,7 +7,7 @@ import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import ToggleBtn from '../../components/ToggleBtn/ToggleBtn';
-import UserInfoT from './SignUpType';
+import { UserInfoT, LunarSolar } from './SignUpType';
 
 function Birthday() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
@@ -18,7 +18,7 @@ function Birthday() {
     userId: '',
     userName: '',
     password: '',
-    lunarSloar: '',
+    lunarSloar: LunarSolar.Solar,
     birth: '',
     oldUserId: [],
   });
@@ -32,7 +32,7 @@ function Birthday() {
         userId: '',
         userName: '',
         password: '',
-        lunarSloar: '',
+        lunarSloar: LunarSolar.Solar,
         birth: '',
         oldUserId: [],
       });
@@ -43,12 +43,13 @@ function Birthday() {
     navigate('/sign-up/password', { state: userInfo });
   };
 
-  // '음력' 또는 '양력' 선택 시 setUserInfo를 사용하여 값을 새롭게 할당
+  // '음력' 또는 '양력' 선택 시 setUserInfo를 사용하여 userInfo.lunarSloar 필드를
+  // LunarSolar.Lunar 또는 LunarSolar.Solar로 설정
   const handleToggle = (selected: string) => {
     if (selected === 'left') {
-      setUserInfo({ ...userInfo, lunarSloar: '음력' });
+      setUserInfo({ ...userInfo, lunarSloar: LunarSolar.Lunar });
     } else if (selected === 'right') {
-      setUserInfo({ ...userInfo, lunarSloar: '양력' });
+      setUserInfo({ ...userInfo, lunarSloar: LunarSolar.Solar });
     }
   };
 
@@ -75,7 +76,9 @@ function Birthday() {
           <ToggleBtn
             optionLeft="음력"
             optionRight="양력"
-            initType={userInfo.lunarSloar === '음력' ? 'left' : 'right'}
+            initType={
+              userInfo.lunarSloar === LunarSolar.Lunar ? 'left' : 'right'
+            }
             onToggle={handleToggle}
           />
           <InputBoxStyle

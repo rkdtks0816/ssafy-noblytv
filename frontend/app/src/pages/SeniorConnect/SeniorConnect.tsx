@@ -8,7 +8,7 @@ import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import StatusMsg from '../../components/StatusMsg/StatusMsg';
 import AddSeniorS from './SeniorConnectStyle';
-import UserInfoT from '../SignUp/SignUpType';
+import { UserInfoT, LunarSolar } from '../SignUp/SignUpType';
 
 function SeniorConnect() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ function SeniorConnect() {
     userId: '',
     userName: '',
     password: '',
-    lunarSloar: '',
+    lunarSloar: LunarSolar.Solar,
     birth: '',
     oldUserId: [],
   });
@@ -31,7 +31,7 @@ function SeniorConnect() {
         userId: '',
         userName: '',
         password: '',
-        lunarSloar: '',
+        lunarSloar: LunarSolar.Solar,
         birth: '',
         oldUserId: [],
       });
@@ -46,7 +46,7 @@ function SeniorConnect() {
   };
 
   const handleBackBtn = () => {
-    navigate('/cummunity');
+    navigate('/sign-up/birthday');
   };
 
   const handleSubmit = () => {
@@ -76,7 +76,7 @@ function SeniorConnect() {
           >
             완료
           </LargeBtnStyle>
-          <AddSeniorS to="/app/senior-info">
+          <AddSeniorS to="/senior-sign-up/name-gender">
             어르신을 등록하고 싶어요!
           </AddSeniorS>
         </FlexBoxStyle>

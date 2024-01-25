@@ -7,7 +7,7 @@ import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import StatusMsg from '../../components/StatusMsg/StatusMsg';
-import UserInfoT from './SignUpType';
+import { UserInfoT, LunarSolar } from './SignUpType';
 
 function Password() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
@@ -18,7 +18,7 @@ function Password() {
     userId: '',
     userName: '',
     password: '',
-    lunarSloar: '',
+    lunarSloar: LunarSolar.Solar,
     birth: '',
     oldUserId: [],
   });
@@ -37,7 +37,7 @@ function Password() {
         userId: '',
         userName: '',
         password: '',
-        lunarSloar: '',
+        lunarSloar: LunarSolar.Solar,
         birth: '',
         oldUserId: [],
       });

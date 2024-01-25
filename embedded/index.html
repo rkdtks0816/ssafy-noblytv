@@ -1,4 +1,6 @@
 <div>Teachable Machine Pose Model</div>
+
+
 <button type="button" onclick="init()">Start</button>
 <div><canvas id="canvas"></canvas></div>
 <div id="label-container"></div>
@@ -9,7 +11,7 @@
     // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/pose
 
     // the link to your model provided by Teachable Machine export panel
-    const URL = "https://storage.googleapis.com/tm-model/-HYOFRSf4/";
+    const URL = "https://teachablemachine.withgoogle.com/models/-HYOFRSf4/";
     let model, webcam, ctx, labelContainer, maxPredictions;
 
     async function init() {
@@ -41,8 +43,8 @@
     }
 
     async function loop(timestamp) {
-        webcam.update(); // update the webcam frame
-        await predict();
+        webcam.update(); // update the webcam frame	    
+	await predict();
         window.requestAnimationFrame(loop);
     }
 
@@ -52,15 +54,29 @@
         const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
         // Prediction 2: run input through teachable machine classification model
         const prediction = await model.predict(posenetOutput);
+	
+	const arr = [];
 
         for (let i = 0; i < maxPredictions; i++) {
-            const classPrediction =
-                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            labelContainer.childNodes[i].innerHTML = classPrediction;
+	    const classPrediction = {
+					"class" : prediction[i].className,
+					"probability" : prediction[i].probability.toFixed(2)
+				    }
+	
+		arr.push(classPrediction);
         }
-
-        // finally draw the poses
-        drawPose(pose);
+	
+	// Sort arr by probability
+	arr.sort(function(a, b){
+            if(a.probability > b.probability) return -1;
+            else if(a.probability === b.probability) return 0;
+            else return 1;
+        })	
+	
+	// Show class name of element has the biggest probability 
+       	labelContainer.childNodes[0].innerHTML = arr[0].class;
+	
+	drawPose(pose);
     }
 
     function drawPose(pose) {
@@ -74,5 +90,5 @@
             }
         }
     }
+	init();
 </script>
-

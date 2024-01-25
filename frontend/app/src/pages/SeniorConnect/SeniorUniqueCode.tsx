@@ -4,6 +4,7 @@ import BgImgStyle from '../../components/BgImg/BgImgStyle';
 import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
+import QrCode from '../../components/Qrcode/Qrcode';
 
 function SeniorUniqueCode() {
   const navigate = useNavigate();
@@ -23,6 +24,8 @@ function SeniorUniqueCode() {
           <BackBtnStyle onClick={handleBackBtn} />
           <MenuTitleStyle>어르신 고유 코드</MenuTitleStyle>
         </FlexBoxStyle>
+        <QrCode />
+        <div>어르신 고유 코드</div>
         <FlexBoxStyle>
           <LargeBtnStyle
             style={{ marginBottom: '20px' }}

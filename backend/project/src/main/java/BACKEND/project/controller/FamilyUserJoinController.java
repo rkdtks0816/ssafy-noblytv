@@ -2,6 +2,7 @@ package BACKEND.project.controller;
 
 import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.dto.FamilyUserRegistrationDto;
+import BACKEND.project.dto.FamilyUserUpdateDto;
 import BACKEND.project.service.FamilyUserJoinService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +38,11 @@ public class FamilyUserJoinController {
     public ResponseEntity<FamilyUserRegistrationDto> updateOldUsersOfFamilyUser(@PathVariable("familyUserId") String familyUserId, @RequestBody List<String> oldUserIds) {
         FamilyUserRegistrationDto familyUser = familyUserJoinService.updateOldUsers(familyUserId, oldUserIds);
         return ResponseEntity.ok(familyUser);
+    }
+
+    @PutMapping("/{familyUserId}")
+    public ResponseEntity<FamilyUserUpdateDto> updateFamilyUserInfo(@PathVariable("familyUserId") String familyUserId, @RequestBody FamilyUserUpdateDto familyUserUpdateDto) {
+        FamilyUserUpdateDto updatedFamilyUserDto = familyUserJoinService.updateFamilyUserInfo(familyUserId, familyUserUpdateDto);
+        return ResponseEntity.ok(updatedFamilyUserDto);
     }
 }

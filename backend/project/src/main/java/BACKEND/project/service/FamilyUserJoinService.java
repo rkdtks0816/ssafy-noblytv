@@ -4,6 +4,7 @@ import BACKEND.project.domain.FamilyRelation;
 import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.dto.FamilyUserRegistrationDto;
 import BACKEND.project.domain.OldUserInfo;
+import BACKEND.project.dto.FamilyUserUpdateDto;
 import BACKEND.project.repository.FamilyRelationRepository;
 import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.repository.OldUserRepository;
@@ -91,5 +92,29 @@ public class FamilyUserJoinService {
                 .toList();
 
         return new FamilyUserRegistrationDto(familyUser.getUserId(), familyUser.getPassword(), familyUser.getUsername(), familyUser.getBirth(), familyUser.getLunarSolar(), oldUserIds);
+    }
+
+    @Transactional
+    public FamilyUserUpdateDto updateFamilyUserInfo(String familyUserId, FamilyUserUpdateDto familyUserUpdateDto) {
+        FamilyUserInfo familyUser = familyUserRepository.findByUserId(familyUserId)
+                .orElseThrow(() -> new NoSuchElementException("해당 가족 회원이 존재하지 않습니다."));
+
+        if (familyUserUpdateDto.getPassword() != null) {
+            if (!familyUserUpdateDto.getPassword().equals(familyUserUpdateDto.getConfirmPassword())) {
+                throw new IllegalArgumentException("비밀번호와 비밀번호 확인란이 일치하지 않습니다.");
+            }
+            familyUser.setPassword(bCryptPasswordEncoder.encode(familyUserUpdateDto.getPassword()));
+        }
+        if (familyUserUpdateDto.getUsername() != null) {
+            familyUser.setUsername(familyUserUpdateDto.getUsername());
+        }
+        if (familyUserUpdateDto.getBirth() != null) {
+            familyUser.setBirth(familyUserUpdateDto.getBirth());
+        }
+        if (familyUserUpdateDto.getLunarSolar() != null) {
+            familyUser.setLunarSolar(familyUserUpdateDto.getLunarSolar());
+        }
+
+        return new FamilyUserUpdateDto(familyUser.getUserId(), familyUser.getPassword(), familyUser.getPassword(), familyUser.getUsername(), familyUser.getBirth(), familyUser.getLunarSolar());
     }
 }

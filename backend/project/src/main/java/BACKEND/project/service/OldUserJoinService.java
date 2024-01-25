@@ -1,13 +1,12 @@
 package BACKEND.project.service;
 
 import BACKEND.project.domain.Medication;
-import BACKEND.project.domain.MedicationDto;
+import BACKEND.project.dto.MedicationDto;
 import BACKEND.project.domain.OldUserInfo;
-import BACKEND.project.domain.OldUserRegistrationDto;
+import BACKEND.project.dto.OldUserRegistrationDto;
 import BACKEND.project.repository.OldUserRepository;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

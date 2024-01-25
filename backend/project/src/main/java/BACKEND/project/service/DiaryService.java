@@ -1,7 +1,7 @@
 package BACKEND.project.service;
 
 import BACKEND.project.domain.Diary;
-import BACKEND.project.domain.DiaryDto;
+import BACKEND.project.dto.DiaryDto;
 import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.repository.DiaryRepository;

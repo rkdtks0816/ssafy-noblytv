@@ -1,7 +1,7 @@
 package BACKEND.project.controller;
 
 import BACKEND.project.domain.OldUserInfo;
-import BACKEND.project.domain.OldUserRegistrationDto;
+import BACKEND.project.dto.OldUserRegistrationDto;
 import BACKEND.project.service.OldUserJoinService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

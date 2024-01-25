@@ -1,4 +1,4 @@
-package BACKEND.project.domain;
+package BACKEND.project.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

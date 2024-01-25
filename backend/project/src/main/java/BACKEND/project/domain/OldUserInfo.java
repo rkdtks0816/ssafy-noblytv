@@ -69,8 +69,4 @@ public class OldUserInfo {
     @JsonManagedReference
     @OneToMany(mappedBy = "oldUserInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Diary> diaries = new ArrayList<>();
-
-    private String qrCodeToken;
-
-    private LocalDateTime qrCodeTokenExpiration;
 }

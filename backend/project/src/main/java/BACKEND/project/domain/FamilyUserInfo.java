@@ -47,10 +47,4 @@ public class FamilyUserInfo {
     @OneToMany(mappedBy = "familyUserInfo")
     @JsonManagedReference
     private List<FamilyRelation> familyRelations = new ArrayList<>();
-
-    public List<String> getOldUserIds() {
-        return familyRelations.stream()
-                .map(familyRelation -> familyRelation.getOldUserInfo().getUserId())
-                .collect(Collectors.toList());
-    }
 }

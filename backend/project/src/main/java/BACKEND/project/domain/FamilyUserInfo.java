@@ -17,6 +17,11 @@ import java.util.stream.Collectors;
 @Entity
 public class FamilyUserInfo {
 
+    public enum LunarSolar {
+        LUNAR,
+        SOLAR
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,6 +39,9 @@ public class FamilyUserInfo {
     private String username;
 
     private LocalDate birth;
+
+    @Enumerated(EnumType.STRING)
+    private LunarSolar lunarSolar;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "familyUserInfo")

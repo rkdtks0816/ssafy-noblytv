@@ -18,6 +18,7 @@ import java.net.URI;
 public class OldUserJoinController {
 
     private final OldUserJoinService oldUserJoinService;
+
     public OldUserJoinController(OldUserJoinService oldUserJoinService) {
         this.oldUserJoinService = oldUserJoinService;
     }

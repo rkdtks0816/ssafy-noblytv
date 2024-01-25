@@ -22,7 +22,7 @@ public class FamilyUserRegistrationDto {
 
     private LocalDate birth;
 
-    @NotBlank(message = "노인 사용자 아이디는 필수입니다.")
-    @Size(max = 50, message = "아이디는 50자 이내로 입력해주세요.")
+    private FamilyUserInfo.LunarSolar lunarSolar;
+
     private String oldUserId;
 }

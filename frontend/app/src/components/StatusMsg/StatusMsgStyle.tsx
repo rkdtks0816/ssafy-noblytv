@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { IconTypeProps, ContentsColorProps } from './StatusMsgType';
 
 const StatusMsgBoxS = styled.div`
   display: flex;
@@ -9,18 +8,18 @@ const StatusMsgBoxS = styled.div`
   margin-top: 5px;
 `;
 
-const StatusMsgImgS = styled.div<IconTypeProps>`
+const StatusMsgImgS = styled.div<{ $iconType?: string }>`
   width: 15px;
   height: 15px;
 
-  background: url('/src/assets/icon_${props => props.iconType}.png');
+  background: url(${props => `/src/assets/icon_${props.$iconType}.png`});
   background-size: cover;
   background-repeat: no-repeat;
 `;
 
-const StatusMsgContentsS = styled.div<ContentsColorProps>`
+const StatusMsgContentsS = styled.div<{ $contentsColor?: string }>`
   margin-left: 5px;
-  color: ${props => props.contentsColor};
+  color: ${props => props.$contentsColor};
   font-weight: 900;
   font-size: 15px;
   line-height: 1.5;

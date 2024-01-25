@@ -4,7 +4,7 @@ interface UserInfoT {
   password: string;
   lunarSloar: string;
   birth: string;
-  oldUserId: string;
+  oldUserId: string[];
 }
 
-export type { UserInfoT };
+export default UserInfoT;

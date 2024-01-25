@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { ToggleBtnProps } from './ToggleBtnType';
 
 const ToggleBtnBoxS = styled.div`
   display: flex;
@@ -9,15 +8,15 @@ const ToggleBtnBoxS = styled.div`
   margin-top: 70px;
 `;
 
-const ToggleBtnS = styled.div<ToggleBtnProps>`
+const ToggleBtnS = styled.div<{ $toggleBtnType: string; $isSelected: boolean }>`
   width: 150px;
   height: 50px;
 
   cursor: pointer;
 
   border-radius: ${props =>
-    props.toggleBtnType === 'left' ? '10px 0 0 10px' : '0 10px 10px 0'};
-  background-color: ${props => (props.isSelected ? '#eac164' : '#FFFFFF')};
+    props.$toggleBtnType === 'left' ? '10px 0 0 10px' : '0 10px 10px 0'};
+  background-color: ${props => (props.$isSelected ? '#eac164' : '#FFFFFF')};
 
   color: #888888;
   text-align: center;

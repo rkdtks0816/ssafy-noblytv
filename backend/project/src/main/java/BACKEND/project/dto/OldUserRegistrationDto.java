@@ -1,7 +1,6 @@
 package BACKEND.project.dto;
 
 import BACKEND.project.domain.OldUserInfo;
-import BACKEND.project.dto.MedicationDto;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

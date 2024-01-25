@@ -1,4 +1,5 @@
 export interface SeniorInfoT {
+  userId: string;
   userName: string;
   birth: string;
   lunarSloar: LunarSolar;
@@ -9,11 +10,11 @@ export interface SeniorInfoT {
 }
 
 export enum LunarSolar {
-  Lunar = 'Lunar',
-  Solar = 'Solar',
+  LUNAR = 'LUNAR',
+  SOLAR = 'SOLAR',
 }
 
 export enum Gender {
-  Male = 'Male',
-  Female = 'Female',
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
 }

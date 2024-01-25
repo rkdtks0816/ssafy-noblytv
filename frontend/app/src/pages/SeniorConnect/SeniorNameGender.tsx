@@ -14,10 +14,11 @@ function SeniorNameGender() {
   const location = useLocation();
 
   const [seniorInfo, setSeniorInfo] = useState<SeniorInfoT>({
+    userId: '',
     userName: '',
     birth: '',
-    lunarSloar: LunarSolar.Solar,
-    gender: Gender.Male,
+    lunarSloar: LunarSolar.SOLAR,
+    gender: Gender.MALE,
     medications: [],
     medicine: '',
     medicationTimes: '',
@@ -29,10 +30,11 @@ function SeniorNameGender() {
       setSeniorInfo(location.state as SeniorInfoT);
     } else {
       setSeniorInfo({
+        userId: '',
         userName: '',
         birth: '',
-        lunarSloar: LunarSolar.Solar,
-        gender: Gender.Male,
+        lunarSloar: LunarSolar.SOLAR,
+        gender: Gender.MALE,
         medications: [],
         medicine: '',
         medicationTimes: '',
@@ -47,9 +49,9 @@ function SeniorNameGender() {
   // '남성' 또는 '여성' 선택 시 setSeniorInfo 사용하여 값을 새롭게 할당
   const handleToggle = (selected: string) => {
     if (selected === 'left') {
-      setSeniorInfo({ ...seniorInfo, gender: Gender.Male });
+      setSeniorInfo({ ...seniorInfo, gender: Gender.MALE });
     } else if (selected === 'right') {
-      setSeniorInfo({ ...seniorInfo, gender: Gender.Female });
+      setSeniorInfo({ ...seniorInfo, gender: Gender.FEMALE });
     }
   };
 
@@ -80,7 +82,7 @@ function SeniorNameGender() {
             optionLeft="남성"
             optionRight="여성"
             initType={
-              seniorInfo.lunarSloar === LunarSolar.Lunar ? 'left' : 'right'
+              seniorInfo.lunarSloar === LunarSolar.LUNAR ? 'left' : 'right'
             }
             onToggle={handleToggle}
           />

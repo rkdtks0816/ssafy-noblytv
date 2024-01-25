@@ -69,8 +69,8 @@ function SeniorBirth() {
   // }, [seniorInfo]);
 
   const handleSubmit = () => {
-    // navigate('/senior-connect');
-    console.log('');
+    // 다음 페이지 구현 필요
+    // navigate('/');
   };
 
   return (

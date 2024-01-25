@@ -44,11 +44,6 @@ function SeniorNameGender() {
     navigate('/senior-connect', { state: seniorInfo });
   };
 
-  // 콘솔창에서 Debug를 위해 사용
-  // useEffect(() => {
-  //   console.log('seniorInfo 상태가 변경되었습니다:', seniorInfo);
-  // }, [seniorInfo]);
-
   // '남성' 또는 '여성' 선택 시 setSeniorInfo 사용하여 값을 새롭게 할당
   const handleToggle = (selected: string) => {
     if (selected === 'left') {
@@ -58,7 +53,7 @@ function SeniorNameGender() {
     }
   };
 
-  // 사용자 입력을 처리하고, userInfo 상태를 업데이트 합니다. 입력 필드가 변경될 때마다 호출.
+  // 사용자 입력을 처리하고, seniorInfo 상태를 업데이트 합니다. 입력 필드가 변경될 때마다 호출.
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     field: keyof SeniorInfoT,
@@ -69,6 +64,11 @@ function SeniorNameGender() {
   const handleSubmit = () => {
     navigate('/senior-sign-up/birth-date', { state: seniorInfo });
   };
+
+  // 콘솔창에서 Debug를 위해 사용
+  // useEffect(() => {
+  //   console.log('seniorInfo 상태가 변경되었습니다:', seniorInfo);
+  // }, [seniorInfo]);
 
   return (
     <div>

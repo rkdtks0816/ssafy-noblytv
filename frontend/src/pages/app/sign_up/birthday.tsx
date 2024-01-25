@@ -16,7 +16,7 @@ function Birthday() {
           <ToggleBtn optionLeft='음력' optionRight='양력'></ToggleBtn>
           <InputBoxS type="date" style={{marginTop: '20px'}} />
         </FlexBoxS>
-        <LargeBtn pageUrl='/app/' largeBtnContents='다음' style={{marginBottom: '10vh'}}></LargeBtn>
+        <LargeBtn pageUrl='/app/sign-up/senior-conect' largeBtnContents='다음' style={{marginBottom: '10vh'}}></LargeBtn>
       </BgImgS>
     </div>
   );

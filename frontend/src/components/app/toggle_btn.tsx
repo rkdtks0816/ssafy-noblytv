@@ -10,7 +10,7 @@ function ToggleBtn({ optionLeft, optionRight }: ToggleBtnProps){
   const [selectedType, setSelectedType] = useState<string>("");
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginLeft: 'auto', marginTop: '5px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginLeft: 'auto', marginTop: '70px' }}>
       <ToggleBtnS style={{ borderRadius: '10px 0 0 10px', backgroundColor: selectedType === 'left' ? '#eac164' : '#FFFFFF' }} onClick={() => setSelectedType('left')}>
         {optionLeft}
       </ToggleBtnS>

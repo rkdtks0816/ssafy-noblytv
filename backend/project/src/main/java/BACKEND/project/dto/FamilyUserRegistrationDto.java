@@ -3,6 +3,7 @@ package BACKEND.project.dto;
 import BACKEND.project.domain.FamilyUserInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class FamilyUserRegistrationDto {
 
     @NotBlank(message = "아이디는 필수입니다.")

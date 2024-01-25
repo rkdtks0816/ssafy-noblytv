@@ -34,7 +34,7 @@ public class FamilyUserInfo {
     private String password;
 
     @NotBlank(message = "이름은 필수입니다.")
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(nullable = false, length = 50)
     private String username;
 
     private LocalDate birth;

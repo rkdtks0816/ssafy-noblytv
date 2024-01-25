@@ -7,14 +7,13 @@ import BgImgStyle from '../../components/BgImg/BgImgStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import BackBtnStyle from '../../components/BackBtn/BackBtnStyle';
 import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
-import StatusMsg from '../../components/StatusMsg/StatusMsg';
+import ToggleBtn from '../../components/ToggleBtn/ToggleBtn';
 
-function NameId() {
+function Birthday() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
   const navigate = useNavigate();
   const location = useLocation();
 
-  // userInfo 상태를 관리하고 초기값을 설정합니다. 여기서 User 타입을 사용합니다.
   const [userInfo, setUserInfo] = useState<UserInfoT>({
     userId: '',
     userName: '',
@@ -24,6 +23,7 @@ function NameId() {
     oldUserId: '',
   });
 
+  // 이전 정보 저장
   useEffect(() => {
     setUserInfo(
       location.state || {
@@ -37,21 +37,32 @@ function NameId() {
     );
   }, [location.state]);
 
-  // 사용자 입력을 처리하고, userInfo 상태를 업데이트 합니다. 입력 필드가 변경될 때마다 호출.
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    field: keyof UserInfoT,
-  ) => {
-    setUserInfo({ ...userInfo, [field]: event.target.value });
+  // birthday 입력필드가 변할 때마다 setBirthday를 사용하여 값을 새롭게 할당
+  const Changebirth = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { name, value },
+    } = event;
+    if (name === 'birth') {
+      setUserInfo({ ...userInfo, birth: value });
+    }
   };
 
   const handleBackBtn = () => {
-    navigate('/sign-in');
+    navigate('/sign-up/password', { state: userInfo });
   };
 
-  // 사용자 정보(이름과 아이디)를 추가하고, useNavigate를 사용하여 다음 페이지로 이동
+  // updateBrithday함수에 birth 인자로 사용해서 스토어의 birth 필드 업데이트
   const handleSubmit = () => {
-    navigate('/sign-up/password', { state: userInfo });
+    console.log(userInfo);
+  };
+
+  // '음력' 또는 '양력' 선택 시 updateLunarSloar를 사용하여 스토어의 lunarSloar 필드 업데이트
+  const handleToggle = (selected: string) => {
+    if (selected === 'left') {
+      setUserInfo({ ...userInfo, lunarSloar: '음력' });
+    } else if (selected === 'right') {
+      setUserInfo({ ...userInfo, lunarSloar: '양력' });
+    }
   };
 
   return (
@@ -60,24 +71,21 @@ function NameId() {
         <FlexBoxStyle>
           <BackBtnStyle onClick={handleBackBtn} />
           <MenuTitleStyle>회원가입</MenuTitleStyle>
+          <ToggleBtn
+            optionLeft="음력"
+            optionRight="양력"
+            initType={userInfo.lunarSloar === '음력' ? 'left' : 'right'}
+            onToggle={handleToggle}
+          ></ToggleBtn>
           <InputBoxStyle
-            placeholder="이름을 입력하세요."
-            style={{ marginTop: '70px' }}
-            onChange={e => handleInputChange(e, 'userName')}
-            value={userInfo.userName}
-          />
-          <InputBoxStyle
-            placeholder="아이디를 입력하세요."
+            name="birth"
+            type="date"
             style={{ marginTop: '20px' }}
-            onChange={e => handleInputChange(e, 'userId')}
-            value={userInfo.userId}
-          />
-          <StatusMsg
-            statusMsgType="error"
-            statusMsgContents="아이디가 중복 됩니다."
+            onChange={Changebirth}
+            value={userInfo.birth}
           />
         </FlexBoxStyle>
-        <LargeBtnStyle style={{ marginBottom: '10vh' }} onClick={handleSubmit}>
+        <LargeBtnStyle onClick={handleSubmit} style={{ marginBottom: '10vh' }}>
           다음
         </LargeBtnStyle>
       </BgImgStyle>
@@ -85,4 +93,4 @@ function NameId() {
   );
 }
 
-export default NameId;
+export default Birthday;

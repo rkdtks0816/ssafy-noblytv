@@ -1,5 +1,6 @@
 package BACKEND.project.service;
 
+import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.domain.Medication;
 import BACKEND.project.dto.MedicationDto;
 import BACKEND.project.domain.OldUserInfo;
@@ -56,5 +57,9 @@ public class OldUserJoinService {
     public OldUserInfo findByUserId(String userId) {
         Optional<OldUserInfo> oldUserInfo = oldUserRepository.findByUserId(userId);
         return oldUserInfo.orElseThrow(() -> new IllegalArgumentException("등록되지 않은 회원 ID입니다."));
+    }
+
+    public Optional<OldUserInfo> getOldUserInfo(String userId) {
+        return oldUserRepository.findByUserId(userId);
     }
 }

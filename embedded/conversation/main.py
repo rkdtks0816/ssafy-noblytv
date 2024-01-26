@@ -3,10 +3,16 @@ import os
 import speech_recognition as sr
 import pyaudio
 from openai import OpenAI
+from dotenv import load_dotenv
+import pymysql
+import datetime
 
+load_dotenv()
 client = OpenAI(
-  api_key = "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"
+    api_key = os.getenv('OPENAI_API_KEY')
 )
+
+old_user_id = "testID"
 
 msg = [{"role": "assistant", "content": "assistant는 할아버지의 7살 손주이다. 할아버지가 일기를 쓰면 그 일기 내용으로 할아버지에게 짧은 질문을 하나만 하고, 자연스럽게 짧은 대화를 이어간다. 이제 user가 일기를 쓸 것이다."}]
 
@@ -51,15 +57,15 @@ with sr.Microphone(12) as source:
 print("Runnnnnn")
 
 diary = ""
-try:
-    with open("./audio_file.wav", "wb") as file:
-        file.write(audio.get_wav_data())
-except Exception:
-    print("Save Audio File Error")
+
+# try:
+#     with open("./audio_file.wav", "wb") as file:
+#         file.write(audio.get_wav_data())
+# except Exception:
+#     print("Save Audio File Error")
 
 GOOGLE_CLOUD_SPEECH_CREDENTIALS = r"""./ssafy-stt-3b72dd53f9e1.json"""
 diary = r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS, language="ko")
-
 
 res = chat(diary)
 print(res)
@@ -82,9 +88,26 @@ while True:
         speak("대화를 종료합니다.")
         break
 
-print()
-# TODO: 전체 일기 내용 DB로 전송
+diary = "추운 날씨에 창밖의 풍경은 하얗게 덮여 있었다. 나는 따뜻한 차 한 잔과 함께 책을 펴 보았다. 오랜 세월을 지나도 늘 그리워하는 향기와 추억들이 마음을 따스하게 감싸고 있었다. 밤이 오면 별들이 나를 감싸듯한 느낌이 들었다. 혼자 사는 시간, 이 작은 공간이 나에게는 소중한 안식처가 되고 있다."
+summarizedDiary = summarize(diary)
+
 print(f"diary: {diary}")
 print()
-# TODO: 일기 요약 내용 DB로 전송
-print(f"summarize: {summarize(diary)}")
+print(f"summarize: {summarizedDiary}")
+print()
+
+time = datetime.datetime.now()
+
+query = "insert into diary(date, text, summarizedtext, old_user_id) values (%s, %s, %s, %s)"
+value = (time, diary, summarizedDiary, old_user_id)
+
+db = pymysql.connect(host = '172.26.7.27',
+                     user = 'root',
+                     passwd = '1234',
+                     db = 'project',
+                     charset = 'utf8',
+                     ssl_key = r"./I10C103T.pem")
+cur = db.cursor(pymysql.cursors.DictCursor)
+
+cur.execute(query, value)
+db.commit()

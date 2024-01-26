@@ -19,7 +19,7 @@ const SeniorNameS = styled(Link)`
 
   font-weight: 400;
   font-size: 40px;
-  line-height: 2;
+  line-height: 35px;
 
   color: #666666;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -32,7 +32,7 @@ const SeniorTitleS = styled.div`
 
   font-weight: 400;
   font-size: 25px;
-  line-height: 2;
+  line-height: 20px;
 
   color: #888888;
 
@@ -47,7 +47,7 @@ const NoticeIconS = styled(Link)`
   background-image: url('/src/assets/icon_notice.png');
   background-size: cover; /* 이미지가 화면에 가득 차도록 조절 */
   background-repeat: no-repeat; /* 이미지 반복 없음 */
-  filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
   text-decoration: none;
 

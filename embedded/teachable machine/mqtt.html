@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MQTT와 웹소켓 테스트</title>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"
+      type="text/javascript"
+    ></script>
+    
+    <script type="text/javascript">
+      var mqtt;
+      var reconnectTimeout = 2000;
+      var host = "i10c103.p.ssafy.io";
+      var port = 1883;
+      var myimg = document.getElementById("myimg");
+      
+      //callback function
+      function onConnect() {
+        console.log("접속완료");
+        mqtt.subscribe("web");
+        message = new Paho.MQTT.Message("start");
+        //topic설정
+        message.destinationName = "sensor";
+        //mqtt메시지 보내기 - publish
+        mqtt.send(message);
+      }
+      
+      function onFailure(message) {
+        console.log("접속실패" + host + "," + port);
+        // setTimeout(MQTTconnect, reconnectTimeout);
+      }
+
+      function onMessageArrived(msg) {
+        out_msg = "메시지전달:" + msg.payloadString + "<br/>";
+        out_msg = out_msg + "msg topic:" + message.destinationName;
+        console.log(out_msg);
+      }
+
+      function MQTTconnect() {
+        console.log("mqtt접속" + host + "," + port);
+        //클라이언트 오브젝트 생성
+        mqtt = new Paho.MQTT.Client(host, port, "javascript_client");
+        var options = {
+          timeout: 3,
+          onSuccess: onConnect,
+          onFailure: onFailure,
+        };
+        mqtt.onMessageArrived = onMessageArrived;
+        mqtt.connect(options); //connect
+      }
+      
+    </script>
+  </head>
+  <body>
+    <h1>MQTT와 웹소켓 테스트</h1>
+    <script type="text/javascript">
+      MQTTconnect();
+    </script>
+    <img src="" id="myimg" />
+  </body>
+</html>

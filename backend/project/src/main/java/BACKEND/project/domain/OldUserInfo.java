@@ -7,7 +7,6 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,8 +68,4 @@ public class OldUserInfo {
     @JsonManagedReference
     @OneToMany(mappedBy = "oldUserInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Diary> diaries = new ArrayList<>();
-
-    private String qrCodeToken;
-
-    private LocalDateTime qrCodeTokenExpiration;
 }

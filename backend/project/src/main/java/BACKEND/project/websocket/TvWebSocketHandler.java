@@ -1,7 +1,6 @@
 package BACKEND.project.websocket;
 
 import BACKEND.project.domain.OldUserInfo;
-import BACKEND.project.repository.OldUserRepository;
 import BACKEND.project.service.OldUserJoinService;
 import BACKEND.project.util.JwtUtil;
 import org.springframework.web.socket.TextMessage;

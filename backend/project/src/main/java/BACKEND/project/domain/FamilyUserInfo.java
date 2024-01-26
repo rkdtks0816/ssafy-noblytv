@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -35,7 +34,7 @@ public class FamilyUserInfo {
     private String password;
 
     @NotBlank(message = "이름은 필수입니다.")
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(nullable = false, length = 50)
     private String username;
 
     private LocalDate birth;
@@ -47,10 +46,4 @@ public class FamilyUserInfo {
     @OneToMany(mappedBy = "familyUserInfo")
     @JsonManagedReference
     private List<FamilyRelation> familyRelations = new ArrayList<>();
-
-    public List<String> getOldUserIds() {
-        return familyRelations.stream()
-                .map(familyRelation -> familyRelation.getOldUserInfo().getUserId())
-                .collect(Collectors.toList());
-    }
 }

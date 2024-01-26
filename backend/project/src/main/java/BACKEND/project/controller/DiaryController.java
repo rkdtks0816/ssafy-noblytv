@@ -1,7 +1,7 @@
 package BACKEND.project.controller;
 
 import BACKEND.project.domain.Diary;
-import BACKEND.project.domain.DiaryDto;
+import BACKEND.project.dto.DiaryDto;
 import BACKEND.project.service.DiaryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

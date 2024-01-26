@@ -1,5 +1,6 @@
-package BACKEND.project.domain;
+package BACKEND.project.dto;
 
+import BACKEND.project.domain.OldUserInfo;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -20,6 +21,7 @@ public class OldUserRegistrationDto {
 
     private OldUserInfo.LunarSolar lunarSolar;
 
+    @NotBlank(message = "성별을 입력해주세요.")
     private OldUserInfo.Gender gender;
 
     private List<MedicationDto> medications;

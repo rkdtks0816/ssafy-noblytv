@@ -58,24 +58,6 @@ public class OldUserJoinService {
         return oldUserInfo.orElseThrow(() -> new IllegalArgumentException("등록되지 않은 회원 ID입니다."));
     }
 
-//    public OldUserUpdateDto oldUserUpdateInfo(String oldUserId, OldUserUpdateDto oldUserUpdateDto) {
-//        OldUserInfo oldUser = oldUserRepository.findByUserId(oldUserId)
-//                .orElseThrow(() -> new NoSuchElementException("해당 노인 회원이 존재하지 않습니다."));
-//        if (oldUserUpdateDto.getUsername() != null) {
-//            oldUser.setUsername(oldUserUpdateDto.getUsername());
-//        }
-//
-//        if (oldUserUpdateDto.getBirth() != null) {
-//            oldUser.setBirth(oldUserUpdateDto.getBirth());
-//        }
-//
-//        if (oldUserUpdateDto.getLunarSolar() != null) {
-//            oldUser.setLunarSolar(oldUserUpdateDto.getLunarSolar());
-//        }
-//
-//        return new OldUserUpdateDto(oldUser.getUserId(), oldUser.getUsername(), oldUser.getBirth(), oldUser.getLunarSolar());
-//    }
-
     public Optional<OldUserInfo> getOldUserInfo(String userId) {
         return oldUserRepository.findByUserId(userId);
     }

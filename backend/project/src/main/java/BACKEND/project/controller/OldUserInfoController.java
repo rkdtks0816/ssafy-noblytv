@@ -1,10 +1,8 @@
 package BACKEND.project.controller;
 
-import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.dto.OldUserInfoDto;
 import BACKEND.project.service.OldUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +18,8 @@ public class OldUserInfoController {
     }
 
     @PutMapping("/{oldUserId}")
-    public ResponseEntity<OldUserInfo> updateOldUserInfo(@PathVariable String oldUserId, @RequestBody OldUserInfoDto oldUserInfoDto) {
+    public ResponseEntity<OldUserInfoDto> updateOldUserInfo(@PathVariable String oldUserId, @RequestBody OldUserInfoDto oldUserInfoDto) {
         oldUserInfoService.updateOldUserInfo(oldUserId, oldUserInfoDto);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.ok(oldUserInfoDto);
     }
 }

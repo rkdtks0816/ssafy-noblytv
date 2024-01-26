@@ -1,5 +1,7 @@
+import BGLayerStyle from './styles/BGLayerStyle';
+
 function BGLayer() {
-  return <div>BGLayer</div>;
+  return <BGLayerStyle />;
 }
 
 export default BGLayer;

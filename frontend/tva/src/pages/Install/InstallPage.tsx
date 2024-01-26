@@ -1,5 +1,12 @@
+import BGLayer from '../../components/Install/BGLayer';
+
 function InstallPage() {
-  return <div>InstallPage</div>;
+  return (
+    <>
+      <BGLayer />
+      <BGLayer />
+    </>
+  );
 }
 
 export default InstallPage;

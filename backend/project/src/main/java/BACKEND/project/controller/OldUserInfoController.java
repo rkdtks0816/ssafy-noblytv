@@ -1,0 +1,27 @@
+package BACKEND.project.controller;
+
+import BACKEND.project.domain.OldUserInfo;
+import BACKEND.project.dto.OldUserInfoDto;
+import BACKEND.project.service.OldUserInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/users/old")
+public class OldUserInfoController {
+
+    private final OldUserInfoService oldUserInfoService;
+
+    @Autowired
+    public OldUserInfoController(OldUserInfoService oldUserInfoService) {
+        this.oldUserInfoService = oldUserInfoService;
+    }
+
+    @PutMapping("/{oldUserId}")
+    public ResponseEntity<OldUserInfo> updateOldUserInfo(@PathVariable String oldUserId, @RequestBody OldUserInfoDto oldUserInfoDto) {
+        oldUserInfoService.updateOldUserInfo(oldUserId, oldUserInfoDto);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+}

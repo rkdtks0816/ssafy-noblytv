@@ -1,6 +1,5 @@
 package BACKEND.project.controller;
 
-import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.dto.OldUserRegistrationDto;
 import BACKEND.project.service.OldUserJoinService;
@@ -33,6 +32,16 @@ public class OldUserJoinController {
 
         return ResponseEntity.created(location).body(registeredUser);
     }
+
+//    @PutMapping("/{oldUserId}/medication")
+//    public ResponseEntity<OldUserRegistrationDto> updateOldUserMedication(@PathVariable("oldUserId") @RequestBody List<String>)
+//
+//
+//    @PutMapping("/{oldUserId}")
+//    public ResponseEntity<OldUserUpdateDto> updateOldUserInfo(@PathVariable("oldUserId") String oldUserId, @RequestBody OldUserUpdateDto oldUserUpdateDto) {
+//        OldUserUpdateDto oldUserUpdateInfo = oldUserJoinService.oldUserUpdateInfo(oldUserId, oldUserUpdateDto);
+//        return ResponseEntity.ok(oldUserUpdateInfo);
+//    }
 
     @GetMapping("/{oldUserId}")
     public ResponseEntity<Optional<OldUserInfo>> getUserInfo(@PathVariable String oldUserId) {

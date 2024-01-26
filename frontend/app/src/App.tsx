@@ -11,6 +11,7 @@ import Password from './pages/SignUp/Password';
 import SeniorConnect from './pages/SeniorConnect/SeniorConnect';
 import SeniorNameGender from './pages/SeniorConnect/SeniorNameGender';
 import SeniorBirth from './pages/SeniorConnect/SeniorBirth';
+import SeniorUniqueCode from './pages/SeniorConnect/SeniorUniqueCode';
 
 // import Community from './pages/app/community/community';
 // App 컴포넌트 내에서 라우터 설정
@@ -29,6 +30,7 @@ function App() {
           path="/senior-sign-up/name-gender"
           element={<SeniorNameGender />}
         />
+        <Route path="/senior-unique-code" element={<SeniorUniqueCode />} />
       </Routes>
     </Router>
   );

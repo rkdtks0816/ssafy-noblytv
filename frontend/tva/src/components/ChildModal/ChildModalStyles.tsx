@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ChildModalBg = styled.div`
+const ChildModalBg = styled.div`
   position: fixed;
   right: -100vw;
   transition: right 1s ease-out;
@@ -24,17 +24,17 @@ export const ChildModalBg = styled.div`
   color: #222222;
 `;
 
-export const ChildModalTitle = styled.div`
+const ChildModalTitle = styled.div`
   margin: 4vh 0 0 3vw;
   font-size: 4vw;
 `;
 
-export const ChildModalContent = styled.div`
+const ChildModalContent = styled.div`
   margin: 1vh 0 0 3vw;
   font-size: 3vw;
 `;
 
-export const ChildModalImg = styled.div`
+const ChildModalImg = styled.div`
   margin: 0 auto;
   background: url('src/assets/child.png');
   background-size: contain;
@@ -44,3 +44,5 @@ export const ChildModalImg = styled.div`
   height: 100%;
   border-radius: 5vw; /* 이미지도 부모와 같은 경계 반경을 가짐 */
 `;
+
+export { ChildModalBg, ChildModalTitle, ChildModalContent, ChildModalImg };

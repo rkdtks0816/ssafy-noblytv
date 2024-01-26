@@ -4,7 +4,7 @@ import {
   ChildModalTitle,
   ChildModalContent,
   ChildModalImg,
-} from './child_modal_styles';
+} from './ChildModalStyles';
 
 function ChildModal() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -26,3 +26,4 @@ function ChildModal() {
 }
 
 export default ChildModal;
+

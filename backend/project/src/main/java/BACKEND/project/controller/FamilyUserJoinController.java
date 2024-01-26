@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users/family")
@@ -44,5 +45,15 @@ public class FamilyUserJoinController {
     public ResponseEntity<FamilyUserUpdateDto> updateFamilyUserInfo(@PathVariable("familyUserId") String familyUserId, @RequestBody FamilyUserUpdateDto familyUserUpdateDto) {
         FamilyUserUpdateDto updatedFamilyUserDto = familyUserJoinService.updateFamilyUserInfo(familyUserId, familyUserUpdateDto);
         return ResponseEntity.ok(updatedFamilyUserDto);
+    }
+
+    @GetMapping("/{familyUserId}")
+    public ResponseEntity<Optional<FamilyUserInfo>> getUserInfo(@PathVariable String familyUserId) {
+        Optional<FamilyUserInfo> familyUserInfo = familyUserJoinService.getFamilyUserInfo(familyUserId);
+        if (familyUserId != null) {
+            return ResponseEntity.ok(familyUserInfo);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

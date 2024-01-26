@@ -4,7 +4,7 @@ import {
   ChildModalTitle,
   ChildModalContent,
   ChildModalImg,
-} from './styles/child_modal_styles';
+} from './child_modal_styles';
 
 function ChildModal() {
   const [isModalOpen, setModalOpen] = useState(false);

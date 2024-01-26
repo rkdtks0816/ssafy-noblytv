@@ -1,5 +1,5 @@
-import BgVideo from '../../components/tv/bg_video';
-import ChildModal from '../../components/tv/child_modal';
+import BgVideo from '../components/bg_video';
+import ChildModal from '../components/child_modal';
 
 function TvLayout() {
   return (

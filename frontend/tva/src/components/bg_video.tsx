@@ -1,4 +1,4 @@
-import BgVideoS from './styles/bg_video_styles';
+import BgVideoS from './bg_video_styles';
 
 function BgVideo() {
   return (

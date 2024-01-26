@@ -1,5 +1,7 @@
 package BACKEND.project.config;
 
+import BACKEND.project.util.JwtAuthenticationFilter;
+import BACKEND.project.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,13 +14,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final UserDetailsService userDetailsService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -26,29 +29,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/signup", "/", "/login").permitAll()
-                        .anyRequest().authenticated())
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
+                .formLogin(AbstractHttpConfigurer::disable)
+//                .authorizeHttpRequests((authorize) -> authorize.requestMatchers("users/family/signup", "/users/old/signup","/users/family/login").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll())
+                .sessionManagement((sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
-        http.formLogin(formLogin -> formLogin.loginPage("/loginForm")
-                .loginProcessingUrl("/login")
-                .usernameParameter("userId")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/")
-                .permitAll());
-
-        http.logout((logout) -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/loginForm"));
-
-        return http.build();
+        return httpSecurity.build();
     }
 }

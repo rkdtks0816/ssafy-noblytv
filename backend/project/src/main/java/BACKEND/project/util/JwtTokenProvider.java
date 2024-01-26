@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -49,7 +50,8 @@ public class JwtTokenProvider {
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + 86400000))
+                .setSubject(authentication.getName())
+                .setExpiration(new Date(now + 2592000000L))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
@@ -66,7 +68,7 @@ public class JwtTokenProvider {
         Claims claims = parseClaims(accessToken);
 
         if (claims.get("auth") == null) {
-            throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+            throw new JwtAuthenticationException("권한 정보가 없는 토큰입니다.");
         }
 
         // Claim에서 권한 정보 가져오기
@@ -79,7 +81,7 @@ public class JwtTokenProvider {
     }
 
     // 토큰 정보를 검증하는 메서드
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token) throws AuthenticationException {
         try {
             Jwts.parserBuilder()
                     .setSigningKey(key)
@@ -87,15 +89,24 @@ public class JwtTokenProvider {
                     .parseClaimsJws(token);
             return true;
         } catch (SecurityException | MalformedJwtException e) {
-            log.info("Invalid JWT Token", e);
+            throw new JwtAuthenticationException("Invalid JWT Token", e);
         } catch (ExpiredJwtException e) {
-            log.info("Expired JWT Token", e);
+            throw new JwtAuthenticationException("Expired JWT Token", e);
         } catch (UnsupportedJwtException e) {
-            log.info("Unsupported JWT Token", e);
+            throw new JwtAuthenticationException("Unsupported JWT Token", e);
         } catch (IllegalArgumentException e) {
-            log.info("JWT claims string is empty", e);
+            throw new JwtAuthenticationException("JWT claims string is empty", e);
         }
-        return false;
+    }
+
+    public static class JwtAuthenticationException extends org.springframework.security.core.AuthenticationException {
+        public JwtAuthenticationException(String msg, Throwable t) {
+            super(msg, t);
+        }
+
+        public JwtAuthenticationException(String msg) {
+            super(msg);
+        }
     }
 
     private Claims parseClaims(String accessToken) {

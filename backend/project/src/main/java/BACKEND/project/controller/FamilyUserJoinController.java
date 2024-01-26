@@ -3,7 +3,13 @@ package BACKEND.project.controller;
 import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.dto.FamilyUserRegistrationDto;
 import BACKEND.project.dto.FamilyUserUpdateDto;
+import BACKEND.project.dto.LoginDto;
+import BACKEND.project.service.FamilyLoginService;
 import BACKEND.project.service.FamilyUserJoinService;
+import BACKEND.project.util.JwtToken;
+import ch.qos.logback.classic.Logger;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -12,15 +18,14 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/users/family")
 public class FamilyUserJoinController {
 
     private final FamilyUserJoinService familyUserJoinService;
-
-    public FamilyUserJoinController(FamilyUserJoinService familyUserJoinService) {
-        this.familyUserJoinService = familyUserJoinService;
-    }
+    private final FamilyLoginService familyLoginService;
 
     @PostMapping("/signup")
     public ResponseEntity<FamilyUserInfo> registerFamilyUser(@Valid @RequestBody FamilyUserRegistrationDto registrationDto) {
@@ -44,5 +49,15 @@ public class FamilyUserJoinController {
     public ResponseEntity<FamilyUserUpdateDto> updateFamilyUserInfo(@PathVariable("familyUserId") String familyUserId, @RequestBody FamilyUserUpdateDto familyUserUpdateDto) {
         FamilyUserUpdateDto updatedFamilyUserDto = familyUserJoinService.updateFamilyUserInfo(familyUserId, familyUserUpdateDto);
         return ResponseEntity.ok(updatedFamilyUserDto);
+    }
+
+    @PostMapping("/login")
+    public JwtToken login(@RequestBody LoginDto loginDto) {
+        String userId = loginDto.getUserId();
+        String password = loginDto.getPassword();
+        JwtToken jwtToken = familyLoginService.login(userId, password);
+        log.info("request username = {}, password = {}", userId, password);
+        log.info("jwtToken accessToken = {}, refreshToken = {}", jwtToken.getAccessToken(), jwtToken.getRefreshToken());
+        return jwtToken;
     }
 }

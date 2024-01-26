@@ -1,5 +1,5 @@
 import styled from 'styled-components';
 
-const styles = styled.div``;
+const DiscriptionBoxStyle = styled.div``;
 
-export default styles;
+export default DiscriptionBoxStyle;

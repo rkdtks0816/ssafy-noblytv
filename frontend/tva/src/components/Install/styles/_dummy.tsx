@@ -18,7 +18,7 @@ const styles = styled.div`
   justify-content: center;
   align-items: center;
   padding: 0px;
-  gap: 298px;
+  gap: 300px;
 
   position: absolute;
   width: 3350px;

@@ -1,5 +1,11 @@
+import SeperationLineStyle from './styles/SeperationLineStyle';
+
 function SeperationLine() {
-  return <div>SeperationLine</div>;
+  return (
+    <SeperationLineStyle>
+      <div>분리선</div>
+    </SeperationLineStyle>
+  );
 }
 
 export default SeperationLine;

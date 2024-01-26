@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
-const styles = styled.div``;
+const LeftBoxStyle = styled.div`
+  color: #ffffff;
+`;
 
-export default styles;
+export default LeftBoxStyle;

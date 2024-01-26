@@ -1,5 +1,16 @@
+import FlexBoxStyle from './styles/FlexBoxStyle';
+import LeftBox from './LeftBox';
+import SeperationLine from './SeperationLine';
+import RightBox from './RightBox';
+
 function FlexBox() {
-  return <div>FlexBox</div>;
+  return (
+    <FlexBoxStyle>
+      <LeftBox />
+      <SeperationLine />
+      <RightBox />
+    </FlexBoxStyle>
+  );
 }
 
 export default FlexBox;

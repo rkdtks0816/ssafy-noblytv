@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { UserInfoT } from './SignUpType';
-import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
-import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
-import BgImgStyle from '../../components/BgImg/BgImgStyle';
-import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BackBtnStyle from '../../components/BackBtn/BackBtnStyle';
+import BgImgStyle from '../../components/BgImg/BgImgStyle';
 import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
+import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
+import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
+import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import StatusMsg from '../../components/StatusMsg/StatusMsg';
+import { UserInfoT, LunarSolar } from './SignUpType';
 
 function Password() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
@@ -18,9 +18,9 @@ function Password() {
     userId: '',
     userName: '',
     password: '',
-    lunarSloar: '',
+    lunarSloar: LunarSolar.Solar,
     birth: '',
-    oldUserId: '',
+    oldUserId: [],
   });
   const [currentPassword, setcurrentPassword] = useState('');
   const [formatState, setformatState] = useState('');
@@ -28,18 +28,20 @@ function Password() {
   const [formatError, setformatError] = useState('');
   const [mismatchError, setmismatchError] = useState('');
 
-  // 이전 정보 저장
+  // location.state가 유효한 객체일 경우 userInfo 상태를 업데이트하고, 그렇지 않으면 초기화
   useEffect(() => {
-    setUserInfo(
-      location.state || {
+    if (location.state && typeof location.state === 'object') {
+      setUserInfo(location.state as UserInfoT);
+    } else {
+      setUserInfo({
         userId: '',
         userName: '',
         password: '',
-        lunarSloar: '',
+        lunarSloar: LunarSolar.Solar,
         birth: '',
-        oldUserId: '',
-      },
-    );
+        oldUserId: [],
+      });
+    }
   }, [location.state]);
 
   // 'password'와 'password_confirm' 입력 필드가 변경될 때, 비밀번호 길이 및 일치성을 검증하고 오류 메시지 설정

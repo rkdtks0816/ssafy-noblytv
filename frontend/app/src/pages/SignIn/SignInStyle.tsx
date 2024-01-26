@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const LogoImgS = styled.div`
   margin: 0 auto;
@@ -35,4 +35,4 @@ const SignUpBtnS = styled(Link)`
   text-decoration: none;
 `;
 
-export { LogoImgS, FindIdPwBtnS, SignUpBtnS };
+export { FindIdPwBtnS, LogoImgS, SignUpBtnS };

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class FamilyUserJoinService {
@@ -115,5 +116,9 @@ public class FamilyUserJoinService {
         }
 
         return new FamilyUserUpdateDto(familyUser.getUserId(), familyUser.getPassword(), familyUser.getPassword(), familyUser.getUsername(), familyUser.getBirth(), familyUser.getLunarSolar());
+    }
+
+    public Optional<FamilyUserInfo> getFamilyUserInfo(String userId) {
+        return familyUserRepository.findByUserId(userId);
     }
 }

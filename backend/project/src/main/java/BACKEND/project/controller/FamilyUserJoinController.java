@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -59,5 +60,15 @@ public class FamilyUserJoinController {
         log.info("request username = {}, password = {}", userId, password);
         log.info("jwtToken accessToken = {}, refreshToken = {}", jwtToken.getAccessToken(), jwtToken.getRefreshToken());
         return jwtToken;
+    }
+
+    @GetMapping("/{familyUserId}")
+    public ResponseEntity<Optional<FamilyUserInfo>> getUserInfo(@PathVariable String familyUserId) {
+        Optional<FamilyUserInfo> familyUserInfo = familyUserJoinService.getFamilyUserInfo(familyUserId);
+        if (familyUserId != null) {
+            return ResponseEntity.ok(familyUserInfo);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

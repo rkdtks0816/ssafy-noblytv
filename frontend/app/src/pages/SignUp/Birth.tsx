@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { UserInfoT } from './SignUpType';
-import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
-import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
-import BgImgStyle from '../../components/BgImg/BgImgStyle';
-import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BackBtnStyle from '../../components/BackBtn/BackBtnStyle';
+import BgImgStyle from '../../components/BgImg/BgImgStyle';
 import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
+import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
+import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
+import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import ToggleBtn from '../../components/ToggleBtn/ToggleBtn';
+import { UserInfoT, LunarSolar } from './SignUpType';
 
 function Birthday() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
@@ -18,26 +18,42 @@ function Birthday() {
     userId: '',
     userName: '',
     password: '',
-    lunarSloar: '',
+    lunarSloar: LunarSolar.Solar,
     birth: '',
-    oldUserId: '',
+    oldUserId: [],
   });
 
-  // 이전 정보 저장
+  // location.state가 유효한 객체일 경우 userInfo 상태를 업데이트하고, 그렇지 않으면 초기화
   useEffect(() => {
-    setUserInfo(
-      location.state || {
+    if (location.state && typeof location.state === 'object') {
+      setUserInfo(location.state as UserInfoT);
+    } else {
+      setUserInfo({
         userId: '',
         userName: '',
         password: '',
-        lunarSloar: '',
+        lunarSloar: LunarSolar.Solar,
         birth: '',
-        oldUserId: '',
-      },
-    );
+        oldUserId: [],
+      });
+    }
   }, [location.state]);
 
-  // birthday 입력필드가 변할 때마다 setBirthday를 사용하여 값을 새롭게 할당
+  const handleBackBtn = () => {
+    navigate('/sign-up/password', { state: userInfo });
+  };
+
+  // '음력' 또는 '양력' 선택 시 setUserInfo를 사용하여 userInfo.lunarSloar 필드를
+  // LunarSolar.Lunar 또는 LunarSolar.Solar로 설정
+  const handleToggle = (selected: string) => {
+    if (selected === 'left') {
+      setUserInfo({ ...userInfo, lunarSloar: LunarSolar.Lunar });
+    } else if (selected === 'right') {
+      setUserInfo({ ...userInfo, lunarSloar: LunarSolar.Solar });
+    }
+  };
+
+  // birthday 입력필드가 변할 때마다 setUserInfo 사용하여 값을 새롭게 할당
   const Changebirth = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value },
@@ -47,22 +63,8 @@ function Birthday() {
     }
   };
 
-  const handleBackBtn = () => {
-    navigate('/sign-up/password', { state: userInfo });
-  };
-
-  // updateBrithday함수에 birth 인자로 사용해서 스토어의 birth 필드 업데이트
   const handleSubmit = () => {
-    console.log(userInfo);
-  };
-
-  // '음력' 또는 '양력' 선택 시 updateLunarSloar를 사용하여 스토어의 lunarSloar 필드 업데이트
-  const handleToggle = (selected: string) => {
-    if (selected === 'left') {
-      setUserInfo({ ...userInfo, lunarSloar: '음력' });
-    } else if (selected === 'right') {
-      setUserInfo({ ...userInfo, lunarSloar: '양력' });
-    }
+    navigate('/senior-connect');
   };
 
   return (
@@ -74,9 +76,11 @@ function Birthday() {
           <ToggleBtn
             optionLeft="음력"
             optionRight="양력"
-            initType={userInfo.lunarSloar === '음력' ? 'left' : 'right'}
+            initType={
+              userInfo.lunarSloar === LunarSolar.Lunar ? 'left' : 'right'
+            }
             onToggle={handleToggle}
-          ></ToggleBtn>
+          />
           <InputBoxStyle
             name="birth"
             type="date"

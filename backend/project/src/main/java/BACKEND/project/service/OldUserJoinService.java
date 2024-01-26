@@ -57,4 +57,8 @@ public class OldUserJoinService {
         Optional<OldUserInfo> oldUserInfo = oldUserRepository.findByUserId(userId);
         return oldUserInfo.orElseThrow(() -> new IllegalArgumentException("등록되지 않은 회원 ID입니다."));
     }
+
+    public Optional<OldUserInfo> getOldUserInfo(String userId) {
+        return oldUserRepository.findByUserId(userId);
+    }
 }

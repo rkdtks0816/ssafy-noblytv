@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { UserInfoT } from './SignUpType';
-import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
-import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
-import BgImgStyle from '../../components/BgImg/BgImgStyle';
-import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BackBtnStyle from '../../components/BackBtn/BackBtnStyle';
+import BgImgStyle from '../../components/BgImg/BgImgStyle';
 import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
+import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
+import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
+import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import StatusMsg from '../../components/StatusMsg/StatusMsg';
+import { UserInfoT, LunarSolar } from './SignUpType';
 
 function NameId() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
@@ -19,22 +19,25 @@ function NameId() {
     userId: '',
     userName: '',
     password: '',
-    lunarSloar: '',
+    lunarSloar: LunarSolar.Solar,
     birth: '',
-    oldUserId: '',
+    oldUserId: [],
   });
 
+  // location.state가 유효한 객체일 경우 userInfo 상태를 업데이트하고, 그렇지 않으면 초기화
   useEffect(() => {
-    setUserInfo(
-      location.state || {
+    if (location.state && typeof location.state === 'object') {
+      setUserInfo(location.state as UserInfoT);
+    } else {
+      setUserInfo({
         userId: '',
         userName: '',
         password: '',
-        lunarSloar: '',
+        lunarSloar: LunarSolar.Solar,
         birth: '',
-        oldUserId: '',
-      },
-    );
+        oldUserId: [],
+      });
+    }
   }, [location.state]);
 
   // 사용자 입력을 처리하고, userInfo 상태를 업데이트 합니다. 입력 필드가 변경될 때마다 호출.

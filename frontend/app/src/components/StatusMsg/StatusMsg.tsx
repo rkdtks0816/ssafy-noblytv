@@ -3,14 +3,14 @@ import {
   StatusMsgImgS,
   StatusMsgContentsS,
 } from './StatusMsgStyle';
-import { StatusMsgProps } from './StatusMsgType';
+import StatusMsgProps from './StatusMsgType';
 
 function StatusMsg({ statusMsgType, statusMsgContents }: StatusMsgProps) {
   return (
     <StatusMsgBoxS>
-      <StatusMsgImgS iconType={statusMsgType} />
+      <StatusMsgImgS $iconType={statusMsgType} />
       <StatusMsgContentsS
-        contentsColor={statusMsgType === 'error' ? '#ff1f1f' : '#6DCD01'}
+        $contentsColor={statusMsgType === 'error' ? '#ff1f1f' : '#6DCD01'}
       >
         {statusMsgContents}
       </StatusMsgContentsS>

@@ -2,4 +2,4 @@ interface FooterIconProps {
   footerIconType: string;
 }
 
-export type { FooterIconProps };
+export default FooterIconProps;

@@ -18,6 +18,7 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -67,14 +68,17 @@ public class JwtTokenProvider {
         // Jwt Token 복호화
         Claims claims = parseClaims(accessToken);
 
-        if (claims.get("auth") == null) {
-            throw new JwtAuthenticationException("권한 정보가 없는 토큰입니다.");
-        }
+        String authInfo = claims.get("auth").toString();
 
         // Claim에서 권한 정보 가져오기
-        Collection<? extends GrantedAuthority> authorities = Arrays.stream(claims.get("auth").toString().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+        Collection<? extends GrantedAuthority> authorities;
+        if (authInfo != null && !authInfo.isEmpty()) {
+            authorities = Arrays.stream(authInfo.split(","))
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
+        } else {
+            authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+        }
 
         UserDetails principal = new User(claims.getSubject(), "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);

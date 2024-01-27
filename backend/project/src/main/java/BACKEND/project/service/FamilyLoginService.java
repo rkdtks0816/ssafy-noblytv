@@ -11,6 +11,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -30,6 +35,16 @@ public class FamilyLoginService {
 
         // 인증 정보를 기반으로 JWT 토큰 생성
         return jwtTokenProvider.generateToken(authentication);
+    }
 
+    // Token Blacklist 관리 Collection
+    private final Set<String> blacklistedTokens = Collections.newSetFromMap(new ConcurrentHashMap<>());
+
+    public void logout(String token) {
+        blacklistedTokens.add(token);
+    }
+
+    public boolean isTokenBlacklisted(String token) {
+        return blacklistedTokens.contains(token);
     }
 }

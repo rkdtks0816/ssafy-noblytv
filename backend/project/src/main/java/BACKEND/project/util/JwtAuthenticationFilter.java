@@ -1,5 +1,6 @@
 package BACKEND.project.util;
 
+import BACKEND.project.service.FamilyLoginService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -17,6 +18,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {
     private final JwtTokenProvider jwtTokenProvider;
+    private final FamilyLoginService familyLoginService;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -30,10 +32,10 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         }
 
         try {
-            // 그 외의 모든 요청에 대해서는 토큰 유효성 검사
             String token = resolveToken(httpRequest);
 
-            if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
+            // 토큰이 유효하고, 블랙리스트에 없는지 확인
+            if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token) && !familyLoginService.isTokenBlacklisted(token)) {
                 Authentication authentication = jwtTokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
@@ -42,41 +44,14 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                 return;
             }
         } catch (JwtTokenProvider.JwtAuthenticationException e) {
-            // 예외를 잡아서 처리 (예: 로그 남기기)
-            // 필요한 경우 응답에 상태 코드 및 메시지 설정
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             httpResponse.setContentType("application/json");
             httpResponse.getWriter().write("{\"error\": \"" + e.getMessage() + "\"}");
-            return; // 여기에서 요청 처리를 중지
+            return;
         }
 
         chain.doFilter(request, response);
-
-//        try {
-//            // Request Header에서 JWT Token 추출
-//            String token = resolveToken((HttpServletRequest) request);
-//
-//            // validateToken으로 토큰 유효성 검사
-//            if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
-//                Authentication authentication = jwtTokenProvider.getAuthentication(token);
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-//            } else {
-//                SecurityContextHolder.clearContext();
-//                ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT token");
-//                return; // 여기에서 요청 처리를 중지
-//            }
-//        } catch (JwtTokenProvider.JwtAuthenticationException e) {
-//            // 예외를 잡아서 처리 (예: 로그 남기기)
-//            // 필요한 경우 응답에 상태 코드 및 메시지 설정
-//            HttpServletResponse httpResponse = (HttpServletResponse) response;
-//            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//            httpResponse.setContentType("application/json");
-//            httpResponse.getWriter().write("{\"error\": \"" + e.getMessage() + "\"}");
-//            return; // 여기에서 요청 처리를 중지
-//        }
-//
-//        chain.doFilter(request, response);
     }
 
     // Request Header에서 토큰 정보 추출

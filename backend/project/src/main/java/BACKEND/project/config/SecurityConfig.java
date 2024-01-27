@@ -1,5 +1,6 @@
 package BACKEND.project.config;
 
+import BACKEND.project.service.FamilyLoginService;
 import BACKEND.project.util.JwtAuthenticationFilter;
 import BACKEND.project.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -7,11 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -22,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final FamilyLoginService familyLoginService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -34,10 +33,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests((authorize) -> authorize.requestMatchers("users/family/signup", "/users/old/signup","/users/family/login").permitAll().anyRequest().authenticated())
-                .authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll())
+                .authorizeHttpRequests((authorize) -> authorize.requestMatchers("users/family/signup", "/users/old/signup","/users/family/login").permitAll().anyRequest().authenticated())
+//                .authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll())
                 .sessionManagement((sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, familyLoginService), UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }

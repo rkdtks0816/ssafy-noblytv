@@ -2,9 +2,8 @@ package BACKEND.project.service;
 
 import BACKEND.project.domain.FamilyRelation;
 import BACKEND.project.domain.FamilyUserInfo;
-import BACKEND.project.dto.FamilyUserRegistrationDto;
+import BACKEND.project.dto.*;
 import BACKEND.project.domain.OldUserInfo;
-import BACKEND.project.dto.FamilyUserUpdateDto;
 import BACKEND.project.repository.FamilyRelationRepository;
 import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.repository.OldUserRepository;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FamilyUserJoinService {
@@ -118,7 +117,39 @@ public class FamilyUserJoinService {
         return new FamilyUserUpdateDto(familyUser.getUserId(), familyUser.getPassword(), familyUser.getPassword(), familyUser.getUsername(), familyUser.getBirth(), familyUser.getLunarSolar());
     }
 
-    public Optional<FamilyUserInfo> getFamilyUserInfo(String userId) {
-        return familyUserRepository.findByUserId(userId);
+    public FamilyUserInfoDto getFamilyUserInfo(String userId) {
+        FamilyUserInfo familyUserInfo = familyUserRepository.findByUserId(userId)
+                .orElseThrow(() -> new NoSuchElementException("해당 가족 회원이 존재하지 않습니다."));
+
+        return convertToDto(familyUserInfo);
+    }
+
+    private FamilyUserInfoDto convertToDto(FamilyUserInfo familyUserInfo) {
+        FamilyUserInfoDto dto = new FamilyUserInfoDto();
+        dto.setUserId(familyUserInfo.getUserId());
+        dto.setUsername(familyUserInfo.getUsername());
+        dto.setBirth(familyUserInfo.getBirth());
+        dto.setLunarSolar(familyUserInfo.getLunarSolar());
+
+        List<FamilyRelationDto> familyRelationDtos = familyUserInfo.getFamilyRelations().stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+        dto.setFamilyRelations(familyRelationDtos);
+
+        return dto;
+    }
+
+    private FamilyRelationDto convertToDto(FamilyRelation familyRelation) {
+        FamilyRelationDto dto = new FamilyRelationDto();
+        dto.setOldUserInfo(convertToDto(familyRelation.getOldUserInfo()));
+
+        return dto;
+    }
+
+    private OldUserInfoDto convertToDto(OldUserInfo oldUserInfo) {
+        OldUserInfoDto dto = new OldUserInfoDto();
+        dto.setUsername(oldUserInfo.getUsername());
+
+        return dto;
     }
 }

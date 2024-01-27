@@ -18,8 +18,8 @@ public class OldUserInfoController {
     }
 
     @PutMapping("/{oldUserId}")
-    public ResponseEntity<OldUserInfoDto> updateOldUserInfo(@PathVariable String oldUserId, @RequestBody OldUserInfoDto oldUserInfoDto) {
-        oldUserInfoService.updateOldUserInfo(oldUserId, oldUserInfoDto);
-        return ResponseEntity.ok(oldUserInfoDto);
+    public ResponseEntity<OldUserInfoDto> updateOldUserInfo(@PathVariable("oldUserId") String oldUserId, @RequestBody OldUserInfoDto oldUserInfoDto) {
+        OldUserInfoDto updatedoldUserInfoDto = oldUserInfoService.updateOldUserInfo(oldUserId, oldUserInfoDto);
+        return ResponseEntity.ok(updatedoldUserInfoDto);
     }
 }

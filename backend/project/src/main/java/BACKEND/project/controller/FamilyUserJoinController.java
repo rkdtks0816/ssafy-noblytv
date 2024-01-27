@@ -1,6 +1,7 @@
 package BACKEND.project.controller;
 
 import BACKEND.project.domain.FamilyUserInfo;
+import BACKEND.project.dto.FamilyUserInfoDto;
 import BACKEND.project.dto.FamilyUserRegistrationDto;
 import BACKEND.project.dto.FamilyUserUpdateDto;
 import BACKEND.project.dto.LoginDto;
@@ -28,6 +29,8 @@ public class FamilyUserJoinController {
     private final FamilyUserJoinService familyUserJoinService;
     private final FamilyLoginService familyLoginService;
 
+
+    // 가족 회원 가입
     @PostMapping("/signup")
     public ResponseEntity<FamilyUserInfo> registerFamilyUser(@Valid @RequestBody FamilyUserRegistrationDto registrationDto) {
         FamilyUserInfo registeredFamilyUser = familyUserJoinService.registerFamilyUser(registrationDto);
@@ -40,6 +43,7 @@ public class FamilyUserJoinController {
         return ResponseEntity.created(location).body(registeredFamilyUser);
     }
 
+    // 가족 회원 연관 노인 ID 수정
     @PutMapping("/{familyUserId}/oldUsers")
     public ResponseEntity<FamilyUserRegistrationDto> updateOldUsersOfFamilyUser(@PathVariable("familyUserId") String familyUserId, @RequestBody List<String> oldUserIds) {
         FamilyUserRegistrationDto familyUser = familyUserJoinService.updateOldUsers(familyUserId, oldUserIds);
@@ -63,12 +67,8 @@ public class FamilyUserJoinController {
     }
 
     @GetMapping("/{familyUserId}")
-    public ResponseEntity<Optional<FamilyUserInfo>> getUserInfo(@PathVariable String familyUserId) {
-        Optional<FamilyUserInfo> familyUserInfo = familyUserJoinService.getFamilyUserInfo(familyUserId);
-        if (familyUserId != null) {
-            return ResponseEntity.ok(familyUserInfo);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<FamilyUserInfoDto> getUserInfo(@PathVariable("familyUserId") String familyUserId) {
+        FamilyUserInfoDto familyUserInfoDto = familyUserJoinService.getFamilyUserInfo(familyUserId);
+        return ResponseEntity.ok(familyUserInfoDto);
     }
 }

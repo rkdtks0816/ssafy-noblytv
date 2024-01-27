@@ -2,16 +2,16 @@ package BACKEND.project.dto;
 
 import BACKEND.project.domain.Medication;
 import BACKEND.project.domain.OldUserInfo;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Getter
-@Setter
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OldUserInfoDto {
 
     private String username;

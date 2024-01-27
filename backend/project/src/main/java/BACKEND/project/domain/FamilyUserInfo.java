@@ -43,7 +43,7 @@ public class FamilyUserInfo {
     private LunarSolar lunarSolar;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "familyUserInfo")
+    @OneToMany(mappedBy = "familyUserInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<FamilyRelation> familyRelations = new ArrayList<>();
 }

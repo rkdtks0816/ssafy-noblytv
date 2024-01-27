@@ -5,11 +5,10 @@ import BACKEND.project.dto.FamilyUserInfoDto;
 import BACKEND.project.dto.FamilyUserRegistrationDto;
 import BACKEND.project.dto.FamilyUserUpdateDto;
 import BACKEND.project.dto.LoginDto;
+import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.service.FamilyLoginService;
 import BACKEND.project.service.FamilyUserJoinService;
 import BACKEND.project.util.JwtToken;
-import ch.qos.logback.classic.Logger;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,7 +28,7 @@ public class FamilyUserJoinController {
 
     private final FamilyUserJoinService familyUserJoinService;
     private final FamilyLoginService familyLoginService;
-
+    private final FamilyUserRepository familyUserRepository;
 
     // 가족 회원 가입
     @PostMapping("/signup")
@@ -78,5 +77,18 @@ public class FamilyUserJoinController {
     public ResponseEntity<FamilyUserInfoDto> getUserInfo(@PathVariable("familyUserId") String familyUserId) {
         FamilyUserInfoDto familyUserInfoDto = familyUserJoinService.getFamilyUserInfo(familyUserId);
         return ResponseEntity.ok(familyUserInfoDto);
+    }
+
+    @DeleteMapping("/delete/{familyUserId}")
+    public ResponseEntity<?> deleteUser(@PathVariable("familyUserId") String familyUserId, @RequestHeader(value = "Authorization") String token) {
+        FamilyUserInfo user = familyUserRepository.findByUserId(familyUserId)
+                .orElseThrow(() -> new NoSuchElementException("해당 가족 회원이 존재하지 않습니다."));
+
+        familyUserRepository.delete(user);
+
+        // 회원 탈퇴 시 로그아웃을 통해 Token 무효화
+        familyLoginService.logout(token);
+
+        return ResponseEntity.noContent().build();
     }
 }

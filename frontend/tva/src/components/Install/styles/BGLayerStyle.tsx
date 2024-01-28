@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const BGLayerStyle = styled.img`
+const BGLayerStyle = styled.div`
   position: fixed;
   top: 0px;
   left: 0px;

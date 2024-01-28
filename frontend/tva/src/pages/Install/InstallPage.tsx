@@ -3,10 +3,9 @@ import FlexBox from '../../components/Install/FlexBox';
 
 function InstallPage() {
   return (
-    <>
-      <BGLayer />
+    <BGLayer>
       <FlexBox />
-    </>
+    </BGLayer>
   );
 }
 

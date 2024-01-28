@@ -6,8 +6,14 @@ const FlexBoxStyle = styled.div`
   justify-content: center;
   align-items: center;
   gap: auto;
-  width: 100dvw;
-  height: 100dvh;
+  width: 80dvw;
+  height: 70dvh;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
 
 export default FlexBoxStyle;

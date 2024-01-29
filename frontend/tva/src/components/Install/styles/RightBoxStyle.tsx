@@ -11,6 +11,7 @@ const RightBoxStyle = styled.div`
 
   div {
     margin-top: 20px;
+    font-size: 30px;
   }
 `;
 

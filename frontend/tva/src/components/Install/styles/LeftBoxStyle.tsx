@@ -9,21 +9,24 @@ const LeftBoxStyle = styled.div`
   color: white;
 
   p {
-    font-size: large;
+    font-size: 30px;
     font-weight: 800;
   }
 
   div {
     margin-bottom: 30px;
+    font-size: 20px;
   }
 
   ol {
     padding-left: 30px;
     margin-bottom: 30px;
+    font-size: 20px;
   }
 
   li {
     margin-bottom: 5px;
+    font-size: 20px;
   }
 `;
 

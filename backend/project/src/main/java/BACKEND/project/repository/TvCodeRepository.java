@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface TvCodeRepository extends JpaRepository<TvCode, Long> {
     Optional<TvCode> findByCode(String code);
+    boolean existsByCode(String code);
 }

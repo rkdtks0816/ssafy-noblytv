@@ -26,7 +26,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         String requestURI = httpRequest.getRequestURI();
 
         // 로그인 및 회원가입 요청에 해당하는 URL일 경우, 토큰 유효성 검사를 수행하지 않음
-        if (requestURI.equals("/users/family/login") || requestURI.equals("/users/family/signup") || requestURI.equals("/users/old/signup")) {
+        if (requestURI.equals("/users/family/login") || requestURI.equals("/users/family/signup") || requestURI.equals("/users/old/signup")
+                || requestURI.startsWith("/tv/generate-code") || requestURI.startsWith("/tv/login") || requestURI.startsWith("/users/family/duplication/")) {
             chain.doFilter(request, response);
             return;
         }

@@ -94,6 +94,11 @@ public class FamilyUserJoinService {
     }
 
     @Transactional
+    public boolean isUserIdDuplicated(String userId) {
+        return familyUserRepository.findByUserId(userId).isPresent();
+    }
+
+    @Transactional
     public FamilyUserUpdateDto updateFamilyUserInfo(String familyUserId, FamilyUserUpdateDto familyUserUpdateDto) {
         FamilyUserInfo familyUser = familyUserRepository.findByUserId(familyUserId)
                 .orElseThrow(() -> new NoSuchElementException("해당 가족 회원이 존재하지 않습니다."));
@@ -148,6 +153,7 @@ public class FamilyUserJoinService {
 
     private OldUserInfoDto convertToDto(OldUserInfo oldUserInfo) {
         OldUserInfoDto dto = new OldUserInfoDto();
+        dto.setUserId(oldUserInfo.getUserId());
         dto.setUsername(oldUserInfo.getUsername());
 
         return dto;

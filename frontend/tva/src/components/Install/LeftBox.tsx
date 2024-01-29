@@ -10,7 +10,7 @@ function LeftBox() {
         <li>화면에 나오는 코드를 입력하세요.</li>
       </ol>
       <div>또는 아래 UI에 접속하여 코드를 확인하세요.</div>
-      <div>http://www.asdf.com</div>
+      <div>http://192.168.100.72:5173/connect-tv</div>
       <div>코드번호: </div>
     </LeftBoxStyle>
   );

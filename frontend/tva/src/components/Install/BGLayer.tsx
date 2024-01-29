@@ -1,7 +1,7 @@
 import BGLayerStyle from './styles/BGLayerStyle';
 
-function BGLayer() {
-  return <BGLayerStyle />;
+function BGLayer({ children }: React.PropsWithChildren) {
+  return <BGLayerStyle>{children}</BGLayerStyle>;
 }
 
 export default BGLayer;

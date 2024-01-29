@@ -1,12 +1,12 @@
 package BACKEND.project.service;
 
 import BACKEND.project.domain.Medication;
-import BACKEND.project.domain.MedicationDto;
+import BACKEND.project.dto.MedicationDto;
 import BACKEND.project.domain.OldUserInfo;
-import BACKEND.project.domain.OldUserRegistrationDto;
+import BACKEND.project.dto.OldUserRegistrationDto;
 import BACKEND.project.repository.OldUserRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,14 +22,14 @@ public class OldUserJoinService {
 
     @Transactional
     public OldUserInfo registerUser(OldUserRegistrationDto oldUserRegistrationDto) {
-        // 고유코드 중복 체크
-        Optional<OldUserInfo> existingUser = oldUserRepository.findByUserId(oldUserRegistrationDto.getUserId());
-        if (existingUser.isPresent()) {
-            throw new IllegalStateException("이미 등록된 고유코드입니다.");
-        }
+        // 고유 코드 생성
+        String userId;
+        do {
+            userId = RandomStringUtils.randomAlphanumeric(8).toLowerCase();
+        } while (oldUserRepository.findByUserId(userId).isPresent());
 
         OldUserInfo newUser = new OldUserInfo();
-        newUser.setUserId(oldUserRegistrationDto.getUserId());
+        newUser.setUserId(userId);
         newUser.setUsername(oldUserRegistrationDto.getUsername());
         newUser.setBirth(oldUserRegistrationDto.getBirth());
         newUser.setLunarSolar(oldUserRegistrationDto.getLunarSolar());
@@ -51,5 +51,14 @@ public class OldUserJoinService {
         medication.setMedicine(medicationDto.getMedicine());
         medication.setMedicationTime(medicationDto.getMedicationTime());
         return medication;
+    }
+
+    public OldUserInfo findByUserId(String userId) {
+        Optional<OldUserInfo> oldUserInfo = oldUserRepository.findByUserId(userId);
+        return oldUserInfo.orElseThrow(() -> new IllegalArgumentException("등록되지 않은 회원 ID입니다."));
+    }
+
+    public Optional<OldUserInfo> getOldUserInfo(String userId) {
+        return oldUserRepository.findByUserId(userId);
     }
 }

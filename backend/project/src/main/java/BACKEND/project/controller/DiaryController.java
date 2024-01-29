@@ -1,8 +1,9 @@
 package BACKEND.project.controller;
 
 import BACKEND.project.domain.Diary;
-import BACKEND.project.domain.DiaryDto;
+import BACKEND.project.dto.DiaryDto;
 import BACKEND.project.service.DiaryService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class DiaryController {
     @PostMapping("/create/{oldUserId}")
     public ResponseEntity<Diary> createDiary(@Valid @RequestBody DiaryDto diaryDto, @PathVariable("oldUserId") String oldUserId) {
         Diary newDiary = diaryService.saveDiary(diaryDto, oldUserId);
-        return ResponseEntity.ok(newDiary);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newDiary);
     }
 
     @GetMapping("/view/{oldUserId}")

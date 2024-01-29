@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -16,6 +15,11 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode(of = "id")
 @Entity
 public class FamilyUserInfo {
+
+    public enum LunarSolar {
+        LUNAR,
+        SOLAR
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,19 +34,16 @@ public class FamilyUserInfo {
     private String password;
 
     @NotBlank(message = "이름은 필수입니다.")
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(nullable = false, length = 50)
     private String username;
 
     private LocalDate birth;
 
+    @Enumerated(EnumType.STRING)
+    private LunarSolar lunarSolar;
+
     @ToString.Exclude
-    @OneToMany(mappedBy = "familyUserInfo")
+    @OneToMany(mappedBy = "familyUserInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<FamilyRelation> familyRelations = new ArrayList<>();
-
-    public List<String> getOldUserIds() {
-        return familyRelations.stream()
-                .map(familyRelation -> familyRelation.getOldUserInfo().getUserId())
-                .collect(Collectors.toList());
-    }
 }

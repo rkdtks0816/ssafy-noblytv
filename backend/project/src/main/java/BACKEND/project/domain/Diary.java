@@ -21,8 +21,11 @@ public class Diary {
     @CreationTimestamp
     private LocalDate date;
 
-    @Column(length = 1000)
+    @Column
     private String text;
+
+    @Column
+    private String summary;
 
     @ToString.Exclude
     @JsonBackReference

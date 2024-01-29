@@ -1,7 +1,7 @@
 package BACKEND.project.service;
 
 import BACKEND.project.domain.Diary;
-import BACKEND.project.domain.DiaryDto;
+import BACKEND.project.dto.DiaryDto;
 import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.repository.DiaryRepository;
@@ -35,6 +35,7 @@ public class DiaryService {
 
         Diary newDiary = new Diary();
         newDiary.setText(diaryDto.getText());
+        newDiary.setSummary(diaryDto.getSummary());
         newDiary.setOldUserInfo(oldUser);
 
         return diaryRepository.save(newDiary);

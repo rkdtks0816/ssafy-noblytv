@@ -32,8 +32,7 @@ public class OldUserInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank()
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String userId;
 
     @NotBlank(message = "이름은 필수입니다")

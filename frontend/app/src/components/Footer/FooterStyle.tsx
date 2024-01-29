@@ -9,7 +9,7 @@ export const FooterBgS = styled.div`
   display: flex;
   width: 100vw;
   height: 70px;
-  background-image: url('./assets/footer_bg.png');
+  background: url('/src/assets/bg_footer.png');
   background-size: cover;
   background-repeat: no-repeat;
   align-items: center; /* 세로 가운데 정렬 */

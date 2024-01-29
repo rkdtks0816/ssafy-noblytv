@@ -1,4 +1,4 @@
-export interface UserInfoT {
+interface UserInfoT {
   userId: string;
   userName: string;
   password: string;
@@ -7,7 +7,10 @@ export interface UserInfoT {
   oldUserId: string[];
 }
 
-export enum LunarSolar {
+enum LunarSolar {
   Lunar = 'Lunar',
   Solar = 'Solar',
 }
+
+export type { UserInfoT };
+export { LunarSolar };

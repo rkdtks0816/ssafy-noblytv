@@ -7,21 +7,15 @@ import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import StatusMsg from '../../components/StatusMsg/StatusMsg';
-import { UserInfoT, LunarSolar } from './SignUpType';
+import { UserInfoT } from './SignUpType';
+import userInfoInit from './SignUpConstants';
 
 function Password() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [userInfo, setUserInfo] = useState<UserInfoT>({
-    userId: '',
-    userName: '',
-    password: '',
-    lunarSloar: LunarSolar.Solar,
-    birth: '',
-    oldUserId: [],
-  });
+  const [userInfo, setUserInfo] = useState<UserInfoT>(userInfoInit);
   const [currentPassword, setcurrentPassword] = useState('');
   const [formatState, setformatState] = useState('');
   const [mismatchState, setmismatchState] = useState('');
@@ -33,14 +27,7 @@ function Password() {
     if (location.state && typeof location.state === 'object') {
       setUserInfo(location.state as UserInfoT);
     } else {
-      setUserInfo({
-        userId: '',
-        userName: '',
-        password: '',
-        lunarSloar: LunarSolar.Solar,
-        birth: '',
-        oldUserId: [],
-      });
+      setUserInfo(userInfoInit);
     }
   }, [location.state]);
 

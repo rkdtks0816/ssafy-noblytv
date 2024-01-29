@@ -7,7 +7,8 @@ import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import StatusMsg from '../../components/StatusMsg/StatusMsg';
-import { UserInfoT, LunarSolar } from './SignUpType';
+import { UserInfoT } from './SignUpType';
+import userInfoInit from './SignUpConstants';
 
 function NameId() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
@@ -15,28 +16,14 @@ function NameId() {
   const location = useLocation();
 
   // userInfo 상태를 관리하고 초기값을 설정합니다. 여기서 User 타입을 사용합니다.
-  const [userInfo, setUserInfo] = useState<UserInfoT>({
-    userId: '',
-    userName: '',
-    password: '',
-    lunarSloar: LunarSolar.Solar,
-    birth: '',
-    oldUserId: [],
-  });
+  const [userInfo, setUserInfo] = useState<UserInfoT>(userInfoInit);
 
   // location.state가 유효한 객체일 경우 userInfo 상태를 업데이트하고, 그렇지 않으면 초기화
   useEffect(() => {
     if (location.state && typeof location.state === 'object') {
       setUserInfo(location.state as UserInfoT);
     } else {
-      setUserInfo({
-        userId: '',
-        userName: '',
-        password: '',
-        lunarSloar: LunarSolar.Solar,
-        birth: '',
-        oldUserId: [],
-      });
+      setUserInfo(userInfoInit);
     }
   }, [location.state]);
 

@@ -8,33 +8,20 @@ import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import StatusMsg from '../../components/StatusMsg/StatusMsg';
 import AddSeniorS from './SeniorConnectStyle';
-import { UserInfoT, LunarSolar } from '../SignUp/SignUpType';
+import { UserInfoT } from '../sign_up/SignUpType';
+import userInfoInit from '../sign_up/SignUpConstants';
 
 function SeniorConnect() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [userInfo, setUserInfo] = useState<UserInfoT>({
-    userId: '',
-    userName: '',
-    password: '',
-    lunarSloar: LunarSolar.Solar,
-    birth: '',
-    oldUserId: [],
-  });
+  const [userInfo, setUserInfo] = useState<UserInfoT>(userInfoInit);
 
   useEffect(() => {
     if (location.state && typeof location.state === 'object') {
       setUserInfo(location.state as UserInfoT);
     } else {
-      setUserInfo({
-        userId: '',
-        userName: '',
-        password: '',
-        lunarSloar: LunarSolar.Solar,
-        birth: '',
-        oldUserId: [],
-      });
+      setUserInfo(userInfoInit);
     }
   }, [location.state]);
 
@@ -46,11 +33,11 @@ function SeniorConnect() {
   };
 
   const handleBackBtn = () => {
-    navigate('/sign-up/birthday');
+    navigate('/community');
   };
 
   const handleSubmit = () => {
-    navigate('/cummunity');
+    navigate('/community');
   };
 
   return (

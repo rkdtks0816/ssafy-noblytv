@@ -22,13 +22,13 @@
       var mqttPort = 9001; // Change to your MQTT broker WebSocket port
       var mqttTopic = "topic/id3/user"; // Change to your topic
 
-      document.getElementById("connect").addEventListener("click", function () {
-        mqttClient = new Paho.MQTT.Client(
-          mqttBroker,
-          mqttPort,
-          "topic/id1"
-        );
 
+      // btn : connect
+      document.getElementById("connect").addEventListener("click", function () {
+        // Create a client instance
+        mqttClient = new Paho.MQTT.Client(mqttBroker, mqttPort, mqttTopic);
+
+        // set callback handlers
         mqttClient.onConnectionLost = function (responseObject) {
           console.log("Connection lost: " + responseObject.errorMessage);
           connected = false;
@@ -39,10 +39,11 @@
           console.log("Message Arrived: " + message.payloadString);
         };
 
+        // called when the client connects
         mqttClient.connect({
           onSuccess: function () {
             console.log("Connected to " + mqttBroker + ":" + mqttPort);
-            mqttClient.subscribe("topic/id1");
+            mqttClient.subscribe("topic/#");
             connected = true;
             updateUI();
           },
@@ -52,6 +53,7 @@
         });
       });
 
+      // btn : disconnect
       document
         .getElementById("disconnect")
         .addEventListener("click", function () {
@@ -63,6 +65,7 @@
           }
         });
 
+      // btn : send message
       document
         .getElementById("sendMessage")
         .addEventListener("click", function () {

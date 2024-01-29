@@ -34,7 +34,7 @@ public class OldUserJoinController {
     }
 
     @GetMapping("/{oldUserId}")
-    public ResponseEntity<Optional<OldUserInfo>> getUserInfo(@PathVariable String oldUserId) {
+    public ResponseEntity<Optional<OldUserInfo>> getUserInfo(@PathVariable("oldUserId") String oldUserId) {
         Optional<OldUserInfo> oldUserInfo = oldUserJoinService.getOldUserInfo(oldUserId);
         if (oldUserId != null) {
             return ResponseEntity.ok(oldUserInfo);

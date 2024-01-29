@@ -35,6 +35,7 @@ public class DiaryService {
 
         Diary newDiary = new Diary();
         newDiary.setText(diaryDto.getText());
+        newDiary.setSummary(diaryDto.getSummary());
         newDiary.setOldUserInfo(oldUser);
 
         return diaryRepository.save(newDiary);

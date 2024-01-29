@@ -26,4 +26,3 @@ function ChildModal() {
 }
 
 export default ChildModal;
-

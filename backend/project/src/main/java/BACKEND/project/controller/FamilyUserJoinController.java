@@ -9,6 +9,7 @@ import BACKEND.project.service.FamilyLoginService;
 import BACKEND.project.service.FamilyUserJoinService;
 import BACKEND.project.util.JwtToken;
 import ch.qos.logback.classic.Logger;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -64,6 +65,13 @@ public class FamilyUserJoinController {
         log.info("request username = {}, password = {}", userId, password);
         log.info("jwtToken accessToken = {}, refreshToken = {}", jwtToken.getAccessToken(), jwtToken.getRefreshToken());
         return jwtToken;
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@RequestHeader("Authorization") String token) {
+        String jwtToken = token.split(" ")[1];
+        familyLoginService.logout(jwtToken);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{familyUserId}")

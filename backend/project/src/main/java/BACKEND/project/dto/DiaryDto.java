@@ -13,4 +13,7 @@ public class DiaryDto {
 
     @NotBlank()
     private String text;
+
+    @NotBlank()
+    private String summary;
 }

@@ -10,7 +10,11 @@ module.exports = {
     'prettier',
   ],
   parserOptions: {
+<<<<<<< HEAD
     project: './frontend/tva/tsconfig.eslint.json',
+=======
+    project: './tva/tsconfig.eslint.json',
+>>>>>>> e7ff5c087cc8f849098937ce08b970c200e7fcfd
     ecmaVersion: 11,
     sourceType: 'module',
   },

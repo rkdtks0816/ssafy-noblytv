@@ -12,9 +12,24 @@ client = OpenAI(
     api_key = os.getenv('OPENAI_API_KEY')
 )
 
+db = pymysql.connect(host = 'i10c103.p.ssafy.io',
+                     user = 'root',
+                     passwd = '1234',
+                     db = 'project',
+                     charset = 'utf8')
+cur = db.cursor(pymysql.cursors.DictCursor)
+
 old_user_id = "1"
 
-msg = [{"role": "assistant", "content": "assistant는 할아버지의 7살 손주이다. 할아버지가 일기를 쓰면 그 일기 내용으로 할아버지에게 짧은 질문을 하나만 하고, 자연스럽게 짧은 대화를 이어간다. 이제 user가 일기를 쓸 것이다."}]
+cur.execute("SELECT gender FROM old_user_info where id = (%s);", old_user_id)
+gender = "할머니"
+for gen in cur:
+    print(gen)
+    if gen.get("gender") == "MALE":
+        gender = "할아버지"
+    
+
+msg = [{"role": "assistant", "content": f"assistant는 {gender}의 7살 손주이다. {gender}가 일기를 쓰면 그 일기 내용으로 {gender}에게 짧은 질문을 하나만 하고, 자연스럽게 짧은 대화를 이어간다. 이제 user가 일기를 쓸 것이다."}]
 
 def chat(text):
     user_turn = {"role": "user", "content": text}
@@ -100,12 +115,7 @@ time = datetime.datetime.now()
 query = "insert into `diary` (date, text, summary, old_user_id) values (%s, %s, %s, %s)"
 value = (time, diary, summarizedDiary, old_user_id)
 
-db = pymysql.connect(host = 'i10c103.p.ssafy.io',
-                     user = 'root',
-                     passwd = '1234',
-                     db = 'project',
-                     charset = 'utf8')
-cur = db.cursor(pymysql.cursors.DictCursor)
+
 
 cur.execute(query, value)
 db.commit()

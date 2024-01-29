@@ -1,13 +1,11 @@
 package BACKEND.project.service;
 
-import BACKEND.project.domain.FamilyRelation;
 import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.domain.TvCode;
 import BACKEND.project.dto.FamilyRelationDto;
 import BACKEND.project.dto.FamilyUserInfoDto;
 import BACKEND.project.dto.OldUserInfoDto;
 import BACKEND.project.exception.InvalidCredentialsException;
-import BACKEND.project.repository.FamilyRelationRepository;
 import BACKEND.project.repository.OldUserInfoRepository;
 import BACKEND.project.repository.TvCodeRepository;
 import BACKEND.project.util.JwtToken;

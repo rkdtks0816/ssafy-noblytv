@@ -12,7 +12,7 @@ client = OpenAI(
     api_key = os.getenv('OPENAI_API_KEY')
 )
 
-old_user_id = "testID"
+old_user_id = "1"
 
 msg = [{"role": "assistant", "content": "assistant는 할아버지의 7살 손주이다. 할아버지가 일기를 쓰면 그 일기 내용으로 할아버지에게 짧은 질문을 하나만 하고, 자연스럽게 짧은 대화를 이어간다. 이제 user가 일기를 쓸 것이다."}]
 
@@ -50,7 +50,7 @@ print("Running")
 # for i in range(p.get_device_count()):
 #     print(p.get_device_info_by_index(i))
 
-with sr.Microphone(12) as source:
+with sr.Microphone(11) as source:
     r.adjust_for_ambient_noise(source, duration=1)  # Adjust for ambient
     print("Say something!")
     audio=r.listen(source)
@@ -72,7 +72,7 @@ print(res)
 speak(res)
 
 while True:
-    with sr.Microphone(12) as source:
+    with sr.Microphone(11) as source:
         r.adjust_for_ambient_noise(source, duration=1)  # Adjust for ambient
         print("Say something!")
         audio=r.listen(source, 10, 5)
@@ -88,7 +88,6 @@ while True:
         speak("대화를 종료합니다.")
         break
 
-diary = "추운 날씨에 창밖의 풍경은 하얗게 덮여 있었다. 나는 따뜻한 차 한 잔과 함께 책을 펴 보았다. 오랜 세월을 지나도 늘 그리워하는 향기와 추억들이 마음을 따스하게 감싸고 있었다. 밤이 오면 별들이 나를 감싸듯한 느낌이 들었다. 혼자 사는 시간, 이 작은 공간이 나에게는 소중한 안식처가 되고 있다."
 summarizedDiary = summarize(diary)
 
 print(f"diary: {diary}")
@@ -98,15 +97,14 @@ print()
 
 time = datetime.datetime.now()
 
-query = "insert into diary(date, text, summarizedtext, old_user_id) values (%s, %s, %s, %s)"
+query = "insert into `diary` (date, text, summary, old_user_id) values (%s, %s, %s, %s)"
 value = (time, diary, summarizedDiary, old_user_id)
 
-db = pymysql.connect(host = '172.26.7.27',
+db = pymysql.connect(host = 'i10c103.p.ssafy.io',
                      user = 'root',
                      passwd = '1234',
                      db = 'project',
-                     charset = 'utf8',
-                     ssl_key = r"./I10C103T.pem")
+                     charset = 'utf8')
 cur = db.cursor(pymysql.cursors.DictCursor)
 
 cur.execute(query, value)

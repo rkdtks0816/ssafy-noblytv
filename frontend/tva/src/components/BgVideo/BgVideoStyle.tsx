@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const BgVideoS = styled.video`
+const BgVideoStyle = styled.video`
   position: fixed;
   top: 0px;
   left: 0px;
@@ -10,4 +10,6 @@ const BgVideoS = styled.video`
   z-index: -1;
 `;
 
-export default BgVideoS;
+export default BgVideoStyle;
+
+

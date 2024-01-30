@@ -43,6 +43,13 @@ public class FamilyUserJoinController {
         return ResponseEntity.created(location).body(registeredFamilyUser);
     }
 
+    // ID 중복 확인
+    @GetMapping("/duplication/{familyUserId}")
+    public ResponseEntity<?> checkUserIdDuplication(@PathVariable("familyUserId") String familyUserId) {
+        boolean isDuplicated = familyUserJoinService.isUserIdDuplicated(familyUserId);
+        return ResponseEntity.ok().body(isDuplicated);
+    }
+
     // 가족 회원 연관 노인 ID 수정
     @PutMapping("/{familyUserId}/oldUsers")
     public ResponseEntity<FamilyUserRegistrationDto> updateOldUsersOfFamilyUser(@PathVariable("familyUserId") String familyUserId, @RequestBody List<String> oldUserIds) {

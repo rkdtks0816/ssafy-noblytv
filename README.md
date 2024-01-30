@@ -11,7 +11,7 @@
 | :white_check_mark: Responsive Web | :black_square_button: Blockchain      | :black_square_button: C/C++      | :black_square_button: Angular        |
 | :black_square_button: Android App | :white_check_mark: IoT                | :black_square_button: C#         | :black_square_button: Node.js        |
 | :black_square_button: iOS App     | :black_square_button: AR/VR/Metaverse | :white_check_mark: ​Python       | :black_square_button: Flask/Django   |
-| :black_square_button: Desktop App | :black_square_button: Game            | :black_square_button: Java       | :white_check_mark: Spring/Springboot |
+| :black_square_button: Desktop App | :black_square_button: Game            | :white_check_mark: Java       | :white_check_mark: Spring/Springboot |
 |                                   |                                       | :black_square_button: Kotlin     |                                      |
 
 <!-- 필수 항목 -->

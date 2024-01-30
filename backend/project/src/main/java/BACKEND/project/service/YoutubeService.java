@@ -1,8 +1,7 @@
 package BACKEND.project.service;
 
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
@@ -21,7 +20,7 @@ public class YoutubeService {
 
     public String searchVideo(String query) throws IOException {
         // JSON 데이터를 처리하기 위한 JsonFactory 객체 생성
-        JsonFactory jsonFactory = new JacksonFactory();
+        JsonFactory jsonFactory = new GsonFactory(); // JacksonFactory deprecated
 
         // YouTube 객체를 빌드하여 API에 접근할 수 있는 YouTube 클라이언트 생성
         YouTube youtube = new YouTube.Builder(

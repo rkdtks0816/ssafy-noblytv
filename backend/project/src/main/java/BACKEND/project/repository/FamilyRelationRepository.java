@@ -6,6 +6,8 @@ import BACKEND.project.domain.OldUserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface FamilyRelationRepository extends JpaRepository<FamilyRelation, Long> {
     boolean existsByOldUserInfoAndFamilyUserInfo(OldUserInfo oldUser, FamilyUserInfo familyUser);

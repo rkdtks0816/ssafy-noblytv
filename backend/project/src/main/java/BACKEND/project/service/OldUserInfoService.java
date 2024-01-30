@@ -55,6 +55,6 @@ public class OldUserInfoService {
 
         oldUserInfoRepository.save(oldUserInfo);
 
-        return new OldUserInfoDto(oldUserInfo.getUsername(), oldUserInfo.getBirth(), oldUserInfo.getLunarSolar(), oldUserInfo.getGender(), oldUserInfo.getMedications());
+        return new OldUserInfoDto(oldUserInfo.getUserId(), oldUserInfo.getUsername(), oldUserInfo.getBirth(), oldUserInfo.getLunarSolar(), oldUserInfo.getGender(), oldUserInfo.getMedications());
     }
 }

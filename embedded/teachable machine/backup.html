@@ -10,10 +10,6 @@
   crossorigin="anonymous"
   referrerpolicy="no-referrer"
 ></script>
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"
-  type="text/javascript"
-></script>
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
 
@@ -23,72 +19,17 @@
 
   // the link to your model provided by Teachable Machine export panel
   const URL = "https://teachablemachine.withgoogle.com/models/-HYOFRSf4/";
-  const backend = "http://i10c103.p.ssafy.io:9001";
+  const backend = "http://i10c103.p.ssafy.io:9000";
   var sendData = {
-    class: "default",
-    probability: 1.0,
+    "class" : "default",
+    "probability" : 1.0,
   };
 
   let model, webcam, ctx, labelContainer, maxPredictions;
 
-  var mqttClient;
-  var connected = false;
-
-  // Configuration
-  var mqttBroker = "i10c103.p.ssafy.io"; // Change to your MQTT broker URL or IP
-  var mqttPort = 9001; // Change to your MQTT broker WebSocket port
-  var mqttTopic = "topic/id3/user"; // Change to your topic
-
-  function connect() {
-    // Create a client instance
-    mqttClient = new Paho.MQTT.Client(mqttBroker, mqttPort, mqttTopic);
-
-    // set callback handlers
-    mqttClient.onConnectionLost = function (responseObject) {
-      console.log("Connection lost: " + responseObject.errorMessage);
-      connected = false;
-    };
-
-    mqttClient.onMessageArrived = function (message) {
-      console.log("Message Arrived: " + message.payloadString);
-    };
-
-    // called when the client connects
-    mqttClient.connect({
-      onSuccess: function () {
-        console.log("Connected to " + mqttBroker + ":" + mqttPort);
-        mqttClient.subscribe("topic/#");
-        connected = true;
-      },
-      onFailure: function (message) {
-        console.log("Connection failed: " + message.errorMessage);
-      },
-    });
-  }
-
-  function disconnect() {
-    if (mqttClient) {
-      mqttClient.disconnect();
-      console.log("Disconnected");
-      connected = false;
-    }
-  }
-
-  function sendMessage() {
-    if (mqttClient && connected) {
-      var message = new Paho.MQTT.Message(sendData.class + " has probability of " + sendData.probability + ".");
-      message.destinationName = "topic/id3";
-      mqttClient.send(message);
-      console.log("Message sent: " + message.payloadString);
-    } else {
-      console.log("Cannot send message. Not connected.");
-    }
-  }
-
   async function init() {
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
-    connect();
 
     // load the model and metadata
     // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
@@ -119,10 +60,7 @@
   async function loop(timestamp) {
     webcam.update(); // update the webcam frame
     await predict();
-    // await sendPostRequest(sendData);
-    sendMessage();
-
-
+    await sendPostRequest(sendData);
     window.requestAnimationFrame(loop);
   }
 
@@ -156,8 +94,8 @@
 
     // data to send
     sendData = {
-      class: arr[0].class,
-      probability: arr[0].probability,
+      "class" : arr[0].class,
+      "probability" : arr[0].probability,
     };
 
     drawPose(pose);

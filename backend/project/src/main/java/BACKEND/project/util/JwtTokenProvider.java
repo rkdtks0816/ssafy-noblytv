@@ -62,6 +62,31 @@ public class JwtTokenProvider {
                 .build();
     }
 
+    public JwtToken createToken(String userId) {
+        long now = (new Date()).getTime();
+
+        // Access Token 생성
+        Date accessTokenExpiresIn = new Date(now + 86400000);
+        String accessToken = Jwts.builder()
+                .setSubject(userId)
+                .setExpiration(accessTokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+
+        // Refresh Token 생성
+        String refreshToken = Jwts.builder()
+                .setSubject(userId)
+                .setExpiration(new Date(now + 2592000000L))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+
+        return JwtToken.builder()
+                .grantType("Bearer")
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
     // Jwt Token을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
     public Authentication getAuthentication(String accessToken) {
         // Jwt Token 복호화

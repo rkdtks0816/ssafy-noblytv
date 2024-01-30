@@ -15,6 +15,7 @@ import SeniorNameGender from './pages/senior_sign_up/SeniorNameGender';
 import SeniorBirth from './pages/senior_sign_up/SeniorBirth';
 import SeniorUniqueCode from './pages/senior_sign_up/SeniorUniqueCode';
 import Community from './pages/community/community';
+import Datetime from './pages/datetime/Datetime';
 // App 컴포넌트 내에서 라우터 설정
 function App() {
   return (
@@ -45,6 +46,8 @@ function App() {
         <Route path="/select-senior" element={<SelectSenior />} />
         {/* Community */}
         <Route path="/community" element={<Community />} />
+        {/* Datetime */}
+        <Route path="/datetime" element={<Datetime />} />
       </Routes>
     </Router>
   );

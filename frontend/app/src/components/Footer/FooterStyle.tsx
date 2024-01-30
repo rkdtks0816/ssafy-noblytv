@@ -28,6 +28,6 @@ export const FooterIconS = styled(Link)<{ $footerIconType: string }>`
   text-decoration: none;
 
   &:hover {
-    background: url(${props => `/src/assets/icon_${props.$footerIconType}_hover.png`});
+    background: url(${props => `/src/assets/hover_icon_${props.$footerIconType}.png`});
   }
 `;

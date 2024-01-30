@@ -17,7 +17,7 @@ const SeniorNameS = styled(Link)`
   height: 40px;
   margin: 15px 10px 15px 15px;
 
-  font-weight: 400;
+  font-weight: 900;
   font-size: 40px;
   line-height: 35px;
 
@@ -30,13 +30,13 @@ const SeniorTitleS = styled.div`
   height: 25px;
   margin: 30px 0 15px 0;
 
-  font-weight: 400;
+  font-weight: 900;
   font-size: 25px;
   line-height: 20px;
 
   color: #888888;
 
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
 `;
 
 const NoticeIconS = styled(Link)`

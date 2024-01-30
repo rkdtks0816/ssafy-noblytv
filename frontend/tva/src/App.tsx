@@ -1,6 +1,8 @@
-<<<<<<< HEAD
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SignInTV from './pages/SignInTV/SignInTV';
 import Overlay from './pages/Overlay/Overlay';
+import GymnasticsStart from './pages/gymnastics/GymnasticsStart';
+import Gymnastics from './pages/gymnastics/Gymnastics';
 // App 컴포넌트 내에서 라우터 설정
 function App() {
   return (
@@ -14,7 +16,7 @@ function App() {
 }
 
 export default App;
-=======
+=========
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import TvLayout from './pages/TvLayout';
 import InstallPage from './pages/Install/InstallPage';
@@ -31,4 +33,4 @@ function App() {
 }
 
 export default App;
->>>>>>> e7ff5c087cc8f849098937ce08b970c200e7fcfd
+>>>>>>>>> Temporary merge branch 2

@@ -7,14 +7,17 @@ import {
 } from './ModalStyle';
 import ModalProps from './ModalType';
 
-function Modal({ modalContents }: ModalProps) {
+function Modal({ modalContents, onClictBtn }: ModalProps) {
+  const handleBtnClick = () => {
+    onClictBtn('');
+  };
   return (
     <div>
-      <ModalBgS>
+      <ModalBgS onClick={handleBtnClick}>
         <ModalBoxS>
           <ModalTitleS>경고</ModalTitleS>
           <ModalContentsS>{modalContents}</ModalContentsS>
-          <ModalButtonS> 확인</ModalButtonS>
+          <ModalButtonS onClick={handleBtnClick}> 확인</ModalButtonS>
         </ModalBoxS>
       </ModalBgS>
     </div>

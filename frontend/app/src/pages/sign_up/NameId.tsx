@@ -40,7 +40,6 @@ function NameId() {
         const response = await axios.get(
           `http://3.38.153.237:8080/users/family/duplication/${debouncedUserId}`,
         );
-        // db와 통신 되면 좀 더 수정 필요
         console.log(response.data);
         setMessage(
           response.data === true

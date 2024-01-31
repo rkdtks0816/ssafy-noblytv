@@ -4,12 +4,13 @@ import CardHeader from './CardHeader';
 
 function Card() {
   return (
-    <div style={{ margin: '22%' }}>
+    <>
+      <div style={{ marginTop: '22%' }} />
       <Container>
         <CardHeader />
         <CardBody />
       </Container>
-    </div>
+    </>
   );
 }
 

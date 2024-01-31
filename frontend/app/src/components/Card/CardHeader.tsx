@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import SmallBtnStyle from '../SmallBtn/SmallBtnStyle';
 
 function CardHeader() {
@@ -7,7 +8,7 @@ function CardHeader() {
 
   useEffect(() => {
     axios
-      .get('http://3.38.153.237:8080/')
+      .get('http://3.38.153.237:8080/users/family/flos9537')
       .then(response => {
         setUsername(response.data); // 타입 지정 필요
       })
@@ -16,11 +17,18 @@ function CardHeader() {
       });
   }, []); // 빈 의존성 배열을 사용하여 마운트 시에만 요청.
 
+  const HeaderContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; // 상단에 정렬
+    width: 90%;
+  `;
+
   return (
-    <div>
-      <span>{username} 유저네임 </span>
+    <HeaderContainer>
+      <div>{username} 유저네임 </div>
       <SmallBtnStyle>삭제</SmallBtnStyle>
-    </div>
+    </HeaderContainer>
   );
 }
 

@@ -86,8 +86,8 @@ function NameId() {
           <InputBoxStyle
             placeholder="이름을 입력하세요."
             style={{ marginTop: '70px' }}
-            onChange={e => handleInputChange(e, 'userName')}
-            value={userInfo.userName}
+            onChange={e => handleInputChange(e, 'username')}
+            value={userInfo.username}
           />
           <InputBoxStyle
             placeholder="아이디를 입력하세요."

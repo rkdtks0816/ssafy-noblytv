@@ -2,11 +2,11 @@ import { UserInfoT, LunarSolar } from './SignUpType';
 
 const userInfoInit: UserInfoT = {
   userId: '',
-  userName: '',
+  username: '',
   password: '',
-  lunarSloar: LunarSolar.Solar,
+  lunarSolar: LunarSolar.SOLAR,
   birth: '',
-  oldUserId: [],
+  oldUserIds: [],
 };
 
 export default userInfoInit;

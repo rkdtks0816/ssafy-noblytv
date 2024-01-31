@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import BackBtnStyle from '../../components/BackBtn/BackBtnStyle';
 import BgImgStyle from '../../components/BgImg/BgImgStyle';
 import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
@@ -7,22 +8,35 @@ import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import ToggleBtn from '../../components/ToggleBtn/ToggleBtn';
-import { UserInfoT, LunarSolar } from './SignUpType';
-import userInfoInit from './SignUpConstants';
+import { LunarSolar, UserInfoT } from './SignUpType';
 
 function Birthday() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [userInfo, setUserInfo] = useState<UserInfoT>(userInfoInit);
+  const [userInfo, setUserInfo] = useState<UserInfoT>({
+    userId: '',
+    userName: '',
+    password: '',
+    lunarSloar: LunarSolar.Solar,
+    birth: '',
+    oldUserId: [],
+  });
 
   // location.state가 유효한 객체일 경우 userInfo 상태를 업데이트하고, 그렇지 않으면 초기화
   useEffect(() => {
     if (location.state && typeof location.state === 'object') {
       setUserInfo(location.state as UserInfoT);
     } else {
-      setUserInfo(userInfoInit);
+      setUserInfo({
+        userId: '',
+        userName: '',
+        password: '',
+        lunarSloar: LunarSolar.Solar,
+        birth: '',
+        oldUserId: [],
+      });
     }
   }, [location.state]);
 
@@ -50,8 +64,19 @@ function Birthday() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmitAsync = async () => {
+    const response = await axios.post(
+      'http://3.38.153.237:8080/users/family/signup',
+      userInfo,
+    );
+    console.log(response.data);
     navigate('/senior-connect');
+  };
+
+  const handleSubmit = () => {
+    handleSubmitAsync().catch(error => {
+      console.error('회원가입 실패:', error);
+    });
   };
 
   return (
@@ -77,7 +102,7 @@ function Birthday() {
           />
         </FlexBoxStyle>
         <LargeBtnStyle onClick={handleSubmit} style={{ marginBottom: '10vh' }}>
-          다음
+          완료
         </LargeBtnStyle>
       </BgImgStyle>
     </div>

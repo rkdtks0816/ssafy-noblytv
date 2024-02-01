@@ -46,9 +46,4 @@ public class FamilyUserInfo {
     @OneToMany(mappedBy = "familyUserInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<FamilyRelation> familyRelations = new ArrayList<>();
-
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<QuizResult> quizResults = new ArrayList<>();
 }

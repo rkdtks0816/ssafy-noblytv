@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 import ChildCenter from '../../components/ChildCenter/ChildCenter';
 
 function QuizSocketio() {
   const [quizContents, setQuizContents] = useState<string>('');
   const socket = io('http://i10c103.p.ssafy.io:9000');
+  const navigate = useNavigate();
 
   useEffect(() => {
     // 소켓 연결
@@ -24,6 +26,12 @@ function QuizSocketio() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (quizContents === '다음에 같이 퀴즈 놀이 해요.') {
+      navigate('/');
+    }
+  }, [quizContents, navigate]);
 
   return <ChildCenter ChildCenterContents={quizContents} />;
 }

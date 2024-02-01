@@ -21,7 +21,7 @@ function Overlay() {
       />
       <ChildModal
         title="할아버지!"
-        content="약 아직 안드셨죠?!?!?!?"
+        content="약 아직 안드셨죠?!?!?!?;ㅑ"
         isActive={activeModal === 2}
         onToggle={() => openModal(2)}
       />

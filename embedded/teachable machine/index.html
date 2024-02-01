@@ -23,21 +23,25 @@
 
   // the link to your model provided by Teachable Machine export panel
   const URL = "https://teachablemachine.withgoogle.com/models/-HYOFRSf4/";
-  const backend = "http://i10c103.p.ssafy.io:9001";
+
+  let model, webcam, ctx, labelContainer, maxPredictions;
+  var mqttClient;
+
+  /*--- Configuration ---*/
+
+  var mqttBroker = "i10c103.p.ssafy.io"; // Change to your MQTT broker URL or IP
+  var mqttPort = 9001; // Change to your MQTT broker WebSocket port
+  var mqttTopic = "topic/id3/user"; // Change to your topic
+  var connected = false;
+
   var sendData = {
     class: "default",
     probability: 1.0,
   };
 
-  let model, webcam, ctx, labelContainer, maxPredictions;
 
-  var mqttClient;
-  var connected = false;
 
-  // Configuration
-  var mqttBroker = "i10c103.p.ssafy.io"; // Change to your MQTT broker URL or IP
-  var mqttPort = 9001; // Change to your MQTT broker WebSocket port
-  var mqttTopic = "topic/id3/user"; // Change to your topic
+  /*--- MQTT Callbacks ---*/
 
   function connect() {
     // Create a client instance
@@ -62,6 +66,7 @@
       },
       onFailure: function (message) {
         console.log("Connection failed: " + message.errorMessage);
+        connect();
       },
     });
   }
@@ -76,7 +81,9 @@
 
   function sendMessage() {
     if (mqttClient && connected) {
-      var message = new Paho.MQTT.Message(sendData.class + " has probability of " + sendData.probability + ".");
+      var message = new Paho.MQTT.Message(
+        sendData.class + " has probability of " + sendData.probability + "."
+      );
       message.destinationName = "topic/id3";
       mqttClient.send(message);
       console.log("Message sent: " + message.payloadString);
@@ -84,6 +91,36 @@
       console.log("Cannot send message. Not connected.");
     }
   }
+
+
+
+  /*--- REST API ---*/
+  async function getData() {
+    try {
+      const response = await axios.get(`${url}/hi`);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // async/await를 사용하여 POST 요청 보내는 함수 정의
+  async function sendPostRequest(data) {
+    try {
+      // Axios를 사용하여 POST 요청 보내기
+      const response = await axios.post(backend, data);
+
+      // 백엔드 응답 출력
+      console.log("백엔드 응답:", response.data);
+    } catch (error) {
+      // 에러 발생 시 출력
+      console.error("에러 발생:", error);
+    }
+  }
+
+
+
+  /*--- Teachable Machine ---*/
 
   async function init() {
     const modelURL = URL + "model.json";
@@ -119,10 +156,7 @@
   async function loop(timestamp) {
     webcam.update(); // update the webcam frame
     await predict();
-    // await sendPostRequest(sendData);
     sendMessage();
-
-
     window.requestAnimationFrame(loop);
   }
 
@@ -140,7 +174,6 @@
         class: prediction[i].className,
         probability: prediction[i].probability.toFixed(2),
       };
-
       arr.push(classPrediction);
     }
 
@@ -151,10 +184,10 @@
       else return 1;
     });
 
-    // Show class name of element has the biggest probability
+    // Show class name of element has the highest probability
     labelContainer.childNodes[0].innerHTML = arr[0].class;
 
-    // data to send
+    // Set data to send
     sendData = {
       class: arr[0].class,
       probability: arr[0].probability,
@@ -175,28 +208,6 @@
     }
   }
 
-  async function getData() {
-    try {
-      const response = await axios.get(`${url}/hi`);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  // async/await를 사용하여 POST 요청 보내는 함수 정의
-  async function sendPostRequest(data) {
-    try {
-      // Axios를 사용하여 POST 요청 보내기
-      const response = await axios.post(backend, data);
-
-      // 백엔드 응답 출력
-      console.log("백엔드 응답:", response.data);
-    } catch (error) {
-      // 에러 발생 시 출력
-      console.error("에러 발생:", error);
-    }
-  }
-
+  
   init();
 </script>

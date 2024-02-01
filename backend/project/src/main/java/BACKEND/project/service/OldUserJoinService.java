@@ -61,4 +61,8 @@ public class OldUserJoinService {
     public Optional<OldUserInfo> getOldUserInfo(String userId) {
         return oldUserRepository.findByUserId(userId);
     }
+
+    public OldUserInfo findByUsername(String username) {
+        return oldUserRepository.findByUsername(username);
+    }
 }

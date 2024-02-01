@@ -158,4 +158,8 @@ public class FamilyUserJoinService {
 
         return dto;
     }
+
+    public FamilyUserInfo findByUsername(String username) {
+        return familyUserRepository.findByUsername(username);
+    }
 }

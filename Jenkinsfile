@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        PATH = "$PATH:/usr/local/bin"
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -12,16 +8,34 @@ pipeline {
             }
         }
 
-        stage('Deploy With Docker Compose') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'cd backend/project && docker-compose up --build -d'
+                    sh '''
+                        cd ./backend/project
+                        docker build -t easyho1129/c103_back .
+                    '''
                 }
             }
         }
-    }
 
-    options {
-        skipDefaultCheckout(true)
+        stage('Delete Previous Docker Container') {
+            steps {
+                script {
+                    sh '''
+                        docker stop springboot
+                        docker rm springboot
+                    '''
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    sh "docker run -d -p 3000:3000 --network=project_default --name springboot easyho1129/c103_back"
+                }
+            }
+        }
     }
 }

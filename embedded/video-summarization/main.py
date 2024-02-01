@@ -1,14 +1,12 @@
 import torch
-from training.summary.datamodule import SummaryDataset
+from v2021 import SummaryModel
 from transformers import ViTImageProcessor
 from tqdm import tqdm
-import matplotlib.pyplot as plt
 import cv2
-import seaborn as sns
 import numpy as np
 from moviepy.editor import VideoFileClip, concatenate_videoclips
-
-from v2021 import SummaryModel
+import os
+import datetime
 
 preprocessor = ViTImageProcessor.from_pretrained(
     "google/vit-base-patch16-224", size=224
@@ -16,7 +14,10 @@ preprocessor = ViTImageProcessor.from_pretrained(
 
 SAMPLE_EVERY_SEC = 2
 
-video_path = 'videos/test.mp4'
+time = str(datetime.datetime.now()).split()[0]
+
+video_path = f"videos/{time}.mp4"
+result_path = f"videos/{time}_summary.mp4"
 
 cap = cv2.VideoCapture(video_path)
 
@@ -94,4 +95,6 @@ for i, y_p in enumerate(y_pred):
 
 result = concatenate_videoclips(subclips)
 
-result.write_videofile("videos/result.mp4")
+result.write_videofile(result_path)
+
+os.system(f'scp -i "../I10C103T.pem" {result_path} ubuntu@i10c103.p.ssafy.io:~/videos/1234/')

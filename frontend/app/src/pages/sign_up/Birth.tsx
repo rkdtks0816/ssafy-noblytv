@@ -17,11 +17,11 @@ function Birthday() {
 
   const [userInfo, setUserInfo] = useState<UserInfoT>({
     userId: '',
-    userName: '',
+    username: '',
     password: '',
-    lunarSloar: LunarSolar.Solar,
+    lunarSolar: LunarSolar.SOLAR,
     birth: '',
-    oldUserId: [],
+    oldUserIds: [],
   });
 
   // location.state가 유효한 객체일 경우 userInfo 상태를 업데이트하고, 그렇지 않으면 초기화
@@ -31,11 +31,11 @@ function Birthday() {
     } else {
       setUserInfo({
         userId: '',
-        userName: '',
+        username: '',
         password: '',
-        lunarSloar: LunarSolar.Solar,
+        lunarSolar: LunarSolar.SOLAR,
         birth: '',
-        oldUserId: [],
+        oldUserIds: [],
       });
     }
   }, [location.state]);
@@ -48,9 +48,9 @@ function Birthday() {
   // LunarSolar.Lunar 또는 LunarSolar.Solar로 설정
   const handleToggle = (selected: string) => {
     if (selected === 'left') {
-      setUserInfo({ ...userInfo, lunarSloar: LunarSolar.Lunar });
+      setUserInfo({ ...userInfo, lunarSolar: LunarSolar.LUNAR });
     } else if (selected === 'right') {
-      setUserInfo({ ...userInfo, lunarSloar: LunarSolar.Solar });
+      setUserInfo({ ...userInfo, lunarSolar: LunarSolar.SOLAR });
     }
   };
 
@@ -68,6 +68,11 @@ function Birthday() {
     const response = await axios.post(
       'http://3.38.153.237:8080/users/family/signup',
       userInfo,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
     );
     console.log(response.data);
     navigate('/senior-connect');
@@ -76,6 +81,7 @@ function Birthday() {
   const handleSubmit = () => {
     handleSubmitAsync().catch(error => {
       console.error('회원가입 실패:', error);
+      // console.error('회원가입 실패:', error.response.config.data);
     });
   };
 
@@ -89,7 +95,7 @@ function Birthday() {
             optionLeft="음력"
             optionRight="양력"
             initType={
-              userInfo.lunarSloar === LunarSolar.Lunar ? 'left' : 'right'
+              userInfo.lunarSolar === LunarSolar.LUNAR ? 'left' : 'right'
             }
             onToggle={handleToggle}
           />

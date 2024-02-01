@@ -1,260 +1,289 @@
-<div>Teachable Machine Pose Model</div>
+<html>
+  <head>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+      integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"
+      type="text/javascript"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
 
-<button type="button" onclick="init()">Start</button>
-<div><canvas id="canvas"></canvas></div>
-<div id="label-container"></div>
+    <script type="text/javascript">
+      // More API functions here:
+      // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/pose
 
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
-  integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"
-></script>
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"
-  type="text/javascript"
-></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
+      // the link to your model provided by Teachable Machine export panel
+      const URL = "https://teachablemachine.withgoogle.com/models/4hpcyRW2r/";
 
-<script type="text/javascript">
-  // More API functions here:
-  // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/pose
+      let model, webcam, ctx, labelContainer, maxPredictions;
+      var mqttClient;
 
-  // the link to your model provided by Teachable Machine export panel
-  const URL = "https://teachablemachine.withgoogle.com/models/4hpcyRW2r/";
+      /*--- Configuration ---*/
+      const backend = "http://i10c103.p.ssafy.io:9000";
 
-  let model, webcam, ctx, labelContainer, maxPredictions;
-  var mqttClient;
+      var mqttBroker = "i10c103.p.ssafy.io"; // Change to your MQTT broker URL or IP
+      var mqttPort = 9001; // Change to your MQTT broker WebSocket port
+      var mqttTopic = "topic/id3/user"; // Change to your topic
+      var connected = false;
 
-  /*--- Configuration ---*/
-  const backend = "http://i10c103.p.ssafy.io:9000";
+      // 방송 스케쥴
+      const schedule = [
+        new Date("2024-01-31 01:30"),
+        new Date("2024-01-31 02:30"),
+        new Date("2024-01-31 04:30"),
+        new Date("2024-01-31 06:30"),
+        new Date("2024-01-31 09:00"),
+        new Date("2024-01-31 12:00"),
+        new Date("2024-01-31 13:30"),
+        new Date("2024-01-31 17:23"),
+      ];
 
-  var mqttBroker = "i10c103.p.ssafy.io"; // Change to your MQTT broker URL or IP
-  var mqttPort = 9001; // Change to your MQTT broker WebSocket port
-  var mqttTopic = "topic/id3/user"; // Change to your topic
-  var connected = false;
+      // 방송 스케쥴에서 5분씩 뺀 시간
+      const playTimes = schedule.map((date) => new Date(date - 1000 * 60 * 5));
+      const newDates = playTimes.map((playTime) => {
+        return `${playTime.getYear()}-${playTime.getMonth()}-${playTime.getDate()} ${playTime.getHours()}:${playTime.getMinutes()}`;
+      });
 
-  // 방송 스케쥴
-  const schedule = [
-    new Date("2024-01-31 01:30"),
-    new Date("2024-01-31 02:30"),
-    new Date("2024-01-31 04:30"),
-    new Date("2024-01-31 06:30"),
-    new Date("2024-01-31 09:00"),
-    new Date("2024-01-31 12:00"),
-    new Date("2024-01-31 13:30"),
-    new Date("2024-01-31 17:23"),
-  ];
+      var detections = [];
+      var started = new Date();
 
-  // 방송 스케쥴에서 5분씩 뺀 시간
-  const playTimes = schedule.map((date) => new Date(date - 1000 * 60 * 5));
-  const newDates = playTimes.map((playTime) => {
-    return `${playTime.getYear()}-${playTime.getMonth()}-${playTime.getDate()} ${playTime.getHours()}:${playTime.getMinutes()}`;
-  });
-  
-  var detections = [];
-  var started = new Date();
-
-  var sendData = {
-    class: "default",
-    probability: 1.0,
-  };
-
-  /*--- MQTT Callbacks ---*/
-
-  function connect() {
-    // Create a client instance
-    mqttClient = new Paho.MQTT.Client(mqttBroker, mqttPort, mqttTopic);
-
-    // set callback handlers
-    mqttClient.onConnectionLost = function (responseObject) {
-      console.log("Connection lost: " + responseObject.errorMessage);
-      connected = false;
-    };
-
-    mqttClient.onMessageArrived = function (message) {
-      console.log("Message Arrived: " + message.payloadString);
-    };
-
-    // called when the client connects
-    mqttClient.connect({
-      onSuccess: function () {
-        console.log("Connected to " + mqttBroker + ":" + mqttPort);
-        mqttClient.subscribe("topic/#");
-        connected = true;
-      },
-      onFailure: function (message) {
-        console.log("Connection failed: " + message.errorMessage);
-        connect();
-      },
-    });
-  }
-
-  function disconnect() {
-    if (mqttClient) {
-      mqttClient.disconnect();
-      console.log("Disconnected");
-      connected = false;
-    }
-  }
-
-  function sendMessage() {
-    if (mqttClient && connected) {
-      var message = new Paho.MQTT.Message(
-        sendData.class + " has probability of " + sendData.probability + "."
-      );
-      message.destinationName = "topic/id3";
-      mqttClient.send(message);
-      console.log("Message sent: " + message.payloadString);
-    } else {
-      console.log("Cannot send message. Not connected.");
-    }
-  }
-
-  /*--- REST API ---*/
-  async function getData() {
-    try {
-      const response = await axios.get(`${url}/hi`);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  // async/await를 사용하여 POST 요청 보내는 함수 정의
-  async function sendPostRequest(data) {
-    try {
-      // Axios를 사용하여 POST 요청 보내기
-      const response = await axios.post(backend, data);
-
-      // 백엔드 응답 출력
-      console.log("백엔드 응답:", response.data);
-    } catch (error) {
-      // 에러 발생 시 출력
-      console.error("에러 발생:", error);
-    }
-  }
-
-  /*--- Teachable Machine Start ---*/
-
-  async function init() {
-    const modelURL = URL + "model.json";
-    const metadataURL = URL + "metadata.json";
-    
-    // mqtt connect
-    //connect();
-
-    // load the model and metadata
-    // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-    // Note: the pose library adds a tmPose object to your window (window.tmPose)
-    model = await tmPose.load(modelURL, metadataURL);
-    maxPredictions = model.getTotalClasses();
-
-    // Convenience function to setup a webcam
-    const size = 200;
-    const flip = true; // whether to flip the webcam
-    webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
-    await webcam.setup(); // request access to the webcam
-    await webcam.play();
-    window.requestAnimationFrame(loop);
-
-    // append/get elements to the DOM
-    const canvas = document.getElementById("canvas");
-    canvas.width = size;
-    canvas.height = size;
-    ctx = canvas.getContext("2d");
-    labelContainer = document.getElementById("label-container");
-    for (let i = 0; i < maxPredictions; i++) {
-      // and class labels
-      labelContainer.appendChild(document.createElement("div"));
-    }
-  }
-
-  async function loop(timestamp) {
-    webcam.update(); // update the webcam frame
-    await predict();
-
-    const now = new Date();
-    const target = `${now.getYear()}-${now.getMonth()}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
-
-    // 현재 시간이 방송 시작 5분 전이고, TV 켜진 시간이 2시간 이상 경과
-    if (
-      newDates.includes(target) &&
-      (now.getTime() - started.getTime()) / 1000 >= 10
-    ) {
-      const nones = detections.reduce((cnt, element) => cnt + ("None" === element), cnt = 0);
-      const detecteds = detections.reduce((cnt, element) => cnt + ("Detected" === element), cnt = 0);
-      const detectability = detecteds / (nones + detecteds);
-
-      console.log(detectability);
-      
-      // 시청 시간이 90퍼센트 이상이면 FE에 송신
-      if(detectability >= 0.9){
-        await sendPostRequest("Hello, FrontEnd!");
-        // 초기화
-        started = now;
-        detections = [];
-        console.log(detections);
-      }
-    }
-    
-  
-    // console.log((now.getTime() - started.getTime()) / 1000 / 60 / 60 + "시간 경과");
-
-    window.requestAnimationFrame(loop);
-  }
-
-  async function predict() {
-    // Prediction #1: run input through posenet
-    // estimatePose can take in an image, video or canvas html element
-    const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
-    // Prediction 2: run input through teachable machine classification model
-    const prediction = await model.predict(posenetOutput);
-
-    const classifications = [];
-
-    for (let i = 0; i < maxPredictions; i++) {
-      const classPrediction = {
-        class: prediction[i].className,
-        probability: prediction[i].probability.toFixed(2),
+      var sendData = {
+        class: "default",
+        probability: 1.0,
       };
-      classifications.push(classPrediction);
-    }
 
-    // Sort classifications by probability
-    classifications.sort(function (a, b) {
-      if (a.probability > b.probability) return -1;
-      else if (a.probability === b.probability) return 0;
-      else return 1;
-    });
+      /*--- MQTT Callbacks ---*/
 
-    // Show class name of element has the highest probability
-    labelContainer.childNodes[0].innerHTML = classifications[0].class;
+      function connect() {
+        // Create a client instance
+        mqttClient = new Paho.MQTT.Client(mqttBroker, mqttPort, mqttTopic);
 
-    // Set data to send
-    sendData = {
-      class: classifications[0].class,
-      probability: classifications[0].probability,
-    };
+        // set callback handlers
+        mqttClient.onConnectionLost = function (responseObject) {
+          console.log("Connection lost: " + responseObject.errorMessage);
+          connected = false;
+        };
 
-    detection = classifications[0].class;
-    detections.push(detection);
+        mqttClient.onMessageArrived = function (message) {
+          console.log("Message Arrived: " + message.payloadString);
+        };
 
-    drawPose(pose);
-  }
-
-  function drawPose(pose) {
-    if (webcam.canvas) {
-      ctx.drawImage(webcam.canvas, 0, 0);
-      // draw the keypoints and skeleton
-      if (pose) {
-        const minPartConfidence = 0.5;
-        tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
-        tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
+        // called when the client connects
+        mqttClient.connect({
+          onSuccess: function () {
+            console.log("Connected to " + mqttBroker + ":" + mqttPort);
+            mqttClient.subscribe("topic/#");
+            connected = true;
+          },
+          onFailure: function (message) {
+            console.log("Connection failed: " + message.errorMessage);
+            connect();
+          },
+        });
       }
-    }
-  }
 
-  init();
-</script>
+      function disconnect() {
+        if (mqttClient) {
+          mqttClient.disconnect();
+          console.log("Disconnected");
+          connected = false;
+        }
+      }
+
+      function sendMessage() {
+        if (mqttClient && connected) {
+          var message = new Paho.MQTT.Message(
+            sendData.class + " has probability of " + sendData.probability + "."
+          );
+          message.destinationName = "topic/id3";
+          mqttClient.send(message);
+          console.log("Message sent: " + message.payloadString);
+        } else {
+          console.log("Cannot send message. Not connected.");
+        }
+      }
+
+      /*--- REST API ---*/
+      async function getData() {
+        try {
+          const response = await axios.get(`${url}/hi`);
+          console.log(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      // async/await를 사용하여 POST 요청 보내는 함수 정의
+      async function sendPostRequest(data) {
+        try {
+          // Axios를 사용하여 POST 요청 보내기
+          const response = await axios.post(backend, data);
+
+          // 백엔드 응답 출력
+          console.log("백엔드 응답:", response.data);
+        } catch (error) {
+          // 에러 발생 시 출력
+          console.error("에러 발생:", error);
+        }
+      }
+
+      /*--- Socket.io ---*/
+      var socket = io.connect();
+
+      socket.on("connect", function () {
+        console.log("server connected");
+      });
+
+      function btnClick(data) {
+        socket.emit("click", data);
+      }
+
+      socket.on("clickResponse", function (data) {
+        console.log(data);
+        var contents = document.getElementById("contents");
+        contents.innerText = data;
+      });
+
+      /*--- Teachable Machine Start ---*/
+
+      async function init() {
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        // mqtt connect
+        //connect();
+
+        // load the model and metadata
+        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+        // Note: the pose library adds a tmPose object to your window (window.tmPose)
+        model = await tmPose.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+
+        // Convenience function to setup a webcam
+        const size = 200;
+        const flip = true; // whether to flip the webcam
+        webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
+        await webcam.setup(); // request access to the webcam
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        // append/get elements to the DOM
+        const canvas = document.getElementById("canvas");
+        canvas.width = size;
+        canvas.height = size;
+        ctx = canvas.getContext("2d");
+        labelContainer = document.getElementById("label-container");
+        for (let i = 0; i < maxPredictions; i++) {
+          // and class labels
+          labelContainer.appendChild(document.createElement("div"));
+        }
+      }
+
+      async function loop(timestamp) {
+        webcam.update(); // update the webcam frame
+        await predict();
+
+        const now = new Date();
+        const target = `${now.getYear()}-${now.getMonth()}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
+
+        // 현재 시간이 방송 시작 5분 전이고, TV 켜진 시간이 2시간 이상 경과
+        if (
+          newDates.includes(target) &&
+          (now.getTime() - started.getTime()) / 1000 >= 10
+        ) {
+          const nones = detections.reduce(
+            (cnt, element) => cnt + ("None" === element),
+            (cnt = 0)
+          );
+          const detecteds = detections.reduce(
+            (cnt, element) => cnt + ("Detected" === element),
+            (cnt = 0)
+          );
+          const detectability = detecteds / (nones + detecteds);
+
+          console.log(detectability);
+
+          // 시청 시간이 90퍼센트 이상이면 FE에 송신
+          if (detectability >= 0.9) {
+            await sendPostRequest("Hello, FrontEnd!");
+            // 초기화
+            started = now;
+            detections = [];
+            console.log(detections);
+          }
+        }
+
+        // console.log((now.getTime() - started.getTime()) / 1000 / 60 / 60 + "시간 경과");
+
+        window.requestAnimationFrame(loop);
+      }
+
+      async function predict() {
+        // Prediction #1: run input through posenet
+        // estimatePose can take in an image, video or canvas html element
+        const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
+        // Prediction 2: run input through teachable machine classification model
+        const prediction = await model.predict(posenetOutput);
+
+        const classifications = [];
+
+        for (let i = 0; i < maxPredictions; i++) {
+          const classPrediction = {
+            class: prediction[i].className,
+            probability: prediction[i].probability.toFixed(2),
+          };
+          classifications.push(classPrediction);
+        }
+
+        // Sort classifications by probability
+        classifications.sort(function (a, b) {
+          if (a.probability > b.probability) return -1;
+          else if (a.probability === b.probability) return 0;
+          else return 1;
+        });
+
+        // Show class name of element has the highest probability
+        labelContainer.childNodes[0].innerHTML = classifications[0].class;
+
+        // Set data to send
+        sendData = {
+          class: classifications[0].class,
+          probability: classifications[0].probability,
+        };
+
+        detection = classifications[0].class;
+        detections.push(detection);
+
+        drawPose(pose);
+      }
+
+      function drawPose(pose) {
+        if (webcam.canvas) {
+          ctx.drawImage(webcam.canvas, 0, 0);
+          // draw the keypoints and skeleton
+          if (pose) {
+            const minPartConfidence = 0.5;
+            tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
+            tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
+          }
+        }
+      }
+
+      init();
+    </script>
+  </head>
+
+  <body>
+    <div>Teachable Machine Pose Model</div>
+
+    <button type="button" onclick="init()">Start</button>
+    <div><canvas id="canvas"></canvas></div>
+    <div id="label-container"></div>
+  </body>
+</html>

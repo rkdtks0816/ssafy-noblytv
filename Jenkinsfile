@@ -11,7 +11,7 @@ pipeline {
         stage('Deploy With Docker Compose') {
             steps {
                 script {
-                    sh 'cd backed/project && /usr/local/bin/docker-compose up --build -d'
+                    sh 'cd backend/project && /usr/local/bin/docker-compose up --build -d'
                 }
             }
         }

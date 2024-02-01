@@ -66,6 +66,11 @@ public class OldUserInfo {
     private List<Diary> diaries = new ArrayList<>();
 
     @ToString.Exclude
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<QuizResult> quizResults = new ArrayList<>();
+
+    @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "oldUserInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Gymnastics> gymnastics = new ArrayList<>();

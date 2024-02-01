@@ -8,6 +8,7 @@ import BACKEND.project.repository.DiaryRepository;
 import BACKEND.project.repository.FamilyRelationRepository;
 import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.repository.OldUserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +16,13 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
+@RequiredArgsConstructor
 public class DiaryService {
 
     private final DiaryRepository diaryRepository;
     private final OldUserRepository oldUserRepository;
     private final FamilyRelationRepository familyRelationRepository;
     private final FamilyUserRepository familyUserRepository;
-
-    public DiaryService(DiaryRepository diaryRepository, OldUserRepository oldUserRepository, FamilyRelationRepository familyRelationRepository, FamilyUserRepository familyUserRepository) {
-        this.diaryRepository = diaryRepository;
-        this.oldUserRepository = oldUserRepository;
-        this.familyRelationRepository = familyRelationRepository;
-        this.familyUserRepository = familyUserRepository;
-    }
 
     public Diary saveDiary(DiaryDto diaryDto, String oldUserId) {
         OldUserInfo oldUser = oldUserRepository.findByUserId(oldUserId)

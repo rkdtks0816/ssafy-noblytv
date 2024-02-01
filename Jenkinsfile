@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        cd ./backend/project
+                        cd ./backend/project/build/libs
                         docker build -t easyho1129/c103_back .
                     '''
                 }

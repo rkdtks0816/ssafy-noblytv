@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        gradle "C103_BACK"
+    }
+
     stages {
         stage('Checkout') {
             steps {

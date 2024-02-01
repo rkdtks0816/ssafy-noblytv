@@ -5,10 +5,11 @@ const ChildModalBg = styled.div`
   right: -100vw;
   transition: right 1s ease-out;
   bottom: 5vh;
-  width: 30vw;
+  width: 22vw;
   height: 60vh;
+  min-height: 20vh; /* 최소 높이 설정 */
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   flex-direction: column;
 
@@ -25,20 +26,21 @@ const ChildModalBg = styled.div`
 `;
 
 const ChildModalTitle = styled.div`
-  margin: 4vh 0 0 3vw;
-  font-size: 4vw;
+  margin: 2vh 3vw;
+  font-size: 3vw;
+  text-align: center;
 `;
 
 const ChildModalContent = styled.div`
-  margin: 1vh 0 0 3vw;
-  font-size: 3vw;
+  margin: 1vh auto;
+  font-size: 2vw;
 `;
 
 const ChildModalImg = styled.div`
-  margin: 0 auto;
   background: url('src/assets/child.png');
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: center; /* 중앙 정렬 */
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
   width: 100%;
   height: 100%;

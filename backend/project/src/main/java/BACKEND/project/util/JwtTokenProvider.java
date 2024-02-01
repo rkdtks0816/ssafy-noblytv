@@ -33,17 +33,12 @@ public class JwtTokenProvider {
 
     // Member 정보 이용하여 AccessToken, RefreshToken을 생성하는 메서드
     public JwtToken generateToken(Authentication authentication) {
-        String authorities = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
-
         long now = (new Date()).getTime();
 
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + 86400000);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim("auth", authorities)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -92,20 +87,8 @@ public class JwtTokenProvider {
         // Jwt Token 복호화
         Claims claims = parseClaims(accessToken);
 
-        String authInfo = claims.get("auth").toString();
-
-        // Claim에서 권한 정보 가져오기
-        Collection<? extends GrantedAuthority> authorities;
-        if (authInfo != null && !authInfo.isEmpty()) {
-            authorities = Arrays.stream(authInfo.split(","))
-                    .map(SimpleGrantedAuthority::new)
-                    .collect(Collectors.toList());
-        } else {
-            authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
-        }
-
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
-        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+        UserDetails principal = new User(claims.getSubject(), "", Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+        return new UsernamePasswordAuthenticationToken(principal, "", Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
     }
 
     // 토큰 정보를 검증하는 메서드
@@ -130,10 +113,6 @@ public class JwtTokenProvider {
     public static class JwtAuthenticationException extends org.springframework.security.core.AuthenticationException {
         public JwtAuthenticationException(String msg, Throwable t) {
             super(msg, t);
-        }
-
-        public JwtAuthenticationException(String msg) {
-            super(msg);
         }
     }
 

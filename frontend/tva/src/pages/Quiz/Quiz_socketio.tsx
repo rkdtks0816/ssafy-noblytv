@@ -13,7 +13,7 @@ function QuizSocketio() {
     });
 
     // 특정 이벤트에 대한 메시지 수신 (예: 'quizUpdate')
-    socket.on('quizUpdate', (data: string) => {
+    socket.on('message', (data: string) => {
       console.log('Quiz data received:', data);
       setQuizContents(data);
     });

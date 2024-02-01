@@ -1,25 +1,31 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import io from 'socket.io-client';
 import ChildCenter from '../../components/ChildCenter/ChildCenter';
 
-function Quiz() {
-  const [quizContents, setQuizContents] = useState('');
+function QuizSocketio() {
+  const [quizContents, setQuizContents] = useState<string>('');
+  const socket = io('http://i10c103.p.ssafy.io:9000');
 
   useEffect(() => {
-    const getQuiz = async () => {
-      try {
-        const response = await axios.get<string>('http://3.38.153.237:8080/');
-        console.log(response.data);
-        setQuizContents(response.data);
-      } catch (err) {
-        console.error('QUIZ 데이터 응답 에러 발생:', err);
-      }
-    };
+    // 소켓 연결
+    socket.on('connect', () => {
+      console.log('Socket Connected');
+    });
 
-    getQuiz().catch(err => console.error('getQuiz 실행 중 오류 발생:', err));
+    // 특정 이벤트에 대한 메시지 수신
+    socket.on('message', (data: string) => {
+      console.log('Quiz data received:', data);
+      setQuizContents(data);
+    });
+
+    // 컴포넌트 언마운트 시 소켓 연결 해제
+    return () => {
+      socket.disconnect();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <ChildCenter ChildCenterContents={quizContents} />;
 }
 
-export default Quiz;
+export default QuizSocketio;

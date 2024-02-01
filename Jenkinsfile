@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        gradle "C103_BACK"
+        gradle 'gradle-8.5'
     }
 
     stages {

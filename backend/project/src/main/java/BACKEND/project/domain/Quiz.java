@@ -1,10 +1,7 @@
 package BACKEND.project.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -22,7 +19,4 @@ public class Quiz {
 
     @Column
     private String answer;
-
-    @Column
-    private boolean isCorrect;
 }

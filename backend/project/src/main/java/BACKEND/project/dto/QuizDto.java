@@ -12,6 +12,4 @@ public class QuizDto {
     private String problem;
 
     private String answer;
-
-    private boolean isCorrect;
 }

@@ -7,16 +7,16 @@ import {
 
 const signUpInit: SignUpType = {
   userId: '',
-  userName: '',
+  username: '',
   password: '',
-  lunarSolar: '',
+  lunarSolar: 'SOLAR',
   birth: '',
-  oldUserId: [],
+  oldUserIds: [],
 };
 const seniorSignUpInit: SeniorSignUpType = {
-  userName: '',
+  username: '',
   birth: '',
-  lunarSolar: '',
+  lunarSolar: 'SOLAR',
   gender: '',
   medications: [],
 };

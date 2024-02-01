@@ -7,9 +7,9 @@ import {
 } from './ModalStyle';
 import ModalProps from './ModalType';
 
-function Modal({ modalContents, onClictBtn }: ModalProps) {
+function Modal({ modalContents, onClickBtn }: ModalProps) {
   const handleBtnClick = () => {
-    onClictBtn('');
+    onClickBtn('');
   };
   return (
     <div>

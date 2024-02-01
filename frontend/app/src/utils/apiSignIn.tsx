@@ -6,7 +6,7 @@ import { SignInType, SignInResType } from '../types/api_types';
 interface ApiSignInProps {
   signInData: SignInType;
   successFunc: () => void;
-  errorFunc: () => void;
+  errorFunc?: () => void;
 }
 
 async function apiSignIn({
@@ -30,7 +30,9 @@ async function apiSignIn({
     successFunc();
   } catch (error) {
     console.error('Axios error:', error);
-    errorFunc();
+    if (errorFunc) {
+      errorFunc();
+    }
   }
 }
 

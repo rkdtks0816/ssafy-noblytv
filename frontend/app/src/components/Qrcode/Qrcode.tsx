@@ -1,14 +1,18 @@
-import { QrcodeContainerS, QrcodeTextS } from './QrcodeStyle';
 import QRCode from 'qrcode.react';
+import { BASE_PORT, BASE_URL } from '../../constants/api';
+import { QrcodeContainerS, QrcodeTextS } from './QrcodeStyle';
 
-function QrCode() {
-  const url = 'http://192.168.100.72:5173/senior-connect';
+function QrCode({ uniqueCode }: { uniqueCode: string }) {
+  const QrValue = `${BASE_URL}:${BASE_PORT}?uniqueCode=${encodeURIComponent(uniqueCode)}`;
+  const formattedCode = uniqueCode.toUpperCase();
+  // 4글자씩 나누고 '-'로 이어붙이기
+  const formattedResult = formattedCode.replace(/(\w{4})(\w{4})/, '$1-$2');
   return (
     <div>
       <QrcodeContainerS>
-        <QRCode value={url} size={200} />
+        <QRCode value={QrValue} size={200} />
       </QrcodeContainerS>
-      <QrcodeTextS>A9E9-L32B</QrcodeTextS>
+      <QrcodeTextS>{formattedResult}</QrcodeTextS>
     </div>
   );
 }

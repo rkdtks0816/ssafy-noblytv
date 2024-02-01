@@ -15,16 +15,16 @@ import {
   API_PORT,
   API_FAMILY_SIGN_UP,
   PATH_SENIOR_CONNECT,
+  PATH_SIGN_UP_PASSWORD,
 } from '../../constants/api';
+import apiSignIn from '../../utils/apiSignIn';
 
 function Birthday() {
-  // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
   const navigate = useNavigate();
   const location = useLocation();
 
   const [userInfo, setUserInfo] = useState<SignUpType>(signUpInit);
 
-  // location.state가 유효한 객체일 경우 userInfo 상태를 업데이트하고, 그렇지 않으면 초기화
   useEffect(() => {
     if (location.state && typeof location.state === 'object') {
       setUserInfo(location.state as SignUpType);
@@ -34,11 +34,9 @@ function Birthday() {
   }, [location.state]);
 
   const handleBackBtn = () => {
-    navigate('/sign-up/password', { state: userInfo });
+    navigate(PATH_SIGN_UP_PASSWORD, { state: userInfo });
   };
 
-  // '음력' 또는 '양력' 선택 시 setUserInfo를 사용하여 userInfo.lunarSloar 필드를
-  // LunarSolar.Lunar 또는 LunarSolar.Solar로 설정
   const handleToggle = (selected: string) => {
     if (selected === 'left') {
       setUserInfo({ ...userInfo, lunarSolar: 'LUNAR' });
@@ -47,7 +45,6 @@ function Birthday() {
     }
   };
 
-  // birthday 입력필드가 변할 때마다 setUserInfo 사용하여 값을 새롭게 할당
   const Changebirth = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value },
@@ -57,25 +54,29 @@ function Birthday() {
     }
   };
 
-  const handleSubmitAsync = async () => {
-    const response = await axios.post(
-      `${BASE_URL}:${API_PORT}${API_FAMILY_SIGN_UP}`,
-      userInfo,
-      {
+  const handleSubmit = () => {
+    axios
+      .post(`${BASE_URL}:${API_PORT}${API_FAMILY_SIGN_UP}`, userInfo, {
         headers: {
           'Content-Type': 'application/json',
         },
-      },
-    );
-    console.log(response.data);
-    navigate(PATH_SENIOR_CONNECT);
-  };
+      })
+      .then(response => {
+        // axios 성공 시 실행되는 부분
+        console.log('Axios success:', response);
 
-  const handleSubmit = () => {
-    handleSubmitAsync().catch(error => {
-      console.error('회원가입 실패:', error);
-      // console.error('회원가입 실패:', error.response.config.data);
-    });
+        // 여기에서 apiSignIn 호출
+        apiSignIn({
+          signInData: { userId: userInfo.userId, password: userInfo.password },
+          successFunc: () => navigate(PATH_SENIOR_CONNECT),
+        }).catch(error => {
+          console.error('apiSignIn error:', error);
+        });
+      })
+      .catch(error => {
+        // axios 실패 시 실행되는 부분
+        console.error('Axios error:', error);
+      });
   };
 
   return (

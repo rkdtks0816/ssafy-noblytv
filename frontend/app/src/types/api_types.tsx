@@ -1,10 +1,10 @@
 interface SignUpType {
   userId: string;
-  userName: string;
+  username: string;
   password: string;
   lunarSolar: string;
   birth: string;
-  oldUserId: string[];
+  oldUserIds: string[];
 }
 
 interface Medication {
@@ -13,7 +13,7 @@ interface Medication {
 }
 
 interface SeniorSignUpType {
-  userName: string;
+  username: string;
   birth: string;
   lunarSolar: string;
   gender: string;
@@ -35,10 +35,18 @@ interface SignInResType {
   accessToken: string;
   refreshToken: string;
 }
+
+interface DiaryResType {
+  id: number;
+  date: string;
+  text: string;
+  summary: string;
+}
 export type {
   SignUpType,
   SeniorSignUpType,
   TvSignInType,
   SignInType,
   SignInResType,
+  DiaryResType,
 };

@@ -1,100 +1,39 @@
-import torch
-from videoSummarization.v2021 import SummaryModel
-from transformers import ViTImageProcessor
-from tqdm import tqdm
-import cv2
-import numpy as np
-from moviepy.editor import VideoFileClip, concatenate_videoclips
-import os
-import datetime
+from videoSummarization.main import summarize_video
+from conversation.functions_resources import speak, getGender, getAnswer, getAudio, sendData
 
-preprocessor = ViTImageProcessor.from_pretrained(
-    "google/vit-base-patch16-224", size=224
-)
+gender = getGender()
 
-SAMPLE_EVERY_SEC = 2
+# 체조 유도
+system_instruction = f"{gender}는 TV를 본지 2시간이 넘었다. {gender}의 7살 손주가 {gender}에게 지금 체조를 하라고 하고 싶은데, 뭐라고 해야 할 지 1줄 이내로 알려줘라."
+res = getAnswer(system_instruction)
+print(res)
+sendData(res)
+speak(res)
 
-time = str(datetime.datetime.now()).split()[0]
+# 체조 진행 여부
+res = getAudio()
+system_instruction = f"{gender}는 다음과 같이 대답했다. {res}. Is he or she answering yes or no? You can only answer 'yes' or 'no'."
+res = getAnswer(system_instruction)
+print(res)
+if "yes" in res.lower():
+    sendData("체조 시작 할께요!")
+    speak("체조 시작 할께요!")
 
-video_path = f"videos/{time}.mp4"
-result_path = f"videos/{time}_summary.mp4"
+    # TODO
+    # 영상 촬영
+        # FE로 시작 신호 보내기
+        # 영상 촬영
+        # FE에서 체조 끝남 신호 받기
 
-cap = cv2.VideoCapture(video_path)
+    # 체조 완료 후 응원 문구
+    system_instruction = f"{gender}는 체조를 완벽하게 잘 해냈다. {gender}의 7살 손주가 {gender}에게 칭찬을 하고 싶은데, 뭐라고 해야 할까?"
+    res = getAnswer(system_instruction)
+    sendData(res)
+    speak(res)
 
-n_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-fps = cap.get(cv2.CAP_PROP_FPS)
+    # 체조 영상 하이라이트 추출
+    summarize_video()
 
-video_len = n_frames / fps
-
-print(f'Video length {video_len:.2f} seconds!')
-
-frames = []
-last_collected = -1
-
-while cap.isOpened():
-    ret, frame = cap.read()
-    if not ret:
-        break
-
-    timestamp = cap.get(cv2.CAP_PROP_POS_MSEC)
-    second = timestamp // 1000
-
-    if second % SAMPLE_EVERY_SEC == 0 and second != last_collected:
-        last_collected = second
-        frames.append(frame)
-
-features = preprocessor(images=frames, return_tensors="pt")["pixel_values"]
-
-model = SummaryModel.load_from_checkpoint('summary.ckpt')
-model.eval()
-
-y_pred = []
-
-for frame in tqdm(features):
-    y_p = model(frame.unsqueeze(0))
-    y_p = torch.sigmoid(y_p)
-
-    y_pred.append(y_p.cpu().detach().numpy().squeeze())
-
-y_pred = np.array(y_pred)
-
-def determine_threshold(th):
-    global y_pred
-    total_sec = 0
-
-    for i, y_p in enumerate(y_pred):
-        if y_p >= th:
-            total_sec += SAMPLE_EVERY_SEC
-    return total_sec
-
-THRESHOLD = 0.1
-total_secs = 100
-
-while(total_secs > 30):
-    THRESHOLD += 0.001
-    total_secs = determine_threshold(THRESHOLD)
-
-while(total_secs < 15):
-    THRESHOLD -= 0.001
-    total_secs = determine_threshold(THRESHOLD)
-
-
-clip = VideoFileClip(video_path)
-
-subclips = []
-
-for i, y_p in enumerate(y_pred):
-    sec = i * SAMPLE_EVERY_SEC
-
-    if y_p >= THRESHOLD:
-        start = sec - SAMPLE_EVERY_SEC
-        if start < 0:
-            start = 0
-        subclip = clip.subclip(start, sec)
-        subclips.append(subclip)
-
-result = concatenate_videoclips(subclips)
-
-result.write_videofile(result_path)
-
-os.system(f'scp -i "../I10C103T.pem" {result_path} ubuntu@i10c103.p.ssafy.io:~/videos/1234/')
+else:
+    sendData("조금 있다가 꼭 체조 하셔야 해요!")
+    speak("조금 있다가 꼭 체조 하셔야 해요!")

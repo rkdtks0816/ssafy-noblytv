@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 import pymysql
 import datetime
 import socketio
-import requests
 
 old_user_id = "1"
 
@@ -44,9 +43,11 @@ def on_data_from_server(data):
 
 server_url = 'http://i10c103.p.ssafy.io:9000'
 sio.connect(server_url)
+
 @sio.event
 def sendData(text):
     sio.emit('message', text)
+
 
 def chat(text):
     '''

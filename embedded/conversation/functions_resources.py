@@ -76,7 +76,6 @@ def getGender():
     cur.execute("SELECT gender FROM old_user_info where id = (%s);", old_user_id)
     gender = "할머니"
     for gen in cur:
-        print(gen)
         if gen.get("gender") == "MALE":
             gender = "할아버지"
     return gender
@@ -123,7 +122,28 @@ def getAudio():
             speak("대화를 종료합니다.")
 
     return ans
- 
+
+def getQuiz(id):
+    '''
+    getQuiz:
+    get quiz from DB
+    '''
+    ans = ""
+    prob = ""
+
+    cur.execute("select * from `quiz` where id = (%s)", (id,))
+    for data in cur:
+        prob = data.get("problem")
+        ans = data.get("answer")
+    return (prob, ans)
+    
+def returnQuizAnswer(id, ans):
+    query = "insert into `quiz_result` (is_correct, quiz_id, user_id) values (%s, %s, %s)"
+    value = (ans, id, old_user_id)
+
+    cur.execute(query, value)
+    db.commit()
+    
 ########################################################################################################
 # p = pyaudio.PyAudio()
 # for i in range(p.get_device_count()):

@@ -1,28 +1,24 @@
-import { useState } from 'react';
+// ChildModal.tsx
+import { ChildModalProps } from '../../types/property';
 import {
   ChildModalBg,
-  ChildModalTitle,
   ChildModalContent,
   ChildModalImg,
+  ChildModalTitle,
 } from './ChildModalStyles';
 
-function ChildModal() {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const toggleModal = () => {
-    setModalOpen(!isModalOpen);
-  };
+function ChildModal({ title, content, isActive, onToggle }: ChildModalProps) {
   return (
     <div>
-      <button type="button" onClick={toggleModal}>
+      <button type="button" onClick={onToggle}>
         Open Modal
       </button>
-      <ChildModalBg style={{ right: isModalOpen ? '3vw' : '-100%' }}>
-        <ChildModalTitle>할아버지!</ChildModalTitle>
-        <ChildModalContent>움직일 시간이야!</ChildModalContent>
+      <ChildModalBg style={{ right: isActive ? '3vw' : '-100%' }}>
+        <ChildModalTitle>{title}</ChildModalTitle>
+        <ChildModalContent>{content}</ChildModalContent>
         <ChildModalImg />
       </ChildModalBg>
     </div>
   );
 }
-
 export default ChildModal;

@@ -20,5 +20,5 @@ export default defineConfig({
     // "@"를 사용하여 "src" 디렉토리를 참조할 수 있도록 변경.
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
   },
-  assetsInclude: ['**/*.jpg', '**/*.png'],
+  assetsInclude: ['**/*.jpg', '**/*.png', '**/*.mp4'],
 });

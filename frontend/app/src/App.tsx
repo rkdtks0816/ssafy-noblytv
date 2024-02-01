@@ -4,6 +4,20 @@ import {
   BrowserRouter as Router,
   Routes,
 } from 'react-router-dom';
+import {
+  PATH_SIGN_IN,
+  PATH_SIGN_UP_BIRTH,
+  PATH_SIGN_UP_NAME_ID,
+  PATH_SIGN_UP_PASSWORD,
+  PATH_SENIOR_CONNECT,
+  PATH_SENIOR_SIGN_UP_NAME_GENDER,
+  PATH_SENIOR_SIGN_UP_BIRTH,
+  PATH_SENIOR_SIGN_UP_UNIQUE_CODE,
+  PATH_CONNECT_TV,
+  PATH_SELECT_SENIOR,
+  PATH_COMMUNITY,
+  PATH_DATETIME,
+} from './constants/api';
 import SignIn from './pages/SignIn/SignIn';
 import Birthday from './pages/sign_up/Birth';
 import NameId from './pages/sign_up/NameId';
@@ -21,33 +35,33 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate replace to="/sign-in" />} />
+        <Route path="/" element={<Navigate replace to={PATH_SIGN_IN} />} />
         {/* SignIn */}
-        <Route path="/sign-in" element={<SignIn />} />
+        <Route path={PATH_SIGN_IN} element={<SignIn />} />
         {/* sign_up */}
-        <Route path="/sign-up/name-id" element={<NameId />} />
-        <Route path="/sign-up/password" element={<Password />} />
-        <Route path="/sign-up/birthday" element={<Birthday />} />
+        <Route path={PATH_SIGN_UP_NAME_ID} element={<NameId />} />
+        <Route path={PATH_SIGN_UP_PASSWORD} element={<Password />} />
+        <Route path={PATH_SIGN_UP_BIRTH} element={<Birthday />} />
         {/* SeniorConnect */}
-        <Route path="/senior-connect" element={<SeniorConnect />} />
+        <Route path={PATH_SENIOR_CONNECT} element={<SeniorConnect />} />
         {/* senior_sign_up */}
         <Route
-          path="/senior-sign-up/name-gender"
+          path={PATH_SENIOR_SIGN_UP_NAME_GENDER}
           element={<SeniorNameGender />}
         />
-        <Route path="/senior-sign-up/birth" element={<SeniorBirth />} />
+        <Route path={PATH_SENIOR_SIGN_UP_BIRTH} element={<SeniorBirth />} />
         <Route
-          path="/senior-sign-up/unique-code"
+          path={PATH_SENIOR_SIGN_UP_UNIQUE_CODE}
           element={<SeniorUniqueCode />}
         />
         {/* ConnectTv */}
-        <Route path="/connect-tv" element={<ConnectTv />} />
+        <Route path={PATH_CONNECT_TV} element={<ConnectTv />} />
         {/* SelectSenior */}
-        <Route path="/select-senior" element={<SelectSenior />} />
+        <Route path={PATH_SELECT_SENIOR} element={<SelectSenior />} />
         {/* Community */}
-        <Route path="/community" element={<Community />} />
+        <Route path={PATH_COMMUNITY} element={<Community />} />
         {/* Datetime */}
-        <Route path="/datetime" element={<Datetime />} />
+        <Route path={PATH_DATETIME} element={<Datetime />} />
       </Routes>
     </Router>
   );

@@ -8,9 +8,16 @@ import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import StatusMsg from '../../components/StatusMsg/StatusMsg';
-import { UserInfoT } from './SignUpType';
-import userInfoInit from './SignUpConstants';
 import useDebounce from '../../hooks/Debounce';
+import {
+  API_FAMILY_DUPLICATION,
+  API_PORT,
+  BASE_URL,
+  PATH_SIGN_IN,
+  PATH_SIGN_UP_PASSWORD,
+} from '../../constants/api';
+import { SignUpType } from '../../types/api_types';
+import { signUpInit } from '../../constants/type_init';
 
 function NameId() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
@@ -18,15 +25,16 @@ function NameId() {
   const location = useLocation();
 
   // userInfo 상태를 관리하고 초기값을 설정합니다. 여기서 User 타입을 사용합니다.
-  const [userInfo, setUserInfo] = useState<UserInfoT>(userInfoInit);
-  const [message, setMessage] = useState('');
+  const [userInfo, setUserInfo] = useState<SignUpType>(signUpInit);
+  const [message, setMessage] = useState<string>('');
+  const [messageType, setMessageType] = useState<string>('');
 
   // location.state를 확인하여 userInfo 상태를 업데이트하거나 초기화
   useEffect(() => {
     if (location.state && typeof location.state === 'object') {
-      setUserInfo(location.state as UserInfoT);
+      setUserInfo(location.state as SignUpType);
     } else {
-      setUserInfo(userInfoInit);
+      setUserInfo(signUpInit);
     }
   }, [location.state]);
 
@@ -38,14 +46,15 @@ function NameId() {
     const checkUserId = async () => {
       try {
         const response = await axios.get(
-          `http://3.38.153.237:8080/users/family/duplication/${debouncedUserId}`,
+          `${BASE_URL}:${API_PORT}${API_FAMILY_DUPLICATION}/${debouncedUserId}`,
         );
-        console.log(response.data);
-        setMessage(
-          response.data === true
-            ? '아이디가 중복 됩니다.'
-            : '사용가능한 아이디 입니다.',
-        );
+        if (response.data) {
+          setMessage('아이디가 중복 됩니다.');
+          setMessageType('error');
+        } else {
+          setMessage('사용가능한 아이디 입니다.');
+          setMessageType('success');
+        }
       } catch (err) {
         setMessage('아이디 확인 중 에러가 발생했습니다.');
         // console.error('아이디 중복 검사 중 에러 발생:', err);
@@ -62,18 +71,18 @@ function NameId() {
   // 사용자 입력을 처리하고, userInfo 상태를 업데이트 합니다. 입력 필드가 변경될 때마다 호출.
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    field: keyof UserInfoT,
+    field: keyof SignUpType,
   ) => {
     setUserInfo({ ...userInfo, [field]: event.target.value });
   };
 
   const handleBackBtn = () => {
-    navigate('/sign-in');
+    navigate(PATH_SIGN_IN);
   };
 
   // 사용자 정보(이름과 아이디)를 추가하고, useNavigate를 사용하여 다음 페이지로 이동
   const handleSubmit = () => {
-    navigate('/sign-up/password', { state: userInfo });
+    navigate(PATH_SIGN_UP_PASSWORD, { state: userInfo });
   };
 
   return (
@@ -85,8 +94,8 @@ function NameId() {
           <InputBoxStyle
             placeholder="이름을 입력하세요."
             style={{ marginTop: '70px' }}
-            onChange={e => handleInputChange(e, 'username')}
-            value={userInfo.username}
+            onChange={e => handleInputChange(e, 'userName')}
+            value={userInfo.userName}
           />
           <InputBoxStyle
             placeholder="아이디를 입력하세요."
@@ -94,7 +103,12 @@ function NameId() {
             onChange={e => handleInputChange(e, 'userId')}
             value={userInfo.userId}
           />
-          <StatusMsg statusMsgType="error" statusMsgContents={message} />
+          {messageType && (
+            <StatusMsg
+              statusMsgType={messageType}
+              statusMsgContents={message}
+            />
+          )}
         </FlexBoxStyle>
         <LargeBtnStyle style={{ marginBottom: '10vh' }} onClick={handleSubmit}>
           다음

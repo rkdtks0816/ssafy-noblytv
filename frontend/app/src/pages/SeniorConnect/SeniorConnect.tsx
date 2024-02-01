@@ -6,24 +6,31 @@ import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
 import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
-import StatusMsg from '../../components/StatusMsg/StatusMsg';
 import AddSeniorS from './SeniorConnectStyle';
-import { UserInfoT } from '../sign_up/SignUpType';
-import userInfoInit from '../sign_up/SignUpConstants';
+import { SeniorSignUpType } from '../../types/api_types';
+import { seniorSignUpInit } from '../../constants/type_init';
+import Modal from '../../components/Modal/Modal';
+import {
+  PATH_COMMUNITY,
+  PATH_SENIOR_SIGN_UP_NAME_GENDER,
+  PATH_SIGN_IN,
+} from '../../constants/api';
+import apiSignIn from '../../utils/apiSignIn';
+import manageAuthToken from '../../utils/manageAuthToken';
 
 function SeniorConnect() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [userInfo, setUserInfo] = useState<UserInfoT>(userInfoInit);
+  const [modalContents, setModalContents] = useState<React.ReactNode>('');
+  const [oldUserIds, setOldUserIds] = useState<string[]>([]);
 
+  // 로그인 확인
   useEffect(() => {
-    if (location.state && typeof location.state === 'object') {
-      setUserInfo(location.state as UserInfoT);
-    } else {
-      setUserInfo(userInfoInit);
-    }
-  }, [location.state]);
+    manageAuthToken({
+      handleNavigate: () => navigate(PATH_SIGN_IN, { state: PATH_COMMUNITY }),
+    });
+  }, [navigate]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserInfo({
@@ -33,11 +40,24 @@ function SeniorConnect() {
   };
 
   const handleBackBtn = () => {
-    navigate('/community');
+    navigate(PATH_COMMUNITY);
   };
 
   const handleSubmit = () => {
-    navigate('/community');
+    apiSignIn({
+      signInData,
+      successFunc: () => navigate(PATH_COMMUNITY),
+      errorFunc: () => {
+        setModalContents(
+          <div>
+            아이디와 비밀번호를 <br />
+            로그인하여 주세요.
+          </div>,
+        );
+      },
+    }).catch(error => {
+      console.error(error);
+    });
   };
 
   return (
@@ -51,10 +71,6 @@ function SeniorConnect() {
             style={{ marginTop: '70px' }}
             onChange={handleInputChange}
           />
-          <StatusMsg
-            statusMsgType="error"
-            statusMsgContents="일치하는 고유코드가 없습니다."
-          />
         </FlexBoxStyle>
         <FlexBoxStyle>
           <LargeBtnStyle
@@ -63,11 +79,14 @@ function SeniorConnect() {
           >
             완료
           </LargeBtnStyle>
-          <AddSeniorS to="/senior-sign-up/name-gender">
+          <AddSeniorS to={PATH_SENIOR_SIGN_UP_NAME_GENDER}>
             어르신을 등록하고 싶어요!
           </AddSeniorS>
         </FlexBoxStyle>
       </BgImgStyle>
+      {modalContents && (
+        <Modal modalContents={modalContents} onClickBtn={setModalContents} />
+      )}
     </div>
   );
 }

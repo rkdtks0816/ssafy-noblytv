@@ -1,8 +1,9 @@
 const BASE_URL: string = 'http://i10c103.p.ssafy.io';
+const BASE_PORT: string = '3000';
 const API_PORT: string = '8888';
 // PATHS
 const PATH_SIGN_IN: string = '/sign-in';
-const PATH_SIGN_UP: string = '/sign-in';
+const PATH_SIGN_UP: string = '/sign-up';
 const PATH_SIGN_UP_NAME_ID: string = `${PATH_SIGN_UP}/name-id`;
 const PATH_SIGN_UP_PASSWORD: string = `${PATH_SIGN_UP}/password`;
 const PATH_SIGN_UP_BIRTH: string = `${PATH_SIGN_UP}/birth`;
@@ -33,6 +34,7 @@ const API_DIARY_VIEW: string = `${API_DIARY}/view`;
 
 export {
   BASE_URL,
+  BASE_PORT,
   API_PORT,
   // PATH
   PATH_SIGN_IN,

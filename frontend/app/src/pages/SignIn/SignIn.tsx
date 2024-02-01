@@ -1,22 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
-import axios from 'axios';
 import BgImgStyle from '../../components/BgImg/BgImgStyle';
 import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
 import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import { FindIdPwBtnS, LogoImgS, SignUpBtnS } from './SignInStyle';
-import {
-  BASE_URL,
-  API_PORT,
-  API_FAMILY_SIGN_IN,
-  PATH_COMMUNITY,
-  PATH_SIGN_UP_NAME_ID,
-} from '../../constants/api';
-import { SignInType, SignInResType } from '../../types/api';
+import { PATH_COMMUNITY, PATH_SIGN_UP_NAME_ID } from '../../constants/api';
+import { SignInType } from '../../types/api_types';
 import { signInInit } from '../../constants/type_init';
 import Modal from '../../components/Modal/Modal';
+import apiSignIn from '../../utils/apiSignIn';
 
 function SignIn() {
   const navigate = useNavigate();
@@ -32,26 +25,20 @@ function SignIn() {
   };
 
   const handleLogin = () => {
-    axios
-      .post(`${BASE_URL}:${API_PORT}${API_FAMILY_SIGN_IN}`, signInData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(response => {
-        const data = response.data as SignInResType;
-        Cookies.set('authToken', data.accessToken, { expires: 7 });
-        navigate(PATH_COMMUNITY);
-      })
-      .catch(error => {
-        console.error('Axios error:', error);
+    apiSignIn({
+      signInData,
+      successFunc: () => navigate(PATH_COMMUNITY),
+      errorFunc: () => {
         setModalContents(
           <div>
             아이디와 비밀번호를 <br />
             로그인하여 주세요.
           </div>,
         );
-      });
+      },
+    }).catch(error => {
+      console.error(error);
+    });
   };
 
   return (
@@ -83,7 +70,7 @@ function SignIn() {
         <SignUpBtnS to={PATH_SIGN_UP_NAME_ID}>처음이신가요?</SignUpBtnS>
       </BgImgStyle>
       {modalContents && (
-        <Modal modalContents={modalContents} onClictBtn={setModalContents} />
+        <Modal modalContents={modalContents} onClickBtn={setModalContents} />
       )}
     </div>
   );

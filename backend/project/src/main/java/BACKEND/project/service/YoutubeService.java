@@ -56,7 +56,7 @@ public class YoutubeService {
             String videoId = searchResult.getId().getVideoId();
             String videoTitle = searchResult.getSnippet().getTitle();
 
-            return "Title: " + videoTitle + "\nURL: https://www.youtube.com/watch?v=" + videoId;
+            return "videoId: " + videoId + "\nTitle: " + videoTitle + "\nURL: https://www.youtube.com/watch?v=" + videoId;
         }
         return "검색 결과가 없습니다";
     }

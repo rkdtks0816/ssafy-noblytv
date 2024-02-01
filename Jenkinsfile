@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "$PATH:/usr/local/bin"
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -11,7 +15,7 @@ pipeline {
         stage('Deploy With Docker Compose') {
             steps {
                 script {
-                    sh 'cd backend/project && /usr/local/bin/docker-compose up --build -d'
+                    sh 'cd backend/project && docker-compose up --build -d'
                 }
             }
         }

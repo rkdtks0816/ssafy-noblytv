@@ -12,10 +12,10 @@ import BACKEND.project.util.JwtToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -32,7 +32,7 @@ public class FamilyUserJoinController {
 
     // 가족 회원 가입
     @PostMapping("/signup")
-    public ResponseEntity<FamilyUserInfo> registerFamilyUser(@Valid @RequestBody FamilyUserRegistrationDto registrationDto) {
+    public ResponseEntity<FamilyUserInfo> registerFamilyUser(@Validated @RequestBody FamilyUserRegistrationDto registrationDto) {
         FamilyUserInfo registeredFamilyUser = familyUserJoinService.registerFamilyUser(registrationDto);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()

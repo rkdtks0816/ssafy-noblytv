@@ -3,13 +3,12 @@ package BACKEND.project.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -48,6 +47,9 @@ public class OldUserInfo {
     @Column(nullable = false)
     private Gender gender;
 
+    @Column
+    private String tvCode;
+
     @ToString.Exclude
     @JsonManagedReference
     @OneToMany(mappedBy = "oldUser", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -57,12 +59,6 @@ public class OldUserInfo {
     @OneToMany(mappedBy = "oldUserInfo")
     @JsonBackReference
     private List<FamilyRelation> familyRelations = new ArrayList<>();
-
-    public List<String> getFamilyUserIds() {
-        return familyRelations.stream()
-                .map(familyRelation -> familyRelation.getFamilyUserInfo().getUserId())
-                .collect(Collectors.toList());
-    }
 
     @ToString.Exclude
     @JsonManagedReference

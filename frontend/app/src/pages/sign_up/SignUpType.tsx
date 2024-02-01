@@ -1,15 +1,15 @@
 interface UserInfoT {
   userId: string;
-  userName: string;
+  username: string;
   password: string;
-  lunarSloar: LunarSolar;
+  lunarSolar: LunarSolar;
   birth: string;
-  oldUserId: string[];
+  oldUserIds: string[];
 }
 
 enum LunarSolar {
-  Lunar = 'Lunar',
-  Solar = 'Solar',
+  LUNAR = 'LUNAR',
+  SOLAR = 'SOLAR',
 }
 
 export type { UserInfoT };

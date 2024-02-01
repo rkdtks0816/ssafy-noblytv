@@ -1,8 +1,8 @@
 package BACKEND.project.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalTime;
 
 @Data

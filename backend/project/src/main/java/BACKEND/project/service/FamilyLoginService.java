@@ -1,6 +1,5 @@
 package BACKEND.project.service;
 
-import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.util.JwtToken;
 import BACKEND.project.util.JwtTokenProvider;
 import jakarta.transaction.Transactional;
@@ -21,9 +20,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class FamilyLoginService {
 
-    private final FamilyUserRepository familyUserRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
+
 
     public JwtToken login(String userId, String password) {
         // userId, password 기반 Authentication 객체 생성

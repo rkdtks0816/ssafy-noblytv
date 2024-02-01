@@ -5,9 +5,9 @@ import BACKEND.project.dto.DiaryDto;
 import BACKEND.project.service.DiaryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,7 +21,7 @@ public class DiaryController {
     }
 
     @PostMapping("/create/{oldUserId}")
-    public ResponseEntity<Diary> createDiary(@Valid @RequestBody DiaryDto diaryDto, @PathVariable("oldUserId") String oldUserId) {
+    public ResponseEntity<Diary> createDiary(@Validated @RequestBody DiaryDto diaryDto, @PathVariable("oldUserId") String oldUserId) {
         Diary newDiary = diaryService.saveDiary(diaryDto, oldUserId);
         return ResponseEntity.status(HttpStatus.CREATED).body(newDiary);
     }

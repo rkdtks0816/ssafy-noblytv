@@ -25,4 +25,15 @@ public class QuizService {
         return quizRepository.save(newQuiz);
     }
 
+    public QuizDto getQuiz(Long id) {
+        Quiz quiz = quizRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("해당 퀴즈가 존재하지 않습니다."));
+
+        QuizDto quizDto = new QuizDto();
+        quizDto.setId(quiz.getId());
+        quizDto.setProblem(quiz.getProblem());
+        quizDto.setAnswer(quiz.getAnswer());
+
+        return quizDto;
+    }
 }

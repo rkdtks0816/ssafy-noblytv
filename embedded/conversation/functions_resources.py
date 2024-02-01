@@ -6,6 +6,8 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import pymysql
 import datetime
+import socketio
+import requests
 
 old_user_id = "1"
 
@@ -25,6 +27,26 @@ def noalsaerr():
     asound.snd_lib_error_set_handler(c_error_handler)
     yield
     asound.snd_lib_error_set_handler(None)
+
+sio = socketio.Client()
+
+@sio.on('connect')
+def on_connect():
+    print('Connected to Node.js server')
+
+@sio.on('disconnect')
+def on_disconnect():
+    print('Disconnected from Node.js server')
+
+@sio.on('dataFromServer')
+def on_data_from_server(data):
+    print('Data from server:', data)
+
+server_url = 'http://i10c103.p.ssafy.io:9000'
+sio.connect(server_url)
+@sio.event
+def sendData(text):
+    sio.emit('message', text)
 
 def chat(text):
     '''
@@ -167,3 +189,4 @@ cur = db.cursor(pymysql.cursors.DictCursor)
 
 gender = getGender()
 msg = [{"role": "system", "content": f"assistant는 {gender}의 7살 손주이다. {gender}가 일기를 쓰면 그 일기 내용으로 {gender}에게 짧은 질문을 하나만 하고, 자연스럽게 짧은 대화를 이어간다. 이제 user가 일기를 쓸 것이다."}]
+

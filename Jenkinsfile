@@ -8,11 +8,19 @@ pipeline {
             }
         }
 
+        stage('Build JAR') {
+            steps {
+                script {
+                    sh './gradlew build'
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 script {
                     sh '''
-                        cd ./backend/project/build/libs
+                        cd ./backend/project
                         docker build -t easyho1129/c103_back .
                     '''
                 }

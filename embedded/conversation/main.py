@@ -58,11 +58,16 @@ def summarize(text):
     summarization of diary
     '''
     system_instruction = f"assistant는 user의 input을 bullet point로 3줄 요약해준다. user의 input은 노인이 쓴 일기이다. user의 input: {text}"
-    messages=[{"role": "assistant", "content": system_instruction}]
+    messages=[{"role": "system", "content": system_instruction}]
     res = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
     summary = res.choices[0].message.content
     return summary
 
+# p = pyaudio.PyAudio()
+# for i in range(p.get_device_count()):
+#     print(p.get_device_info_by_index(i))
+
+########################################################################################################
 # get openAI Key
 load_dotenv()
 client = OpenAI(
@@ -91,10 +96,14 @@ for gen in cur:
 # chatGPT chat system info
 msg = [{"role": "system", "content": f"assistant는 {gender}의 7살 손주이다. {gender}가 일기를 쓰면 그 일기 내용으로 {gender}에게 짧은 질문을 하나만 하고, 자연스럽게 짧은 대화를 이어간다. 이제 user가 일기를 쓸 것이다."}]
 
-# p = pyaudio.PyAudio()
-# for i in range(p.get_device_count()):
-#     print(p.get_device_info_by_index(i))
-
+########################################################################################################
+# 일기 유도
+system_instruction = f"지금은 저녁이다. {gender}는 매일 일기를 쓴다. {gender}의 7살 손주가 {gender}에게 일기를 쓰라고 하고 싶은데, 뭐라고 해야 할 지 1줄 이내로 알려줘라."
+messages=[{"role": "system", "content": system_instruction}]
+res = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages).choices[0].message.content
+print(res)
+speak(res)
+########################################################################################################
 with noalsaerr():
     r= sr.Recognizer()
     with sr.Microphone(12) as source:

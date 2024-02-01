@@ -1,30 +1,64 @@
 package BACKEND.project.service;
 
+import BACKEND.project.domain.Medication;
+import BACKEND.project.dto.MedicationDto;
 import BACKEND.project.domain.OldUserInfo;
+import BACKEND.project.dto.OldUserRegistrationDto;
 import BACKEND.project.repository.OldUserRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Transactional
 @Service
 public class OldUserJoinService {
 
     private final OldUserRepository oldUserRepository;
 
-    @Autowired
     public OldUserJoinService(OldUserRepository oldUserRepository) {
         this.oldUserRepository = oldUserRepository;
     }
 
-    public OldUserInfo registerUser(OldUserInfo newUser) {
-        // 아이디 중복 체크
-        Optional<OldUserInfo> existingUser = oldUserRepository.findByUserId(newUser.getUserId());
-        if (existingUser.isPresent()) {
-            throw new IllegalStateException("이미 등록된 아이디입니다.");
-        }
+    @Transactional
+    public OldUserInfo registerUser(OldUserRegistrationDto oldUserRegistrationDto) {
+        // 고유 코드 생성
+        String userId;
+        do {
+            userId = RandomStringUtils.randomAlphanumeric(8).toLowerCase();
+        } while (oldUserRepository.findByUserId(userId).isPresent());
+
+        OldUserInfo newUser = new OldUserInfo();
+        newUser.setUserId(userId);
+        newUser.setUsername(oldUserRegistrationDto.getUsername());
+        newUser.setBirth(oldUserRegistrationDto.getBirth());
+        newUser.setLunarSolar(oldUserRegistrationDto.getLunarSolar());
+        newUser.setGender(oldUserRegistrationDto.getGender());
+
+        // 약 정보와 사용자 정보 연결
+        oldUserRegistrationDto.getMedications().forEach(medicationDto -> {
+            Medication medication = dtoToMedication(medicationDto);
+            medication.setOldUser(newUser);
+            newUser.getMedications().add(medication);
+        });
+
+        // 사용자 정보와 약 정보 저장
         return oldUserRepository.save(newUser);
+    }
+
+    private Medication dtoToMedication(MedicationDto medicationDto) {
+        Medication medication = new Medication();
+        medication.setMedicine(medicationDto.getMedicine());
+        medication.setMedicationTime(medicationDto.getMedicationTime());
+        return medication;
+    }
+
+    public OldUserInfo findByUserId(String userId) {
+        Optional<OldUserInfo> oldUserInfo = oldUserRepository.findByUserId(userId);
+        return oldUserInfo.orElseThrow(() -> new IllegalArgumentException("등록되지 않은 회원 ID입니다."));
+    }
+
+    public Optional<OldUserInfo> getOldUserInfo(String userId) {
+        return oldUserRepository.findByUserId(userId);
     }
 }

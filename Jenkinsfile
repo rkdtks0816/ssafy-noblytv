@@ -24,4 +24,8 @@ pipeline {
             }
         }
     }
+
+    options {
+        skipDefaultCheckout(true)
+    }
 }

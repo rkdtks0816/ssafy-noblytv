@@ -3,20 +3,20 @@ import {
   SeniorSignUpType,
   TvSignInType,
   SignInType,
-} from '../types/api';
+} from '../types/api_types';
 
 const signUpInit: SignUpType = {
   userId: '',
   userName: '',
   password: '',
-  lunarSloar: '',
+  lunarSolar: '',
   birth: '',
   oldUserId: [],
 };
 const seniorSignUpInit: SeniorSignUpType = {
   userName: '',
   birth: '',
-  lunarSloar: '',
+  lunarSolar: '',
   gender: '',
   medications: [],
 };

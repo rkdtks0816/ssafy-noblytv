@@ -7,15 +7,16 @@ import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import StatusMsg from '../../components/StatusMsg/StatusMsg';
-import { UserInfoT } from './SignUpType';
-import userInfoInit from './SignUpConstants';
+import { SignUpType } from '../../types/api_types';
+import { signUpInit } from '../../constants/type_init';
+import { PATH_SIGN_UP_BIRTH, PATH_SIGN_UP_NAME_ID } from '../../constants/api';
 
 function Password() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [userInfo, setUserInfo] = useState<UserInfoT>(userInfoInit);
+  const [userInfo, setUserInfo] = useState<SignUpType>(signUpInit);
   const [currentPassword, setcurrentPassword] = useState('');
   const [formatState, setformatState] = useState('');
   const [mismatchState, setmismatchState] = useState('');
@@ -25,9 +26,9 @@ function Password() {
   // location.state가 유효한 객체일 경우 userInfo 상태를 업데이트하고, 그렇지 않으면 초기화
   useEffect(() => {
     if (location.state && typeof location.state === 'object') {
-      setUserInfo(location.state as UserInfoT);
+      setUserInfo(location.state as SignUpType);
     } else {
-      setUserInfo(userInfoInit);
+      setUserInfo(signUpInit);
     }
   }, [location.state]);
 
@@ -59,12 +60,12 @@ function Password() {
   };
 
   const handleBackBtn = () => {
-    navigate('/sign-up/name-id', { state: userInfo });
+    navigate(PATH_SIGN_UP_NAME_ID, { state: userInfo });
   };
 
   const handleSubmit = () => {
     if (currentPassword.length >= 8 && currentPassword === userInfo.password) {
-      navigate('/sign-up/birthday', { state: userInfo });
+      navigate(PATH_SIGN_UP_BIRTH, { state: userInfo });
     }
   };
 

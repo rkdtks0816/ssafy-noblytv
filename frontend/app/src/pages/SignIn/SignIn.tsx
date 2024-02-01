@@ -14,7 +14,7 @@ import {
   PATH_COMMUNITY,
   PATH_SIGN_UP_NAME_ID,
 } from '../../constants/api';
-import { SignInType, SignInResType } from '../../types/api';
+import { SignInType, SignInResType } from '../../types/api_types';
 import { signInInit } from '../../constants/type_init';
 import Modal from '../../components/Modal/Modal';
 

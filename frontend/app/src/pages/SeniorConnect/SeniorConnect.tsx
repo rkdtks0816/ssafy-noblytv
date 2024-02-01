@@ -8,14 +8,12 @@ import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import StatusMsg from '../../components/StatusMsg/StatusMsg';
 import AddSeniorS from './SeniorConnectStyle';
-import { UserInfoT } from '../sign_up/SignUpType';
-import userInfoInit from '../sign_up/SignUpConstants';
-
+import { SeniorSignUpType } from '../../types/api_types';
 function SeniorConnect() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [userInfo, setUserInfo] = useState<UserInfoT>(userInfoInit);
+  const [userInfo, setUserInfo] = useState<SeniorSignUpType>(userInfoInit);
 
   useEffect(() => {
     if (location.state && typeof location.state === 'object') {

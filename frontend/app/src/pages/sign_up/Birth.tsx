@@ -8,35 +8,28 @@ import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import ToggleBtn from '../../components/ToggleBtn/ToggleBtn';
-import { LunarSolar, UserInfoT } from './SignUpType';
+import { SignUpType } from '../../types/api_types';
+import { signUpInit } from '../../constants/type_init';
+import {
+  BASE_URL,
+  API_PORT,
+  API_FAMILY_SIGN_UP,
+  PATH_SENIOR_CONNECT,
+} from '../../constants/api';
 
 function Birthday() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [userInfo, setUserInfo] = useState<UserInfoT>({
-    userId: '',
-    username: '',
-    password: '',
-    lunarSolar: LunarSolar.SOLAR,
-    birth: '',
-    oldUserIds: [],
-  });
+  const [userInfo, setUserInfo] = useState<SignUpType>(signUpInit);
 
   // location.state가 유효한 객체일 경우 userInfo 상태를 업데이트하고, 그렇지 않으면 초기화
   useEffect(() => {
     if (location.state && typeof location.state === 'object') {
-      setUserInfo(location.state as UserInfoT);
+      setUserInfo(location.state as SignUpType);
     } else {
-      setUserInfo({
-        userId: '',
-        username: '',
-        password: '',
-        lunarSolar: LunarSolar.SOLAR,
-        birth: '',
-        oldUserIds: [],
-      });
+      setUserInfo(signUpInit);
     }
   }, [location.state]);
 
@@ -48,9 +41,9 @@ function Birthday() {
   // LunarSolar.Lunar 또는 LunarSolar.Solar로 설정
   const handleToggle = (selected: string) => {
     if (selected === 'left') {
-      setUserInfo({ ...userInfo, lunarSolar: LunarSolar.LUNAR });
+      setUserInfo({ ...userInfo, lunarSolar: 'LUNAR' });
     } else if (selected === 'right') {
-      setUserInfo({ ...userInfo, lunarSolar: LunarSolar.SOLAR });
+      setUserInfo({ ...userInfo, lunarSolar: 'SOLAR' });
     }
   };
 
@@ -66,7 +59,7 @@ function Birthday() {
 
   const handleSubmitAsync = async () => {
     const response = await axios.post(
-      'http://3.38.153.237:8080/users/family/signup',
+      `${BASE_URL}:${API_PORT}${API_FAMILY_SIGN_UP}`,
       userInfo,
       {
         headers: {
@@ -75,7 +68,7 @@ function Birthday() {
       },
     );
     console.log(response.data);
-    navigate('/senior-connect');
+    navigate(PATH_SENIOR_CONNECT);
   };
 
   const handleSubmit = () => {
@@ -94,9 +87,7 @@ function Birthday() {
           <ToggleBtn
             optionLeft="음력"
             optionRight="양력"
-            initType={
-              userInfo.lunarSolar === LunarSolar.LUNAR ? 'left' : 'right'
-            }
+            initType={userInfo.lunarSolar === 'LUNAR' ? 'left' : 'right'}
             onToggle={handleToggle}
           />
           <InputBoxStyle

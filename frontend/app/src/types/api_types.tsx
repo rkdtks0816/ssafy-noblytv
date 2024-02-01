@@ -2,7 +2,7 @@ interface SignUpType {
   userId: string;
   userName: string;
   password: string;
-  lunarSloar: string;
+  lunarSolar: string;
   birth: string;
   oldUserId: string[];
 }
@@ -15,7 +15,7 @@ interface Medication {
 interface SeniorSignUpType {
   userName: string;
   birth: string;
-  lunarSloar: string;
+  lunarSolar: string;
   gender: string;
   medications: Medication[];
 }

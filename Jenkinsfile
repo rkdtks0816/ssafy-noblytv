@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://lab.ssafy.com/s10-webmobile3-sub2/S10P12C103.git'
+                checkout scm
             }
         }
 
@@ -23,5 +23,9 @@ pipeline {
                 }
             }
         }
+    }
+
+    options {
+        skipDefaultCheckout(true)
     }
 }

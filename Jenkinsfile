@@ -8,18 +8,10 @@ pipeline {
             }
         }
 
-        stage('Build Docker Images') {
-            steps {
-                script {
-                    docker.build("BackEnd", "./backend/project")
-                }
-            }
-        }
-
         stage('Deploy With Docker Compose') {
             steps {
                 script {
-                    sh 'docker-compose up -d'
+                    sh 'cd backend/project && docker-compose up --build -d'
                 }
             }
         }

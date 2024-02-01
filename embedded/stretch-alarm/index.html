@@ -25,7 +25,7 @@
       var mqttClient;
 
       /*--- Configuration ---*/
-      const backend = "http://i10c103.p.ssafy.io:9000";
+      const server = "http://i10c103.p.ssafy.io:9000";
 
       var mqttBroker = "i10c103.p.ssafy.io"; // Change to your MQTT broker URL or IP
       var mqttPort = 9001; // Change to your MQTT broker WebSocket port
@@ -34,14 +34,14 @@
 
       // 방송 스케쥴
       const schedule = [
-        new Date("2024-01-31 01:30"),
-        new Date("2024-01-31 02:30"),
-        new Date("2024-01-31 04:30"),
-        new Date("2024-01-31 06:30"),
-        new Date("2024-01-31 09:00"),
-        new Date("2024-01-31 12:00"),
-        new Date("2024-01-31 13:30"),
-        new Date("2024-01-31 17:23"),
+        new Date("2024-02-01 11:35"),
+        new Date("2024-02-01 02:30"),
+        new Date("2024-02-01 04:30"),
+        new Date("2024-02-01 06:30"),
+        new Date("2024-02-01 09:00"),
+        new Date("2024-02-01 12:00"),
+        new Date("2024-02-01 13:30"),
+        new Date("2024-02-01 17:23"),
       ];
 
       // 방송 스케쥴에서 5분씩 뺀 시간
@@ -123,7 +123,7 @@
       async function sendPostRequest(data) {
         try {
           // Axios를 사용하여 POST 요청 보내기
-          const response = await axios.post(backend, data);
+          const response = await axios.post(server, data);
 
           // 백엔드 응답 출력
           console.log("백엔드 응답:", response.data);
@@ -134,21 +134,16 @@
       }
 
       /*--- Socket.io ---*/
-      var socket = io.connect();
+      var socket = io('http://i10c103.p.ssafy.io:9000');
 
       socket.on("connect", function () {
         console.log("server connected");
       });
 
-      function btnClick(data) {
-        socket.emit("click", data);
-      }
+      socket.on("disconnect", function(){
+        console.log("server disconnected");
+      })
 
-      socket.on("clickResponse", function (data) {
-        console.log(data);
-        var contents = document.getElementById("contents");
-        contents.innerText = data;
-      });
 
       /*--- Teachable Machine Start ---*/
 
@@ -211,7 +206,10 @@
 
           // 시청 시간이 90퍼센트 이상이면 FE에 송신
           if (detectability >= 0.9) {
-            await sendPostRequest("Hello, FrontEnd!");
+            socket.emit('message', "Watching TV Too Much!!");
+            socket.on('message', function(res){
+              console.log(res);
+            })
             // 초기화
             started = now;
             detections = [];

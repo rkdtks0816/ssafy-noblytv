@@ -1,7 +1,12 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { BASE_URL, API_PORT, API_FAMILY_SIGN_IN } from '../constants/api';
-import { SignInType, SignInResType } from '../types/api_types';
+import {
+  BASE_URL,
+  API_PORT,
+  API_FAMILY_SIGN_IN,
+  API_FAMILY,
+} from '../constants/api';
+import { SignInType, SignInResType, UserInfoType } from '../types/api_types';
 
 interface ApiSignInProps {
   signInData: SignInType;
@@ -26,7 +31,15 @@ async function apiSignIn({
     );
 
     const data = response.data as SignInResType;
-    Cookies.set('authToken', data.accessToken, { expires: 7 });
+    Cookies.set('grantType', data.grantType, { expires: 7 });
+    Cookies.set('accessToken', data.accessToken, { expires: 7 });
+    Cookies.set('refreshToken', data.refreshToken, { expires: 7 });
+    const UserinfoResponse = await axios.get(
+      `${BASE_URL}:${API_PORT}${API_FAMILY}/${signInData.userId}`,
+      { headers: { Authorization: `${data.grantType} ${data.accessToken}` } },
+    );
+    const UserinfoData = UserinfoResponse.data as UserInfoType;
+    Cookies.set('userId', UserinfoData.userId, { expires: 7 });
     successFunc();
   } catch (error) {
     console.error('Axios error:', error);

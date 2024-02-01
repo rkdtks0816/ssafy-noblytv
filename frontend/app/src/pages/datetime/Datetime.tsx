@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import {
@@ -14,10 +18,19 @@ import {
 } from './DatetimeStyle';
 import { DiaryResType } from '../../types/api_types';
 import Modal from '../../components/Modal/Modal';
-import axios from 'axios';
-import { API_PORT, BASE_URL, API_DIARY_VIEW } from '../../constants/api';
+import {
+  API_PORT,
+  BASE_URL,
+  API_DIARY_VIEW,
+  PATH_SIGN_IN,
+  PATH_COMMUNITY,
+} from '../../constants/api';
+import manageAuthToken from '../../utils/manageAuthToken';
 
 function Datetime() {
+  const grantType = Cookies.get('grantType');
+  const accessToken = Cookies.get('accessToken');
+  const navigate = useNavigate();
   // 현재 날짜를 얻어오는 함수
   const getCurrentDate = (): string => new Date().toISOString().split('T')[0];
 
@@ -28,7 +41,22 @@ function Datetime() {
   const [modalContents, setModalContents] = useState<React.ReactNode>('');
 
   useEffect(() => {
-    axios.get<DiaryResType[]>(`${BASE_URL}:${API_PORT}${API_DIARY_VIEW}`);
+    manageAuthToken({
+      handleNavigate: () => navigate(PATH_SIGN_IN, { state: PATH_COMMUNITY }),
+    });
+  }, [navigate]);
+
+  useEffect(() => {
+    axios
+      .get<DiaryResType[]>(`${BASE_URL}:${API_PORT}${API_DIARY_VIEW}`, {
+        headers: { Authorization: `${grantType} ${accessToken}` },
+      })
+      .then(response => {
+        setdiaryContents(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }, []);
 
   const handleDatetimeHeader = () => {

@@ -42,6 +42,15 @@ interface DiaryResType {
   text: string;
   summary: string;
 }
+
+interface UserInfoType {
+  userId: string;
+  username: string;
+  lunarSolar: string;
+  birth: string;
+  oldUserIds: string[];
+}
+
 export type {
   SignUpType,
   SeniorSignUpType,
@@ -49,4 +58,5 @@ export type {
   SignInType,
   SignInResType,
   DiaryResType,
+  UserInfoType,
 };

@@ -22,14 +22,14 @@ function AddBtn() {
 
   return (
     <div>
-      {/* <AddBtnStyle onClick={handleButtonClick}>+</AddBtnStyle>
+      <AddBtnStyle onClick={handleButtonClick}>+</AddBtnStyle>
       <input
         type="file"
         id="fileInput"
         style={{ display: 'none' }}
         onChange={handleFileSelect}
-        accept="video/*" // 오직 동영상 파일만 선택 가능
-      /> */}
+        accept="video/*" // 비디오 파일 형식만 선택 가능하도록 제한
+      />
     </div>
   );
 }

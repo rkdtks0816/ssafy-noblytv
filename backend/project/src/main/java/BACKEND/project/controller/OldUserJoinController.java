@@ -6,10 +6,10 @@ import BACKEND.project.repository.OldUserRepository;
 import BACKEND.project.service.OldUserJoinService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -23,7 +23,7 @@ public class OldUserJoinController {
     private final OldUserRepository oldUserRepository;
 
     @PostMapping("/signup")
-    public ResponseEntity<OldUserInfo> registerUser(@Valid @RequestBody OldUserRegistrationDto newUser) {
+    public ResponseEntity<OldUserInfo> registerUser(@Validated @RequestBody OldUserRegistrationDto newUser) {
         OldUserInfo registeredUser = oldUserJoinService.registerUser(newUser);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()

@@ -1,5 +1,5 @@
 import torch
-from v2021 import SummaryModel
+from .summarizer import SummaryModel
 from transformers import ViTImageProcessor
 from tqdm import tqdm
 import cv2

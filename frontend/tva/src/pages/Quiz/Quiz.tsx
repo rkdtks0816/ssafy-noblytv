@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 import ChildCenter from '../../components/ChildCenter/ChildCenter';
 
-function QuizSocketio() {
+function Quiz() {
   const [quizContents, setQuizContents] = useState<string>('');
   const socket = io('http://i10c103.p.ssafy.io:9000');
   const navigate = useNavigate();
@@ -39,4 +39,4 @@ function QuizSocketio() {
   return <ChildCenter ChildCenterContents={quizContents} />;
 }
 
-export default QuizSocketio;
+export default Quiz;

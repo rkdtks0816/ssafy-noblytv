@@ -22,4 +22,6 @@ public class FamilyUserInfoDto {
     private FamilyUserInfo.LunarSolar lunarSolar;
 
     private List<FamilyRelationDto> familyRelations;
+
+    private String lastVisitedId;
 }

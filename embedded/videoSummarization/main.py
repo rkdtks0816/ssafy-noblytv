@@ -97,4 +97,4 @@ def summarize_video():
 
     result.write_videofile(result_path)
 
-    os.system(f'scp -i "./I10C103T.pem" {result_path} ubuntu@i10c103.p.ssafy.io:~/videos/1234/')
+    os.system(f'scp -i "./I10C103T.pem" {result_path} ubuntu@i10c103.p.ssafy.io:~/song/front/frontend/app/src/assets')

@@ -9,6 +9,7 @@ import datetime
 import socketio
 
 old_user_id = "1"
+nowD = ""
 
 from ctypes import *
 from contextlib import contextmanager
@@ -39,7 +40,10 @@ def on_disconnect():
 
 @sio.on('message')
 def on_data_from_server(data):
+    global nowD
+
     print('Data from server:', data)
+    nowD = data
 
 server_url = 'http://i10c103.p.ssafy.io:9000'
 sio.connect(server_url)
@@ -48,8 +52,12 @@ sio.connect(server_url)
 def sendData(text):
     sio.emit('message', text)
 
+@sio.event
 def sendMode(text):
     sio.emit('mode', text)
+
+def returnData():
+    return nowD
 
 def chat(text):
     '''

@@ -5,7 +5,7 @@ import GymnasticsStart from './pages/gymnastics/GymnasticsStart';
 import Gymnastics from './pages/gymnastics/Gymnastics';
 import Quiz from './pages/Quiz/Quiz';
 import QuizStart from './pages/Quiz/QuizStart';
-
+import Diary from './pages/Diary/Diary';
 // App 컴포넌트 내에서 라우터 설정
 function App() {
   return (
@@ -19,6 +19,8 @@ function App() {
         {/* Quiz */}
         <Route path="/quiz/start" element={<QuizStart />} />
         <Route path="/quiz" element={<Quiz />} />
+        {/* Diary */}
+        <Route path="/diary" element={<Diary />} />
       </Routes>
     </Router>
   );

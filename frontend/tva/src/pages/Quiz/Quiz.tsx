@@ -29,7 +29,10 @@ function QuizSocketio() {
 
   useEffect(() => {
     if (quizContents === '다음에 같이 퀴즈 놀이 해요.') {
-      navigate('/');
+      // 4초 뒤 url 전환
+      setTimeout(() => {
+        navigate('/');
+      }, 4000);
     }
   }, [quizContents, navigate]);
 

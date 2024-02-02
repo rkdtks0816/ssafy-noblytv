@@ -1,5 +1,5 @@
 import QRCode from 'qrcode.react';
-import { BASE_PORT, BASE_URL } from '../../constants/api';
+import { BASE_PORT, BASE_URL } from '../../constants/constants';
 import { QrcodeContainerS, QrcodeTextS } from './QrcodeStyle';
 
 function QrCode({ uniqueCode }: { uniqueCode: string }) {

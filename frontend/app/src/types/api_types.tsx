@@ -43,12 +43,26 @@ interface DiaryResType {
   summary: string;
 }
 
+interface UserInfoGetOldInfoType {
+  userId: string;
+  username: string;
+}
+
 interface UserInfoType {
   userId: string;
   username: string;
   lunarSolar: string;
   birth: string;
-  oldUserIds: string[];
+  familyRelations: UserInfoGetOldInfoType[];
+  lastVisitedId: string;
+  userType: string;
+}
+
+interface GymnasticsType {
+  day: string;
+  keyword: string;
+  title: string;
+  videoId: string;
 }
 
 export type {
@@ -59,4 +73,5 @@ export type {
   SignInResType,
   DiaryResType,
   UserInfoType,
+  GymnasticsType,
 };

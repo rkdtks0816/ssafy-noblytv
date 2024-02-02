@@ -15,7 +15,7 @@ import {
   BASE_URL,
   PATH_SIGN_IN,
   PATH_SIGN_UP_PASSWORD,
-} from '../../constants/api';
+} from '../../constants/constants';
 import { SignUpType } from '../../types/api_types';
 import { signUpInit } from '../../constants/type_init';
 
@@ -94,8 +94,8 @@ function NameId() {
           <InputBoxStyle
             placeholder="이름을 입력하세요."
             style={{ marginTop: '70px' }}
-            onChange={e => handleInputChange(e, 'userName')}
-            value={userInfo.userName}
+            onChange={e => handleInputChange(e, 'username')}
+            value={userInfo.username}
           />
           <InputBoxStyle
             placeholder="아이디를 입력하세요."

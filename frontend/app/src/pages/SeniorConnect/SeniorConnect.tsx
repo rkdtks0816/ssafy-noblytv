@@ -14,7 +14,7 @@ import {
   PATH_COMMUNITY,
   PATH_SENIOR_SIGN_UP_NAME_GENDER,
   PATH_SIGN_IN,
-} from '../../constants/api';
+} from '../../constants/constants';
 import apiSignIn from '../../utils/apiSignIn';
 import manageAuthToken from '../../utils/manageAuthToken';
 

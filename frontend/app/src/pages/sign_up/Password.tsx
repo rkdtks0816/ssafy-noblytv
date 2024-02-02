@@ -9,7 +9,10 @@ import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import StatusMsg from '../../components/StatusMsg/StatusMsg';
 import { SignUpType } from '../../types/api_types';
 import { signUpInit } from '../../constants/type_init';
-import { PATH_SIGN_UP_BIRTH, PATH_SIGN_UP_NAME_ID } from '../../constants/api';
+import {
+  PATH_SIGN_UP_BIRTH,
+  PATH_SIGN_UP_NAME_ID,
+} from '../../constants/constants';
 
 function Password() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.

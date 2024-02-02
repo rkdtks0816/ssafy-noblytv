@@ -12,7 +12,7 @@ import { seniorSignUpInit } from '../../constants/type_init';
 import {
   PATH_SENIOR_CONNECT,
   PATH_SENIOR_SIGN_UP_BIRTH,
-} from '../../constants/api';
+} from '../../constants/constants';
 
 function SeniorNameGender() {
   const navigate = useNavigate();

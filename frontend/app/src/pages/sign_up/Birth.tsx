@@ -16,7 +16,7 @@ import {
   API_FAMILY_SIGN_UP,
   PATH_SENIOR_CONNECT,
   PATH_SIGN_UP_PASSWORD,
-} from '../../constants/api';
+} from '../../constants/constants';
 import apiSignIn from '../../utils/apiSignIn';
 
 function Birthday() {
@@ -55,6 +55,7 @@ function Birthday() {
   };
 
   const handleSubmit = () => {
+    console.log(userInfo);
     axios
       .post(`${BASE_URL}:${API_PORT}${API_FAMILY_SIGN_UP}`, userInfo, {
         headers: {

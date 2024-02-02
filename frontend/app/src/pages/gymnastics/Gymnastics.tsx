@@ -1,14 +1,12 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import Cookies from 'js-cookie';
 import manageAuthToken from '../../utils/manageAuthToken';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
-import AddBtn from '../../components/AddBtn/AddBtn';
 import { PATH_COMMUNITY, PATH_SIGN_IN } from '../../constants/constants';
-import CommunityCard from '../../components/CommunityCard/CommunityCard';
+import GymnasticsCard from '../../components/GymnasticsCard/GymnasticsCard';
 
-function Community() {
+function Gymnastics() {
   const navigate = useNavigate();
   useEffect(() => {
     manageAuthToken({
@@ -19,11 +17,10 @@ function Community() {
   return (
     <div>
       <Header />
-      <CommunityCard />
-      <AddBtn />
+      <GymnasticsCard />
       <Footer />
     </div>
   );
 }
 
-export default Community;
+export default Gymnastics;

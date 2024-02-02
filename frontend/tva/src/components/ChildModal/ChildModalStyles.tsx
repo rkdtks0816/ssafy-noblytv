@@ -46,5 +46,32 @@ const ChildModalImg = styled.div`
   height: 100%;
   border-radius: 5vw; /* 이미지도 부모와 같은 경계 반경을 가짐 */
 `;
+const ChildModalVideoBG = styled.div`
+  position: fixed;
+  left: 2vw;
+  top: 5vh;
+  width: 12vw;
+  height: 30vh;
+  min-height: 20vh; /* 최소 높이 설정 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  flex-direction: column;
+`;
 
-export { ChildModalBg, ChildModalTitle, ChildModalContent, ChildModalImg };
+const ChildModalVideo = styled.video`
+  width: 100%;
+  height: 100%;
+  background: url('src/assets/child.png');
+  z-index: 100;
+`;
+
+export {
+  ChildModalBg,
+  ChildModalTitle,
+  ChildModalContent,
+  ChildModalImg,
+  ChildModalVideoBG,
+  ChildModalVideo,
+};

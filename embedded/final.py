@@ -1,14 +1,16 @@
 import time
 import os
-from conversation.functions_resources import sendMode
+from conversation.functions_resources import sendMode, returnData
 
 gymnastic_file_path = './gymnastics.py'
 diary_file_path = './conversation/diary.py'
 quiz_file_path = './conversation/quiz.py'
 
-sendMode('gymnastic')
-time.sleep(2)
-os.system(f'python3.9 {gymnastic_file_path}')
+while True:
+    if returnData() == "chejo" :
+        sendMode('gymnastic')
+        os.system(f'python3.9 {gymnastic_file_path}')
+        break
 
 time.sleep(2)
 ################################################################

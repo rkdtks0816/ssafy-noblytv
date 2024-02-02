@@ -21,6 +21,11 @@ public class FamilyUserInfo {
         SOLAR
     }
 
+    public enum UserType {
+        FAMILY,
+        OLD
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,9 +52,9 @@ public class FamilyUserInfo {
     @JsonManagedReference
     private List<FamilyRelation> familyRelations = new ArrayList<>();
 
-    private String userType;
+    // 마지막으로 확인한 노인 ID 저장 필드
+    private String lastVisitedId;
 
-    public FamilyUserInfo() {
-        this.userType = "family";
-    }
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 }

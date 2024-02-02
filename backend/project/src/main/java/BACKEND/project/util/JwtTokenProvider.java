@@ -35,10 +35,15 @@ public class JwtTokenProvider {
     public JwtToken generateToken(Authentication authentication) {
         long now = (new Date()).getTime();
 
+        String roles = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + 86400000);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
+                .claim("roles", roles)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -57,13 +62,14 @@ public class JwtTokenProvider {
                 .build();
     }
 
-    public JwtToken createToken(String userId) {
+    public JwtToken createToken(String userId, String role) {
         long now = (new Date()).getTime();
 
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + 86400000);
         String accessToken = Jwts.builder()
                 .setSubject(userId)
+                .claim("roles", role)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -87,8 +93,12 @@ public class JwtTokenProvider {
         // Jwt Token 복호화
         Claims claims = parseClaims(accessToken);
 
-        UserDetails principal = new User(claims.getSubject(), "", Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
-        return new UsernamePasswordAuthenticationToken(principal, "", Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")));
+        Collection<GrantedAuthority> authorities = Arrays.stream(claims.get("roles").toString().split(","))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+
+        UserDetails principal = new User(claims.getSubject(), "", authorities);
+        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
     // 토큰 정보를 검증하는 메서드

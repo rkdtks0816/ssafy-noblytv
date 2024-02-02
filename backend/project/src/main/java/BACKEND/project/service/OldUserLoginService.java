@@ -4,7 +4,7 @@ import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.dto.FamilyRelationDto;
 import BACKEND.project.dto.FamilyUserInfoDto;
 import BACKEND.project.dto.OldUserInfoDto;
-import BACKEND.project.repository.OldUserInfoRepository;
+import BACKEND.project.repository.OldUserRepository;
 import BACKEND.project.util.JwtToken;
 import BACKEND.project.util.JwtTokenProvider;
 import jakarta.transaction.Transactional;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class OldUserLoginService {
 
-    private final OldUserInfoRepository oldUserInfoRepository;
+    private final OldUserRepository oldUserRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final FamilyUserJoinService familyUserJoinService;
 
@@ -36,16 +36,16 @@ public class OldUserLoginService {
 
     public JwtToken authenticate(String tvCode, String userId) {
         // 사용자 정보 조회
-        OldUserInfo oldUserInfo = oldUserInfoRepository.findByUserId(userId)
+        OldUserInfo oldUserInfo = oldUserRepository.findByUserId(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + userId));
 
         // tvCode 필드 검사 및 업데이트
         if (oldUserInfo.getTvCode() == null || !oldUserInfo.getTvCode().equals(tvCode)) {
             oldUserInfo.setTvCode(tvCode);
-            oldUserInfoRepository.save(oldUserInfo);
+            oldUserRepository.save(oldUserInfo);
         }
 
         // JWT 토큰 생성
-        return jwtTokenProvider.createToken(userId);
+        return jwtTokenProvider.createToken(userId, "ROLE_OLD");
     }
 }

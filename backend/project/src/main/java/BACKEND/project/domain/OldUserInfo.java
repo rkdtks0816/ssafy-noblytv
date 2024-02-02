@@ -27,6 +27,11 @@ public class OldUserInfo {
         SOLAR
     }
 
+    public enum UserType {
+        FAMILY,
+        OLD
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -75,9 +80,6 @@ public class OldUserInfo {
     @OneToMany(mappedBy = "oldUserInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Gymnastics> gymnastics = new ArrayList<>();
 
-    private String userType;
-
-    public OldUserInfo() {
-        this.userType = "old";
-    }
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 }

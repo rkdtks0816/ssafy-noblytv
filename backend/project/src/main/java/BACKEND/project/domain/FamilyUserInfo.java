@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
+//@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
 public class FamilyUserInfo {
@@ -46,4 +46,10 @@ public class FamilyUserInfo {
     @OneToMany(mappedBy = "familyUserInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<FamilyRelation> familyRelations = new ArrayList<>();
+
+    private String userType;
+
+    public FamilyUserInfo() {
+        this.userType = "family";
+    }
 }

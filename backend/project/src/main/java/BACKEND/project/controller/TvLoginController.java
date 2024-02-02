@@ -23,4 +23,11 @@ public class TvLoginController {
     public ResponseEntity<?> login(@RequestBody TvLoginDto tvLoginDto) {
         return ResponseEntity.ok().body(oldUserLoginService.authenticate(tvLoginDto.getTvCode(), tvLoginDto.getUserId()));
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@RequestHeader("Authorization") String token) {
+        String jwtToken = token.split(" ")[1];
+        oldUserLoginService.logout(jwtToken);
+        return ResponseEntity.noContent().build();
+    }
 }

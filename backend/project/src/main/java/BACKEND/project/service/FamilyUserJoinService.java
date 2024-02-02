@@ -132,6 +132,10 @@ public class FamilyUserJoinService {
         dto.setBirth(familyUserInfo.getBirth());
         dto.setLunarSolar(familyUserInfo.getLunarSolar());
 
+        if (familyUserInfo.getLastVisitedId() != null) {
+            dto.setLastVisitedId(familyUserInfo.getLastVisitedId());
+        }
+
         List<FamilyRelationDto> familyRelationDtos = familyUserInfo.getFamilyRelations().stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());

@@ -37,7 +37,7 @@ def on_connect():
 def on_disconnect():
     print('Disconnected from Node.js server')
 
-@sio.on('dataFromServer')
+@sio.on('message')
 def on_data_from_server(data):
     print('Data from server:', data)
 
@@ -48,6 +48,8 @@ sio.connect(server_url)
 def sendData(text):
     sio.emit('message', text)
 
+def sendMode(text):
+    sio.emit('mode', text)
 
 def chat(text):
     '''
@@ -140,6 +142,7 @@ def getAudio():
         GOOGLE_CLOUD_SPEECH_CREDENTIALS = r"""./ssafy-stt-3b72dd53f9e1.json"""
         try:
             ans = r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS, language="ko")
+            print(ans)
         except Exception:
             ans = "End of Conversation"
             speak("대화를 종료합니다.")
@@ -167,12 +170,12 @@ def returnQuizAnswer(id, ans):
     cur.execute(query, value)
     db.commit()
     
-########################################################################################################
+# #######################################################################################################
 # p = pyaudio.PyAudio()
 # for i in range(p.get_device_count()):
 #     print(p.get_device_info_by_index(i))
 
-########################################################################################################
+# #######################################################################################################
 # get openAI Key
 load_dotenv()
 client = OpenAI(

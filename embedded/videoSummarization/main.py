@@ -17,8 +17,8 @@ def summarize_video():
 
     time = str(datetime.datetime.now()).split()[0]
 
-    video_path = f"videos/{time}.mp4"
-    result_path = f"videos/{time}_summary.mp4"
+    video_path = f"./videoSummarization/videos/{time}.mp4"
+    result_path = f"./videoSummarization/videos/{time}_summary.mp4"
 
     cap = cv2.VideoCapture(video_path)
 
@@ -46,7 +46,7 @@ def summarize_video():
 
     features = preprocessor(images=frames, return_tensors="pt")["pixel_values"]
 
-    model = SummaryModel.load_from_checkpoint('summary.ckpt')
+    model = SummaryModel.load_from_checkpoint('./videoSummarization/summary.ckpt')
     model.eval()
 
     y_pred = []
@@ -60,7 +60,6 @@ def summarize_video():
     y_pred = np.array(y_pred)
 
     def determine_threshold(th):
-        global y_pred
         total_sec = 0
 
         for i, y_p in enumerate(y_pred):
@@ -75,7 +74,7 @@ def summarize_video():
         THRESHOLD += 0.001
         total_secs = determine_threshold(THRESHOLD)
 
-    while(total_secs < 15):
+    while(total_secs < 15 and video_len > 15):
         THRESHOLD -= 0.001
         total_secs = determine_threshold(THRESHOLD)
 
@@ -98,4 +97,4 @@ def summarize_video():
 
     result.write_videofile(result_path)
 
-    os.system(f'scp -i "../I10C103T.pem" {result_path} ubuntu@i10c103.p.ssafy.io:~/videos/1234/')
+    os.system(f'scp -i "./I10C103T.pem" {result_path} ubuntu@i10c103.p.ssafy.io:~/videos/1234/')

@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import YouTube, { YouTubeProps } from 'react-youtube';
 import { useNavigate } from 'react-router-dom';
+import VideoModal from '../../components/ChildModal/ViedoModal';
 
 function Gymnastics() {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ function Gymnastics() {
         onEnd={handleEnd}
         style={{ width: '100vw', height: '100vh' }}
       />
+      <VideoModal />
     </div>
   );
 }

@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
 import io from 'socket.io-client';
-import { ChildModalProps } from '../../types/property';
-import { ChildModalBg, ChildModalVideo } from './ChildModalStyles';
+import { ChildModalVideoBG, ChildModalVideo } from './ChildModalStyles';
 
-function VideoModal({ isActive, onToggle }: ChildModalProps) {
+function VideoModal() {
   const videoRef = useRef<HTMLVideoElement>(null); // 여기에서 타입을 지정
   const socket = io('http://i10c103.p.ssafy.io:9000');
 
@@ -27,12 +26,9 @@ function VideoModal({ isActive, onToggle }: ChildModalProps) {
   }, []);
   return (
     <div>
-      <button type="button" onClick={onToggle}>
-        Open Modal
-      </button>
-      <ChildModalBg style={{ right: isActive ? '3vw' : '-100%' }}>
+      <ChildModalVideoBG>
         <ChildModalVideo />
-      </ChildModalBg>
+      </ChildModalVideoBG>
     </div>
   );
 }

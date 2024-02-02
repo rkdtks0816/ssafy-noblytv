@@ -9,8 +9,6 @@ import java.util.Optional;
 @Repository
 public interface OldUserRepository extends JpaRepository<OldUserInfo, Long> {
     Optional<OldUserInfo> findByUserId(String userId);
-
-    OldUserInfo findByUsername(String username);
 }
 
 

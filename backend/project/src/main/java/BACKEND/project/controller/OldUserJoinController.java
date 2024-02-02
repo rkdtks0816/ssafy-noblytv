@@ -34,16 +34,6 @@ public class OldUserJoinController {
         return ResponseEntity.created(location).body(registeredUser);
     }
 
-    @GetMapping("/{oldUserId}")
-    public ResponseEntity<Optional<OldUserInfo>> getUserInfo(@PathVariable("oldUserId") String oldUserId) {
-        Optional<OldUserInfo> oldUserInfo = oldUserJoinService.getOldUserInfo(oldUserId);
-        if (oldUserId != null) {
-            return ResponseEntity.ok(oldUserInfo);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     @DeleteMapping("/delete/{oldUserId}")
     public ResponseEntity<?> deleteUser(@PathVariable("oldUserId") String oldUserId) {
         OldUserInfo user = oldUserRepository.findByUserId(oldUserId)

@@ -3,20 +3,17 @@ package BACKEND.project.service;
 import BACKEND.project.domain.Gymnastics;
 import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.repository.GymnastcisRepository;
-import BACKEND.project.repository.OldUserInfoRepository;
+import BACKEND.project.repository.OldUserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class VideoService {
 
     private final GymnastcisRepository gymnastcisRepository;
-    private final OldUserInfoRepository oldUserInfoRepository;
-
-    public VideoService(GymnastcisRepository gymnastcisRepository, OldUserInfoRepository oldUserInfoRepository) {
-        this.gymnastcisRepository = gymnastcisRepository;
-        this.oldUserInfoRepository = oldUserInfoRepository;
-    }
+    private final OldUserRepository oldUserInfoRepository;
 
     @Transactional
     public Gymnastics saveGymnastics(String oldUserId, Gymnastics gymnastics) {

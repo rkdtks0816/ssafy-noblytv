@@ -78,6 +78,8 @@ public class OldUserInfoService {
             if (familyRelationRepository.existsByOldUserInfoAndFamilyUserInfo(oldUserInfo, familyUserInfo)) {
                 familyUserInfo.setLastVisitedId(oldUserId);
                 familyUserRepository.save(familyUserInfo);
+            } else {
+                throw new IllegalArgumentException("노인 회원과 가족 회원 사이에 관계가 없습니다.");
             }
         }
 

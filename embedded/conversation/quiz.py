@@ -36,7 +36,7 @@ if "yes" in res.lower():
         else:
             returnQuizAnswer(id, 0)
 
-
+        sendData("다음 퀴즈를 진행하시겠어요?")
         speak("다음 퀴즈를 진행하시겠어요?")
 
         res = getAudio()
@@ -57,5 +57,5 @@ elif "no" in res.lower():
     sendData("다음에 같이 퀴즈 놀이 해요.")
     speak("다음에 같이 퀴즈 놀이 해요.")
 
-
+sendData("stop")
 

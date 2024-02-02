@@ -3,7 +3,7 @@ import argparse
 import torch
 from transformers import ViTFeatureExtractor
 
-from v2021 import extract_video_features
+from .feature_extraction import extract_video_features
 
 from .model import SummaryModel
 

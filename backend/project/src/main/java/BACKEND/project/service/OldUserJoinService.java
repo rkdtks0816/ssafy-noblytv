@@ -34,6 +34,7 @@ public class OldUserJoinService {
         newUser.setBirth(oldUserRegistrationDto.getBirth());
         newUser.setLunarSolar(oldUserRegistrationDto.getLunarSolar());
         newUser.setGender(oldUserRegistrationDto.getGender());
+        newUser.setUserType(OldUserInfo.UserType.OLD);
 
         // 약 정보와 사용자 정보 연결
         oldUserRegistrationDto.getMedications().forEach(medicationDto -> {
@@ -56,13 +57,5 @@ public class OldUserJoinService {
     public OldUserInfo findByUserId(String userId) {
         Optional<OldUserInfo> oldUserInfo = oldUserRepository.findByUserId(userId);
         return oldUserInfo.orElseThrow(() -> new IllegalArgumentException("등록되지 않은 회원 ID입니다."));
-    }
-
-    public Optional<OldUserInfo> getOldUserInfo(String userId) {
-        return oldUserRepository.findByUserId(userId);
-    }
-
-    public OldUserInfo findByUsername(String username) {
-        return oldUserRepository.findByUsername(username);
     }
 }

@@ -31,6 +31,7 @@ while True:
     sendData(res)
     speak(res)
 
+sendData("stop")
 # diary summarization
 summarizedDiary = summarize(diary)
 

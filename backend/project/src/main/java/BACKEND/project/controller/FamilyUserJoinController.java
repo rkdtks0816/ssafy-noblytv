@@ -67,9 +67,20 @@ public class FamilyUserJoinController {
     public JwtToken login(@RequestBody LoginDto loginDto) {
         String userId = loginDto.getUserId();
         String password = loginDto.getPassword();
+
+        // 사용자 조회
+        FamilyUserInfo familyUserInfo = familyUserRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 회원 ID입니다."));
+
+        // JwtToken 생성
         JwtToken jwtToken = familyLoginService.login(userId, password);
+
+        // UserType 설정
+        jwtToken.setUserType(String.valueOf(familyUserInfo.getUserType()));
+
         log.info("request username = {}, password = {}", userId, password);
-        log.info("jwtToken accessToken = {}, refreshToken = {}", jwtToken.getAccessToken(), jwtToken.getRefreshToken());
+        log.info("jwtToken accessToken = {}, refreshToken = {}, userType = {}", jwtToken.getAccessToken(), jwtToken.getRefreshToken(), jwtToken.getUserType());
+
         return jwtToken;
     }
 

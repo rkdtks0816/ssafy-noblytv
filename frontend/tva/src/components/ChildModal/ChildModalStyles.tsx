@@ -47,4 +47,12 @@ const ChildModalImg = styled.div`
   border-radius: 5vw; /* 이미지도 부모와 같은 경계 반경을 가짐 */
 `;
 
-export { ChildModalBg, ChildModalTitle, ChildModalContent, ChildModalImg };
+const ChildModalVideo = styled.div``;
+
+export {
+  ChildModalBg,
+  ChildModalTitle,
+  ChildModalContent,
+  ChildModalImg,
+  ChildModalVideo,
+};

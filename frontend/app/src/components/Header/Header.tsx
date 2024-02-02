@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import {
   HeaderBgS,
   SeniorNameS,
@@ -6,10 +7,11 @@ import {
 } from './HeaderStyle';
 
 function Header() {
+  const oldUsername = Cookies.get('oldUsername');
   return (
     <div>
       <HeaderBgS>
-        <SeniorNameS to="/select-senior">이세종</SeniorNameS>
+        <SeniorNameS to="/select-senior">{oldUsername}</SeniorNameS>
         <SeniorTitleS>어르신</SeniorTitleS>
         <NoticeIconS to="/alarm" />
       </HeaderBgS>

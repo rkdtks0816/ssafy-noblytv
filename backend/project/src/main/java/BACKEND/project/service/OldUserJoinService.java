@@ -34,6 +34,7 @@ public class OldUserJoinService {
         newUser.setBirth(oldUserRegistrationDto.getBirth());
         newUser.setLunarSolar(oldUserRegistrationDto.getLunarSolar());
         newUser.setGender(oldUserRegistrationDto.getGender());
+        newUser.setUserType(OldUserInfo.UserType.OLD);
 
         // 약 정보와 사용자 정보 연결
         oldUserRegistrationDto.getMedications().forEach(medicationDto -> {

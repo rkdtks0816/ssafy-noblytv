@@ -8,6 +8,7 @@ import BACKEND.project.repository.FamilyRelationRepository;
 import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.repository.OldUserRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,19 +17,13 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class FamilyUserJoinService {
 
     private final FamilyUserRepository familyUserRepository;
     private final OldUserRepository oldUserRepository;
     private final FamilyRelationRepository familyRelationRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public FamilyUserJoinService(FamilyUserRepository familyUserRepository, OldUserRepository oldUserRepository, FamilyRelationRepository familyRelationRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.familyUserRepository = familyUserRepository;
-        this.oldUserRepository = oldUserRepository;
-        this.familyRelationRepository = familyRelationRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
 
     @Transactional
     public FamilyUserInfo registerFamilyUser(FamilyUserRegistrationDto familyUserRegistrationDto) {
@@ -42,6 +37,7 @@ public class FamilyUserJoinService {
         newUser.setUsername(familyUserRegistrationDto.getUsername());
         newUser.setBirth(familyUserRegistrationDto.getBirth());
         newUser.setLunarSolar(familyUserRegistrationDto.getLunarSolar());
+        newUser.setUserType(FamilyUserInfo.UserType.FAMILY);
         FamilyUserInfo registeredFamilyUser = familyUserRepository.save(newUser);
 
         // 노인 회원 정보 조회 + 노인과 가족 관계 저장
@@ -157,9 +153,5 @@ public class FamilyUserJoinService {
         dto.setUsername(oldUserInfo.getUsername());
 
         return dto;
-    }
-
-    public FamilyUserInfo findByUsername(String username) {
-        return familyUserRepository.findByUsername(username);
     }
 }

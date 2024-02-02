@@ -18,8 +18,8 @@ public class OldUserInfoController {
     private final OldUserInfoService oldUserInfoService;
 
     @GetMapping("/{oldUserId}")
-    public ResponseEntity<OldUserInfo> getUserInfo(@PathVariable("oldUserId") String oldUserId, @RequestParam("userId") String userId, @RequestParam("userType") OldUserInfoService.UserType userType) {
-        OldUserInfo oldUserInfo = oldUserInfoService.getOldUserInfo(oldUserId, userId, userType);
+    public ResponseEntity<OldUserInfo> getUserInfo(@PathVariable("oldUserId") String oldUserId, @RequestParam("userId") String userId) {
+        OldUserInfo oldUserInfo = oldUserInfoService.getOldUserInfo(oldUserId, userId);
         return ResponseEntity.ok(oldUserInfo);
     }
 

@@ -21,6 +21,11 @@ public class FamilyUserInfo {
         SOLAR
     }
 
+    public enum UserType {
+        FAMILY,
+        OLD
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -49,4 +54,7 @@ public class FamilyUserInfo {
 
     // 마지막으로 확인한 노인 ID 저장 필드
     private String lastVisitedId;
+
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 }

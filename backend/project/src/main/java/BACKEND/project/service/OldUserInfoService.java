@@ -66,21 +66,30 @@ public class OldUserInfoService {
     }
 
     @Transactional
-    public OldUserInfo getOldUserInfo(String oldUserId, String userId, UserType userType) {
+    public OldUserInfo getOldUserInfo(String oldUserId, String userId) {
 
         OldUserInfo oldUserInfo = oldUserRepository.findByUserId(oldUserId)
                 .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 노인 회원 ID입니다."));
-        FamilyUserInfo familyUserInfo = familyUserRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 가족 회원 ID입니다."));
 
-        // 사용자가 가족 회원인 경우에만 관계를 확인하고, 'lastVisitedId' 필드를 업데이트
-        if (userType == UserType.FAMILY) {
+        // 사용자 아이디로 가족 회원 또는 노인 회원 조회
+        Optional<FamilyUserInfo> optionalFamilyUserInfo = familyUserRepository.findByUserId(userId);
+        Optional<OldUserInfo> optionalOldUserInfo = oldUserRepository.findByUserId(userId);
+
+        if (optionalFamilyUserInfo.isPresent()) {
+            // 가족 회원인 경우
+            FamilyUserInfo familyUserInfo = optionalFamilyUserInfo.get();
+
+            // 관계를 확인하고, 'lastVisitedId' 필드를 업데이트
             if (familyRelationRepository.existsByOldUserInfoAndFamilyUserInfo(oldUserInfo, familyUserInfo)) {
                 familyUserInfo.setLastVisitedId(oldUserId);
                 familyUserRepository.save(familyUserInfo);
             } else {
                 throw new IllegalArgumentException("노인 회원과 가족 회원 사이에 관계가 없습니다.");
             }
+
+        } else if (optionalOldUserInfo.isEmpty()) {
+            // 노인 회원도 아니고 가족 회원도 아닌 경우
+            throw new IllegalArgumentException("등록되지 않은 사용자 ID입니다.");
         }
 
         return oldUserInfo;

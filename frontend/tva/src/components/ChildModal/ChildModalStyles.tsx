@@ -48,10 +48,10 @@ const ChildModalImg = styled.div`
 `;
 const ChildModalVideoBG = styled.div`
   position: fixed;
-  right: -100vw;
-  bottom: 5vh;
-  width: 22vw;
-  height: 60vh;
+  left: 2vw;
+  top: 5vh;
+  width: 12vw;
+  height: 30vh;
   min-height: 20vh; /* 최소 높이 설정 */
   display: flex;
   align-items: center;
@@ -64,7 +64,7 @@ const ChildModalVideo = styled.video`
   width: 100%;
   height: 100%;
   background: url('src/assets/child.png');
-  z-index: 1001;
+  z-index: 100;
 `;
 
 export {

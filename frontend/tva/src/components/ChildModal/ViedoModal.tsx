@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import { ChildModalVideoBG, ChildModalVideo } from './ChildModalStyles';
 
 function VideoModal() {
-  const videoRef = useRef<HTMLVideoElement>(null); // 여기에서 타입을 지정
+  const videoRef = useRef<HTMLVideoElement>(null);
   const socket = io('http://i10c103.p.ssafy.io:9000');
 
   useEffect(() => {
@@ -11,13 +11,13 @@ function VideoModal() {
       console.log('Socket Connected');
     });
 
-    socket.on('videoStream', videoData => {
-      if (videoRef.current) {
-        videoRef.current.src = URL.createObjectURL(
-          new Blob([videoData], { type: 'video/mp4' }),
-        );
-      }
-    });
+    // socket.on('videoStream', videoData => {
+    //   if (videoRef.current) {
+    //     videoRef.current.src = URL.createObjectURL(
+    //       new Blob([videoData], { type: 'video/mp4' }),
+    //     );
+    //   }
+    // });
 
     return () => {
       socket.disconnect();
@@ -27,7 +27,14 @@ function VideoModal() {
   return (
     <div>
       <ChildModalVideoBG>
-        <ChildModalVideo />
+        <ChildModalVideo
+          ref={videoRef}
+          src="/assets/Samsung_social_contribution.mp4"
+          autoPlay
+          controls
+        />
+
+        {/* <ChildModalVideo ref={videoRef} autoPlay controls /> */}
       </ChildModalVideoBG>
     </div>
   );

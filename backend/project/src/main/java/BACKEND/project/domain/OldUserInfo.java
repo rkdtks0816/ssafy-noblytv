@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
+//@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
 public class OldUserInfo {
@@ -74,4 +74,10 @@ public class OldUserInfo {
     @JsonManagedReference
     @OneToMany(mappedBy = "oldUserInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Gymnastics> gymnastics = new ArrayList<>();
+
+    private String userType;
+
+    public OldUserInfo() {
+        this.userType = "old";
+    }
 }

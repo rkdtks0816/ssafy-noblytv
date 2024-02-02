@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class VideoService {
+public class GymnasticsService {
 
     private final GymnastcisRepository gymnastcisRepository;
     private final OldUserInfoRepository oldUserInfoRepository;
 
-    public VideoService(GymnastcisRepository gymnastcisRepository, OldUserInfoRepository oldUserInfoRepository) {
+    public GymnasticsService(GymnastcisRepository gymnastcisRepository, OldUserInfoRepository oldUserInfoRepository) {
         this.gymnastcisRepository = gymnastcisRepository;
         this.oldUserInfoRepository = oldUserInfoRepository;
     }

@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
 public class Post {
@@ -19,9 +18,11 @@ public class Post {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "old_user_name")
     private OldUserInfo oldUserInfo;
 
     @ManyToOne
+    @JoinColumn(name = "family_user_name")
     private FamilyUserInfo familyUserInfo;
 
     @Column(nullable = false)
@@ -29,4 +30,16 @@ public class Post {
 
     @Column
     private LocalDateTime postedAt;
+
+    public Post(OldUserInfo oldUserInfo, String videoUrl) {
+        this.oldUserInfo = oldUserInfo;
+        this.videoPath = videoPath;
+        this.postedAt = LocalDateTime.now();
+    }
+
+    public Post(FamilyUserInfo familyUserInfo, String videoUrl) {
+        this.familyUserInfo = familyUserInfo;
+        this.videoPath = videoPath;
+        this.postedAt = LocalDateTime.now();
+    }
 }

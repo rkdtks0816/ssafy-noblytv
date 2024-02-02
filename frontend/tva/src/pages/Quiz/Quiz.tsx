@@ -17,7 +17,16 @@ function Quiz() {
     // 특정 이벤트에 대한 메시지 수신
     socket.on('message', (data: string) => {
       console.log('Quiz data received:', data);
-      setQuizContents(data);
+      // 종료 메시지가 수신했을 경우 종료
+      if (quizContents === '다음에 같이 퀴즈 놀이 해요.') {
+        // 4초 뒤 url 전환
+        setTimeout(() => {
+          socket.disconnect();
+          navigate('/');
+        }, 4000);
+      } else {
+        setQuizContents(data);
+      }
     });
 
     // 컴포넌트 언마운트 시 소켓 연결 해제
@@ -26,15 +35,6 @@ function Quiz() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (quizContents === '다음에 같이 퀴즈 놀이 해요.') {
-      // 4초 뒤 url 전환
-      setTimeout(() => {
-        navigate('/');
-      }, 4000);
-    }
-  }, [quizContents, navigate]);
 
   return <ChildCenter ChildCenterContents={quizContents} />;
 }

@@ -1,37 +1,26 @@
 import { useState, useRef } from 'react';
 import YouTube, { YouTubeProps } from 'react-youtube';
 import { useNavigate } from 'react-router-dom';
+import io from 'socket.io-client';
 import VideoModal from '../../components/ChildModal/ViedoModal';
 
 function Gymnastics() {
+  const socket = io('http://i10c103.p.ssafy.io:9000');
+
   const navigate = useNavigate();
   const youtubePlayerRef = useRef<unknown>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
   const handleReady: YouTubeProps['onReady'] = event => {
     youtubePlayerRef.current = event.target;
-
-    // // 음성 신호 수신 후 동영상을 재생/일시 정지
-    // const fetchData = async () => {
-    //   try {
-    //     const response = await axios.post('/send-voice-signal', { isPlaying });
-    //     const { success } = response.data;
-
-    //     if (success) {
-    //       setIsPlaying(!isPlaying);
-    //     }
-    //   } catch (error) {
-    //     console.error('Error sending voice signal:', error);
-    //   }
-    // };
-
-    // // 초기 로딩 시 한 번만 호출
-    // fetchData();
     setIsPlaying(false);
   };
 
   const handleEnd: YouTubeProps['onEnd'] = () => {
-    navigate('/');
+    socket.emit('message', 'stop');
+    console.log('unmount component');
+    socket.disconnect();
+    navigate('/R1');
   };
 
   const playerOptions = {

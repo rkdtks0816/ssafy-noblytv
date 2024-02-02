@@ -11,13 +11,11 @@ function VideoModal() {
       console.log('Socket Connected');
     });
 
-    // socket.on('videoStream', videoData => {
-    //   if (videoRef.current) {
-    //     videoRef.current.src = URL.createObjectURL(
-    //       new Blob([videoData], { type: 'video/mp4' }),
-    //     );
-    //   }
-    // });
+    socket.on('start', videoData => {
+      if (videoRef.current) {
+        videoRef.current.src = URL.createObjectURL(new Blob([videoData]));
+      }
+    });
 
     return () => {
       socket.disconnect();
@@ -27,14 +25,7 @@ function VideoModal() {
   return (
     <div>
       <ChildModalVideoBG>
-        <ChildModalVideo
-          ref={videoRef}
-          src="/assets/Samsung_social_contribution.mp4"
-          autoPlay
-          controls
-        />
-
-        {/* <ChildModalVideo ref={videoRef} autoPlay controls /> */}
+        <ChildModalVideo ref={videoRef} autoPlay controls />
       </ChildModalVideoBG>
     </div>
   );

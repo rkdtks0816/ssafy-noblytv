@@ -8,7 +8,7 @@ import pymysql
 import datetime
 import socketio
 
-old_user_id = "1"
+old_user_id = "4"
 nowD = ""
 
 from ctypes import *

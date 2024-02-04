@@ -25,7 +25,7 @@ if "yes" in res.lower():
     sendData("start")
 
     # 카메라로 영상 촬영    
-    subprocess.run(['python3.9', './videoSummarization/videoCapture.py'])
+    subprocess.run(['python3.8', './videoSummarization/videoCapture.py'])
     # os.system("python3.9 ~/videoSummarization/videoCapture.py")
 
     # 체조 완료 후 응원 문구

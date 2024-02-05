@@ -80,6 +80,11 @@ public class OldUserInfo {
     @OneToMany(mappedBy = "oldUserInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Gymnastics> gymnastics = new ArrayList<>();
 
+    @ToString.Exclude
+    @JsonManagedReference
+    @OneToMany(mappedBy = "oldUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Schedule> schedules = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     private UserType userType;
 }

@@ -40,4 +40,11 @@ public class ScheduleController {
         Schedule updatedSchedule = scheduleService.updateSchedule(scheduleId, scheduleDto);
         return ResponseEntity.ok(updatedSchedule);
     }
+
+    @DeleteMapping("/{scheduleId}")
+    @Operation(summary = "일정 삭제")
+    public ResponseEntity<Void> deleteSchedule(@PathVariable("scheduleId") Long scheduleId) {
+        scheduleService.deleteSchedule(scheduleId);
+        return ResponseEntity.noContent().build();
+    }
 }

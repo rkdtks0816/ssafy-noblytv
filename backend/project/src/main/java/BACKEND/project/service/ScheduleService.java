@@ -24,11 +24,15 @@ public class ScheduleService {
     private final OldUserRepository oldUserRepository;
     private final ScheduleRepository scheduleRepository;
 
+    private String getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
+
     @Transactional
     public Schedule registerSchedule(String oldUserId, ScheduleDto scheduleDto) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String familyUserId = authentication.getName();
+        String familyUserId = getCurrentUserId();
 
         FamilyUserInfo familyUser = familyUserRepository.findByUserId(familyUserId)
                 .orElseThrow(() -> new NoSuchElementException("해당 가족 회원이 존재하지 않습니다."));
@@ -57,8 +61,7 @@ public class ScheduleService {
     @Transactional(readOnly = true)
     public List<Schedule> getSchedules(String oldUSerId) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUserId = authentication.getName();
+        String currentUserId = getCurrentUserId();
 
         OldUserInfo oldUser = oldUserRepository.findByUserId(oldUSerId)
                 .orElseThrow(() -> new NoSuchElementException("해당 노인 회원이 존재하지 않습니다."));
@@ -83,8 +86,7 @@ public class ScheduleService {
     @Transactional
     public Schedule updateSchedule(Long scheduleId, ScheduleDto scheduleDto) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String familyUserId = authentication.getName();
+        String familyUserId = getCurrentUserId();
 
         FamilyUserInfo familyUser = familyUserRepository.findByUserId(familyUserId)
                 .orElseThrow(() -> new NoSuchElementException("해당 가족 회원이 존재하지 않습니다."));
@@ -101,4 +103,23 @@ public class ScheduleService {
 
         return schedule;
     }
+
+    @Transactional
+    public void deleteSchedule(Long scheduleId) {
+
+        String familyUserId = getCurrentUserId();
+
+        FamilyUserInfo familyUser = familyUserRepository.findByUserId(familyUserId)
+                .orElseThrow(() -> new NoSuchElementException("해당 가족 회원이 존재하지 않습니다."));
+
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new NoSuchElementException("해당 일정이 존재하지 않습니다."));
+
+        if (!schedule.getFamilyUser().equals(familyUser)) {
+            throw new IllegalArgumentException("해당 일정을 수정할 권한이 없습니다.");
+        }
+
+        scheduleRepository.delete(schedule);
+    }
+
 }

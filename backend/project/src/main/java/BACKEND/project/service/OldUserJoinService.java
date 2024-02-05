@@ -4,17 +4,22 @@ import BACKEND.project.domain.Medication;
 import BACKEND.project.dto.MedicationDto;
 import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.dto.OldUserRegistrationDto;
+import BACKEND.project.repository.MedicationRepository;
 import BACKEND.project.repository.OldUserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class OldUserJoinService {
 
     private final OldUserRepository oldUserRepository;
+    private final MedicationRepository medicationRepository;
 
     @Transactional
     public OldUserInfo registerUser(OldUserRegistrationDto oldUserRegistrationDto) {
@@ -48,5 +53,14 @@ public class OldUserJoinService {
         medication.setMedicine(medicationDto.getMedicine());
         medication.setMedicationTime(medicationDto.getMedicationTime());
         return medication;
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    @Transactional
+    public void resetIsRead() {
+        List<Medication> medications = medicationRepository.findAllByMedicationTimeIsNotNull();
+        for (Medication medication : medications) {
+            medication.setRead(false);
+        }
     }
 }

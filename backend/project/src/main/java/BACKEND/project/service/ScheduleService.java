@@ -8,6 +8,7 @@ import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.repository.OldUserRepository;
 import BACKEND.project.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -47,10 +48,16 @@ public class ScheduleService {
             throw new IllegalArgumentException("가족 회원과 노인 회원이 관계를 가지고 있지 않습니다.");
         }
 
+        if ((scheduleDto.getScheduleDay() == null && scheduleDto.getScheduleTime() == null) ||
+                (scheduleDto.getScheduleDay() != null && scheduleDto.getScheduleTime() != null)) {
+            throw new IllegalArgumentException("스케줄의 날짜와 시간 중 하나만 입력해야 합니다.");
+        }
+
         Schedule newSchedule = new Schedule();
         newSchedule.setFamilyUser(familyUser);
         newSchedule.setOldUser(oldUser);
         newSchedule.setSchedule(scheduleDto.getSchedule());
+        newSchedule.setScheduleDay(scheduleDto.getScheduleDay());
         newSchedule.setScheduleTime(scheduleDto.getScheduleTime());
 
         scheduleRepository.save(newSchedule);
@@ -98,7 +105,12 @@ public class ScheduleService {
             throw new IllegalArgumentException("해당 일정을 수정할 권한이 없습니다.");
         }
 
+        if (scheduleDto.getScheduleDay() != null && scheduleDto.getScheduleTime() != null) {
+            throw new IllegalArgumentException("스케줄의 날짜와 시간 중 하나만 수정해야 합니다.");
+        }
+
         schedule.setSchedule(scheduleDto.getSchedule());
+        schedule.setScheduleDay(scheduleDto.getScheduleDay());
         schedule.setScheduleTime(scheduleDto.getScheduleTime());
 
         return schedule;
@@ -122,4 +134,12 @@ public class ScheduleService {
         scheduleRepository.delete(schedule);
     }
 
+    @Scheduled(cron = "0 0 0 * * ?")
+    @Transactional
+    public void resetIsRead() {
+        List<Schedule> schedules = scheduleRepository.findAllByScheduleTimeIsNotNull();
+        for (Schedule schedule : schedules) {
+            schedule.setRead(false);
+        }
+    }
 }

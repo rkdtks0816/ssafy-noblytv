@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -35,6 +36,12 @@ public class Schedule {
     @Column(nullable = false)
     private String schedule;
 
-    @Column(nullable = false)
-    private LocalDateTime scheduleTime;
+    @Column
+    private LocalDateTime scheduleDay;
+
+    @Column
+    private LocalTime scheduleTime;
+
+    @Column
+    private boolean isRead = false;
 }

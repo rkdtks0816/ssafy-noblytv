@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     List<Schedule> findAllByOldUser(OldUserInfo oldUser);
+    List<Schedule> findAllByScheduleTimeIsNotNull();
 }

@@ -21,6 +21,7 @@ public class FamilyRelation {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "olduser_id")
+    @JsonIgnore
     private OldUserInfo oldUserInfo;
 
     @ToString.Exclude

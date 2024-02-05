@@ -109,9 +109,17 @@ public class ScheduleService {
             throw new IllegalArgumentException("스케줄의 날짜와 시간 중 하나만 수정해야 합니다.");
         }
 
-        schedule.setSchedule(scheduleDto.getSchedule());
-        schedule.setScheduleDay(scheduleDto.getScheduleDay());
-        schedule.setScheduleTime(scheduleDto.getScheduleTime());
+        if (scheduleDto.getScheduleDay() != null) {
+            schedule.setScheduleDay(scheduleDto.getScheduleDay());
+        }
+
+        if (scheduleDto.getScheduleTime() != null) {
+            schedule.setScheduleTime(scheduleDto.getScheduleTime());
+        }
+
+        if (scheduleDto.getSchedule() != null) {
+            schedule.setSchedule(scheduleDto.getSchedule());
+        }
 
         return schedule;
     }

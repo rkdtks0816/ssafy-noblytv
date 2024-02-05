@@ -9,7 +9,7 @@ quiz_file_path = './conversation/quiz.py'
 while True:
     if returnData() == "chejo" :
         sendMode('gymnastic')
-        os.system(f'python3.9 {gymnastic_file_path}')
+        os.system(f'python3.8 {gymnastic_file_path}')
         break
 
 time.sleep(2)
@@ -17,14 +17,14 @@ time.sleep(2)
 
 sendMode('quiz')
 time.sleep(2)
-os.system(f'python3.9 {quiz_file_path}')
+os.system(f'python3.8 {quiz_file_path}')
 
 time.sleep(2)
 ################################################################
 
 sendMode('diary')
 time.sleep(2)
-os.system(f'python3.9 {diary_file_path}')
+os.system(f'python3.8 {diary_file_path}')
 
 time.sleep(2)
 

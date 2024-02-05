@@ -43,8 +43,12 @@ public class QuizService {
         Quiz quiz = quizRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("해당 퀴즈가 존재하지 않습니다."));
 
-        quiz.setProblem(quizDto.getProblem());
-        quiz.setAnswer(quizDto.getAnswer());
+        if (quizDto.getProblem() != null) {
+            quiz.setProblem(quizDto.getProblem());
+        }
+        if (quizDto.getAnswer() != null) {
+            quiz.setAnswer(quizDto.getAnswer());
+        }
 
         return quizDto;
     }

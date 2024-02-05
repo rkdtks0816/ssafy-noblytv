@@ -41,6 +41,12 @@ public class DiaryService {
                 .orElseThrow(() -> new NoSuchElementException("해당 노인 회원이 존재하지 않습니다."));
 
         String currentUserId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // 로그인한 사용자가 노인 본인인 경우
+        if (currentUserId.equals(oldUserId)) {
+            return oldUser.getDiaries();
+        }
+
         FamilyUserInfo familyUser = familyUserRepository.findByUserId(currentUserId)
                 .orElseThrow(() -> new NoSuchElementException(("해당 가족 회원이 존재하지 않습니다.")));
 

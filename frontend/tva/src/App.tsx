@@ -13,9 +13,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Overlay />} />
+        <Route path="/" element={<OverlayR2 />} />
+        <Route path="/R4" element={<Overlay />} />
         <Route path="/R1" element={<OverlayR1 />} />
-        <Route path="/R2" element={<OverlayR2 />} />
         <Route path="/sign-in" element={<SignInTV />} />
         {/* gymnastics */}
         <Route path="/gymnastics/start" element={<GymnasticsStart />} />

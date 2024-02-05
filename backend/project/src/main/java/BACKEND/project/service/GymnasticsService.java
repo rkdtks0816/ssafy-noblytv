@@ -2,6 +2,7 @@ package BACKEND.project.service;
 
 import BACKEND.project.domain.Gymnastics;
 import BACKEND.project.domain.OldUserInfo;
+import BACKEND.project.dto.GymnasticsDto;
 import BACKEND.project.repository.GymnastcisRepository;
 import BACKEND.project.repository.OldUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,8 @@ public class GymnasticsService {
 
     @Transactional
     public Gymnastics saveGymnastics(String oldUserId, Gymnastics gymnastics) {
+
+
         if (gymnastcisRepository.existsByOldUserInfo_userIdAndVideoId(oldUserId, gymnastics.getVideoId())) {
             throw new IllegalArgumentException("이미 존재하는 videoId입니다.");
         }
@@ -28,7 +31,7 @@ public class GymnasticsService {
     }
 
     @Transactional
-    public Gymnastics updateGymnastics(Long id, Gymnastics newGymnastics) {
+    public Gymnastics updateGymnastics(Long id, GymnasticsDto newGymnastics) {
         Gymnastics existingGymnastics = gymnastcisRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 체조가 없습니다."));
         existingGymnastics.setKeyword(newGymnastics.getKeyword());

@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/users/family/signup", "/users/old/signup", "/users/family/login", "/tv/login", "/users/family/duplication/**", "/swagger-ui/**", "/v3/**", "/swagger-resources/**", "/api-docs/**", "/quiz/**", "/video/**", "/youtube").permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/users/family/signup", "/users/old/signup", "/users/family/login", "/tv/login", "/users/family/duplication/**", "/swagger-ui/**", "/v3/**", "/swagger-resources/**", "/api-docs/**", "/quiz/**", "/youtube", "/gymnastics/**").permitAll().anyRequest().authenticated())
                 .sessionManagement((sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, familyLoginService), UsernamePasswordAuthenticationFilter.class);
 

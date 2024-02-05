@@ -2,6 +2,7 @@ package BACKEND.project.controller;
 
 import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.dto.OldUserInfoDto;
+import BACKEND.project.dto.OldUserInfoResponseDto;
 import BACKEND.project.service.OldUserInfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,8 +20,8 @@ public class OldUserInfoController {
 
     @GetMapping("/{oldUserId}")
     @Operation(summary = "노인 회원 정보 조회")
-    public ResponseEntity<OldUserInfo> getUserInfo(@PathVariable("oldUserId") String oldUserId) {
-        OldUserInfo oldUserInfo = oldUserInfoService.getOldUserInfo(oldUserId);
+    public ResponseEntity<OldUserInfoResponseDto> getUserInfo(@PathVariable("oldUserId") String oldUserId) {
+        OldUserInfoResponseDto oldUserInfo = oldUserInfoService.getOldUserInfo(oldUserId);
         return ResponseEntity.ok(oldUserInfo);
     }
 

@@ -61,8 +61,8 @@ public class OldUserInfo {
     private List<Medication> medications = new ArrayList<>();
 
     @ToString.Exclude
+    @JsonManagedReference
     @OneToMany(mappedBy = "oldUserInfo")
-    @JsonBackReference
     private List<FamilyRelation> familyRelations = new ArrayList<>();
 
     @ToString.Exclude
@@ -71,8 +71,8 @@ public class OldUserInfo {
     private List<Diary> diaries = new ArrayList<>();
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuizResult> quizResults = new ArrayList<>();
 
     @ToString.Exclude

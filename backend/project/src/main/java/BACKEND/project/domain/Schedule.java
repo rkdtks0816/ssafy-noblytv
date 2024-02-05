@@ -1,5 +1,6 @@
 package BACKEND.project.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,10 +24,12 @@ public class Schedule {
 
     @ManyToOne
     @JoinColumn(name = "familyUserId")
+    @JsonBackReference
     private FamilyUserInfo familyUser;
 
     @ManyToOne
     @JoinColumn(name = "oldUserId")
+    @JsonBackReference
     private OldUserInfo oldUser;
 
     @Column(nullable = false, updatable = false)

@@ -3,7 +3,9 @@ package BACKEND.project.service;
 import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.domain.Medication;
 import BACKEND.project.domain.OldUserInfo;
+import BACKEND.project.dto.FamilyRelationResponseDto;
 import BACKEND.project.dto.OldUserInfoDto;
+import BACKEND.project.dto.OldUserInfoResponseDto;
 import BACKEND.project.repository.FamilyRelationRepository;
 import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.repository.MedicationRepository;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -81,7 +84,7 @@ public class OldUserInfoService {
     }
 
     @Transactional
-    public OldUserInfo getOldUserInfo(String oldUserId) {
+    public OldUserInfoResponseDto getOldUserInfo(String oldUserId) {
 
         OldUserInfo oldUserInfo = checkUserOrFamily(oldUserId);
 
@@ -95,6 +98,32 @@ public class OldUserInfoService {
             familyUserRepository.save(familyUserInfo);
         }
 
-        return oldUserInfo;
+        // OldUserInfo 객체를 OldUserInfoResponseDto 객체로 변환
+        OldUserInfoResponseDto oldUserInfoResponseDto = new OldUserInfoResponseDto();
+        oldUserInfoResponseDto.setId(oldUserInfo.getId());
+        oldUserInfoResponseDto.setUserId(oldUserInfo.getUserId());
+        oldUserInfoResponseDto.setUsername(oldUserInfo.getUsername());
+        oldUserInfoResponseDto.setBirth(oldUserInfo.getBirth());
+        oldUserInfoResponseDto.setLunarSolar(oldUserInfo.getLunarSolar());
+        oldUserInfoResponseDto.setGender(oldUserInfo.getGender());
+        oldUserInfoResponseDto.setTvCode(oldUserInfo.getTvCode());
+        oldUserInfoResponseDto.setMedications(oldUserInfo.getMedications());
+        oldUserInfoResponseDto.setDiaries(oldUserInfo.getDiaries());
+        oldUserInfoResponseDto.setQuizResults(oldUserInfo.getQuizResults());
+        oldUserInfoResponseDto.setGymnastics(oldUserInfo.getGymnastics());
+        oldUserInfoResponseDto.setSchedules(oldUserInfo.getSchedules());
+        oldUserInfoResponseDto.setUserType(oldUserInfo.getUserType());
+
+        // FamilyRelation 객체를 FamilyRelationResponseDto 객체로 변환
+        List<FamilyRelationResponseDto> familyRelationResponseDtos = oldUserInfo.getFamilyRelations().stream().map(fr -> {
+            FamilyRelationResponseDto familyRelationResponseDto = new FamilyRelationResponseDto();
+            familyRelationResponseDto.setUserId(fr.getFamilyUserInfo().getUserId());
+            familyRelationResponseDto.setUsername(fr.getFamilyUserInfo().getUsername());
+            return familyRelationResponseDto;
+        }).collect(Collectors.toList());
+
+        oldUserInfoResponseDto.setFamilyRelations(familyRelationResponseDtos);
+
+        return oldUserInfoResponseDto;
     }
 }

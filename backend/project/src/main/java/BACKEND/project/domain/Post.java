@@ -31,6 +31,9 @@ public class Post {
     @Column
     private LocalDateTime postedAt;
 
+    @Column
+    private boolean isViewed;
+
     public Post(OldUserInfo oldUserInfo, String videoUrl) {
         this.oldUserInfo = oldUserInfo;
         this.videoPath = videoPath;

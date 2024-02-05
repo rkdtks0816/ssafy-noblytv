@@ -27,14 +27,13 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
         // 로그인 및 회원가입 요청에 해당하는 URL일 경우, 토큰 유효성 검사를 수행하지 않음
         if (requestURI.equals("/users/family/login") || requestURI.equals("/users/family/signup") || requestURI.equals("/users/old/signup")
-                || requestURI.startsWith("/tv/login") || requestURI.startsWith("/users/family/duplication/") || requestURI.startsWith("/swagger-ui/") || requestURI.startsWith("/v3/") || requestURI.startsWith("/api-docs/") || requestURI.startsWith("/swagger-resources/") || requestURI.startsWith("/quiz/")  || requestURI.startsWith("/video/") || requestURI.equals("/youtube"))  {
+                || requestURI.startsWith("/tv/login") || requestURI.startsWith("/users/family/duplication/") || requestURI.startsWith("/swagger-ui/") || requestURI.startsWith("/v3/") || requestURI.startsWith("/api-docs/") || requestURI.startsWith("/swagger-resources/") || requestURI.startsWith("/quiz/") || requestURI.startsWith("/youtube") || requestURI.startsWith("/gymnastics"))  {
             chain.doFilter(request, response);
             return;
         }
 
         try {
             String token = resolveToken(httpRequest);
-
             // 토큰이 유효하고, 블랙리스트에 없는지 확인
             if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token) && !familyLoginService.isTokenBlacklisted(token)) {
                 Authentication authentication = jwtTokenProvider.getAuthentication(token);

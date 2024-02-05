@@ -12,7 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
-//@NoArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
 public class OldUserInfo {

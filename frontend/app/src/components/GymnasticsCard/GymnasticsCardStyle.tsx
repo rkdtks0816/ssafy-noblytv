@@ -47,18 +47,39 @@ const GymnasticsDayS = styled.div`
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
-const GymnasticsKeywordS = styled.div`
+const GymnasticsKeywordS = styled.select`
+  width: 100px
   font-weight: 900;
   font-size: 30px;
 
+  border: none;
   color: #5ab8c0;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
+const GymnasticsVideoS = styled.div`
+  width: 350px;
+  height: 197px;
+  margin-top: 10px;
+  border-radius: 10px 10px 0 0;
+  padding: 10px;
+
+  background: #f1dcaa;
+
+  font-weight: 400;
+  font-size: 30px;
+
+  color: #666666;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 const GymnasticsTitleS = styled.div`
   width: 350px;
-  margin-top: 10px;
-  border-radius: 10px;
+  border-radius: 0 0 10px 10px;
   padding: 10px;
 
   background: #f1dcaa;
@@ -80,5 +101,6 @@ export {
   GymnasticsHeaderS,
   GymnasticsDayS,
   GymnasticsKeywordS,
+  GymnasticsVideoS,
   GymnasticsTitleS,
 };

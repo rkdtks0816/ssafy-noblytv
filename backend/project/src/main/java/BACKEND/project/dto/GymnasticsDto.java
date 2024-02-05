@@ -16,4 +16,5 @@ public class GymnasticsDto {
     private String videoId;
 
     private String title;
+
 }

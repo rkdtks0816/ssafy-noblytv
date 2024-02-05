@@ -19,8 +19,8 @@ function GymnasticsModal() {
 
         if (data === '체조 시작 할께요!') {
           console.log('Gymnastic message:', data);
-          setIsPlaying(true);
           setIsActive(false);
+          setIsPlaying(true);
         } else if (data === '조금 있다가 꼭 체조 하셔야 해요!') {
           setIsActive(false);
           setIsPlaying(false);

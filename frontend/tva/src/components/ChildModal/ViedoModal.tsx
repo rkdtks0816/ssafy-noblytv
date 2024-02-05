@@ -1,33 +1,13 @@
-import { useEffect, useRef } from 'react';
-import io from 'socket.io-client';
-import { ChildModalVideoBG, ChildModalVideo } from './ChildModalStyles';
+import { ChildModalVideoBG } from './ChildModalStyles';
 
-function VideoModal() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const socket = io('http://i10c103.p.ssafy.io:9000');
+function VideoStream() {
+  const streamUrl = 'http://192.168.100.245:5000/video_feed';
 
-  useEffect(() => {
-    socket.on('connect', () => {
-      console.log('Socket Connected');
-    });
-
-    socket.on('start', videoData => {
-      if (videoRef.current) {
-        videoRef.current.src = URL.createObjectURL(new Blob([videoData]));
-      }
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   return (
-    <div>
-      <ChildModalVideoBG>
-        <ChildModalVideo ref={videoRef} autoPlay controls />
-      </ChildModalVideoBG>
-    </div>
+    <ChildModalVideoBG>
+      <img src={streamUrl} alt="비디오 스트림" style={{ width: '100%' }} />
+    </ChildModalVideoBG>
   );
 }
-export default VideoModal;
+
+export default VideoStream;

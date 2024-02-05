@@ -17,7 +17,6 @@ function DiaryModal() {
         setIsActive(true); // 데이터 수신 시 모달 활성화
 
         if (data === 'stop') {
-          setTimeout(() => {}, 5000);
           setIsActive(false); // 특정 조건에서 모달 비활성화
         }
       });

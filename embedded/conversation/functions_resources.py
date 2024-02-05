@@ -177,6 +177,31 @@ def returnQuizAnswer(id, ans):
 
     cur.execute(query, value)
     db.commit()
+
+def remainedVideo():
+    cnt = 0
+
+    cur.execute("select * from `post` order by posted_at desc limit 1")
+    for data in cur:
+        if data.get("is_viewed") == False:
+            cnt += 1
+
+    db.commit()
+    return cnt
+
+def nextVideo():
+    videoPath = ""
+
+    cur.execute("select * from `post` order by posted_at desc limit 1")
+    for data in cur:
+        if data.get("is_viewed"): 
+            break
+        videoPath = data.get("video_path")
+    
+    cur.execute("update `post` set is_viewed = True where video_path = %s", videoPath)
+    db.commit()
+
+    return videoPath
     
 # #######################################################################################################
 # p = pyaudio.PyAudio()

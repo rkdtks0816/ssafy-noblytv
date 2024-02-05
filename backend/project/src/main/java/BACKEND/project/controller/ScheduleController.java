@@ -33,4 +33,11 @@ public class ScheduleController {
         List<Schedule> schedules = scheduleService.getSchedules(oldUserId);
         return ResponseEntity.ok(schedules);
     }
+
+    @PutMapping("/{scheduleId}")
+    @Operation(summary = "일정 수정")
+    public ResponseEntity<Schedule> updateSchedule(@PathVariable("scheduleId") Long scheduleId, @RequestBody ScheduleDto scheduleDto) {
+        Schedule updatedSchedule = scheduleService.updateSchedule(scheduleId, scheduleDto);
+        return ResponseEntity.ok(updatedSchedule);
+    }
 }

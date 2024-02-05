@@ -79,4 +79,26 @@ public class ScheduleService {
 
         return scheduleRepository.findAllByOldUser(oldUser);
     }
+
+    @Transactional
+    public Schedule updateSchedule(Long scheduleId, ScheduleDto scheduleDto) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String familyUserId = authentication.getName();
+
+        FamilyUserInfo familyUser = familyUserRepository.findByUserId(familyUserId)
+                .orElseThrow(() -> new NoSuchElementException("해당 가족 회원이 존재하지 않습니다."));
+
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new NoSuchElementException("해당 일정이 존재하지 않습니다."));
+
+        if (!schedule.getFamilyUser().equals(familyUser)) {
+            throw new IllegalArgumentException("해당 일정을 수정할 권한이 없습니다.");
+        }
+
+        schedule.setSchedule(scheduleDto.getSchedule());
+        schedule.setScheduleTime(scheduleDto.getScheduleTime());
+
+        return schedule;
+    }
 }

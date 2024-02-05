@@ -5,7 +5,6 @@ from tqdm import tqdm
 import cv2
 import numpy as np
 from moviepy.editor import VideoFileClip, concatenate_videoclips
-import os
 import datetime
 
 def summarize_video():
@@ -102,5 +101,3 @@ def summarize_video():
     result = concatenate_videoclips(subclips)
 
     result.write_videofile(result_path)
-
-    os.system(f'scp -i "./I10C103T.pem" {result_path} ubuntu@i10c103.p.ssafy.io:~/song/front/frontend/app/src/assets')

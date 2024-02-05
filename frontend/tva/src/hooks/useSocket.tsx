@@ -9,10 +9,9 @@ function useSocket(url: string): Socket | null {
 
     setSocket(socketIo);
 
-    return () => {
-      socketIo.disconnect();
-    };
-  }, [url]);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return socket;
 }

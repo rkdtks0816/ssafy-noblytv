@@ -5,6 +5,8 @@ import ChildModal from '../ChildModal/ChildModal';
 
 function QuizModal() {
   const [quizContents, setQuizContents] = useState<string>('');
+  const [isActive, setIsActive] = useState<boolean>(false);
+
   const socket: Socket | null = useSocket('http://i10c103.p.ssafy.io:9000');
 
   useEffect(() => {
@@ -12,9 +14,11 @@ function QuizModal() {
       socket.on('message', (data: string) => {
         console.log('Quiz data received:', data);
         setQuizContents(data);
+        setIsActive(true); // 데이터 수신 시 모달 활성화
 
         if (data === '다음에 같이 퀴즈 놀이 해요.' || data === 'stop') {
           setTimeout(() => {}, 5000);
+          setIsActive(false); // 특정 조건에서 모달 비활성화
         }
       });
     }
@@ -24,9 +28,18 @@ function QuizModal() {
     };
   }, [socket]);
 
+  const toggleModal = () => {
+    setIsActive(!isActive);
+  };
+
   return (
-    <ChildModal title="퀴즈" content={quizContents}>
-      {/* 여기에 퀴즈 내용을 표시하는 추가적인 UI 요소를 넣을 수 있습니다. */}
+    <ChildModal
+      title="퀴즈"
+      content={quizContents}
+      isActive={isActive}
+      onToggle={toggleModal}
+    >
+      {/* 추가적인 UI 요소 */}
     </ChildModal>
   );
 }

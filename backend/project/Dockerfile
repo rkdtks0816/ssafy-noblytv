@@ -10,7 +10,7 @@ COPY . /app
 WORKDIR /app
 
 # xargs 설치
-RUN apt-get update && apt-get install -y xargs
+RUN apk --no-cache add findutils
 
 # Gradle Wrapper를 이용하여 애플리케이션 빌드
 RUN chmod +x ./gradlew && ./gradlew clean bootJar

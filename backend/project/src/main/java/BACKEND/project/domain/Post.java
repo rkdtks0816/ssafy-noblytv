@@ -20,12 +20,12 @@ public class Post {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "old_user_name")
+    @JoinColumn(name = "old_user_id")
     @JsonBackReference
     private OldUserInfo oldUserInfo;
 
     @ManyToOne
-    @JoinColumn(name = "family_user_name")
+    @JoinColumn(name = "family_user_id")
     @JsonBackReference
     private FamilyUserInfo familyUserInfo;
 

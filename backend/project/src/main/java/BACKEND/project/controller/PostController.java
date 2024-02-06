@@ -1,64 +1,42 @@
 package BACKEND.project.controller;
 
 import BACKEND.project.domain.FamilyUserInfo;
-import BACKEND.project.domain.OldUserInfo;
-import BACKEND.project.domain.Post;
-import BACKEND.project.service.FamilyUserJoinService;
-import BACKEND.project.service.OldUserInfoService;
-import BACKEND.project.service.OldUserJoinService;
+import BACKEND.project.dto.PostDto;
+import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.service.PostService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/posts")
-@RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
+    private final FamilyUserRepository familyUserRepository;
 
-    private final OldUserJoinService oldUserJoinService;
-
-    private final FamilyUserJoinService familyUserJoinService;
-
-    // 생성
-    @PostMapping
-    public ResponseEntity<Post> create(@RequestBody Post post) {
-        return ResponseEntity.ok(postService.save(post));
+    @Autowired
+    public PostController(PostService postService, FamilyUserRepository familyUserRepository) {
+        this.postService = postService;
+        this.familyUserRepository = familyUserRepository;
     }
 
-    // 단일조회
-    @GetMapping("/{id}")
-    public ResponseEntity<Post> read(@PathVariable Long id) {
-        return ResponseEntity.ok(postService.findById(id));
-    }
+    @PostMapping("/family")
+    public ResponseEntity<String> createPost(@RequestParam("file") MultipartFile file,
+                                             @RequestParam("userId") String userId) {
+        FamilyUserInfo familyUserInfo = familyUserRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("해당 사용자가 없습니다." + userId));
 
-    // 전체조회
-    @GetMapping
-    public ResponseEntity<List<Post>> readAll() {
-        return ResponseEntity.ok(postService.findAll());
-    }
-
-    // 수정
-    @PutMapping("/{id}")
-    public ResponseEntity<Post> update(@PathVariable Long id, @RequestBody Post newPost) {
-        Post post = postService.findById(id);
-        if (post == null) {
-            return ResponseEntity.notFound().build();
+        try {
+            postService.savePost(familyUserInfo, file);
+            return ResponseEntity.ok("File uploaded successfully");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading file");
         }
-        post.setVideoPath(newPost.getVideoPath());
-        return ResponseEntity.ok(postService.save(post));
-    }
-
-    // 삭제
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        postService.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }
+

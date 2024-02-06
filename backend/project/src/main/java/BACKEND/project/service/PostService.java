@@ -1,40 +1,56 @@
 package BACKEND.project.service;
 
+import BACKEND.project.domain.FamilyUserInfo;
+import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.domain.Post;
+import BACKEND.project.dto.FamilyUserInfoDto;
+import BACKEND.project.dto.OldUserInfoDto;
+import BACKEND.project.dto.PostDto;
+import BACKEND.project.repository.FamilyUserRepository;
+import BACKEND.project.repository.OldUserRepository;
 import BACKEND.project.repository.PostRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class PostService {
+
+
+    private final FamilyUserRepository familyUserRepository;
 
     private final PostRepository postRepository;
 
-    // 등록
-    @Transactional
-    public Post save(Post post) {
-        return postRepository.save(post);
+    @Autowired PostService (FamilyUserRepository familyUserRepository, PostRepository postRepository) {
+        this.familyUserRepository = familyUserRepository;
+        this.postRepository = postRepository;
     }
 
-    // 삭제
-    @Transactional
-    public void delete(Long id) {
-        postRepository.deleteById(id);
+
+    public void savePost(FamilyUserInfo familyUserInfo, MultipartFile videoFile) throws IOException {
+        // Get the original filename
+        String filename = videoFile.getOriginalFilename();
+
+        // Save the video file to the server
+        Path filePath = Paths.get("/home/ubuntu/song/front/frontend/app/src/assets/family_" + familyUserInfo.getId(), filename);
+        Files.createDirectories(filePath.getParent());
+        Files.write(filePath, videoFile.getBytes());
+
+        // Create a new post and associate it with the family user
+        Post post = new Post(familyUserInfo, "/assets/family_" + familyUserInfo.getId() + "/" + filename);
+        familyUserInfo.getPosts().add(post);
+
+        // Save the post to the database
+        postRepository.save(post);
     }
 
-    // 단일 조회
-    @Transactional
-    public Post findById(Long id) {
-        return postRepository.findById(id).orElse(null);
-    }
-
-    // 전체 조회
-    @Transactional(readOnly = true)
-    public List<Post> findAll() {
-        return postRepository.findAll();
-    }
 }

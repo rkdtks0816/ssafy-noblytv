@@ -25,10 +25,14 @@ public class PostService {
 
     public String saveVideo(MultipartFile file, String userId) throws IOException {
         // 파일 저장 로직
-        String dirPath = "/home/ubuntu/song/front/frontend/app/src/assets/family_" + userId;
+        //String dirPath = "/home/ubuntu/song/front/frontend/app/src/assets/family_" + userId;
+        String dirPath = "C:/Users/SSAFY/Desktop/S10P12C103/frontend/app/src/assets/family_" + userId;
         File directory = new File(dirPath);
         if (!directory.exists()) {
-            directory.mkdirs(); // 유저별 디렉토리 생성
+            boolean result = directory.mkdirs();
+            if (!result) {
+                throw new IOException("Failed to create directory " + dirPath);
+            }
         }
         String filePath = dirPath + "/" + file.getOriginalFilename();
         File dest = new File(filePath);
@@ -55,6 +59,9 @@ public class PostService {
     }
 
     public void savePost(PostDto postDto) {
+        if (postDto.getVideoPath() == null) {
+            throw new IllegalArgumentException("videoPath cannot be null");
+        }
         Post post = new Post();
 
         post.setId(postDto.getId());

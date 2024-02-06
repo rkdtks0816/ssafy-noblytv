@@ -22,7 +22,6 @@ public class PostController {
     @Autowired
     PostService postService;
 
-
     @PostMapping("/family")
     public ResponseEntity<?> uploadVideo(@RequestParam("file") MultipartFile file, @RequestParam("userId") String userId) {
         try {

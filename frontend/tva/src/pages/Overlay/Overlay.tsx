@@ -8,6 +8,8 @@ import useSocket from '../../hooks/useSocket';
 function Overlay() {
   const socket = useSocket('http://i10c103.p.ssafy.io:9000');
   const [activeModal, setActiveModal] = useState<number | null>(null);
+  const [news, setNews] = useState('');
+  const [commercial, setCommercial] = useState('');
 
   useEffect(() => {
     if (socket) {
@@ -26,6 +28,16 @@ function Overlay() {
           case 'diary':
             setActiveModal(3);
             console.log('activeModal', activeModal);
+            break;
+          case 'news':
+            setNews('news');
+            setNews('');
+            console.log('setNews', news);
+            break;
+          case 'commercial':
+            setNews('');
+            setNews('commercial');
+            console.log('setCommercial', commercial);
             break;
           default:
             setActiveModal(null);

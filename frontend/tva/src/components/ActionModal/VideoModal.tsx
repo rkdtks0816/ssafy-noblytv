@@ -11,22 +11,34 @@ function VideoModal() {
   const socket: Socket | null = useSocket('http://i10c103.p.ssafy.io:9000');
 
   useEffect(() => {
+    let timer: string | number | NodeJS.Timeout | undefined;
     if (socket) {
       socket.on('message', (data: string) => {
-        console.log('Diary data received:', data);
+        // 소켓통신에서 처음 데이터 수신했을 때 모달창 등장시키기
+        console.log('Video data received:', data);
         setVideoContents(data);
-        setIsActive(true); // 데이터 수신 시 모달 활성화
-        if (data === 'start') {
+        setIsActive(true);
+        // 영상을 확인하겠다고 했을 때 처리
+        if (data === 'yes') {
           setIsFullScreen(true);
-        } else if (data === 'stop') {
+
+          // BE에서 영상데이터 정보 가져오기
+        } else if (
+          data === 'stop' ||
+          data === 'no' ||
+          data === '나중에 또 봐요!'
+        ) {
           setIsFullScreen(false);
-          setIsActive(false);
+          timer = setTimeout(() => {
+            setIsActive(false);
+          }, 5000);
         }
       });
     }
 
     return () => {
       socket?.off('message');
+      if (timer) clearTimeout(timer);
     };
   }, [socket]);
 

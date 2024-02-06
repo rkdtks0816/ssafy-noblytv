@@ -1,63 +1,53 @@
-// Overlay.tsx
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import DiaryModal from '../../components/ActionModal/DiaryModal';
+import GymnasticsModal from '../../components/ActionModal/GymnasticsModal';
+import QuizModal from '../../components/ActionModal/QuizModal';
 import BgVideo from '../../components/BgVideo/BgVideo';
-import ChildModal from '../../components/ChildModal/ChildModal';
+import useSocket from '../../hooks/useSocket';
 
-function Overlay() {
+function OverlayR1() {
+  const socket = useSocket('http://i10c103.p.ssafy.io:9000');
   const [activeModal, setActiveModal] = useState<number | null>(null);
 
-  const openModal = (modalId: number) => {
-    setActiveModal(prevModal => (prevModal === modalId ? null : modalId));
-  };
-
   useEffect(() => {
-    const timer1 = setTimeout(() => {
-      setActiveModal(1); // 7초 후에 1번 모달 열기
-    }, 7000);
+    if (socket) {
+      console.log(socket);
+      socket.on('mode', mode => {
+        // console.log('socket connect', mode);
+        switch (mode) {
+          case 'gymnastic':
+            setActiveModal(1);
+            console.log('activeModal', activeModal);
+            break;
+          case 'quiz':
+            setActiveModal(2);
+            console.log('activeModal', activeModal);
+            break;
+          case 'diary':
+            setActiveModal(3);
+            console.log('activeModal', activeModal);
+            break;
+          default:
+            setActiveModal(null);
+            break;
+        }
+      });
+    }
 
-    const timer2 = setTimeout(() => {
-      setActiveModal(null); // 12초 후에 1번 모달 닫기
-    }, 12000);
-
-    const timer3 = setTimeout(() => {
-      setActiveModal(null); // 14초 후에 1번 모달 닫기
-      setActiveModal(2); // 그리고 2번 모달 열기
-    }, 14000);
-
-    const timer4 = setTimeout(() => {
-      setActiveModal(null); // 12초 후에 1번 모달 닫기
-    }, 19000);
-
-    const timer5 = setTimeout(() => {
-      setActiveModal(null); // 21초 후에 2번 모달 닫기
-    }, 21000);
-
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
-      clearTimeout(timer4);
-      clearTimeout(timer5);
-    };
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div>
+    <>
       <BgVideo />
-      <ChildModal
-        title="할아버지!"
-        content="움직일 시간이야!"
-        isActive={activeModal === 1}
-        onToggle={() => openModal(1)}
-      />
-      <ChildModal
-        title="할아버지!"
-        content="약 아직 안드셨죠?!?!?!?"
-        isActive={activeModal === 2}
-        onToggle={() => openModal(2)}
-      />
-    </div>
+      <div>
+        {activeModal === 1 && <GymnasticsModal />}
+        {activeModal === 2 && <QuizModal />}
+        {activeModal === 3 && <DiaryModal />}
+      </div>
+    </>
   );
 }
 
-export default Overlay;
+export default OverlayR1;

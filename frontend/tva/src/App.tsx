@@ -2,7 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import VideoModal from './components/ActionModal/VideoModal';
 import StreamingModal from './components/ChildModal/StreamingModal';
 import Diary from './pages/Diary/Diary';
-import OverlayR2 from './pages/Overlay/Overlay_R2';
+import Overlay from './pages/Overlay/Overlay';
 import Quiz from './pages/Quiz/Quiz';
 import QuizStart from './pages/Quiz/QuizStart';
 import SignInTV from './pages/SignInTV/SignInTV';
@@ -12,7 +12,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<OverlayR2 />} />
+        <Route path="/" element={<Overlay />} />
         <Route path="/sign-in" element={<SignInTV />} />
         {/* gymnastics */}
         <Route path="/gymnastics" element={<Gymnastics />} />

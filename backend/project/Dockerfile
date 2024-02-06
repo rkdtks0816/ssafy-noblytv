@@ -1,7 +1,7 @@
 # OpenJDK 21을 기반으로 하는 Dockerfile
 
 # OpenJDK 21 이미지를 베이스로 사용
-FROM openjdk:21
+FROM docker.io/library/openjdk:21
 
 # 애플리케이션을 빌드할 소스 코드 및 리소스 복사
 COPY . /app

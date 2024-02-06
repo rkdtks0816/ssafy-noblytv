@@ -6,14 +6,14 @@
   <usages>
     <entry>
       <string>nobly</string>
-      <ranges>3-4</ranges>
+      <ranges>3-6</ranges>
     </entry>
   </usages>
   <facets>
     <com.cloudbees.plugins.credentials.fingerprints.ItemCredentialsFingerprintFacet plugin="credentials@1319.v7eb_51b_3a_c97b_">
-      <timestamp>1707208190051</timestamp>
+      <timestamp>1707208653165</timestamp>
       <itemFullName>nobly</itemFullName>
-      <timestamp0>1707207630021</timestamp0>
+      <timestamp0>1707208595073</timestamp0>
     </com.cloudbees.plugins.credentials.fingerprints.ItemCredentialsFingerprintFacet>
   </facets>
 </fingerprint>

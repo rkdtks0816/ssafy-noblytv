@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import YouTube, { YouTubeProps } from 'react-youtube';
 import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
-import VideoModal from '../../components/ChildModal/ViedoModal';
+import VideoModal from '../../components/ChildModal/StreamingModal';
 
 function Gymnastics() {
   const socket = io('http://i10c103.p.ssafy.io:9000');

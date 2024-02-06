@@ -22,8 +22,10 @@ function GymnasticsModal() {
           setIsActive(false);
           setIsPlaying(true);
         } else if (data === '조금 있다가 꼭 체조 하셔야 해요!') {
-          setIsActive(false);
-          setIsPlaying(false);
+          setTimeout(() => {
+            setIsActive(false);
+            setIsPlaying(false);
+          }, 5000);
         }
       });
     }

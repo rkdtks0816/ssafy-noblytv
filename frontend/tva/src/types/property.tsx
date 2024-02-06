@@ -4,4 +4,5 @@ export interface ChildModalProps {
   isActive?: boolean;
   onToggle?: () => void;
   children?: React.ReactNode;
+  isFullScreen?: boolean;
 }

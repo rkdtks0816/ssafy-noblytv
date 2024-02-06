@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-const ChildModalBg = styled.div`
+const ChildModalBg = styled.div<{ isFullScreen?: boolean }>`
   position: fixed;
-  right: -100vw;
-  transition: right 1s ease-out;
-  bottom: 5vh;
-  width: 22vw;
-  height: 60vh;
+  right: ${props => (props.isFullScreen ? '0' : '-100vw')};
+  /* transition: right 2s ease-out; */
+  transition: all 2s ease-out;
+  bottom: ${props => (props.isFullScreen ? '0' : '5vh')};
+  width: ${props => (props.isFullScreen ? '100vw' : '22vw')};
+  height: ${props => (props.isFullScreen ? '100vh' : '60vh')};
   min-height: 20vh; /* 최소 높이 설정 */
   display: flex;
   align-items: center;
@@ -17,7 +18,7 @@ const ChildModalBg = styled.div`
   box-shadow: 0px 0px 5vw 0.1vw #444444;
   backdrop-filter: blur(125px);
 
-  border-radius: 5vw;
+  border-radius: ${props => (props.isFullScreen ? '0' : '5vw')};
 
   font-family: 'BM HANNA_TTF';
   font-style: normal;

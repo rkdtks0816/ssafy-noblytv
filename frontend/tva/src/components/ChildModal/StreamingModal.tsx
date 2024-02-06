@@ -1,6 +1,6 @@
 import { ChildModalVideoBG } from './ChildModalStyles';
 
-function VideoStream() {
+function StreamingModal() {
   const streamUrl = 'http://192.168.100.245:5000/video_feed';
 
   return (
@@ -10,4 +10,4 @@ function VideoStream() {
   );
 }
 
-export default VideoStream;
+export default StreamingModal;

@@ -1,0 +1,19 @@
+version: '3'
+services:
+  sdb:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: project
+    ports:
+      - "3309:3306"
+  sapi:
+    build: 
+      context: ./backend/project/
+      dockerfile: dockerfile
+    ports:
+      - "8888:8080"
+  sweb:
+    build: ./frontend/app/
+    ports:
+      - "3001:3000"

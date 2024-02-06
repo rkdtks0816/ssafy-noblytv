@@ -1,0 +1,66 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1400.v7fd111b_ec82f">
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty plugin="gitlab-plugin@1.8.0">
+      <gitLabConnection></gitLabConnection>
+      <jobCredentialId></jobCredentialId>
+      <useAlternativeCredential>false</useAlternativeCredential>
+    </com.dabsquared.gitlabjenkins.connection.GitLabConnectionProperty>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers>
+        <com.dabsquared.gitlabjenkins.GitLabPushTrigger plugin="gitlab-plugin@1.8.0">
+          <spec></spec>
+          <triggerOnPush>true</triggerOnPush>
+          <triggerToBranchDeleteRequest>false</triggerToBranchDeleteRequest>
+          <triggerOnMergeRequest>true</triggerOnMergeRequest>
+          <triggerOnlyIfNewCommitsPushed>false</triggerOnlyIfNewCommitsPushed>
+          <triggerOnPipelineEvent>false</triggerOnPipelineEvent>
+          <triggerOnAcceptedMergeRequest>false</triggerOnAcceptedMergeRequest>
+          <triggerOnClosedMergeRequest>false</triggerOnClosedMergeRequest>
+          <triggerOnApprovedMergeRequest>true</triggerOnApprovedMergeRequest>
+          <triggerOpenMergeRequestOnPush>never</triggerOpenMergeRequestOnPush>
+          <triggerOnNoteRequest>true</triggerOnNoteRequest>
+          <noteRegex>Jenkins please retry a build</noteRegex>
+          <ciSkip>true</ciSkip>
+          <skipWorkInProgressMergeRequest>true</skipWorkInProgressMergeRequest>
+          <labelsThatForcesBuildIfAdded></labelsThatForcesBuildIfAdded>
+          <setBuildDescription>true</setBuildDescription>
+          <branchFilterType>All</branchFilterType>
+          <includeBranchesSpec></includeBranchesSpec>
+          <excludeBranchesSpec></excludeBranchesSpec>
+          <sourceBranchRegex></sourceBranchRegex>
+          <targetBranchRegex></targetBranchRegex>
+          <secretToken>{AQAAABAAAAAwFFWNxXLBfpbvrYvSdQysaHGU1amnyo73Rkc4DZhkjl3cbwDE4yNXgeT4ZKJQ3Mo1ylgK4shZh7AUpJ9fygXfTQ==}</secretToken>
+          <pendingBuildName></pendingBuildName>
+          <cancelPendingBuildsOnUpdate>false</cancelPendingBuildsOnUpdate>
+        </com.dabsquared.gitlabjenkins.GitLabPushTrigger>
+      </triggers>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@3853.vb_a_490d892963">
+    <scm class="hudson.plugins.git.GitSCM" plugin="git@5.2.1">
+      <configVersion>2</configVersion>
+      <userRemoteConfigs>
+        <hudson.plugins.git.UserRemoteConfig>
+          <url>https://lab.ssafy.com/s10-webmobile3-sub2/S10P12C103.git</url>
+          <credentialsId>1a2a2f0c-affe-451c-a86d-561070ef0321</credentialsId>
+        </hudson.plugins.git.UserRemoteConfig>
+      </userRemoteConfigs>
+      <branches>
+        <hudson.plugins.git.BranchSpec>
+          <name>*/feature/jenkins</name>
+        </hudson.plugins.git.BranchSpec>
+      </branches>
+      <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+      <submoduleCfg class="empty-list"/>
+      <extensions/>
+    </scm>
+    <scriptPath>Jenkinsfile</scriptPath>
+    <lightweight>true</lightweight>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>

@@ -1,57 +1,20 @@
-pipeline {
-    agent any
-
-    tools {
-        jdk "java-21"
-        gradle "gradle-8.5"
+stages {
+    stage('Deploy with Docker Compose') {
+        steps {
+            // Docker Compose 실행
+            script {
+                sh 'docker-compose -f docker-compose.yml up -d'
+            }
+        }
     }
+}
 
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Build JAR') {
-            steps {
-                script {
-                    sh '''
-                        cd ./backend/project
-                        gradle build
-                    '''
-                }
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    sh '''
-                        cd ./backend/project
-                        docker build -t easyho1129/c103_back .
-                    '''
-                }
-            }
-        }
-
-        stage('Delete Previous Docker Container') {
-            steps {
-                script {
-                    sh '''
-                        docker stop springboot
-                        docker rm springboot
-                    '''
-                }
-            }
-        }
-
-        stage('Run Docker Container') {
-            steps {
-                script {
-                    sh "docker run -d -p 3000:3000 --network=project_default --name springboot easyho1129/c103_back"
-                }
-            }
+post {
+    success {
+        script {
+            // Git 저장소에 코드가 푸시될 때마다
+            // 현재 실행 중인 Docker Compose 서비스를 중지하고 제거
+            sh 'docker-compose -f docker-compose.yml down'
         }
     }
 }

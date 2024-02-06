@@ -16,7 +16,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding='utf-8')
 
 isFinished = False
-filename = datetime.datetime.now().strftime("~/videoSummarization/videos/%Y-%m-%d") + '.mp4'
+filename = datetime.datetime.now().strftime("./videoSummarization/videos/%Y-%m-%d") + '.mp4'
 
 sio = socketio.Client()
 

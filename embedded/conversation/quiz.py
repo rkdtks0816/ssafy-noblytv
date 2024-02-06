@@ -22,7 +22,7 @@ if "yes" in res.lower():
         sendData(quiz)
         speak(quiz)
         res = getAudio()
-        system_instruction = f"{quiz} 위 질문의 정답은 {ans}이다. user는 질문을 듣고 {res}라고 대답했다. {gender}의 대답에 대해 짧은 반응을 해줘라."
+        system_instruction = f"{quiz} 위 질문의 정답은 {ans}이다. user는 질문을 듣고 {res}라고 대답했다. {gender}가 맞았는지 틀렸는지 알려주고, 짧은 반응을 해라."
         res = getAnswer(system_instruction)
         sendData(res)
         speak(res)

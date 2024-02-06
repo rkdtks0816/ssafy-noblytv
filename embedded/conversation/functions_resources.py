@@ -8,6 +8,7 @@ import socketio
 
 old_user_id = "1"
 nowD = ""
+family = []
 time = str(datetime.datetime.now()).split()[0]
 result_path = f"./videoSummarization/videos/{time}_summary.mp4"
 
@@ -60,6 +61,10 @@ def sendData(text):
 def sendMode(text):
     sio.emit('mode', text)
 
+@sio.event
+def sendType(text):
+    sio.emit('mode_type', text)
+
 def returnData():
     return nowD
 
@@ -78,7 +83,7 @@ def chat(text):
     messages = msg
     res = client.chat.completions.create(model="gpt-3.5-turbo", messages = messages + [user_turn])
     response_text = res.choices[0].message.content
-    assistant_turn = dict({"role": "assistant","content": response_text})
+    assistant_turn = {"role": "assistant","content": response_text}
 
     msg.append(user_turn)
     msg.append(assistant_turn)
@@ -91,8 +96,8 @@ def continueChat(text):
     Your job is to classify intent. {gender}가 대화를 끝내고 싶으면 no이고, 다른 경우에는 yes이다.
 
     Choose one of the following intents:
-    - yes
-    - no
+    - no: don't want to continue conversation
+    - yes: other situations
 
     User: {text}
     Intent:
@@ -133,7 +138,10 @@ def summarize(text):
     summarization of diary
     '''
     system_instruction = f"user의 일기와 대화들을 bullet point로 3줄 요약해준다."
-    messages=[{"role":"system", "content": persona}, msg, {"role": "system", "content": system_instruction}]
+    messages = [{"role":"system", "content": persona}]
+    for m in msg:
+        messages.append(m)
+    messages.append({"role": "system", "content": system_instruction})
     res = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
     summary = res.choices[0].message.content
     return summary
@@ -252,10 +260,56 @@ def returnQuizAnswer(id, ans):
 
     cur.execute(query, value)
     db.commit()
+
+#######################################################################
+def getFamilyId():
+    global family
+    family = []
+
+    cur.execute("select familyuser_id from `family_relation` WHERE olduser_id = %s", old_user_id)
+    for data in cur:
+        family.append(data.get("familyuser_id"))
+
+def remainedVideo():
+    getFamilyId()
+
+    cnt = 0
+    cur.execute("SELECT * FROM `post` WHERE family_user_id IN %s ORDER BY posted_at DESC", (tuple(family),))
+
+    for data in cur:
+        is_viewed = int.from_bytes(data.get("is_viewed"), byteorder='big')
+        if is_viewed == 0:
+            cnt += 1
+
+    return cnt
+
+def nextVideo():
+    getFamilyId()
+    videoPath = ""
+
+    cur.execute("SELECT * FROM `post` WHERE family_user_id IN %s ORDER BY posted_at DESC", (tuple(family),))
+
+    for data in cur:
+        is_viewed = int.from_bytes(data.get("is_viewed"), byteorder='big')
+        if is_viewed == 1:
+            break
+        videoPath = data.get("video_path")
+    
+    cur.execute("update `post` set is_viewed = 1 where video_path = %s", videoPath)
+    db.commit()
+
+    return videoPath
     
 #######################################################################
 def saveVideo():
     os.system(f'scp -i "./I10C103T.pem" {result_path} ubuntu@i10c103.p.ssafy.io:~/song/front/frontend/app/src/assets/old_{old_user_id}')
+    query = "insert into `post` (is_viewed, posted_at, video_path, family_user_id, old_user_id) values (%s, %s, %s, %s, %s)"
+    time = datetime.datetime.now()
+    nowTime = str(time).split()[0]
+    value = (True, time, f"/old_{old_user_id}/{nowTime}_summary.mp4", None, old_user_id)
+
+    cur.execute(query, value)
+    db.commit()
 
 # #######################################################################################################
 # import pyaudio

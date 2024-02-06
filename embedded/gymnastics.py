@@ -16,11 +16,11 @@ audio = getAudio()
 res = classify(res, audio)
 print(res)
 if "yes" in res.lower():
-    sendData("체조 시작 할께요!")
-    speak("체조 시작 할께요!")
-
     # FE로 시작 신호 보내기
     sendData("start")
+
+    sendData("체조 시작 할께요!")
+    speak("체조 시작 할께요!")
 
     # 카메라로 영상 촬영    
     subprocess.run(['python3', './videoSummarization/videoCapture.py'])

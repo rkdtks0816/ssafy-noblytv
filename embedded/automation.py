@@ -1,5 +1,5 @@
 import subprocess
-from conversation.functions_resources import sendMode
+from conversation.functions_resources import sendMode, sendData, remainedVideo
 
 mode = input()
 
@@ -14,3 +14,10 @@ elif mode == "quiz":
 elif mode == "gymnastic":
     sendMode("gymnastic")
     subprocess.run(["python3", "./gymnastics.py"])
+
+elif mode == "community":
+    if remainedVideo:
+        sendMode("community")
+        subprocess.run(["python3", "./conversation/community.py"])
+    else:
+        sendData("No remained video")

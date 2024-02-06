@@ -14,6 +14,8 @@ services:
     ports:
       - "8888:8080"
   sweb:
-    build: ./frontend/app/
+    build: 
+      context: ./frontend/app/
+      dockerfile: dockerfile
     ports:
       - "3001:3000"

@@ -1,23 +1,39 @@
 pipeline {
     agent any
 
+    environment {
+        COMPOSE_VERSION = '1.29.2'
+    }
+
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    // Your build steps go here
+                }
+            }
+        }
+
         stage('Deploy with Docker Compose') {
             steps {
-                // Docker Compose 실행
                 script {
-                    sh 'docker-compose up -d'
+                    sh "docker-compose -v"
+                    sh "docker-compose up -d"
                 }
             }
         }
     }
 
     post {
-        success {
+        always {
             script {
-                // Git 저장소에 코드가 푸시될 때마다
-                // 현재 실행 중인 Docker Compose 서비스를 중지하고 제거
-                sh 'docker-compose down'
+                sh "docker-compose down"
             }
         }
     }

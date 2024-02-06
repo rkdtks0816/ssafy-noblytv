@@ -31,12 +31,12 @@ function Overlay() {
             break;
           case 'news':
             setNews('news');
-            setNews('');
+            setCommercial('');
             console.log('setNews', news);
             break;
           case 'commercial':
             setNews('');
-            setNews('commercial');
+            setCommercial('commercial');
             console.log('setCommercial', commercial);
             break;
           default:
@@ -49,13 +49,13 @@ function Overlay() {
     return () => {
       if (socket) socket.off('mode');
     };
-  }, [activeModal, socket]);
+  }, [activeModal, commercial, news, socket]);
 
   const isMuted = activeModal !== null;
 
   return (
     <>
-      <BgVideo muted={isMuted} news="dsa" commercial="dsa" />
+      <BgVideo muted={isMuted} news={news} commercial={commercial} />
       <div>
         {activeModal === 1 && <GymnasticsModal />}
         {activeModal === 2 && <QuizModal />}

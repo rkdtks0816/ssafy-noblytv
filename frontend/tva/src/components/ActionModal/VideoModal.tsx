@@ -6,6 +6,7 @@ import ChildModal from '../ChildModal/ChildModal';
 function VideoModal() {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [videoContents, setVideoContents] = useState<string>('');
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
   const socket: Socket | null = useSocket('http://i10c103.p.ssafy.io:9000');
 
@@ -16,9 +17,10 @@ function VideoModal() {
         setVideoContents(data);
         setIsActive(true); // 데이터 수신 시 모달 활성화
         if (data === 'start') {
-          // 모달 창을 전체화면으로 전환하는 로직을 구현
+          setIsFullScreen(true);
         } else if (data === 'stop') {
-          setIsActive(false); // 특정 조건에서 모달 비활성화
+          setIsFullScreen(false);
+          setIsActive(false);
         }
       });
     }
@@ -38,6 +40,7 @@ function VideoModal() {
       content={videoContents}
       isActive={isActive}
       onToggle={toggleModal}
+      isFullScreen={isFullScreen || false} // 기본값 false 설정
     >
       {/* 추가적인 UI 요소 */}
     </ChildModal>

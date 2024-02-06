@@ -7,13 +7,28 @@ import {
 } from './ChildModalStyles';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function ChildModal({ title, content, isActive, onToggle }: ChildModalProps) {
+function ChildModal({
+  title,
+  content,
+  isActive,
+  isFullScreen,
+}: ChildModalProps) {
+  const getRightStyle = () => {
+    if (isFullScreen) return '0';
+    return isActive ? '3vw' : '-100%';
+  };
+
   return (
     <div>
       {/* <button type="button" onClick={onToggle}>
         Open Modal
       </button> */}
-      <ChildModalBg style={{ right: isActive ? '3vw' : '-100%' }}>
+      <ChildModalBg
+        isFullScreen={isFullScreen}
+        style={{
+          right: getRightStyle(),
+        }}
+      >
         <ChildModalTitle>{title}</ChildModalTitle>
         <ChildModalContent>{content}</ChildModalContent>
         <ChildModalImg />

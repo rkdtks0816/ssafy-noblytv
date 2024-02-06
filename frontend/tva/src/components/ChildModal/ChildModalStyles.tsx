@@ -23,6 +23,18 @@ const ChildModalBg = styled.div`
   font-style: normal;
   font-weight: 900;
   color: #222222;
+
+  // 풀 스크린 스타일
+  ${({ isFullScreen }) =>
+    isFullScreen &&
+    `
+      width: 100vw;
+      height: 100vh;
+      right: 0;
+      top: 0;
+      bottom: auto;
+      border-radius: 0;
+    `}
 `;
 
 const ChildModalTitle = styled.div`

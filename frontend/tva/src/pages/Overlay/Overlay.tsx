@@ -39,9 +39,11 @@ function Overlay() {
     };
   }, [activeModal, socket]);
 
+  const isMuted = activeModal !== null;
+
   return (
     <>
-      <BgVideo />
+      <BgVideo muted={isMuted} />
       <div>
         {activeModal === 1 && <GymnasticsModal />}
         {activeModal === 2 && <QuizModal />}

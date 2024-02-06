@@ -1,13 +1,13 @@
 import BgVideoS from './BgVideoStyle';
 
-function BgVideo() {
+interface BgVideoProps {
+  muted: boolean;
+}
+function BgVideo({ muted }: BgVideoProps) {
   return (
     <div>
-      <BgVideoS controls>
-        <source
-          src="src/assets/Samsung_social_contribution.mp4"
-          type="video/mp4"
-        />
+      <BgVideoS controls autoPlay muted={muted} loop>
+        <source src="src/assets/news.mp4" type="video/mp4" />
       </BgVideoS>
     </div>
   );

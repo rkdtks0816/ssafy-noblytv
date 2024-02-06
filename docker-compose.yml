@@ -27,8 +27,3 @@ volumes:
   scripts:
     driver: local
     name: "${PWD}/scripts"
-
-networks:
-  default:
-    external:
-      name: c103_default

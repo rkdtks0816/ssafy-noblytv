@@ -33,7 +33,7 @@
           <excludeBranchesSpec></excludeBranchesSpec>
           <sourceBranchRegex></sourceBranchRegex>
           <targetBranchRegex></targetBranchRegex>
-          <secretToken>{AQAAABAAAAAwHhJNNpDfVOQJhiVRy71xCUEEcYRrIn1N8BkQWHtFx8IdHzdseXOCvp+zO018wavrarGCzgbr3qADE4zBaLeGnw==}</secretToken>
+          <secretToken>{AQAAABAAAAAwzGXd9b5fi1lkSuw54jMNb1yzOQslrEV9Ql/OWq4rafIyBUVBtTwDvXKQCtDBqJ9YOQtr6w9lVVZh4f8tvx6JoQ==}</secretToken>
           <pendingBuildName></pendingBuildName>
           <cancelPendingBuildsOnUpdate>false</cancelPendingBuildsOnUpdate>
         </com.dabsquared.gitlabjenkins.GitLabPushTrigger>

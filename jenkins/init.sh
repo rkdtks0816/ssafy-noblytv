@@ -6,7 +6,7 @@ if [ ! -d "$JENKINS_DIR" ]; then
 fi
 
 # Docker Compose 실행
-docker-compose -f docker-compose-jenkins.yml up -d
+docker-compose up -d
 
 # Jenkins 컨테이너가 완전히 실행될 때까지 대기
 sleep 60

@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_HOST = "unix:///var/run/docker.sock"
+    }
+
     stages {
         stage('Deploy with Docker Compose') {
             steps {

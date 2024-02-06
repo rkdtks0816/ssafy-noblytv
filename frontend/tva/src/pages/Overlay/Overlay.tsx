@@ -8,6 +8,8 @@ import useSocket from '../../hooks/useSocket';
 function Overlay() {
   const socket = useSocket('http://i10c103.p.ssafy.io:9000');
   const [activeModal, setActiveModal] = useState<number | null>(null);
+  const [news, setNews] = useState('');
+  const [commercial, setCommercial] = useState('');
 
   useEffect(() => {
     if (socket) {
@@ -32,18 +34,38 @@ function Overlay() {
             break;
         }
       });
+      socket.on('type', type => {
+        console.log('socket type', type);
+        switch (type) {
+          case 'news':
+            setNews(news);
+            setCommercial('');
+            break;
+          case 'commercial':
+            setNews('');
+            setCommercial(commercial);
+            break;
+          default:
+            setNews('');
+            setCommercial('');
+            break;
+        }
+      });
     }
 
     return () => {
-      if (socket) socket.off('mode');
+      if (socket) {
+        socket.off('mode');
+        socket.off('type');
+      }
     };
-  }, [activeModal, socket]);
+  }, [activeModal, commercial, news, socket]);
 
   const isMuted = activeModal !== null;
 
   return (
     <>
-      <BgVideo muted={isMuted} />
+      <BgVideo muted={isMuted} news={news} commercial={commercial} />
       <div>
         {activeModal === 1 && <GymnasticsModal />}
         {activeModal === 2 && <QuizModal />}

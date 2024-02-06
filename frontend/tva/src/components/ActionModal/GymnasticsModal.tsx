@@ -28,7 +28,7 @@ function GymnasticsModal() {
           setTimeout(() => {
             setIsActive(false);
             setIsPlaying(false);
-          }, 10000);
+          }, 7000);
         }
       });
     }

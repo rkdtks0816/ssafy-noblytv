@@ -1,4 +1,3 @@
-from gtts import gTTS
 import os
 import speech_recognition as sr
 from openai import OpenAI
@@ -116,9 +115,13 @@ def speak(text ,lang="ko", speed=False):
     change text to speech (TTS)
     '''
     try:
-        tts = gTTS(text=text, lang=lang , slow=speed)
-        tts.save("./tts.mp3")
-        os.system("mpg321 ./tts.mp3")
+        response = client.audio.speech.create(
+        model="tts-1-hd",
+        voice="nova",
+        input=f"{text}"
+        )
+        response.stream_to_file("speech.mp3")
+        os.system("mpg321 ./speech.mp3")
     except:
         print("No text to speak")
 
@@ -182,6 +185,7 @@ def classify(question, answer):
                 {"role": "system", "content": persona},
                 {"role": "user", "content": prompt},
             ],
+            temperature=0,
         ).choices[0].message.content
     
     return res
@@ -277,17 +281,17 @@ cur = db.cursor(pymysql.cursors.DictCursor)
 
 gender = getGender()
 
-persona = f"""[Instruction]
+persona = f"""<Instruction>
 {gender}와 짧은 대화를 진행합니다. {gender}에게 하는 질문은 한 번에 하나 입니다.
-[END Instruction]
+</Instruction>
 
-[context]
+<context>
 {gender}는 혼자 살고 있습니다.
-[END Context]
+</Context>
 
-[persona]
+<persona>
 당신은 {gender}의 7살 손주입니다. 당신은 {gender}와 대화를 하고 있습니다. {gender}에게 대하듯 편하게 말해주세요.
-[END persona]
+</persona>
 """
 
 msg = [{"role": "system", "content": persona},{"role": "user", "content": f"{gender}가 일기를 쓰면 그 일기 내용으로 {gender}에게 짧은 질문을 하나만 하고, 자연스럽게 짧은 대화를 이어간다."}]

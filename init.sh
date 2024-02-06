@@ -1,10 +1,15 @@
 #!/bin/bash
 
+JENKINS_DIR="./jenkins"
+if [ ! -d "$JENKINS_DIR" ]; then
+    mkdir "$JENKINS_DIR"
+fi
+
 # Docker Compose 실행
 docker-compose -f docker-compose-jenkins.yml up -d
 
-# Jenkins 컨테이너가 완전히 실행될 때까지 대기 (예: 30초)
-sleep 30
+# Jenkins 컨테이너가 완전히 실행될 때까지 대기
+sleep 60
 
 # Jenkins 폴더로 이동
 cd ./jenkins
@@ -12,8 +17,7 @@ cd ./jenkins
 # update center에 필요한 CA 파일 다운로드
 UPDATE_CENTER_DIR="./update-center-rootCAs"
 if [ ! -d "$UPDATE_CENTER_DIR" ]; then
-    sudo mkdir "$UPDATE_CENTER_DIR"
-    sudo chown $(whoami) "$UPDATE_CENTER_DIR"
+    mkdir "$UPDATE_CENTER_DIR"
 fi
 
 wget https://cdn.jsdelivr.net/gh/lework/jenkins-update-center/rootCA/update-center.crt -O "$UPDATE_CENTER_DIR/update-center.crt"

@@ -1,5 +1,5 @@
 # OpenJDK 21 이미지를 베이스로 사용
-FROM docker.io/library/openjdk:21
+FROM openjdk:21-jdk-slim
 
 # 애플리케이션을 빌드할 소스 코드 및 리소스 복사
 COPY . /app
@@ -7,8 +7,8 @@ COPY . /app
 # 작업 디렉토리 설정
 WORKDIR /app
 
-# xargs 설치를 위해 apk update 및 findutils 설치
-RUN apk update && apk add --no-cache findutils
+# xargs 설치를 위해 apt-get update 및 findutils 설치
+RUN apt-get update && apt-get install -y findutils
 
 # Gradle Wrapper를 이용하여 애플리케이션 빌드
 RUN chmod +x ./gradlew && ./gradlew clean bootJar

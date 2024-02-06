@@ -21,21 +21,14 @@ services:
     ports:
       - "3001:3000"
 
-# 이미지 삭제 스크립트 실행
 volumes:
   cleanup:
     external: true
   scripts:
     driver: local
     name: "${PWD}/scripts"
-  image_cleanup:
-    image: alpine:latest
-    entrypoint: ["/bin/sh", "-c"]
-    command: ["cp /scripts/cleanup.sh /target && /target/cleanup.sh"]
-    volumes:
-      - cleanup:/scripts
-      - scripts:/target
-    depends_on:
-      - sdb
-      - sapi
-      - sweb
+
+networks:
+  default:
+    external:
+      name: c103_default

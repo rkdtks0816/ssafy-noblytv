@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import BackBtnStyle from '../../components/BackBtn/BackBtnStyle';
 import BgImgStyle from '../../components/BgImg/BgImgStyle';
 import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
@@ -7,24 +9,28 @@ import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import AddSeniorS from './SeniorConnectStyle';
-import { SeniorSignUpType } from '../../types/api_types';
-import { seniorSignUpInit } from '../../constants/type_init';
 import Modal from '../../components/Modal/Modal';
 import {
+  API_FAMILY,
+  API_PORT,
+  BASE_URL,
   PATH_COMMUNITY,
   PATH_SENIOR_SIGN_UP_NAME_GENDER,
   PATH_SIGN_IN,
-} from '../../constants/api';
-import apiSignIn from '../../utils/apiSignIn';
+} from '../../constants/constants';
 import manageAuthToken from '../../utils/manageAuthToken';
+import getUserInfo from '../../utils/getUserInfo';
+import getOldUserInfo from '../../utils/getOldUserInfo';
 
 function SeniorConnect() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const grantType = Cookies.get('grantType');
+  const accessToken = Cookies.get('accessToken');
+  const userId = Cookies.get('userId');
 
-  const [modalContents, setModalContents] = useState<React.ReactNode>('');
+  const [oldUserId, setOldUserId] = useState('');
   const [oldUserIds, setOldUserIds] = useState<string[]>([]);
-
+  const [modalContents, setModalContents] = useState<React.ReactNode>('');
   // 로그인 확인
   useEffect(() => {
     manageAuthToken({
@@ -32,11 +38,18 @@ function SeniorConnect() {
     });
   }, [navigate]);
 
+  useEffect(() => {
+    getUserInfo({
+      successFunc: userInfoData => {
+        setOldUserIds(
+          userInfoData.familyRelations.map(item => item.oldUserInfo.userId),
+        );
+      },
+    }).catch((error: Error) => console.error('Axios error:', error));
+  }, []);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserInfo({
-      ...userInfo,
-      oldUserId: [...userInfo.oldUserId, event.target.value],
-    });
+    setOldUserId(event.target.value);
   };
 
   const handleBackBtn = () => {
@@ -44,20 +57,31 @@ function SeniorConnect() {
   };
 
   const handleSubmit = () => {
-    apiSignIn({
-      signInData,
-      successFunc: () => navigate(PATH_COMMUNITY),
-      errorFunc: () => {
-        setModalContents(
-          <div>
-            아이디와 비밀번호를 <br />
-            로그인하여 주세요.
-          </div>,
-        );
-      },
-    }).catch(error => {
-      console.error(error);
-    });
+    setOldUserIds([...oldUserIds, oldUserId]);
+    console.log(oldUserId);
+    axios
+      .put(
+        `${BASE_URL}:${API_PORT}${API_FAMILY}/${userId}/oldUsers`,
+        oldUserIds,
+        {
+          headers: {
+            Authorization: `${grantType} ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      .then(() => {
+        Cookies.set('oldUserId', oldUserId, { expires: 7 });
+        getOldUserInfo({
+          successFunc: oldUserInfoData => {
+            Cookies.set('oldUsername', oldUserInfoData.username, {
+              expires: 7,
+            });
+            navigate(PATH_COMMUNITY);
+          },
+        }).catch(error => console.error('Axios error:', error));
+      })
+      .catch(err => console.error('Axios error:', err));
   };
 
   return (

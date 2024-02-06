@@ -3,18 +3,21 @@ package BACKEND.project.service;
 import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.domain.Medication;
 import BACKEND.project.domain.OldUserInfo;
+import BACKEND.project.dto.FamilyRelationResponseDto;
 import BACKEND.project.dto.OldUserInfoDto;
+import BACKEND.project.dto.OldUserInfoResponseDto;
 import BACKEND.project.repository.FamilyRelationRepository;
 import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.repository.MedicationRepository;
 import BACKEND.project.repository.OldUserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,15 +28,30 @@ public class OldUserInfoService {
     private final FamilyRelationRepository familyRelationRepository;
     private final MedicationRepository medicationRepository;
 
-    public enum UserType {
-        FAMILY,
-        OLD
+    public OldUserInfo checkUserOrFamily(String oldUserId) {
+        OldUserInfo oldUserInfo = oldUserRepository.findByUserId(oldUserId)
+                .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 노인 회원 ID입니다."));
+
+        String currentUserId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if (!oldUserId.equals(currentUserId)) {
+            FamilyUserInfo familyUserInfo = familyUserRepository.findByUserId(currentUserId)
+                    .orElseThrow(() -> new IllegalArgumentException("해당 가족 회원 정보를 찾을 수 없습니다."));
+
+            boolean isFamily = familyRelationRepository.existsByOldUserInfoAndFamilyUserInfo(oldUserInfo, familyUserInfo);
+
+            if (!isFamily) {
+                throw new IllegalArgumentException("해당 노인 회원과 가족 관계가 아닙니다.");
+            }
+        }
+
+        return oldUserInfo;
     }
 
     @Transactional
     public OldUserInfoDto updateOldUserInfo(String userId, OldUserInfoDto oldUserInfoDto) {
-        OldUserInfo oldUserInfo = oldUserRepository.findByUserId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 노인 회원 정보를 찾을 수 없습니다."));
+
+        OldUserInfo oldUserInfo = checkUserOrFamily(userId);
 
         if (oldUserInfoDto.getUsername() != null) {
             oldUserInfo.setUsername(oldUserInfoDto.getUsername());
@@ -66,32 +84,46 @@ public class OldUserInfoService {
     }
 
     @Transactional
-    public OldUserInfo getOldUserInfo(String oldUserId, String userId) {
+    public OldUserInfoResponseDto getOldUserInfo(String oldUserId) {
 
-        OldUserInfo oldUserInfo = oldUserRepository.findByUserId(oldUserId)
-                .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 노인 회원 ID입니다."));
+        OldUserInfo oldUserInfo = checkUserOrFamily(oldUserId);
 
-        // 사용자 아이디로 가족 회원 또는 노인 회원 조회
-        Optional<FamilyUserInfo> optionalFamilyUserInfo = familyUserRepository.findByUserId(userId);
-        Optional<OldUserInfo> optionalOldUserInfo = oldUserRepository.findByUserId(userId);
+        // 'lastVisitedId' 필드를 업데이트
+        String currentUserId = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<FamilyUserInfo> optionalFamilyUserInfo = familyUserRepository.findByUserId(currentUserId);
 
         if (optionalFamilyUserInfo.isPresent()) {
-            // 가족 회원인 경우
             FamilyUserInfo familyUserInfo = optionalFamilyUserInfo.get();
-
-            // 관계를 확인하고, 'lastVisitedId' 필드를 업데이트
-            if (familyRelationRepository.existsByOldUserInfoAndFamilyUserInfo(oldUserInfo, familyUserInfo)) {
-                familyUserInfo.setLastVisitedId(oldUserId);
-                familyUserRepository.save(familyUserInfo);
-            } else {
-                throw new IllegalArgumentException("노인 회원과 가족 회원 사이에 관계가 없습니다.");
-            }
-
-        } else if (optionalOldUserInfo.isEmpty()) {
-            // 노인 회원도 아니고 가족 회원도 아닌 경우
-            throw new IllegalArgumentException("등록되지 않은 사용자 ID입니다.");
+            familyUserInfo.setLastVisitedId(oldUserId);
+            familyUserRepository.save(familyUserInfo);
         }
 
-        return oldUserInfo;
+        // OldUserInfo 객체를 OldUserInfoResponseDto 객체로 변환
+        OldUserInfoResponseDto oldUserInfoResponseDto = new OldUserInfoResponseDto();
+        oldUserInfoResponseDto.setId(oldUserInfo.getId());
+        oldUserInfoResponseDto.setUserId(oldUserInfo.getUserId());
+        oldUserInfoResponseDto.setUsername(oldUserInfo.getUsername());
+        oldUserInfoResponseDto.setBirth(oldUserInfo.getBirth());
+        oldUserInfoResponseDto.setLunarSolar(oldUserInfo.getLunarSolar());
+        oldUserInfoResponseDto.setGender(oldUserInfo.getGender());
+        oldUserInfoResponseDto.setTvCode(oldUserInfo.getTvCode());
+        oldUserInfoResponseDto.setMedications(oldUserInfo.getMedications());
+        oldUserInfoResponseDto.setDiaries(oldUserInfo.getDiaries());
+        oldUserInfoResponseDto.setQuizResults(oldUserInfo.getQuizResults());
+        oldUserInfoResponseDto.setGymnastics(oldUserInfo.getGymnastics());
+        oldUserInfoResponseDto.setSchedules(oldUserInfo.getSchedules());
+        oldUserInfoResponseDto.setUserType(oldUserInfo.getUserType());
+
+        // FamilyRelation 객체를 FamilyRelationResponseDto 객체로 변환
+        List<FamilyRelationResponseDto> familyRelationResponseDtos = oldUserInfo.getFamilyRelations().stream().map(fr -> {
+            FamilyRelationResponseDto familyRelationResponseDto = new FamilyRelationResponseDto();
+            familyRelationResponseDto.setUserId(fr.getFamilyUserInfo().getUserId());
+            familyRelationResponseDto.setUsername(fr.getFamilyUserInfo().getUsername());
+            return familyRelationResponseDto;
+        }).collect(Collectors.toList());
+
+        oldUserInfoResponseDto.setFamilyRelations(familyRelationResponseDtos);
+
+        return oldUserInfoResponseDto;
     }
 }

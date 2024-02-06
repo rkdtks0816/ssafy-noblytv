@@ -23,7 +23,6 @@ public class FamilyLoginService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
 
-
     public JwtToken login(String userId, String password) {
         // userId, password 기반 Authentication 객체 생성
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userId, password);

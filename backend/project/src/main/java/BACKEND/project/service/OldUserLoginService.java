@@ -12,7 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,10 +45,23 @@ public class OldUserLoginService {
         // tvCode 필드 검사 및 업데이트
         if (oldUserInfo.getTvCode() == null || !oldUserInfo.getTvCode().equals(tvCode)) {
             oldUserInfo.setTvCode(tvCode);
-            oldUserRepository.save(oldUserInfo);
         }
 
+        oldUserRepository.save(oldUserInfo);
+
         // JWT 토큰 생성
-        return jwtTokenProvider.createToken(userId, "ROLE_OLD");
+        JwtToken jwtToken = jwtTokenProvider.createToken(userId, "ROLE_OLD");
+
+        // UserType을 토큰에 설정
+        jwtToken.setUserType(oldUserInfo.getUserType().name());
+
+        return jwtToken;
+    }
+
+    // Token Blacklist 관리 Collection
+    private final Set<String> blacklistedTokens = Collections.newSetFromMap(new ConcurrentHashMap<>());
+
+    public void logout(String token) {
+        blacklistedTokens.add(token);
     }
 }

@@ -17,7 +17,8 @@ import {
   PATH_SELECT_SENIOR,
   PATH_COMMUNITY,
   PATH_DATETIME,
-} from './constants/api';
+  PATH_GYMNASTICS,
+} from './constants/constants';
 import SignIn from './pages/SignIn/SignIn';
 import Birthday from './pages/sign_up/Birth';
 import NameId from './pages/sign_up/NameId';
@@ -30,6 +31,7 @@ import SeniorBirth from './pages/senior_sign_up/SeniorBirth';
 import SeniorUniqueCode from './pages/senior_sign_up/SeniorUniqueCode';
 import Community from './pages/community/community';
 import Datetime from './pages/datetime/Datetime';
+import Gymnastics from './pages/gymnastics/Gymnastics';
 // App 컴포넌트 내에서 라우터 설정
 function App() {
   return (
@@ -62,6 +64,8 @@ function App() {
         <Route path={PATH_COMMUNITY} element={<Community />} />
         {/* Datetime */}
         <Route path={PATH_DATETIME} element={<Datetime />} />
+        {/* Gymnastics */}
+        <Route path={PATH_GYMNASTICS} element={<Gymnastics />} />
       </Routes>
     </Router>
   );

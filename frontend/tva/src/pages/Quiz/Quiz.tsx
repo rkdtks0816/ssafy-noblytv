@@ -22,17 +22,13 @@ function Quiz() {
         // 4초 뒤 url 전환
         setTimeout(() => {
           socket.disconnect();
-          navigate('/');
-        }, 4000);
+          console.log('Socket disconnect');
+          navigate('/R1');
+        }, 6000);
       } else {
         setQuizContents(data);
       }
     });
-
-    // 컴포넌트 언마운트 시 소켓 연결 해제
-    return () => {
-      socket.disconnect();
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

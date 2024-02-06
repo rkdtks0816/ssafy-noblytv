@@ -5,20 +5,19 @@ from tqdm import tqdm
 import cv2
 import numpy as np
 from moviepy.editor import VideoFileClip, concatenate_videoclips
-import os
 import datetime
 
 def summarize_video():
     preprocessor = ViTImageProcessor.from_pretrained(
-        "google/vit-base-patch16-224", size=224
+        "google/vit-base-patch16-224", size=224, device='cuda'
     )
 
     SAMPLE_EVERY_SEC = 2
 
     time = str(datetime.datetime.now()).split()[0]
 
-    video_path = f"videos/{time}.mp4"
-    result_path = f"videos/{time}_summary.mp4"
+    video_path = f"./videoSummarization/videos/{time}.mp4"
+    result_path = f"./videoSummarization/videos/{time}_summary.mp4"
 
     cap = cv2.VideoCapture(video_path)
 
@@ -44,13 +43,18 @@ def summarize_video():
             last_collected = second
             frames.append(frame)
 
+        if video_len - second < 1:
+            break
+
     features = preprocessor(images=frames, return_tensors="pt")["pixel_values"]
-
-    model = SummaryModel.load_from_checkpoint('summary.ckpt')
+    print(features.shape)
+    
+    model = SummaryModel.load_from_checkpoint('./videoSummarization/summary.ckpt')
+    model.to('cuda')
     model.eval()
-
+    
+    features = features.to('cuda')
     y_pred = []
-
     for frame in tqdm(features):
         y_p = model(frame.unsqueeze(0))
         y_p = torch.sigmoid(y_p)
@@ -60,7 +64,6 @@ def summarize_video():
     y_pred = np.array(y_pred)
 
     def determine_threshold(th):
-        global y_pred
         total_sec = 0
 
         for i, y_p in enumerate(y_pred):
@@ -69,16 +72,17 @@ def summarize_video():
         return total_sec
 
     THRESHOLD = 0.1
-    total_secs = 100
+    total_secs = video_len
 
+    # 최대 30초로 줄이기
     while(total_secs > 30):
-        THRESHOLD += 0.001
+        THRESHOLD += 0.01
         total_secs = determine_threshold(THRESHOLD)
 
-    while(total_secs < 15):
-        THRESHOLD -= 0.001
+    # 최소 15초로 늘리기
+    while(total_secs < 15 and video_len > 15):
+        THRESHOLD -= 0.01
         total_secs = determine_threshold(THRESHOLD)
-
 
     clip = VideoFileClip(video_path)
 
@@ -88,14 +92,12 @@ def summarize_video():
         sec = i * SAMPLE_EVERY_SEC
 
         if y_p >= THRESHOLD:
-            start = sec - SAMPLE_EVERY_SEC
-            if start < 0:
-                start = 0
-            subclip = clip.subclip(start, sec)
+            end = sec + SAMPLE_EVERY_SEC
+            if end > video_len:
+                end = video_len
+            subclip = clip.subclip(sec, end)
             subclips.append(subclip)
 
     result = concatenate_videoclips(subclips)
 
     result.write_videofile(result_path)
-
-    os.system(f'scp -i "../I10C103T.pem" {result_path} ubuntu@i10c103.p.ssafy.io:~/videos/1234/')

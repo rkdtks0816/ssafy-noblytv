@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import BackBtnStyle from '../../components/BackBtn/BackBtnStyle';
 import BgImgStyle from '../../components/BgImg/BgImgStyle';
 import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
@@ -11,12 +12,16 @@ import ToggleBtn from '../../components/ToggleBtn/ToggleBtn';
 import { seniorSignUpInit } from '../../constants/type_init';
 import { SeniorSignUpType } from '../../types/api_types';
 import {
+  API_GYMNASTICS,
   API_PORT,
   API_SENIOR_SIGN_UP,
   BASE_URL,
+  PATH_COMMUNITY,
   PATH_SENIOR_SIGN_UP_NAME_GENDER,
   PATH_SENIOR_SIGN_UP_UNIQUE_CODE,
-} from '../../constants/api';
+} from '../../constants/constants';
+import gymnasticsInitKeywords from './gymnasticsInitKeywords';
+import getOldUserInfo from '../../utils/getOldUserInfo';
 
 function SeniorBirth() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
@@ -58,9 +63,23 @@ function SeniorBirth() {
     }
   };
 
+  const gymnasticsInit = (oldUserId: string) => {
+    gymnasticsInitKeywords.map(gymnasticsInitKeyword => {
+      axios
+        .post(
+          `${BASE_URL}:${API_PORT}${API_GYMNASTICS}/${oldUserId}?oldUserIds=${oldUserId}&keyword=${gymnasticsInitKeyword.keyword}&day=${gymnasticsInitKeyword.day}`,
+          { headers: { 'Content-Type': 'application' } },
+        )
+        .catch(error => {
+          console.error(error);
+        });
+      return null;
+    });
+  };
+
   const handleSubmit = () => {
     axios
-      .post<{ userId: string }>(
+      .post<{ userId: string; username: string }>(
         `${BASE_URL}:${API_PORT}${API_SENIOR_SIGN_UP}`,
         seniorInfo,
         {
@@ -72,9 +91,17 @@ function SeniorBirth() {
       .then(response => {
         // axios 성공 시 실행되는 부분
         console.log('Axios success:', response);
-        navigate(PATH_SENIOR_SIGN_UP_UNIQUE_CODE, {
-          state: response.data.userId,
-        });
+        navigate(PATH_SENIOR_SIGN_UP_UNIQUE_CODE);
+        Cookies.set('oldUserId', response.data.userId, { expires: 7 });
+        getOldUserInfo({
+          successFunc: oldUserInfoData => {
+            Cookies.set('oldUsername', oldUserInfoData.username, {
+              expires: 7,
+            });
+            navigate(PATH_COMMUNITY);
+          },
+        }).catch(error => console.error('Axios error:', error));
+        gymnasticsInit(response.data.userId);
       })
       .catch(error => {
         // axios 실패 시 실행되는 부분

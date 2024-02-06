@@ -36,11 +36,11 @@ interface SignInResType {
   refreshToken: string;
 }
 
-interface DiaryResType {
-  id: number;
-  date: string;
-  text: string;
-  summary: string;
+interface UserInfoGetOldInfoType {
+  oldUserInfo: {
+    userId: string;
+    username: string;
+  };
 }
 
 interface UserInfoType {
@@ -48,7 +48,39 @@ interface UserInfoType {
   username: string;
   lunarSolar: string;
   birth: string;
-  oldUserIds: string[];
+  familyRelations: UserInfoGetOldInfoType[];
+  lastVisitedId?: string;
+  userType: string;
+}
+
+interface DiaryResType {
+  id: number;
+  date: string;
+  text: string;
+  summary: string;
+}
+
+interface GymnasticsType {
+  day: string;
+  keyword: string;
+}
+
+interface GymnasticsResType {
+  day: string;
+  keyword: string;
+  title: string;
+  videoId: string;
+}
+
+interface OldUserInfoType {
+  userId: string;
+  username: string;
+  lunarSolar: string;
+  birth: string;
+  diaries: DiaryResType[];
+  quizResults: string[];
+  gymnastics: GymnasticsResType[];
+  userType: string;
 }
 
 export type {
@@ -59,4 +91,7 @@ export type {
   SignInResType,
   DiaryResType,
   UserInfoType,
+  GymnasticsType,
+  GymnasticsResType,
+  OldUserInfoType,
 };

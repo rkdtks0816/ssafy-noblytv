@@ -5,11 +5,11 @@ import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
 import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import { FindIdPwBtnS, LogoImgS, SignUpBtnS } from './SignInStyle';
-import { PATH_COMMUNITY, PATH_SIGN_UP_NAME_ID } from '../../constants/api';
+import { PATH_SIGN_UP_NAME_ID } from '../../constants/constants';
 import { SignInType } from '../../types/api_types';
 import { signInInit } from '../../constants/type_init';
 import Modal from '../../components/Modal/Modal';
-import apiSignIn from '../../utils/apiSignIn';
+import postSignIn from '../../utils/postSignIn';
 
 function SignIn() {
   const navigate = useNavigate();
@@ -25,9 +25,9 @@ function SignIn() {
   };
 
   const handleLogin = () => {
-    apiSignIn({
+    postSignIn({
       signInData,
-      successFunc: () => navigate(PATH_COMMUNITY),
+      navigate,
       errorFunc: () => {
         setModalContents(
           <div>

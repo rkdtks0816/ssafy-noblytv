@@ -4,21 +4,22 @@ import BACKEND.project.domain.Medication;
 import BACKEND.project.dto.MedicationDto;
 import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.dto.OldUserRegistrationDto;
+import BACKEND.project.repository.MedicationRepository;
 import BACKEND.project.repository.OldUserRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class OldUserJoinService {
 
     private final OldUserRepository oldUserRepository;
-
-    public OldUserJoinService(OldUserRepository oldUserRepository) {
-        this.oldUserRepository = oldUserRepository;
-    }
+    private final MedicationRepository medicationRepository;
 
     @Transactional
     public OldUserInfo registerUser(OldUserRegistrationDto oldUserRegistrationDto) {
@@ -54,8 +55,12 @@ public class OldUserJoinService {
         return medication;
     }
 
-    public OldUserInfo findByUserId(String userId) {
-        Optional<OldUserInfo> oldUserInfo = oldUserRepository.findByUserId(userId);
-        return oldUserInfo.orElseThrow(() -> new IllegalArgumentException("등록되지 않은 회원 ID입니다."));
+    @Scheduled(cron = "0 0 0 * * ?")
+    @Transactional
+    public void resetIsRead() {
+        List<Medication> medications = medicationRepository.findAllByMedicationTimeIsNotNull();
+        for (Medication medication : medications) {
+            medication.setRead(false);
+        }
     }
 }

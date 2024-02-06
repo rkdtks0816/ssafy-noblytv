@@ -1,6 +1,9 @@
 const BASE_URL: string = 'http://i10c103.p.ssafy.io';
 const BASE_PORT: string = '3000';
-const API_PORT: string = '8888';
+const API_PORT: string = '8080';
+const YOUTUBE_API_URL: string =
+  'https://www.googleapis.com/youtube/v3/videos?part=snippet';
+const YOUTUBE_API_KEY: string = 'AIzaSyCC7MzMBiSro7FIgef-CWcSwf17Hh0mZX4';
 // PATHS
 const PATH_SIGN_IN: string = '/sign-in';
 const PATH_SIGN_UP: string = '/sign-up';
@@ -16,6 +19,7 @@ const PATH_CONNECT_TV: string = '/connect-tv';
 const PATH_SELECT_SENIOR: string = '/select-senior';
 const PATH_COMMUNITY: string = '/community';
 const PATH_DATETIME: string = '/datetime';
+const PATH_GYMNASTICS: string = '/gymnastics';
 // API
 const API_FAMILY: string = `/users/family`;
 const API_FAMILY_SIGN_UP: string = `${API_FAMILY}/signup`;
@@ -31,11 +35,14 @@ const API_TV_OLD_USERS: string = `${API_TV}/old-users`;
 const API_TV_SIGNIN: string = `${API_TV}/login`;
 const API_DIARY: string = `/diary`;
 const API_DIARY_VIEW: string = `${API_DIARY}/view`;
+const API_GYMNASTICS: string = `/gymnastics`;
 
 export {
   BASE_URL,
   BASE_PORT,
   API_PORT,
+  YOUTUBE_API_URL,
+  YOUTUBE_API_KEY,
   // PATH
   PATH_SIGN_IN,
   PATH_SIGN_UP_NAME_ID,
@@ -49,6 +56,7 @@ export {
   PATH_SELECT_SENIOR,
   PATH_COMMUNITY,
   PATH_DATETIME,
+  PATH_GYMNASTICS,
   // API
   API_FAMILY,
   API_FAMILY_SIGN_UP,
@@ -56,9 +64,11 @@ export {
   API_FAMILY_SIGN_IN,
   API_FAMILY_SIGN_OUT,
   API_FAMILY_DELECT,
+  API_SENIOR,
   API_SENIOR_SIGN_UP,
   API_SENIOR_DELECT,
   API_TV_OLD_USERS,
   API_TV_SIGNIN,
   API_DIARY_VIEW,
+  API_GYMNASTICS,
 };

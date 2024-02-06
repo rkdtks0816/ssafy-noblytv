@@ -1,16 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import manageAuthToken from '../../utils/manageAuthToken';
-import Card from '../../components/Card/Card';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
-import AddBtn from '../../components/SmallBtn/Addbtn';
-import { PATH_COMMUNITY, PATH_SIGN_IN } from '../../constants/api';
+import AddBtn from '../../components/AddBtn/AddBtn';
+import { PATH_COMMUNITY, PATH_SIGN_IN } from '../../constants/constants';
+import CommunityCard from '../../components/CommunityCard/CommunityCard';
 
 function Community() {
-  const grantType = Cookies.get('grantType');
-  const accessToken = Cookies.get('accessToken');
   const navigate = useNavigate();
   useEffect(() => {
     manageAuthToken({
@@ -21,7 +19,7 @@ function Community() {
   return (
     <div>
       <Header />
-      <Card />
+      <CommunityCard />
       <AddBtn />
       <Footer />
     </div>

@@ -52,6 +52,11 @@ public class FamilyUserInfo {
     @JsonManagedReference
     private List<FamilyRelation> familyRelations = new ArrayList<>();
 
+    @ToString.Exclude
+    @OneToMany(mappedBy = "familyUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Schedule> schedules = new ArrayList<>();
+
     // 마지막으로 확인한 노인 ID 저장 필드
     private String lastVisitedId;
 

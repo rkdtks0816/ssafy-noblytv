@@ -3,7 +3,10 @@ package BACKEND.project.controller;
 import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.dto.OldUserRegistrationDto;
 import BACKEND.project.repository.OldUserRepository;
+import BACKEND.project.service.OldUserInfoService;
 import BACKEND.project.service.OldUserJoinService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -12,17 +15,19 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users/old")
+@Tag(name = "노인 회원 API")
 public class OldUserJoinController {
 
     private final OldUserJoinService oldUserJoinService;
     private final OldUserRepository oldUserRepository;
+    private final OldUserInfoService oldUserInfoService;
 
     @PostMapping("/signup")
+    @Operation(summary = "노인 회원 가입")
     public ResponseEntity<OldUserInfo> registerUser(@Validated @RequestBody OldUserRegistrationDto newUser) {
         OldUserInfo registeredUser = oldUserJoinService.registerUser(newUser);
 
@@ -35,9 +40,9 @@ public class OldUserJoinController {
     }
 
     @DeleteMapping("/delete/{oldUserId}")
+    @Operation(summary = "노인 회원 탈퇴")
     public ResponseEntity<?> deleteUser(@PathVariable("oldUserId") String oldUserId) {
-        OldUserInfo user = oldUserRepository.findByUserId(oldUserId)
-                .orElseThrow(() -> new NoSuchElementException("해당 회원이 존재하지 않습니다."));
+        OldUserInfo user = oldUserInfoService.checkUserOrFamily(oldUserId);
 
         oldUserRepository.delete(user);
 

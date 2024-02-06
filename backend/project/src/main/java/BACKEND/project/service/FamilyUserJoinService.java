@@ -9,6 +9,8 @@ import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.repository.OldUserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -56,10 +58,21 @@ public class FamilyUserJoinService {
         return registeredFamilyUser;
     }
 
+    private void checkUserAuthorization(String familyUserId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentLoggedInUser = authentication.getName();
+
+        if (!familyUserId.equals(currentLoggedInUser)) {
+            throw new IllegalArgumentException("본인의 정보만 수정할 수 있습니다.");
+        }
+    }
+
     @Transactional
     public FamilyUserRegistrationDto updateOldUsers(String familyUserId, List<String> oldUserIds) {
         FamilyUserInfo familyUser = familyUserRepository.findByUserId(familyUserId)
                 .orElseThrow(() -> new NoSuchElementException("해당 가족 회원이 존재하지 않습니다."));
+
+        checkUserAuthorization(familyUserId);
 
         List<FamilyRelation> existingRelations = familyUser.getFamilyRelations();
 
@@ -82,10 +95,6 @@ public class FamilyUserJoinService {
 
         existingRelations.removeIf(relation -> !oldUserIds.contains(relation.getOldUserInfo().getUserId()));
 
-        List<String> oldUserIdList = existingRelations.stream()
-                .map(relation -> relation.getOldUserInfo().getUserId())
-                .toList();
-
         return new FamilyUserRegistrationDto(familyUser.getUserId(), familyUser.getPassword(), familyUser.getUsername(), familyUser.getBirth(), familyUser.getLunarSolar(), oldUserIds);
     }
 
@@ -98,6 +107,8 @@ public class FamilyUserJoinService {
     public FamilyUserUpdateDto updateFamilyUserInfo(String familyUserId, FamilyUserUpdateDto familyUserUpdateDto) {
         FamilyUserInfo familyUser = familyUserRepository.findByUserId(familyUserId)
                 .orElseThrow(() -> new NoSuchElementException("해당 가족 회원이 존재하지 않습니다."));
+
+        checkUserAuthorization(familyUserId);
 
         if (familyUserUpdateDto.getPassword() != null) {
             if (!familyUserUpdateDto.getPassword().equals(familyUserUpdateDto.getConfirmPassword())) {
@@ -122,6 +133,8 @@ public class FamilyUserJoinService {
         FamilyUserInfo familyUserInfo = familyUserRepository.findByUserId(userId)
                 .orElseThrow(() -> new NoSuchElementException("해당 가족 회원이 존재하지 않습니다."));
 
+        checkUserAuthorization(userId);
+
         return convertToDto(familyUserInfo);
     }
 
@@ -131,6 +144,10 @@ public class FamilyUserJoinService {
         dto.setUsername(familyUserInfo.getUsername());
         dto.setBirth(familyUserInfo.getBirth());
         dto.setLunarSolar(familyUserInfo.getLunarSolar());
+
+        if (familyUserInfo.getLastVisitedId() != null) {
+            dto.setLastVisitedId(familyUserInfo.getLastVisitedId());
+        }
 
         List<FamilyRelationDto> familyRelationDtos = familyUserInfo.getFamilyRelations().stream()
                 .map(this::convertToDto)

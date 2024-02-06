@@ -1,55 +1,67 @@
 package BACKEND.project.service;
 
 import BACKEND.project.domain.FamilyUserInfo;
-import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.domain.Post;
 import BACKEND.project.dto.FamilyUserInfoDto;
-import BACKEND.project.dto.OldUserInfoDto;
 import BACKEND.project.dto.PostDto;
 import BACKEND.project.repository.FamilyUserRepository;
-import BACKEND.project.repository.OldUserRepository;
 import BACKEND.project.repository.PostRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.UUID;
+import java.util.Optional;
 
 @Service
 public class PostService {
 
+    @Autowired
+    FamilyUserRepository familyUserRepository;
+    @Autowired
+    PostRepository postRepository;
 
-    private final FamilyUserRepository familyUserRepository;
-
-    private final PostRepository postRepository;
-
-    @Autowired PostService (FamilyUserRepository familyUserRepository, PostRepository postRepository) {
-        this.familyUserRepository = familyUserRepository;
-        this.postRepository = postRepository;
+    public String saveVideo(MultipartFile file, String userId) throws IOException {
+        // 파일 저장 로직
+        String dirPath = "/home/ubuntu/song/front/frontend/app/src/assets/family_" + userId;
+        File directory = new File(dirPath);
+        if (!directory.exists()) {
+            directory.mkdirs(); // 유저별 디렉토리 생성
+        }
+        String filePath = dirPath + "/" + file.getOriginalFilename();
+        File dest = new File(filePath);
+        file.transferTo(dest);
+        return filePath;
     }
 
+    public FamilyUserInfoDto findFamilyUserById(String userId) {
+        Optional<FamilyUserInfo> optionalFamilyUserInfo = familyUserRepository.findByUserId(userId);
+        if (optionalFamilyUserInfo.isPresent()) {
+            FamilyUserInfo familyUserInfo = optionalFamilyUserInfo.get();
+            FamilyUserInfoDto dto = new FamilyUserInfoDto();
+            dto.setUserId(familyUserInfo.getUserId());
+            dto.setPassword(familyUserInfo.getPassword());
+            dto.setUsername(familyUserInfo.getUsername());
+            dto.setBirth(familyUserInfo.getBirth());
+            dto.setLunarSolar(familyUserInfo.getLunarSolar());
+            dto.setLastVisitedId(familyUserInfo.getLastVisitedId());
 
-    public void savePost(FamilyUserInfo familyUserInfo, MultipartFile videoFile) throws IOException {
-        // Get the original filename
-        String filename = videoFile.getOriginalFilename();
+            return dto;
+        } else {
+            throw new EntityNotFoundException("해당 유저를 찾을 수 없습니다." + userId);
+        }
+    }
 
-        // Save the video file to the server
-        Path filePath = Paths.get("/home/ubuntu/song/front/frontend/app/src/assets/family_" + familyUserInfo.getId(), filename);
-        Files.createDirectories(filePath.getParent());
-        Files.write(filePath, videoFile.getBytes());
+    public void savePost(PostDto postDto) {
+        Post post = new Post();
 
-        // Create a new post and associate it with the family user
-        Post post = new Post(familyUserInfo, "/assets/family_" + familyUserInfo.getId() + "/" + filename);
-        familyUserInfo.getPosts().add(post);
+        post.setId(postDto.getId());
+        post.setVideoPath(postDto.getVideoPath());
+        post.setPostedAt(postDto.getPostedAt());
+        post.setViewed(postDto.isViewed());
 
-        // Save the post to the database
         postRepository.save(post);
     }
 

@@ -1,42 +1,50 @@
 package BACKEND.project.controller;
 
-import BACKEND.project.domain.FamilyUserInfo;
+import BACKEND.project.dto.FamilyUserInfoDto;
 import BACKEND.project.dto.PostDto;
-import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/posts")
 public class PostController {
 
-    private final PostService postService;
-    private final FamilyUserRepository familyUserRepository;
-
     @Autowired
-    public PostController(PostService postService, FamilyUserRepository familyUserRepository) {
-        this.postService = postService;
-        this.familyUserRepository = familyUserRepository;
-    }
+    PostService postService;
+
 
     @PostMapping("/family")
-    public ResponseEntity<String> createPost(@RequestParam("file") MultipartFile file,
-                                             @RequestParam("userId") String userId) {
-        FamilyUserInfo familyUserInfo = familyUserRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("해당 사용자가 없습니다." + userId));
-
+    public ResponseEntity<?> uploadVideo(@RequestParam("file") MultipartFile file, @RequestParam("userId") String userId) {
         try {
-            postService.savePost(familyUserInfo, file);
-            return ResponseEntity.ok("File uploaded successfully");
+            // 파일 저장
+            String filePath = postService.saveVideo(file, userId);
+
+            // DB에 동영상 정보 저장
+            FamilyUserInfoDto familyUserInfoDto = postService.findFamilyUserById(userId);
+            PostDto postDto = new PostDto();
+            postDto.setVideoPath(filePath);
+            postDto.setPostedAt(LocalDateTime.now());
+            postDto.setFamilyUserInfo(familyUserInfoDto);
+            postDto.setViewed(false); // 처음 업로드시에는 아직 보지 않음으로 설정
+
+            postService.savePost(postDto);
+
+            return new ResponseEntity<>("업로드 성공!", HttpStatus.OK);
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading file");
+            return new ResponseEntity<>("파일 저장 실패:" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            return new ResponseEntity<>("업로드 실패:" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-}
 
+}

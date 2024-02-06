@@ -1,9 +1,9 @@
-from functions_resources import speak, getGender, getAnswer, getAudio, sendData, returnData, remainedVideo, nextVideo
+from functions_resources import speak, getGender, getAnswer, getAudio, sendData, returnData, remainedVideo, nextVideo, classify
 
 gender = getGender()
 
 # 커뮤니티 확인 묻기
-system_instruction = f"{gender}의 가족이 커뮤니티에 영상을 올렸다. {gender}의 7살 손주가 {gender}에게 가족들이 올린 영상을 볼 것이냐고 묻고 싶은데, 뭐라고 해야 할 지 1줄 이내로 알려줘라."
+system_instruction = f"{gender}의 가족이 커뮤니티에 영상을 올렸다. {gender}에게 가족들이 올린 영상을 볼 것이냐고 묻고 싶은데, 뭐라고 해야 할 지 1줄 이내로 알려줘라."
 res = getAnswer(system_instruction)
 print(res)
 sendData(res)
@@ -11,9 +11,8 @@ speak(res)
 
 
 # 커뮤니티 확인 의사
-res = getAudio()
-system_instruction = f"{gender}는 다음과 같이 대답했다. {res}. Is he or she answering yes or no? You can only answer 'yes' or 'no'."
-res = getAnswer(system_instruction)
+audio = getAudio()
+res = classify(res, audio)
 print(res)
 
 # 커뮤니티 확인 시
@@ -27,17 +26,16 @@ if "yes" in res.lower():
 
         # 영상이 끝날 때 까지 대기
         while True:
-            if returnData == "stop":
+            if returnData() == "stop":
                 break
         
         # 남은 영상이 있을 때
-        if remainedVideo > 0:
+        if remainedVideo() > 0:
             sendData("다음 영상을 보시겠어요?")
             speak("다음 영상을 보시겠어요?")
 
-            res = getAudio()
-            system_instruction = f"{gender}는 다음과 같이 대답했다. {res}. Is he or she answering yes or no? You can only answer 'yes' or 'no'."
-            res = getAnswer(system_instruction)
+            audio = getAudio()
+            res = classify(res, audio)
             print(res)
 
             if "yes" in res.lower():
@@ -45,6 +43,7 @@ if "yes" in res.lower():
             else:
                 sendData("나중에 또 봐요!")
                 speak("나중에 또 봐요!")
+                break
         else:
             break
 

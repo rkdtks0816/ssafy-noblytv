@@ -1,5 +1,3 @@
-# OpenJDK 21을 기반으로 하는 Dockerfile
-
 # OpenJDK 21 이미지를 베이스로 사용
 FROM docker.io/library/openjdk:21
 
@@ -10,7 +8,7 @@ COPY . /app
 WORKDIR /app
 
 # xargs 설치
-RUN apk --no-cache add findutils
+RUN apt-get update && apt-get install -y findutils
 
 # Gradle Wrapper를 이용하여 애플리케이션 빌드
 RUN chmod +x ./gradlew && ./gradlew clean bootJar

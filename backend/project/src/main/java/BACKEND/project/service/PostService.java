@@ -20,77 +20,37 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 @Service
 public class PostService {
 
-    private final OldUserRepository oldUserRepository;
+
     private final FamilyUserRepository familyUserRepository;
+
     private final PostRepository postRepository;
 
-    @Autowired
-    public PostService(OldUserRepository oldUserRepository, PostRepository postRepository, FamilyUserRepository familyUserRepository) {
-        this.oldUserRepository = oldUserRepository;
+    @Autowired PostService (FamilyUserRepository familyUserRepository, PostRepository postRepository) {
         this.familyUserRepository = familyUserRepository;
         this.postRepository = postRepository;
     }
 
-    @Transactional
-    public PostDto createPost(String oldUsername) {
-        OldUserInfo oldUserInfo = oldUserRepository.findByUsername(oldUsername)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다." + oldUsername));
 
-        String formattedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String videoName = formattedDate + "_summary";
-        String videoPath = "/home/ubuntu/song/front/frontend/app/src/assets/old_" + oldUserInfo.getUserId() + "/" + videoName;
+    public void savePost(FamilyUserInfo familyUserInfo, MultipartFile videoFile) throws IOException {
+        // Get the original filename
+        String filename = videoFile.getOriginalFilename();
 
-        Post post = new Post(oldUserInfo, videoPath);
+        // Save the video file to the server
+        Path filePath = Paths.get("/home/ubuntu/song/front/frontend/app/src/assets/family_" + familyUserInfo.getId(), filename);
+        Files.createDirectories(filePath.getParent());
+        Files.write(filePath, videoFile.getBytes());
+
+        // Create a new post and associate it with the family user
+        Post post = new Post(familyUserInfo, "/assets/family_" + familyUserInfo.getId() + "/" + filename);
+        familyUserInfo.getPosts().add(post);
+
+        // Save the post to the database
         postRepository.save(post);
-
-        PostDto postDto = new PostDto();
-        postDto.setId(post.getId());
-        postDto.setOldUserInfo(convertToDto(oldUserInfo));
-        postDto.setVideoPath(post.getVideoPath());
-        postDto.setPostedAt(post.getPostedAt());
-        postDto.setViewed(post.isViewed());
-
-        return postDto;
     }
-
-    @Transactional
-    public String createPostForFamilyUser(String familyUsername, MultipartFile file) {
-        FamilyUserInfo familyUser = familyUserRepository.findByUsername(familyUsername)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다." + familyUsername));
-
-        String videoName = file.getOriginalFilename();
-        String videoPath = "/home/ubuntu/song/front/frontend/app/src/assets/family_" + familyUser.getUserId() + "/" + videoName;
-
-        // 파일 저장
-        try {
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(videoPath);
-            Files.write(path, bytes);
-        } catch (IOException e) {
-            throw new RuntimeException("파일 저장에 실패했습니다.", e);
-        }
-
-        Post post = new Post(familyUser, videoPath);
-        postRepository.save(post);
-
-        return familyUsername;
-    }
-
-    private OldUserInfoDto convertToDto(OldUserInfo oldUserInfo) {
-        OldUserInfoDto oldUserInfoDto = new OldUserInfoDto();
-        oldUserInfoDto.setUserId(oldUserInfo.getUserId());
-        oldUserInfoDto.setUsername(oldUserInfo.getUsername());
-        oldUserInfoDto.setBirth(oldUserInfo.getBirth());
-        oldUserInfoDto.setLunarSolar(oldUserInfo.getLunarSolar());
-        oldUserInfoDto.setGender(oldUserInfo.getGender());
-        oldUserInfoDto.setMedications(oldUserInfo.getMedications());
-
-        return oldUserInfoDto;
-    }
-
 
 }

@@ -18,11 +18,11 @@ public class Post {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "old_user_name")
+    @JoinColumn(name = "old_user_id")
     private OldUserInfo oldUserInfo;
 
     @ManyToOne
-    @JoinColumn(name = "family_user_name")
+    @JoinColumn(name = "family_user_id")
     private FamilyUserInfo familyUserInfo;
 
     @Column(nullable = false)

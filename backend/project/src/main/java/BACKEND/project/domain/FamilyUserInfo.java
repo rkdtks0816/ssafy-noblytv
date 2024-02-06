@@ -57,4 +57,7 @@ public class FamilyUserInfo {
 
     @Enumerated(EnumType.STRING)
     private UserType userType;
+
+    @OneToMany(mappedBy = "familyUserInfo", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 }

@@ -10,7 +10,7 @@ COPY . /app
 WORKDIR /app
 
 # Gradle Wrapper를 이용하여 애플리케이션 빌드
-RUN ./gradlew clean bootJar
+RUN chmod +x ./gradlew && ./gradlew clean bootJar
 
 # JAR 파일을 /app 디렉토리로 복사
 RUN cp build/libs/*.jar /app/app.jar

@@ -20,15 +20,3 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3001:3000"
-
-volumes:
-  cleanup:
-    external: true
-  scripts:
-    driver: local
-    name: "${PWD}/scripts"
-
-networks:
-  default:
-    external:
-      name: nobly_default

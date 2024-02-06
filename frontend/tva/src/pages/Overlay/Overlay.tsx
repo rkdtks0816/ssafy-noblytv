@@ -5,7 +5,7 @@ import QuizModal from '../../components/ActionModal/QuizModal';
 import BgVideo from '../../components/BgVideo/BgVideo';
 import useSocket from '../../hooks/useSocket';
 
-function OverlayR1() {
+function Overlay() {
   const socket = useSocket('http://i10c103.p.ssafy.io:9000');
   const [activeModal, setActiveModal] = useState<number | null>(null);
 
@@ -34,9 +34,10 @@ function OverlayR1() {
       });
     }
 
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return () => {
+      if (socket) socket.off('mode');
+    };
+  }, [activeModal, socket]);
 
   return (
     <>
@@ -50,4 +51,4 @@ function OverlayR1() {
   );
 }
 
-export default OverlayR1;
+export default Overlay;

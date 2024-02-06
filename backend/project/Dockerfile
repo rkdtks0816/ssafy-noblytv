@@ -10,8 +10,18 @@ WORKDIR /app
 # xargs 설치를 위해 apt-get update 및 findutils 설치
 RUN apt-get update && apt-get install -y findutils
 
+# Gradle 설치
+RUN apt-get install -y curl unzip && \
+    curl -s https://services.gradle.org/distributions/gradle-8.5-bin.zip -o gradle.zip && \
+    unzip -d /opt gradle.zip && \
+    rm gradle.zip
+
+# Gradle 환경 변수 설정
+ENV GRADLE_HOME /opt/gradle-8.5
+ENV PATH $PATH:$GRADLE_HOME/bin
+
 # Gradle Wrapper를 이용하여 애플리케이션 빌드
-RUN chmod +x ./gradlew && ./gradlew clean bootJar
+RUN ./gradlew clean bootJar
 
 # JAR 파일을 /app 디렉토리로 복사
 RUN cp build/libs/*.jar /app/app.jar

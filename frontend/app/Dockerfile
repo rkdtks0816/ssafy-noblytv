@@ -11,9 +11,6 @@ RUN npm install
 # 앱 소스 복사
 COPY . .
 
-# 앱 빌드
-RUN npm run build
-
 # 포트 설정
 EXPOSE 3000
 

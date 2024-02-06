@@ -1,19 +1,19 @@
 package BACKEND.project.controller;
 
+import BACKEND.project.domain.OldUserInfo;
+import BACKEND.project.domain.Post;
 import BACKEND.project.dto.FamilyUserInfoDto;
 import BACKEND.project.dto.PostDto;
 import BACKEND.project.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/posts")
@@ -47,4 +47,14 @@ public class PostController {
         }
     }
 
+    @GetMapping("/family/{oldUserId}")
+    public ResponseEntity<?> getFamilyUserPosts(@PathVariable("oldUserId") Long oldUserId) {
+        try {
+            // OldUser의 id와 FamilyRelation 관계인 FamilyUser가 작성한 게시글 조회
+            List<PostDto> familyUserPosts = postService.getPostsByOldUserId(oldUserId);
+            return new ResponseEntity<>(familyUserPosts, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("게시글 조회 실패:" + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

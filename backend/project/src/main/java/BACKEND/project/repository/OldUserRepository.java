@@ -10,8 +10,6 @@ import java.util.Optional;
 public interface OldUserRepository extends JpaRepository<OldUserInfo, Long> {
     Optional<OldUserInfo> findByUserId(String userId);
     Optional<OldUserInfo> findById(Long id);
-
-
 }
 
 

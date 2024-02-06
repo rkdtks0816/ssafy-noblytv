@@ -1,5 +1,6 @@
 package BACKEND.project.service;
 
+import BACKEND.project.domain.FamilyRelation;
 import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.domain.Post;
@@ -97,5 +98,33 @@ public class PostService {
         postRepository.save(post);
 
         familyUserInfo.getPosts().add(post);
+    }
+
+    public List<PostDto> getPostsByOldUserId(Long oldUserId) {
+        Optional<OldUserInfo> optionalOldUserInfo = oldUserRepository.findById(oldUserId);
+        if (optionalOldUserInfo.isPresent()) {
+            OldUserInfo oldUserInfo = optionalOldUserInfo.get();
+            List<Post> posts = new ArrayList<>();
+
+            // FamilyRelation을 통해 FamilyUser를 찾음
+            List<FamilyRelation> relations = familyRelationRepository.findByOldUserInfo(oldUserInfo);
+            for (FamilyRelation relation : relations) {
+                    posts.addAll(relation.getFamilyUserInfo().getPosts());
+            }
+            
+            // PostDto로 변환하여 반환
+            List<PostDto> postDtos = new ArrayList<>();
+            for (Post post : posts) {
+                PostDto postDto = new PostDto();
+                postDto.setId(post.getId());
+                postDto.setVideoPath(post.getVideoPath());
+                postDto.setViewed(post.isViewed());
+            }
+            return postDtos;
+        } else {
+            throw new EntityNotFoundException("해당 노인유저를 찾을 수 없습니다.");
+        }
+
+
     }
 }

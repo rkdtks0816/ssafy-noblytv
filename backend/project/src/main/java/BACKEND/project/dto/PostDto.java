@@ -4,14 +4,18 @@ import BACKEND.project.domain.FamilyUserInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Data
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostDto {
+
+    private Long id;
 
     private OldUserInfoDto oldUserInfo;
 
@@ -31,4 +35,7 @@ public class PostDto {
         this.familyUserInfo = familyUserInfo;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

@@ -86,7 +86,8 @@ public class OldUserInfoService {
     @Transactional
     public OldUserInfoResponseDto getOldUserInfo(String oldUserId) {
 
-        OldUserInfo oldUserInfo = checkUserOrFamily(oldUserId);
+        OldUserInfo oldUserInfo = oldUserRepository.findByUserId(oldUserId)
+                .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 노인 회원 ID입니다."));
 
         // 'lastVisitedId' 필드를 업데이트
         String currentUserId = SecurityContextHolder.getContext().getAuthentication().getName();

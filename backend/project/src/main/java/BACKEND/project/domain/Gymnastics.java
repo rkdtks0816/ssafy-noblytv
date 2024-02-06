@@ -24,6 +24,9 @@ public class Gymnastics {
     @Column
     private String videoId;
 
+    @Column
+    private String title;
+
     @ToString.Exclude
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)

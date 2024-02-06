@@ -1,4 +1,5 @@
 from flask import Flask, render_template, Response
+from flask_cors import CORS
 import cv2
 import threading
 import socketio
@@ -8,6 +9,7 @@ import sys
 import os
 
 app = Flask(__name__)
+CORS(app)
 sio = socketio.Server(cors_allowed_origins="*")
 
 sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8')
@@ -71,7 +73,7 @@ def index():
 @app.route('/video_feed')
 def video_feed():
     return Response(gen(),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
+                    mimetype='multipart/x-mixed-replace; boundary=frame', headers={'Access-Control-Allow-Origin': '*'})
 
 if __name__ == '__main__':
     sio.connect("http://i10c103.p.ssafy.io:9000")

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -19,7 +19,7 @@ public class Diary {
     private Long id;
 
     @CreationTimestamp
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Column
     private String text;

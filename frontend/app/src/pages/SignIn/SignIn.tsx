@@ -9,7 +9,7 @@ import { PATH_SIGN_UP_NAME_ID } from '../../constants/constants';
 import { SignInType } from '../../types/api_types';
 import { signInInit } from '../../constants/type_init';
 import Modal from '../../components/Modal/Modal';
-import apiSignIn from '../../utils/apiSignIn';
+import postSignIn from '../../utils/postSignIn';
 
 function SignIn() {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ function SignIn() {
   };
 
   const handleLogin = () => {
-    apiSignIn({
+    postSignIn({
       signInData,
       navigate,
       errorFunc: () => {

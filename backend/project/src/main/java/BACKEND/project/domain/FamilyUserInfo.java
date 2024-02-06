@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-//@NoArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
 public class FamilyUserInfo {
@@ -51,6 +51,11 @@ public class FamilyUserInfo {
     @OneToMany(mappedBy = "familyUserInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<FamilyRelation> familyRelations = new ArrayList<>();
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "familyUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Schedule> schedules = new ArrayList<>();
 
     // 마지막으로 확인한 노인 ID 저장 필드
     private String lastVisitedId;

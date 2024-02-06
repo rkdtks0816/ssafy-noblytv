@@ -1,6 +1,4 @@
-from gtts import gTTS
 import os
-import pyaudio
 import speech_recognition as sr
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -8,9 +6,13 @@ import pymysql
 import datetime
 import socketio
 
-old_user_id = "4"
+old_user_id = "1"
 nowD = ""
+time = str(datetime.datetime.now()).split()[0]
+result_path = f"./videoSummarization/videos/{time}_summary.mp4"
 
+#######################################################################
+# ALSA warning handdler
 from ctypes import *
 from contextlib import contextmanager
 
@@ -28,6 +30,8 @@ def noalsaerr():
     yield
     asound.snd_lib_error_set_handler(None)
 
+#######################################################################
+# socket io
 sio = socketio.Client()
 
 @sio.on('connect')
@@ -59,12 +63,18 @@ def sendMode(text):
 def returnData():
     return nowD
 
+#######################################################################
+# chat with GPT based on the diary
 def chat(text):
     '''
     chat:
     live stream chat with ChatGPT
     '''
     user_turn = {"role": "user", "content": text}
+
+    if not continueChat(text):
+        return "stop"
+
     messages = msg
     res = client.chat.completions.create(model="gpt-3.5-turbo", messages = messages + [user_turn])
     response_text = res.choices[0].message.content
@@ -75,29 +85,61 @@ def chat(text):
 
     return response_text
 
+def continueChat(text):
+    system_instruction = f"""
+    당신은 {gender}의 7살 손주이고, 지금 대화를 나누고 있다.
+    Your job is to classify intent. {gender}가 대화를 끝내고 싶으면 no이고, 다른 경우에는 yes이다.
+
+    Choose one of the following intents:
+    - yes
+    - no
+
+    User: {text}
+    Intent:
+    """
+    res = client.chat.completions.create(
+            model="gpt-4", 
+            messages=[
+                {"role": "system", "content": persona},
+                {"role": "user", "content": system_instruction},
+            ],
+        ).choices[0].message.content
+    
+    return res
+
+#######################################################################
+# TTS
 def speak(text ,lang="ko", speed=False):
     '''
     speak:
     change text to speech (TTS)
     '''
     try:
-        tts = gTTS(text=text, lang=lang , slow=speed)
-        tts.save("./tts.mp3")
-        os.system("mpg321 ./tts.mp3")
+        response = client.audio.speech.create(
+        model="tts-1-hd",
+        voice="nova",
+        input=f"{text}"
+        )
+        response.stream_to_file("speech.mp3")
+        os.system("mpg321 ./speech.mp3")
     except:
         print("No text to speak")
 
+#######################################################################
+# summarize diary
 def summarize(text):
     '''
     summarize:
     summarization of diary
     '''
-    system_instruction = f"assistant는 user의 input을 bullet point로 3줄 요약해준다. user의 input은 노인이 쓴 일기이다. user의 input: {text}"
-    messages=[{"role": "system", "content": system_instruction}]
+    system_instruction = f"user의 일기와 대화들을 bullet point로 3줄 요약해준다."
+    messages=[{"role":"system", "content": persona}, msg, {"role": "system", "content": system_instruction}]
     res = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
     summary = res.choices[0].message.content
     return summary
 
+#######################################################################
+# get gender of old_user from DB
 def getGender():
     '''
     getGender:
@@ -113,16 +155,43 @@ def getGender():
             gender = "할아버지"
     return gender
 
+#######################################################################
+# get answer from GPT
 def getAnswer(text):
     '''
     getAnswer:
     get answer from openAI
     '''
-    system_instruction = text
-    messages=[{"role": "system", "content": system_instruction}]
+    messages=[{"role": "system", "content": persona}, {"role": "user", "content": text}]
     res = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages).choices[0].message.content
     return res
 
+#######################################################################
+# Let GPT check Yes or no
+def classify(question, answer):
+    prompt = f"""Your question was: {question}
+    Your job is to classify intent.
+    
+    Choose one of the following intents:
+    - yes
+    - no
+
+    User: {answer}
+    Intent:
+    """
+    res = client.chat.completions.create(
+            model="gpt-4", 
+            messages=[
+                {"role": "system", "content": persona},
+                {"role": "user", "content": prompt},
+            ],
+            temperature=0,
+        ).choices[0].message.content
+    
+    return res
+
+#######################################################################
+# save diary to DB
 def diaryToDB(diary, summarizedDiary):
     '''
     diaryToDB:
@@ -136,6 +205,8 @@ def diaryToDB(diary, summarizedDiary):
     cur.execute(query, value)
     db.commit()
 
+#######################################################################
+# get user input
 def getAudio():
     with noalsaerr():
         r= sr.Recognizer()
@@ -157,6 +228,8 @@ def getAudio():
 
     return ans
 
+#######################################################################
+# get quiz from DB
 def getQuiz(id):
     '''
     getQuiz:
@@ -170,7 +243,9 @@ def getQuiz(id):
         prob = data.get("problem")
         ans = data.get("answer")
     return (prob, ans)
-    
+
+#######################################################################
+# add if user is correct or not
 def returnQuizAnswer(id, ans):
     query = "insert into `quiz_result` (is_correct, quiz_id, user_id) values (%s, %s, %s)"
     value = (ans, id, old_user_id)
@@ -203,12 +278,17 @@ def nextVideo():
 
     return videoPath
     
+#######################################################################
+def saveVideo():
+    os.system(f'scp -i "./I10C103T.pem" {result_path} ubuntu@i10c103.p.ssafy.io:~/song/front/frontend/app/src/assets/old_{old_user_id}')
+
 # #######################################################################################################
+# import pyaudio
 # p = pyaudio.PyAudio()
 # for i in range(p.get_device_count()):
 #     print(p.get_device_info_by_index(i))
-
 # #######################################################################################################
+
 # get openAI Key
 load_dotenv()
 client = OpenAI(
@@ -225,5 +305,18 @@ db = pymysql.connect(host = 'i10c103.p.ssafy.io',
 cur = db.cursor(pymysql.cursors.DictCursor)
 
 gender = getGender()
-msg = [{"role": "system", "content": f"assistant는 {gender}의 7살 손주이다. {gender}가 일기를 쓰면 그 일기 내용으로 {gender}에게 짧은 질문을 하나만 하고, 자연스럽게 짧은 대화를 이어간다. 이제 user가 일기를 쓸 것이다."}]
 
+persona = f"""<Instruction>
+{gender}와 짧은 대화를 진행합니다. {gender}에게 하는 질문은 한 번에 하나 입니다.
+</Instruction>
+
+<context>
+{gender}는 혼자 살고 있습니다.
+</Context>
+
+<persona>
+당신은 {gender}의 7살 손주입니다. 당신은 {gender}와 대화를 하고 있습니다. {gender}에게 대하듯 편하게 말해주세요.
+</persona>
+"""
+
+msg = [{"role": "system", "content": persona},{"role": "user", "content": f"{gender}가 일기를 쓰면 그 일기 내용으로 {gender}에게 짧은 질문을 하나만 하고, 자연스럽게 짧은 대화를 이어간다."}]

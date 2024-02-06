@@ -23,6 +23,12 @@ public class Medication {
     @JoinColumn(name = "old_user_id")
     private OldUserInfo oldUser;
 
+    @Column
     private String medicine;
+
+    @Column
     private LocalTime medicationTime;
+
+    @Column
+    private boolean isRead = false;
 }

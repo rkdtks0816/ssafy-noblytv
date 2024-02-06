@@ -2,14 +2,13 @@ import BgVideoS from './BgVideoStyle';
 
 interface BgVideoProps {
   muted: boolean;
-  news: string;
-  commercial: string;
+  currentMode: string;
 }
-function BgVideo({ muted, news, commercial }: BgVideoProps) {
+function BgVideo({ muted, currentMode }: BgVideoProps) {
   let videoSrc = 'src/assets/news.mp4';
-  if (news) {
+  if (currentMode === 'news') {
     videoSrc = 'src/assets/news_closing.mp4';
-  } else if (commercial) {
+  } else if (currentMode === 'commercial') {
     videoSrc = 'src/assets/advertisement_2.mp4';
   }
 

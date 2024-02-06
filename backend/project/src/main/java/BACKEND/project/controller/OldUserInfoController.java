@@ -1,8 +1,8 @@
 package BACKEND.project.controller;
 
-import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.dto.OldUserInfoDto;
 import BACKEND.project.dto.OldUserInfoResponseDto;
+import BACKEND.project.dto.OldUserUpdateDto;
 import BACKEND.project.service.OldUserInfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,8 +27,8 @@ public class OldUserInfoController {
 
     @PutMapping("/{oldUserId}")
     @Operation(summary = "노인 회원 정보 수정")
-    public ResponseEntity<OldUserInfoDto> updateOldUserInfo(@PathVariable("oldUserId") String oldUserId, @RequestBody OldUserInfoDto oldUserInfoDto) {
-        OldUserInfoDto updatedoldUserInfoDto = oldUserInfoService.updateOldUserInfo(oldUserId, oldUserInfoDto);
+    public ResponseEntity<OldUserUpdateDto> updateOldUserInfo(@PathVariable("oldUserId") String oldUserId, @RequestBody OldUserUpdateDto oldUserUpdateDto) {
+        OldUserUpdateDto updatedoldUserInfoDto = oldUserInfoService.updateOldUserInfo(oldUserId, oldUserUpdateDto);
         return ResponseEntity.ok(updatedoldUserInfoDto);
     }
 }

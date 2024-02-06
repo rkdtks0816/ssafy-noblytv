@@ -61,7 +61,7 @@ public class OldUserInfo {
     private List<Medication> medications = new ArrayList<>();
 
     @ToString.Exclude
-    @JsonManagedReference
+    @JsonManagedReference(value = "oldUserInfoBackRef")
     @OneToMany(mappedBy = "oldUserInfo")
     private List<FamilyRelation> familyRelations = new ArrayList<>();
 

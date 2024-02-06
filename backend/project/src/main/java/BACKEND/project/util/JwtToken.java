@@ -13,5 +13,6 @@ public class JwtToken {
     private String accessToken;
     private String refreshToken;
     private String userType;
+    private String redirectUrl;
 }
 

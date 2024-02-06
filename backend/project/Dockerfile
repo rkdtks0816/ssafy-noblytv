@@ -14,20 +14,17 @@ RUN apt-get update && apt-get install -y findutils
 RUN apt-get install -y curl unzip && \
     curl -s https://services.gradle.org/distributions/gradle-8.5-bin.zip -o gradle.zip && \
     unzip -d /opt gradle.zip && \
-    rm gradle.zip
+    rm gradle.zip && \
+    ln -s /opt/gradle-8.5/bin/gradle /usr/bin/gradle
 
-# Gradle 환경 변수 설정
-ENV GRADLE_HOME /opt/gradle-8.5
-ENV PATH $PATH:$GRADLE_HOME/bin
-
-# Gradle Wrapper를 이용하여 애플리케이션 빌드
-RUN ./gradlew clean bootJar
+# Spring Boot 애플리케이션 빌드
+RUN gradle clean bootJar
 
 # JAR 파일을 /app 디렉토리로 복사
 RUN cp build/libs/*.jar /app/app.jar
 
 # 빌드 과정에서 생성된 불필요한 파일들 삭제
-RUN rm -rf build
+RUN gradle clean
 
 # Spring Boot 애플리케이션 실행을 위한 명령 설정
 ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "/app/app.jar"]

@@ -36,6 +36,10 @@ function Overlay() {
             setCurrentMode('commercial');
             // console.log('현재 모드', currentMode);
             break;
+          case 'main':
+            setCurrentMode('main');
+            // console.log('현재 모드', currentMode);
+            break;
           default:
             setActiveModal(null);
             break;

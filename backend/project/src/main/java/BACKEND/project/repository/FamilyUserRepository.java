@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface FamilyUserRepository extends JpaRepository<FamilyUserInfo, Long> {
     Optional<FamilyUserInfo> findByUserId(String userId);
 
-    FamilyUserInfo findByUsername(String username);
+    Optional<FamilyUserInfo> findByUsername(String username);
 }

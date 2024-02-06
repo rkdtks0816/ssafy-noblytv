@@ -33,7 +33,7 @@
           <excludeBranchesSpec></excludeBranchesSpec>
           <sourceBranchRegex></sourceBranchRegex>
           <targetBranchRegex></targetBranchRegex>
-          <secretToken>{AQAAABAAAAAwzGXd9b5fi1lkSuw54jMNb1yzOQslrEV9Ql/OWq4rafIyBUVBtTwDvXKQCtDBqJ9YOQtr6w9lVVZh4f8tvx6JoQ==}</secretToken>
+          <secretToken>{AQAAABAAAAAwMFRN8WsDiWsevIeltUK7FUES+9jfqzPjKNAz1i4w2iDTxFIsM/04cDm+bnhtoo+acL48T5SCybdXjDBVTpLFyA==}</secretToken>
           <pendingBuildName></pendingBuildName>
           <cancelPendingBuildsOnUpdate>false</cancelPendingBuildsOnUpdate>
         </com.dabsquared.gitlabjenkins.GitLabPushTrigger>
@@ -58,7 +58,7 @@
       <submoduleCfg class="empty-list"/>
       <extensions/>
     </scm>
-    <scriptPath>Jenkinsfile</scriptPath>
+    <scriptPath>jenkins/Jenkinsfile</scriptPath>
     <lightweight>true</lightweight>
   </definition>
   <triggers/>

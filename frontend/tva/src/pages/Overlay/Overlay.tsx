@@ -18,23 +18,23 @@ function Overlay() {
         switch (mode) {
           case 'gymnastic':
             setActiveModal(1);
-            console.log('activeModal', activeModal);
+            // console.log('activeModal', activeModal);
             break;
           case 'quiz':
             setActiveModal(2);
-            console.log('activeModal', activeModal);
+            // console.log('activeModal', activeModal);
             break;
           case 'diary':
             setActiveModal(3);
-            console.log('activeModal', activeModal);
+            // console.log('activeModal', activeModal);
             break;
           case 'news':
             setCurrentMode('news');
-            console.log('현재 모드', currentMode);
+            // console.log('현재 모드', currentMode);
             break;
           case 'commercial':
             setCurrentMode('commercial');
-            console.log('현재 모드', currentMode);
+            // console.log('현재 모드', currentMode);
             break;
           default:
             setActiveModal(null);
@@ -58,13 +58,13 @@ function Overlay() {
         {activeModal === 2 && <QuizModal />}
         {activeModal === 3 && <DiaryModal />}
       </div>
-      {/* 테스트용 버튼 */}
+      {/* 테스트용 버튼
       <button type="button" onClick={() => setCurrentMode('news')}>
         뉴스 모드 설정
       </button>
       <button type="button" onClick={() => setCurrentMode('commercial')}>
         커머셜 모드 설정
-      </button>
+      </button> */}
     </>
   );
 }

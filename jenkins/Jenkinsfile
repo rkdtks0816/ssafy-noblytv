@@ -1,21 +1,11 @@
 pipeline {
     agent any
 
-    environment {
-        COMPOSE_VERSION = '1.29.2'
-    }
-
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
 
         stage('Deploy with Docker Compose') {
             steps {
                 script {
-                    sh "docker-compose -v"
                     sh "docker-compose up -d"
                 }
             }

@@ -10,12 +10,12 @@ services:
   sapi:
     build: 
       context: ./backend/project/
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     ports:
       - "8888:8080"
   sweb:
     build: 
       context: ./frontend/app/
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     ports:
       - "3001:3000"

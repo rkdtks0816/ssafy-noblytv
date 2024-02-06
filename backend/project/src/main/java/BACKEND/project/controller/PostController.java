@@ -19,17 +19,18 @@ import java.time.LocalDateTime;
 @RequestMapping("/posts")
 public class PostController {
 
+
     @Autowired
     PostService postService;
 
     @PostMapping("/family")
-    public ResponseEntity<?> uploadVideo(@RequestParam("file") MultipartFile file, @RequestParam("userId") String userId) {
+    public ResponseEntity<?> uploadVideo(@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId) {
         try {
             // 파일 저장
             String filePath = postService.saveVideo(file, userId);
 
             // DB에 동영상 정보 저장
-            FamilyUserInfoDto familyUserInfoDto = postService.findFamilyUserById(userId);
+            FamilyUserInfoDto familyUserInfoDto = postService.findById(userId);
             PostDto postDto = new PostDto();
             postDto.setVideoPath(filePath);
             postDto.setPostedAt(LocalDateTime.now());

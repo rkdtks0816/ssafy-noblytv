@@ -1,6 +1,6 @@
 package BACKEND.project.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import BACKEND.project.domain.FamilyUserInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +13,6 @@ import java.time.LocalDateTime;
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostDto {
 
-    private Long id;
-
     private OldUserInfoDto oldUserInfo;
 
     private FamilyUserInfoDto familyUserInfo;
@@ -24,4 +22,13 @@ public class PostDto {
     private LocalDateTime postedAt;
 
     private boolean isViewed;
+
+    public FamilyUserInfoDto getFamilyUserInfo() {
+        return familyUserInfo;
+    }
+
+    public void setFamilyUserInfo(FamilyUserInfoDto familyUserInfo) {
+        this.familyUserInfo = familyUserInfo;
+    }
+
 }

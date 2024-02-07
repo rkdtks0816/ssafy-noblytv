@@ -40,19 +40,21 @@ public class PostService {
 
     public String saveVideo(MultipartFile file, Long userId) throws IOException {
         // 파일 저장 로직
-        String dirPath = "/home/ubuntu/nobly/fileserver/videos/family_" + userId;
+        String dirPath = "/home/ubuntu/nobly/fileserver/videos";
+        String dbsavePath = "/family_" + userId;
+        String serverPath = dirPath + dbsavePath;
         //String dirPath = "C:/Users/spets/OneDrive/바탕 화면/S10P12C103/frontend/app/src/assets/family_" + userId;
-        File directory = new File(dirPath);
+        File directory = new File(serverPath);
         if (!directory.exists()) {
             boolean result = directory.mkdirs();
             if (!result) {
-                throw new IOException("Failed to create directory " + dirPath);
+                throw new IOException("Failed to create directory " + serverPath);
             }
         }
-        String filePath = dirPath + "/" + file.getOriginalFilename();
-        File dest = new File(filePath);
+        String filePath = dbsavePath + "/" + file.getOriginalFilename();
+        File dest = new File(filePath, file.getOriginalFilename());
         file.transferTo(dest);
-        return filePath;
+        return dbsavePath;
     }
 
 

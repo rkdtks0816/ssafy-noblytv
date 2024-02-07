@@ -141,6 +141,7 @@ public class OldUserInfoService {
         // FamilyRelation 객체를 FamilyRelationResponseDto 객체로 변환
         List<FamilyRelationResponseDto> familyRelationResponseDtos = oldUserInfo.getFamilyRelations().stream().map(fr -> {
             FamilyRelationResponseDto familyRelationResponseDto = new FamilyRelationResponseDto();
+            familyRelationResponseDto.setId(fr.getFamilyUserInfo().getId());
             familyRelationResponseDto.setUserId(fr.getFamilyUserInfo().getUserId());
             familyRelationResponseDto.setUsername(fr.getFamilyUserInfo().getUsername());
             return familyRelationResponseDto;

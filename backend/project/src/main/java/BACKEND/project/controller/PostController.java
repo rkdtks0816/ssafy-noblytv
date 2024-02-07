@@ -1,5 +1,6 @@
 package BACKEND.project.controller;
 
+import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.domain.Post;
 import BACKEND.project.dto.FamilyUserInfoDto;
@@ -20,8 +21,12 @@ import java.util.List;
 public class PostController {
 
 
+
+    private final PostService postService;
     @Autowired
-    PostService postService;
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
 
     @PostMapping("/family")
     public ResponseEntity<?> uploadVideo(@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId) {
@@ -47,14 +52,9 @@ public class PostController {
         }
     }
 
-    @GetMapping("/family/{oldUserId}")
-    public ResponseEntity<?> getFamilyUserPosts(@PathVariable("oldUserId") Long oldUserId) {
-        try {
-            // OldUser의 id와 FamilyRelation 관계인 FamilyUser가 작성한 게시글 조회
-            List<PostDto> familyUserPosts = postService.getPostsByOldUserId(oldUserId);
-            return new ResponseEntity<>(familyUserPosts, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("게시글 조회 실패:" + e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping("/{oldUserId}")
+    public ResponseEntity<List<Post>> getPostsByOldUserInfoId(@PathVariable("oldUserId") Long oldUserId) {
+        List<Post> posts = postService.getPostsByOldUserInfoId(oldUserId);
+        return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }

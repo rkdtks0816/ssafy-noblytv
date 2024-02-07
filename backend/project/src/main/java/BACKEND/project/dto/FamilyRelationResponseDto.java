@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FamilyRelationResponseDto {
 
+    private Long id;
     private String userId;
     private String username;
 }

@@ -13,5 +13,7 @@ import java.util.List;
 public interface FamilyRelationRepository extends JpaRepository<FamilyRelation, Long> {
     boolean existsByOldUserInfoAndFamilyUserInfo(OldUserInfo oldUser, FamilyUserInfo familyUser);
 
-    List<FamilyRelation> findByOldUserInfo(OldUserInfo oldUserInfo);
+    FamilyRelation findByOldUserInfo(OldUserInfo oldUserInfo);
+
+    List<FamilyRelation> findByFamilyUserInfoId(Long familyUserInfoId);
 }

@@ -3,9 +3,9 @@ import { Socket } from 'socket.io-client';
 import useSocket from '../../hooks/useSocket';
 import ChildModal from '../ChildModal/ChildModal';
 
-function VideoModal() {
+function FamilyVideoModal() {
   const [isActive, setIsActive] = useState<boolean>(false);
-  const [videoContents, setVideoContents] = useState<string>('');
+  const [familyVideos, setFamilyVideos] = useState<string>('');
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   const socket: Socket | null = useSocket('http://i10c103.p.ssafy.io:9000');
@@ -16,7 +16,7 @@ function VideoModal() {
       socket.on('message', (data: string) => {
         // 소켓통신에서 처음 데이터 수신했을 때 모달창 등장시키기
         console.log('Video data received:', data);
-        setVideoContents(data);
+        setFamilyVideos(data);
         setIsActive(true);
         // 영상을 확인하겠다고 했을 때 처리
         if (data === 'yes') {
@@ -48,11 +48,11 @@ function VideoModal() {
 
   // 'mute' 또는 'muteoff'일 경우 빈 문자열을, 그렇지 않으면 videoContents 값을 그대로 사용
   const displayContent =
-    videoContents !== 'mute' &&
-    videoContents !== 'muteoff' &&
-    videoContents !== 'start' &&
-    videoContents !== 'stop'
-      ? videoContents
+    familyVideos !== 'mute' &&
+    familyVideos !== 'muteoff' &&
+    familyVideos !== 'start' &&
+    familyVideos !== 'stop'
+      ? familyVideos
       : '';
 
   return (
@@ -66,4 +66,4 @@ function VideoModal() {
   );
 }
 
-export default VideoModal;
+export default FamilyVideoModal;

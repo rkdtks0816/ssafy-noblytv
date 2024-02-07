@@ -1,13 +1,28 @@
+import { useState, useEffect } from 'react';
 import BgVideoS from './BgVideoStyle';
 
-function BgVideo() {
+interface BgVideoProps {
+  muted: boolean;
+  currentMode: string;
+}
+
+function BgVideo({ muted, currentMode }: BgVideoProps) {
+  const [videoSrc, setVideoSrc] = useState('src/assets/news.mp4');
+
+  useEffect(() => {
+    if (currentMode === 'news') {
+      setVideoSrc('src/assets/news_closing.mp4');
+    } else if (currentMode === 'commercial') {
+      setVideoSrc('src/assets/advertisement_2.mp4');
+    } else if (currentMode === 'main') {
+      setVideoSrc('src/assets/news.mp4');
+    }
+  }, [currentMode]);
+
   return (
     <div>
-      <BgVideoS controls>
-        <source
-          src="src/assets/Samsung_social_contribution.mp4"
-          type="video/mp4"
-        />
+      <BgVideoS key={videoSrc} controls autoPlay muted={muted} loop>
+        <source src={videoSrc} type="video/mp4" />
       </BgVideoS>
     </div>
   );

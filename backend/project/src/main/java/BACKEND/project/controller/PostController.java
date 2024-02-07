@@ -20,8 +20,6 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostController {
 
-
-
     private final PostService postService;
     @Autowired
     public PostController(PostService postService) {
@@ -52,9 +50,18 @@ public class PostController {
         }
     }
 
-    @GetMapping("/{oldUserId}")
+    @GetMapping("familypostsearch/{oldUserId}")
     public ResponseEntity<List<Post>> getPostsByOldUserInfoId(@PathVariable("oldUserId") Long oldUserId) {
         List<Post> posts = postService.getPostsByOldUserInfoId(oldUserId);
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    @GetMapping("oldpostsearch/{familyUserId}")
+    public ResponseEntity<List<PostDto>> getPostByLastVisitedId(@PathVariable("familyUserId") Long familyUserId) {
+        List<PostDto> posts = postService.getPostsByLastVistedId(familyUserId);
+        if (posts == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }

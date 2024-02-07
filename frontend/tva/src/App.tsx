@@ -23,7 +23,7 @@ function App() {
         {/* Diary */}
         <Route path="/diary" element={<Diary />} />
         {/* Video */}
-        <Route path="/FamilyVideoModal" element={<FamilyVideoModal />} />
+        <Route path="/FamilyVideo" element={<FamilyVideoModal />} />
       </Routes>
     </Router>
   );

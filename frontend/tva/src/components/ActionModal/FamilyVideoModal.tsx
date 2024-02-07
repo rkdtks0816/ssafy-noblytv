@@ -45,19 +45,31 @@ function FamilyVideoModal() {
   const toggleModal = () => {
     setIsActive(!isActive);
   };
+  // 서버에서 받은 데이터가 비디오 경로인지 확인하기 위한 함수
+  const isVideoPath = (path: string): boolean =>
+    /^(http(s?):)([/|.|\w|\s|-])*\.(?:mp4|mov)$/.test(path);
 
-  // 'mute' 또는 'muteoff'일 경우 빈 문자열을, 그렇지 않으면 videoContents 값을 그대로 사용
-  const displayContent =
-    familyVideos !== 'mute' &&
-    familyVideos !== 'muteoff' &&
-    familyVideos !== 'start' &&
-    familyVideos !== 'stop'
-      ? familyVideos
-      : '';
+  // displayContent 조건 수정
+  const displayContent = (() => {
+    if (['mute', 'muteoff', 'start', 'stop'].includes(familyVideos)) {
+      return ''; // 이 경우엔 빈 문자열 반환
+    }
+    if (isVideoPath(familyVideos)) {
+      // 비디오 경로일 경우, video 태그를 통해 비디오를 재생
+      return (
+        // 자막 추가해야한다는 접근성 지침. 여기에서는 무시
+        // eslint-disable-next-line jsx-a11y/media-has-caption
+        <video controls autoPlay>
+          <source src={familyVideos} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      );
+    }
+    return familyVideos; // 일반 텍스트일 경우
+  })();
 
   return (
     <ChildModal
-      title="영상"
       content={displayContent}
       isActive={isActive}
       onToggle={toggleModal}

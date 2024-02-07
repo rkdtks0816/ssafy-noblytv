@@ -21,14 +21,14 @@ function GymnasticsModal() {
           console.log('Gymnastic message:', data);
           setIsActive(false);
           setIsPlaying(true);
-        } else if (
-          data === '조금 있다가 꼭 체조 하셔야 해요!' ||
-          data === 'stop'
-        ) {
+        } else if (data === '조금 있다가 꼭 체조 하셔야 해요!') {
           setTimeout(() => {
             setIsActive(false);
             setIsPlaying(false);
           }, 7000);
+        } else if (data === 'stop') {
+          setIsActive(false);
+          setIsPlaying(false);
         }
       });
     }

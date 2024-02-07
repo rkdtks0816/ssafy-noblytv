@@ -54,7 +54,6 @@ function Birthday() {
   };
 
   const handleSubmit = () => {
-    console.log(userInfo);
     axios
       .post(`${BASE_URL}:${API_PORT}${API_FAMILY_SIGN_UP}`, userInfo, {
         headers: {

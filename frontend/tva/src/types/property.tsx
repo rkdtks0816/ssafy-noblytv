@@ -1,6 +1,6 @@
 export interface ChildModalProps {
-  title: string;
-  content: string;
+  title?: string;
+  content: string | JSX.Element;
   isActive?: boolean;
   onToggle?: () => void;
   children?: React.ReactNode;

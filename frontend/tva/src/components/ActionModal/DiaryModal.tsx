@@ -19,7 +19,7 @@ function DiaryModal() {
         if (data === 'stop') {
           setTimeout(() => {
             setIsActive(false);
-          }, 5000);
+          }, 7000);
         }
       });
     }
@@ -32,11 +32,16 @@ function DiaryModal() {
   const toggleModal = () => {
     setIsActive(!isActive);
   };
+  // 'mute' 또는 'muteoff'일 경우 빈 문자열을, 그렇지 않으면 diaryContents 값을 그대로 사용
+  const displayContent =
+    diaryContents !== 'mute' && diaryContents !== 'muteoff'
+      ? diaryContents
+      : '';
 
   return (
     <ChildModal
       title="일기"
-      content={diaryContents}
+      content={displayContent}
       isActive={isActive}
       onToggle={toggleModal}
     >

@@ -21,11 +21,9 @@ function GymnasticsModal() {
           console.log('Gymnastic message:', data);
           setIsActive(false);
           setIsPlaying(true);
-        } else if (data === '조금 있다가 꼭 체조 하셔야 해요!') {
-          setTimeout(() => {
-            setIsActive(false);
-            setIsPlaying(false);
-          }, 5000);
+        } else if (data === 'stop') {
+          setIsActive(false);
+          setIsPlaying(false);
         }
       });
     }
@@ -37,27 +35,21 @@ function GymnasticsModal() {
     };
   }, [socket]);
 
-  useEffect(() => {
-    console.log('isPlaying 상태:', isPlaying);
-    if (isPlaying) {
-      // YouTube 컴포넌트를 통한 영상 재생 로직을 여기에 추가
-    }
-  }, [isPlaying]);
-
   const toggleModal = () => {
     setIsActive(!isActive);
   };
+  // 'mute' 또는 'muteoff'일 경우 빈 문자열을, 그렇지 않으면 gymContents 값을 그대로 사용
+  const displayContent =
+    gymContents !== 'mute' && gymContents !== 'muteoff' ? gymContents : '';
 
   return (
     <>
       <ChildModal
         title="체조"
-        content={gymContents}
+        content={displayContent}
         isActive={isActive}
         onToggle={toggleModal}
-      >
-        {/* 기존 YouTube 컴포넌트 및 기타 내용 */}
-      </ChildModal>
+      />
 
       {isPlaying && <Gymnastics />}
     </>

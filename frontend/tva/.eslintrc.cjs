@@ -25,5 +25,6 @@ module.exports = {
     ],
     'prettier/prettier': 'error',
     'linebreak-style': ['error', 'windows'],
+    'react/prop-types': 'off',
   },
 };

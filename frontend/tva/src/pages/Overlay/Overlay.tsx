@@ -10,7 +10,6 @@ function Overlay() {
   const socket = useSocket('http://i10c103.p.ssafy.io:9000');
   const [activeModal, setActiveModal] = useState<number | null>(null);
   const [currentMode, setCurrentMode] = useState('');
-
   useEffect(() => {
     if (socket) {
       console.log(socket);
@@ -62,6 +61,7 @@ function Overlay() {
             break;
           case 'main':
             setCurrentMode('main');
+            setActiveModal(null);
             // console.log('현재 모드', currentMode);
             break;
           default:
@@ -74,25 +74,16 @@ function Overlay() {
     return () => {
       if (socket) socket.off('mode');
     };
-  }, [activeModal, currentMode, socket]);
-
-  const isMuted = activeModal !== null;
+  }, [socket]);
 
   return (
     <>
-      <BgVideo muted={isMuted} currentMode={currentMode} />
+      <BgVideo currentMode={currentMode} />
       <div>
         {activeModal === 1 && <GymnasticsModal />}
         {activeModal === 2 && <QuizModal />}
         {activeModal === 3 && <DiaryModal />}
       </div>
-      {/* 테스트용 버튼
-      <button type="button" onClick={() => setCurrentMode('news')}>
-        뉴스 모드 설정
-      </button>
-      <button type="button" onClick={() => setCurrentMode('commercial')}>
-        커머셜 모드 설정
-      </button> */}
     </>
   );
 }

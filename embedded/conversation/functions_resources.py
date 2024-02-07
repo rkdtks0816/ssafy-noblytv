@@ -5,12 +5,13 @@ from dotenv import load_dotenv
 import pymysql
 import datetime
 import socketio
+import time
 
 old_user_id = "1"
 nowD = ""
 family = []
-time = str(datetime.datetime.now()).split()[0]
-result_path = f"./videoSummarization/videos/{time}_summary.mp4"
+nowtime = str(datetime.datetime.now()).split()[0]
+result_path = f"./videoSummarization/videos/{nowtime}_summary.mp4"
 
 #######################################################################
 # ALSA warning handdler
@@ -55,7 +56,21 @@ sio.connect(server_url)
 
 @sio.event
 def sendData(text):
-    sio.emit('message', text)
+    try:
+        if not sio.connected:
+            print("Socket is disconnected, attempting to reconnect...")
+            sio.connect(server_url)
+            time.sleep(1)  # 재연결 후에 서버가 연결을 처리할 시간을 줍니다.
+            if sio.connected:
+                print("Reconnected successfully.")
+            else:
+                print("Failed to reconnect.")
+                return  # 재연결에 실패한 경우, 함수를 빠져나갑니다.
+        sio.emit('message', text)
+        print(f"Sent data: {text}")
+        time.sleep(0.5)  # 메시지를 전송한 후 충분한 처리 시간을 보장합니다.
+    except Exception as e:
+        print(f"An error occurred while sending data: {e}")
 
 @sio.event
 def sendMode(text):
@@ -205,10 +220,10 @@ def diaryToDB(diary, summarizedDiary):
     diaryToDB:
     save diary to DB
     '''
-    time = str(datetime.datetime.now()).split()[0]
+    nowtime = str(datetime.datetime.now()).split()[0]
 
     query = "insert into `diary` (date, summary,  text, old_user_id) values (%s, %s, %s, %s)"
-    value = (time, summarizedDiary, diary, old_user_id)
+    value = (nowtime, summarizedDiary, diary, old_user_id)
 
     cur.execute(query, value)
     db.commit()
@@ -262,6 +277,9 @@ def returnQuizAnswer(id, ans):
     db.commit()
 
 #######################################################################
+def getOldID():
+    return old_user_id    
+
 def getFamilyId():
     global family
     family = []
@@ -302,14 +320,27 @@ def nextVideo():
     
 #######################################################################
 def saveVideo():
-    os.system(f'scp -i "./I10C103T.pem" {result_path} ubuntu@i10c103.p.ssafy.io:~/song/front/frontend/app/src/assets/old_{old_user_id}')
-    query = "insert into `post` (is_viewed, posted_at, video_path, family_user_id, old_user_id) values (%s, %s, %s, %s, %s)"
+    os.system(f'scp -i "./I10C103T.pem" {result_path} ubuntu@i10c103.p.ssafy.io:/home/ubuntu/nobly/fileserver/videos/old_{old_user_id}')
     time = datetime.datetime.now()
     nowTime = str(time).split()[0]
-    value = (True, time, f"/old_{old_user_id}/{nowTime}_summary.mp4", None, old_user_id)
+    cnt = 0
+    id = ""
 
-    cur.execute(query, value)
-    db.commit()
+    cur.execute("SELECT * FROM `post` WHERE video_path = %s", f"/old_{old_user_id}/{nowTime}_summary.mp4")
+    for data in cur:
+        cnt += 1
+        id = data.get("id")
+
+    if cnt == 0:
+        query = "insert into `post` (is_viewed, posted_at, video_path, family_user_id, old_user_id) values (%s, %s, %s, %s, %s)"
+        value = (True, time, f"/old_{old_user_id}/{nowTime}_summary.mp4", None, old_user_id)
+
+        cur.execute(query, value)
+        db.commit()
+    else:
+        cur.execute("UPDATE `post` SET `posted_at` = %s WHERE `id` = %s", (time, id))
+        db.commit()
+
 
 # #######################################################################################################
 # import pyaudio

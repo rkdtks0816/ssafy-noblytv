@@ -24,9 +24,10 @@ services:
     volumes:
       - ./videos:/usr/share/nginx/html:ro
     ports:
-      - "8001:80"
+      - "8880:80"
     networks:
       - snet
+    command: /bin/sh -c "chmod -R 755 /usr/share/nginx/html && nginx -g 'daemon off;'"
 
 networks:
   snet:

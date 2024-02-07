@@ -1,3 +1,0 @@
-[filesystem "Eclipse Adoptium|17.0.10|/dev/root"]
-	timestampResolution = 5656 nanoseconds
-	minRacyThreshold = 4183 microseconds

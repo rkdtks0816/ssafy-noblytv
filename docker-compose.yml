@@ -3,7 +3,7 @@ version: '3'
 services:
   sapi:
     build: 
-      context: ./backend/project/
+      context: ./backend/project
       dockerfile: Dockerfile
     ports:
       - "8888:8080"
@@ -12,7 +12,7 @@ services:
 
   sweb:
     build: 
-      context: ./frontend/app/
+      context: ./frontend/app
       dockerfile: Dockerfile
     ports:
       - "3001:3000"
@@ -21,7 +21,7 @@ services:
 
   nginx-file-server:
     build: 
-      context: ./fileserver/
+      context: ./fileserver
       dockerfile: Dockerfile
     volumes:
       - ./fileserver/videos:/usr/share/nginx/html

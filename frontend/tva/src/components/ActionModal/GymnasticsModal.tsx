@@ -38,17 +38,18 @@ function GymnasticsModal() {
   const toggleModal = () => {
     setIsActive(!isActive);
   };
+  // 'mute' 또는 'muteoff'일 경우 빈 문자열을, 그렇지 않으면 gymContents 값을 그대로 사용
+  const displayContent =
+    gymContents !== 'mute' && gymContents !== 'muteoff' ? gymContents : '';
 
   return (
     <>
       <ChildModal
         title="체조"
-        content={gymContents}
+        content={displayContent}
         isActive={isActive}
         onToggle={toggleModal}
-      >
-        {/* 기존 YouTube 컴포넌트 및 기타 내용 */}
-      </ChildModal>
+      />
 
       {isPlaying && <Gymnastics />}
     </>

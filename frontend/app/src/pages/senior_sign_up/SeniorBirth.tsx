@@ -13,13 +13,11 @@ import { seniorSignUpInit } from '../../constants/type_init';
 import { SeniorSignUpType } from '../../types/api_types';
 import {
   API_GYMNASTICS,
-  API_GYMNASTICS,
   API_PORT,
   API_SENIOR_SIGN_UP,
   BASE_URL,
-  PATH_COMMUNITY,
   PATH_SENIOR_SIGN_UP_NAME_GENDER,
-  PATH_SENIOR_SIGN_UP_UNIQUE_CODE,
+  PATH_SENIOR_UNIQUE_CODE,
 } from '../../constants/constants';
 import gymnasticsInitKeywords from './gymnasticsInitKeywords';
 
@@ -91,7 +89,7 @@ function SeniorBirth() {
       .then(response => {
         // axios 성공 시 실행되는 부분
         console.log('Axios success:', response);
-        navigate(PATH_SENIOR_SIGN_UP_UNIQUE_CODE);
+        navigate(PATH_SENIOR_UNIQUE_CODE);
         Cookies.set('oldUserId', response.data.userId, { expires: 7 });
         gymnasticsInit(response.data.userId);
       })

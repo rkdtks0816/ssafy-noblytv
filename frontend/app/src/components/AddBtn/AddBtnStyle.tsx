@@ -16,7 +16,7 @@ const AddBtnStyle = styled.button`
   width: 50px;
   height: 50px;
   line-height: 50px; // 세로 중앙 정렬을 위해 height와 동일하게 설정
-  position: absolute;
+  position: fixed;
   bottom: 10%;
   right: 4%;
 

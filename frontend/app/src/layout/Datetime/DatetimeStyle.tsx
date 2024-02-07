@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+const DateTimeBoxS = styled.div`
+  position: fixed;
+  top: 90px;
+  left: 0px;
+  margin: 0 auto;
+  width: 390px;
+`;
+
 const DateTimeHearderS = styled.div`
   position: fixed;
   top: 90px;
@@ -103,6 +111,7 @@ const DateTimeDiaryListBoxLiContentsS = styled.div`
 `;
 
 export {
+  DateTimeBoxS,
   DateTimeHearderS,
   DateTimeTitleS,
   DateTimeInputS,

@@ -6,7 +6,7 @@ import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import QrCode from '../../components/Qrcode/Qrcode';
-import { PATH_COMMUNITY } from '../../constants/constants';
+import { PATH_MAIN } from '../../constants/constants';
 
 function SeniorUniqueCode() {
   const oldUserId: string = Cookies.get('oldUserId') || '';
@@ -18,7 +18,7 @@ function SeniorUniqueCode() {
   }, [oldUserId]);
 
   const handleSubmit = () => {
-    navigate(PATH_COMMUNITY, { state: { uniqueCode } });
+    navigate(PATH_MAIN);
   };
 
   return (

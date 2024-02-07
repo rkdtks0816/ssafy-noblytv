@@ -7,6 +7,7 @@ import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import StatusMsg from '../../components/StatusMsg/StatusMsg';
+import { PATH_MAIN, PATH_SELECT_SENIOR } from '../../constants/constants';
 
 function ConnectTv() {
   const navigate = useNavigate();
@@ -25,11 +26,11 @@ function ConnectTv() {
   }, [location]); // location 객체가 변경될 때마다 이 useEffect 훅을 실행
 
   const handleBackBtn = () => {
-    navigate('/cummunity');
+    navigate(PATH_MAIN);
   };
 
   const handleSubmit = () => {
-    navigate('/select-senior');
+    navigate(PATH_SELECT_SENIOR);
   };
 
   return (

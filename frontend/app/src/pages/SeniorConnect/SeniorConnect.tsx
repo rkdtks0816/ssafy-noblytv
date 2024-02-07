@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Cookies from 'js-cookie';
 import BackBtnStyle from '../../components/BackBtn/BackBtnStyle';
 import BgImgStyle from '../../components/BgImg/BgImgStyle';
 import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
@@ -17,10 +14,7 @@ import {
   API_FAMILY,
   API_PORT,
   BASE_URL,
-  API_FAMILY,
-  API_PORT,
-  BASE_URL,
-  PATH_COMMUNITY,
+  PATH_MAIN,
   PATH_SENIOR_SIGN_UP_NAME_GENDER,
   PATH_SIGN_IN,
 } from '../../constants/constants';
@@ -32,19 +26,14 @@ function SeniorConnect() {
   const grantType = Cookies.get('grantType');
   const accessToken = Cookies.get('accessToken');
   const userId = Cookies.get('userId');
-  const grantType = Cookies.get('grantType');
-  const accessToken = Cookies.get('accessToken');
-  const userId = Cookies.get('userId');
 
-  const [oldUserId, setOldUserId] = useState('');
-  const [oldUserIds, setOldUserIds] = useState<string[]>([]);
   const [oldUserId, setOldUserId] = useState('');
   const [oldUserIds, setOldUserIds] = useState<string[]>([]);
   const [modalContents, setModalContents] = useState<React.ReactNode>('');
   // 로그인 확인
   useEffect(() => {
     manageAuthToken({
-      handleNavigate: () => navigate(PATH_SIGN_IN, { state: PATH_COMMUNITY }),
+      handleNavigate: () => navigate(PATH_SIGN_IN),
     });
   }, [navigate]);
 
@@ -74,7 +63,7 @@ function SeniorConnect() {
   };
 
   const handleBackBtn = () => {
-    navigate(PATH_COMMUNITY);
+    navigate(PATH_MAIN);
   };
 
   const handleSubmit = () => {
@@ -93,7 +82,7 @@ function SeniorConnect() {
       )
       .then(() => {
         Cookies.set('oldUserId', oldUserId, { expires: 7 });
-        navigate(PATH_COMMUNITY);
+        navigate(PATH_MAIN);
       })
       .catch(err => console.error('Axios error:', err));
   };

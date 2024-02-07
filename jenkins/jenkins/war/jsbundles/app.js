@@ -2,7 +2,7 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 237:
+/***/ 6576:
 /***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
 
 
@@ -226,7 +226,7 @@ function isInViewport(element) {
   return rect.top >= 0 && rect.left >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth;
 }
 // EXTERNAL MODULE: ../../../../../.yarn/berry/cache/tippy.js-npm-6.3.7-424f946d38-10c0.zip/node_modules/tippy.js/dist/tippy.esm.js + 16 modules
-var tippy_esm = __webpack_require__(3075);
+var tippy_esm = __webpack_require__(7480);
 ;// CONCATENATED MODULE: ./src/main/js/components/dropdowns/utils.js
 
 
@@ -241,7 +241,7 @@ const SELECTED_ITEM_CLASS = "jenkins-dropdown__item--selected";
  * @param callback - called to retrieve the list of dropdown items
  */
 function generateDropdown(element, callback) {
-  (0,tippy_esm/* default */.ZP)(element, Object.assign({}, templates.dropdown(), {
+  (0,tippy_esm/* default */.cp)(element, Object.assign({}, templates.dropdown(), {
     onCreate(instance) {
       instance.reference.addEventListener("mouseenter", () => {
         if (instance.loaded) {
@@ -280,7 +280,7 @@ function generateDropdownItems(items, compact) {
     }
     const menuItem = templates.menuItem(item);
     if (item.subMenu != null) {
-      (0,tippy_esm/* default */.ZP)(menuItem, Object.assign({}, templates.dropdown(), {
+      (0,tippy_esm/* default */.cp)(menuItem, Object.assign({}, templates.dropdown(), {
         content: generateDropdownItems(item.subMenu()),
         trigger: "mouseenter",
         placement: "right-start",
@@ -675,7 +675,7 @@ function applyFilterKeyword(menu, filterInput) {
   }
 }
 function generateDropDown(button, callback) {
-  (0,tippy_esm/* default */.ZP)(button, Object.assign({}, templates.dropdown(), {
+  (0,tippy_esm/* default */.cp)(button, Object.assign({}, templates.dropdown(), {
     appendTo: undefined,
     onCreate(instance) {
       if (instance.loaded) {
@@ -888,7 +888,7 @@ function registerTooltip(element) {
     element._tippy.destroy();
   }
   if (element.hasAttribute("tooltip") && !element.hasAttribute("data-html-tooltip")) {
-    (0,tippy_esm/* default */.ZP)(element, Object.assign({
+    (0,tippy_esm/* default */.cp)(element, Object.assign({
       content: element => element.getAttribute("tooltip").replace(/<br[ /]?\/?>|\\n/g, "\n"),
       onCreate(instance) {
         instance.reference.setAttribute("title", instance.props.content);
@@ -902,7 +902,7 @@ function registerTooltip(element) {
     }, TOOLTIP_BASE));
   }
   if (element.hasAttribute("data-html-tooltip")) {
-    (0,tippy_esm/* default */.ZP)(element, Object.assign({
+    (0,tippy_esm/* default */.cp)(element, Object.assign({
       content: element => element.getAttribute("data-html-tooltip"),
       allowHTML: true,
       onCreate(instance) {
@@ -918,7 +918,7 @@ function registerTooltip(element) {
  * @param {HTMLElement} element - The element to show the tooltip
  */
 function hoverNotification(text, element) {
-  const tooltip = (0,tippy_esm/* default */.ZP)(element, Object.assign({
+  const tooltip = (0,tippy_esm/* default */.cp)(element, Object.assign({
     trigger: "hover",
     offset: [0, 0],
     content: text,
@@ -1008,12 +1008,12 @@ function confirmation_link_init() {
   init: confirmation_link_init
 });
 // EXTERNAL MODULE: ../../../../../.yarn/berry/cache/jquery-npm-3.7.1-eeeac0f21e-10c0.zip/node_modules/jquery/dist/jquery.js
-var jquery = __webpack_require__(6284);
+var jquery = __webpack_require__(1184);
 var jquery_default = /*#__PURE__*/__webpack_require__.n(jquery);
 // EXTERNAL MODULE: ../../../../../.yarn/berry/cache/window-handle-npm-1.0.1-369b8e9cbe-10c0.zip/node_modules/window-handle/index.js
-var window_handle = __webpack_require__(6569);
+var window_handle = __webpack_require__(8920);
 // EXTERNAL MODULE: ../../../../../.yarn/berry/cache/handlebars-npm-4.7.8-25244c2c82-10c0.zip/node_modules/handlebars/runtime.js
-var runtime = __webpack_require__(7218);
+var runtime = __webpack_require__(5304);
 var runtime_default = /*#__PURE__*/__webpack_require__.n(runtime);
 ;// CONCATENATED MODULE: ./src/main/js/util/jenkins.js
 /**
@@ -1589,7 +1589,7 @@ dialogs.init();
 /******/ 	
 /******/ 	/* webpack/runtime/runtimeId */
 /******/ 	!function() {
-/******/ 		__webpack_require__.j = 143;
+/******/ 		__webpack_require__.j = 524;
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */
@@ -1600,7 +1600,7 @@ dialogs.init();
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
-/******/ 			143: 0
+/******/ 			524: 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -1657,7 +1657,7 @@ dialogs.init();
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [216], function() { return __webpack_require__(237); })
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [275], function() { return __webpack_require__(6576); })
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

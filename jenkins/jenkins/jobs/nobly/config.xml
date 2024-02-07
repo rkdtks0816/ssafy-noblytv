@@ -1,14 +1,6 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <flow-definition plugin="workflow-job@1400.v7fd111b_ec82f">
-  <actions>
-    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2175.v76a_fff0a_2618"/>
-    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2175.v76a_fff0a_2618">
-      <jobProperties/>
-      <triggers/>
-      <parameters/>
-      <options/>
-    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
-  </actions>
+  <actions/>
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
@@ -23,10 +15,10 @@
           <spec></spec>
           <triggerOnPush>true</triggerOnPush>
           <triggerToBranchDeleteRequest>false</triggerToBranchDeleteRequest>
-          <triggerOnMergeRequest>true</triggerOnMergeRequest>
+          <triggerOnMergeRequest>false</triggerOnMergeRequest>
           <triggerOnlyIfNewCommitsPushed>false</triggerOnlyIfNewCommitsPushed>
           <triggerOnPipelineEvent>false</triggerOnPipelineEvent>
-          <triggerOnAcceptedMergeRequest>false</triggerOnAcceptedMergeRequest>
+          <triggerOnAcceptedMergeRequest>true</triggerOnAcceptedMergeRequest>
           <triggerOnClosedMergeRequest>false</triggerOnClosedMergeRequest>
           <triggerOnApprovedMergeRequest>true</triggerOnApprovedMergeRequest>
           <triggerOpenMergeRequestOnPush>never</triggerOpenMergeRequestOnPush>
@@ -41,7 +33,7 @@
           <excludeBranchesSpec></excludeBranchesSpec>
           <sourceBranchRegex></sourceBranchRegex>
           <targetBranchRegex></targetBranchRegex>
-          <secretToken>{AQAAABAAAAAwMFRN8WsDiWsevIeltUK7FUES+9jfqzPjKNAz1i4w2iDTxFIsM/04cDm+bnhtoo+acL48T5SCybdXjDBVTpLFyA==}</secretToken>
+          <secretToken>{AQAAABAAAAAw+qwrAfQXKkV7mJJpo7OUC0bFGwRe9DUQOYaisN8IhzXIcmKUZcPraoTGDDgR+J0vxihm+dzwsNBMh6/KoCqifQ==}</secretToken>
           <pendingBuildName></pendingBuildName>
           <cancelPendingBuildsOnUpdate>false</cancelPendingBuildsOnUpdate>
         </com.dabsquared.gitlabjenkins.GitLabPushTrigger>
@@ -54,12 +46,12 @@
       <userRemoteConfigs>
         <hudson.plugins.git.UserRemoteConfig>
           <url>https://lab.ssafy.com/s10-webmobile3-sub2/S10P12C103.git</url>
-          <credentialsId>d232b4c1-6e67-4731-ad18-774aaef71a78</credentialsId>
+          <credentialsId>0e191993-4fa0-41d7-bf21-ffa79cded39e</credentialsId>
         </hudson.plugins.git.UserRemoteConfig>
       </userRemoteConfigs>
       <branches>
         <hudson.plugins.git.BranchSpec>
-          <name>*/feature/jenkins</name>
+          <name>*/develop</name>
         </hudson.plugins.git.BranchSpec>
       </branches>
       <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>

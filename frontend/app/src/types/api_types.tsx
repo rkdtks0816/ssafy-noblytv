@@ -41,6 +41,10 @@ interface UserInfoGetOldInfoType {
     userId: string;
     username: string;
   };
+  oldUserInfo: {
+    userId: string;
+    username: string;
+  };
 }
 
 interface UserInfoType {
@@ -50,7 +54,15 @@ interface UserInfoType {
   birth: string;
   familyRelations: UserInfoGetOldInfoType[];
   lastVisitedId?: string;
+  lastVisitedId?: string;
   userType: string;
+}
+
+interface DiaryResType {
+  id: number;
+  date: string;
+  text: string;
+  summary: string;
 }
 
 interface DiaryResType {
@@ -66,10 +78,22 @@ interface GymnasticsType {
 }
 
 interface GymnasticsResType {
+  id: number;
   day: string;
   keyword: string;
   title: string;
   videoId: string;
+}
+
+interface OldUserInfoType {
+  userId: string;
+  username: string;
+  lunarSolar: string;
+  birth: string;
+  diaries: DiaryResType[];
+  quizResults: string[];
+  gymnastics: GymnasticsResType[];
+  userType: string;
 }
 
 interface OldUserInfoType {
@@ -92,6 +116,8 @@ export type {
   DiaryResType,
   UserInfoType,
   GymnasticsType,
+  GymnasticsResType,
+  OldUserInfoType,
   GymnasticsResType,
   OldUserInfoType,
 };

@@ -19,14 +19,15 @@ const gymnasticsInitKeywords: GymnasticsType[] = [
   },
   {
     day: '목',
-    keyword: '기초 대응',
+    keyword: '자세 교정',
   },
   {
     day: '금',
-    keyword: '체조 및 스텝 에어로빅',
+    keyword: '유산소 운동',
   },
   {
     day: '토',
+    keyword: '스트레스 해소',
     keyword: '스트레스 해소',
   },
 ];

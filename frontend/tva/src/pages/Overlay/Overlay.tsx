@@ -7,10 +7,34 @@ import useSocket from '../../hooks/useSocket';
 
 function Overlay() {
   const socket = useSocket('http://i10c103.p.ssafy.io:9000');
+  const socket = useSocket('http://i10c103.p.ssafy.io:9000');
   const [activeModal, setActiveModal] = useState<number | null>(null);
   const [currentMode, setCurrentMode] = useState('');
 
   useEffect(() => {
+    if (socket) {
+      console.log(socket);
+      socket.on('mode', mode => {
+        // console.log('socket connect', mode);
+        switch (mode) {
+          case 'gymnastic':
+            setActiveModal(1);
+            console.log('activeModal', activeModal);
+            break;
+          case 'quiz':
+            setActiveModal(2);
+            console.log('activeModal', activeModal);
+            break;
+          case 'diary':
+            setActiveModal(3);
+            console.log('activeModal', activeModal);
+            break;
+          default:
+            setActiveModal(null);
+            break;
+        }
+      });
+    }
     if (socket) {
       console.log(socket);
       socket.on('mode', mode => {

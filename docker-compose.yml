@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  sapi:
+    build: 
+      context: ./backend/project
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8080"
+    networks:
+      - snet
+
+  sweb:
+    build: 
+      context: ./frontend/app
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    networks:
+      - snet
+
+  nginx-file-server:
+    build: 
+      context: ./fileserver
+      dockerfile: Dockerfile
+    volumes:
+      - /home/ubuntu/nobly/fileserver/videos:/usr/share/nginx/html
+    ports:
+      - "8880:80"
+    networks:
+      - snet
+
+networks:
+  snet:

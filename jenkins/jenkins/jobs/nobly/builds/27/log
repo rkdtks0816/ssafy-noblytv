@@ -1,0 +1,157 @@
+Started by GitLab push by 송강산
+Obtained jenkins/Jenkinsfile from git https://lab.ssafy.com/s10-webmobile3-sub2/S10P12C103.git
+[8mha:////4BUr+iJAqi+dhSvrPI0Ga3CNujdClFdkeOMZYK6M/fpxAAAAoh+LCAAAAAAAAP9tjTEOwjAQBM8BClpKHuFItIiK1krDC0x8GCfWnbEdkooX8TX+gCESFVvtrLSa5wtWKcKBo5UdUu8otU4GP9jS5Mixv3geZcdn2TIl9igbHBs2eJyx4YwwR1SwULBGaj0nRzbDRnX6rmuvydanHMu2V1A5c4MHCFXMWcf8hSnC9jqYxPTz/BXAFEIGsfuclm8zQVqFvQAAAA==[0m[Pipeline] Start of Pipeline
+[8mha:////4IOVwkUMqRz8apfB3nK/ap3lo+CPJBm43WOv/7ogKFP8AAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycohUghExsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jduZBmjwAAAAA==[0m[Pipeline] node
+Running on [8mha:////4H8FWI+Ay5t5qXqgVKHGENFHa3k7pWlDwnlOojBxrQefAAAAoR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAz2EgZR/eT83ILSktQifY2k0sycEt3MPE19AHHxbH3KAAAA[0mJenkins in /var/jenkins_home/workspace/nobly
+[8mha:////4Bol1GNgsQ6GvzhVXdvXNzKBON5oelyr6zFVmO+7VjGSAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gA0xsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jfoP95RwAAAAA==[0m[Pipeline] {
+[8mha:////4LOM/Is2pqwfaBXV+idfl3gnakuTJnoJPkSlxZ77S7wQAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gQkxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jc09154wAAAAA==[0m[Pipeline] stage
+[8mha:////4JYY7Tp53MdDMnMWENRnpZG9l8q6C9Jy85AmpMWqPcjrAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0ggUxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jek7ggRwAAAAA==[0m[Pipeline] { (Declarative: Checkout SCM)
+[8mha:////4FTUD3kmQmN7zPUV0KXqH5sX6BBCluZslWJlFC0kH7PCAAAAoh+LCAAAAAAAAP9tjTEOAiEURD9rLGwtPQTbaWGsbAmNJ0AWEZb8zwLrbuWJvJp3kLiJlZNMMm+a93rDOic4UbLcG+wdZu14DKOti0+U+lugiXu6ck2YKRguzSSpM+cFJRUDS1gDKwEbgzpQdmgLbIVXD9UGhba9lFS/o4DGdQM8gYlqLiqVL8wJdvexy4Q/z18BzLEA29ce4gfg7KmOvAAAAA==[0m[Pipeline] checkout
+The recommended git tool is: git
+using credential d232b4c1-6e67-4731-ad18-774aaef71a78
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/nobly/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://lab.ssafy.com/s10-webmobile3-sub2/S10P12C103.git # timeout=10
+Fetching upstream changes from https://lab.ssafy.com/s10-webmobile3-sub2/S10P12C103.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.39.2'
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --force --progress -- https://lab.ssafy.com/s10-webmobile3-sub2/S10P12C103.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+skipping resolution of commit remotes/origin/feature/jenkins, since it originates from another repository
+ > git rev-parse refs/remotes/origin/feature/jenkins^{commit} # timeout=10
+Checking out Revision f8996b07d373a6fea02c3e51658ed11aff6454f8 (refs/remotes/origin/feature/jenkins)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f f8996b07d373a6fea02c3e51658ed11aff6454f8 # timeout=10
+Commit message: "🐛fixed : test jenkins 26"
+ > git rev-list --no-walk 6feeec3f8c0381e7fc6ccb55ceb59e95a8caafaa # timeout=10
+[8mha:////4Aiz2y7401t4yjZ/1aU5hxNoAvRCMioVFeGOXxSQvuErAAAAoh+LCAAAAAAAAP9tjTEOAiEURD9rLGwtPQTbGRNjZUtoPAGyiLDkfxZYdytP5NW8g8RNrJxkknnTvNcb1jnBiZLl3mDvMGvHYxhtXXyi1N8CTdzTlWvCTMFwaSZJnTkvKKkYWMIaWAnYGNSBskNbYCu8eqg2KLTtpaT6HQU0rhvgCUxUc1GpfGFOsLuPXSb8ef4KYI6xADvU7j9Dg2gqvAAAAA==[0m[Pipeline] }
+[8mha:////4DUWb06vd0s9hS136sd7vBbLg+k+W/4lOzX0xx9XTtjqAAAAoh+LCAAAAAAAAP9tjTEOAiEURD9rLGwtPQRbWRhjZUtoPAGyiLDkfxZYdytP5NW8g8RNrJxkknnTvNcb1jnBiZLl3mDvMGvHYxhtXXyi1N8CTdzTlWvCTMFwaSZJnTkvKKkYWMIaWAnYGNSBskNbYCu8eqg2KLTtpaT6HQU0rhvgCUxUc1GpfGFOsLuPXSb8ef4KYI6xADvU7j9J+wGOvAAAAA==[0m[Pipeline] // stage
+[8mha:////4Op5qWHlL4BAnFhlcvcfNOZoEp2qcbU8nyoRjmEvlSH8AAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQDEh2iorXc8AITG+PEugv2haTiRXyNPxCIRMVWOyut5vmCMic4UPKycdgGzHWQXez91ORAqb1EGmRDZ1kTZopOajdosu44oyZ2MEcUsFCwdFhHygE9w0o15m6qaNBXJ07TtldQBHuDBwg1mdkk/sKYYH3tbSb8ef4KYOwYxI6h2G4+x/INtuQqUcEAAAA=[0m[Pipeline] withEnv
+[8mha:////4Dj0uBTFbijxBTiRrnjOFjdjF/nctYzf8gyyXLf/mmkrAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+DOrAycoiUzoiJNerCCUITQtLo/zZJSSdOxNW4Ay2VmPBg2Zas93pDGQOcKBjuNHYWY2t570czJ54pdDdPmTu68pYwkte80bkhpc9rbShpWFUw2AjYamw9RYsmwU44+ZCVl2iqSwrzdhTArBrgCYWYyUmG9C1TgP19VJHwx/kLgKlPwOrDYvXyLD8BobDcwgAAAA==[0m[Pipeline] {
+[8mha:////4MjMDogX2uUQnK1BA7YcdJq+8z5EyG2OF1w6YbODuwkVAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUZUVMrFEWThCaEJJG/7dJSjpxIq7GHWipxIQHy7ZkvdcbqhjgRMEwp7GzGFvLej+aObFMobt5yszRlbWEkbxmQmdBSp/XKihpWFWUsOGw1dh6ihZNgh138iFrL9HUlxTm7cihtGqAJxR8JicZ0rdMAfb3UUXCH+cvAKY+Qdk0ix2WZ/UBbwyqm8IAAAA=[0m[Pipeline] stage
+[8mha:////4F/3Kl5pqu94lIyyrEtL+7n6NT4alMqFDpgm2fmCNCnyAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUwIiYukZZOEFoQkgb/V9+UtqJE3E17kBLJSY8WLYl673eUESGE7ETjcXWY6y96ELvpiQG4vYaaBANXURNGClYoeygyNhqqYqShUVZDisJa4t1oOjRJdjIRj90GTS68px42o4Scm/u8IRMTuSkOX3LyLC99SYS/jh/ATB2CfLdfrbD/Cw+y7kUycIAAAA=[0m[Pipeline] { (Deploy with Docker Compose)
+[8mha:////4OeGhiYlvq4cJMWG0xy6MkWP/fa05OUZT6MQq0O4uYJwAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUCDbE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5Dv9rMd5mfxAbNWnxXCAAAA[0m[Pipeline] script
+[8mha:////4Nyzbxv6AoaEjfDc2g5HXIFeNWxJPJ5aUmrULjMY1Kb+AAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUSDAhpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYJ8t5/tMD+LD5WQ+PfCAAAA[0m[Pipeline] {
+[8mha:////4DqtZKGix4QcRpKYKku0qUVzVW4gWsXdEICZOLQYEAV8AAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiCmgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGPIUG53n9qHN7LjSKW+AAAA[0m[Pipeline] sh
++ docker-compose down
+[8mha:////4HUYOykg7GOsqmQZ3BxML+pSz6cslQGMOheqPHa/bYx3AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiCkSBqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDhnK7+9Q+vAHz0lO8vgAAAA==[0m[Pipeline] sh
++ docker-compose up -d
+#0 building with "default" instance using docker driver
+
+#1 [sapi internal] load build definition from Dockerfile
+#1 transferring dockerfile: 595B done
+#1 DONE 0.0s
+
+#2 [sweb internal] load build definition from Dockerfile
+#2 transferring dockerfile: 327B done
+#2 DONE 0.0s
+
+#3 [sweb internal] load metadata for docker.io/library/node:20.11.0
+#3 DONE 1.4s
+
+#4 [sapi internal] load metadata for docker.io/library/openjdk:21-jdk-slim
+#4 DONE 1.5s
+
+#5 [sweb internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [sweb 1/5] FROM docker.io/library/node:20.11.0@sha256:fd0115473b293460df5b217ea73ff216928f2b0bb7650c5e7aa56aae4c028426
+#6 DONE 0.0s
+
+#7 [sweb internal] load build context
+#7 transferring context: 6.38kB done
+#7 DONE 0.0s
+
+#8 [sweb 4/5] RUN npm install
+#8 CACHED
+
+#9 [sweb 2/5] WORKDIR /usr/src/app
+#9 CACHED
+
+#10 [sweb 3/5] COPY package*.json ./
+#10 CACHED
+
+#11 [sweb 5/5] COPY . .
+#11 CACHED
+
+#12 [sweb] exporting to image
+#12 exporting layers done
+#12 writing image sha256:31b7f9c8db1822e369f587a48784bedc809f24ef0f0fa698ff6e994814c5e0e7 done
+#12 naming to docker.io/library/nobly-sweb done
+#12 DONE 0.0s
+
+#13 [sapi internal] load .dockerignore
+#13 transferring context: 2B done
+#13 DONE 0.0s
+
+#14 [sapi internal] load build context
+#14 transferring context: 10.98kB done
+#14 DONE 0.0s
+
+#15 [sapi 1/6] FROM docker.io/library/openjdk:21-jdk-slim@sha256:7072053847a8a05d7f3a14ebc778a90b38c50ce7e8f199382128a53385160688
+#15 CACHED
+
+#16 [sapi 2/6] COPY . /app
+#16 DONE 0.1s
+
+#17 [sapi 3/6] WORKDIR /app
+#17 DONE 0.0s
+
+#18 [sapi 4/6] RUN chmod +x ./gradlew
+#18 DONE 0.4s
+
+#19 [sapi 5/6] RUN ./gradlew clean bootJar
+#19 0.460 Downloading https://services.gradle.org/distributions/gradle-8.5-bin.zip
+#19 2.096 ............10%.............20%............30%.............40%.............50%............60%.............70%.............80%............90%.............100%
+#19 5.121 
+#19 5.121 Welcome to Gradle 8.5!
+#19 5.122 
+#19 5.122 Here are the highlights of this release:
+#19 5.122  - Support for running on Java 21
+#19 5.122  - Faster first use with Kotlin DSL
+#19 5.123  - Improved error and warning messages
+#19 5.123 
+#19 5.124 For more details see https://docs.gradle.org/8.5/release-notes.html
+#19 5.124 
+#19 5.320 Starting a Gradle Daemon (subsequent builds will be faster)
+#19 18.62 > Task :clean UP-TO-DATE
+#19 38.12 > Task :compileJava
+#19 38.12 > Task :processResources
+#19 38.12 > Task :classes
+#19 38.12 > Task :resolveMainClassName
+#19 41.02 > Task :bootJar
+#19 41.02 
+#19 41.02 BUILD SUCCESSFUL in 40s
+#19 41.02 5 actionable tasks: 4 executed, 1 up-to-date
+#19 DONE 41.6s
+
+#20 [sapi 6/6] RUN cp build/libs/*.jar /app/app.jar
+#20 DONE 0.4s
+
+#21 [sapi] exporting to image
+#21 exporting layers
+#21 exporting layers 2.1s done
+#21 writing image sha256:77c1d65f9aec390b58c11aac056ba0fb84f5a06c34877c08d24ac2960ebf1610 done
+#21 naming to docker.io/library/nobly-sapi done
+#21 DONE 2.1s
+ Network nobly_snet  Creating
+ Network nobly_snet  Created
+ Container nobly-sweb-1  Creating
+ Container nobly-sapi-1  Creating
+ Container nobly-sweb-1  Created
+ Container nobly-sapi-1  Created
+ Container nobly-sapi-1  Starting
+ Container nobly-sweb-1  Starting
+ Container nobly-sapi-1  Started
+ Container nobly-sweb-1  Started
+[8mha:////4JIOA7Z74C2TaheWBtreztDIHiwXkyRjV47N+Z7ol6HfAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiCiQkRJXWcsMLTGyME+vO2A5JxYv4Gn8gEImKLVY728zzBcsU4cjRYmuoc5Qah8H3dlo4cOwungds+YwNU2JvUJpBsjb1jJKzgTlFCQsBK0ON5+TIZliLVt1V5RXZ6pTj9B0ElE7f4AGFmMxZxfyFMcLm2uvE9PP8FcAYQoZyu//U7g1b0dOKvgAAAA==[0m[Pipeline] }
+[8mha:////4DOxWXU8Dsb8KWfGcxe5i37L0P1wRp09vg0NJUukciE1AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiJBqEqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFBu95/avQFoMog2vgAAAA==[0m[Pipeline] // script
+[8mha:////4CtfybIo/AfXMlul3cQNskv8JE04Z/n1V7PDH7+DfoHBAAAApB+LCAAAAAAAAP9tjTsOwjAQRDdBFLSUHGLDp0SpaC03nMAkxjixdoPt4FSciKtxBywiUTHFaN407/WGZfBQszfYaeothcbi4EaTFyb2/dVxwo4v2DAFdhqlTpJbfZpRctQwpyhhIWClqXEcLJkIa9Gph6qcIlOdo8/fUUBp2zs8oRDZHJWPX5g8bG5jG5h+nr8CmIYhQrnf5todPp7sC76+AAAA[0m[Pipeline] }
+[8mha:////4A1ZkzkhKBVD9d/MOBgqsRELaj/WRX9nbyCXwkGoFPQaAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPMJR0iIqWisNLzCxMU6sO8e+kFS8iK/xBywiUbHFamebeb1hmyKcKFrRGxwcps6J4Cebl5gpDjdPs+jpKjrCRN6I1swtaXNesSU2sKYoYSNhZ7DzlBxahr3s1UNVXqGtLhzzd5RQOj3CEwqZzawif2GJcLhPOhH+PH8FsITAUDZ1rrr5AK0PUAK+AAAA[0m[Pipeline] // stage
+[8mha:////4KhBRqNFmyKBrGainj2f2L5CT8edcVFn9sU08hjTEUzHAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPMJR0iIqWisNLzCxMU6sO8e+kFS8iK/xBywiUbHFamebeb1hmyKcKFrRGxwcps6J4Cebl5gpDjdPs+jpKjrCRN6I1swtaXNesSU2sKYoYSNhZ7DzlBxahr3s1UNVXqGtLhzzd5RQOj3CEwqZzawif2GJcLhPOhH+PH8FsITAUDZNrrr+ALkszR2+AAAA[0m[Pipeline] }
+[8mha:////4LkBxNuTy6GATsx+LTltk1ExqU4Vt6o616PFe7i25aR8AAAApB+LCAAAAAAAAP9tjTsOwjAQRDdBFLSUHGLDp0SpaC03nMAkxjixdoPt4FSciKtxBywiUTHFaN407/WGZfBQszfYaeothcbi4EaTFyb2/dVxwo4v2DAFdhqlTpJbfZpRctQwpyhhIWClqXEcLJkIa9Gph6qcIlOdo8/fUUBp2zs8oRDZHJWPX5g8bG5jG5h+nr8CmIYhQrk/5NptP4rPlqG+AAAA[0m[Pipeline] // withEnv
+[8mha:////4H6PsjELDbx1tOOoHfLIUGpnTLy+TdYu1DXSmEGDTj1qAAAAox+LCAAAAAAAAP9tjbEOgjAURS8YB1dHP6Ikhs04uTYsfkGFWgvNe9g+hMkv8tf8B4kkTt7pnrOc1xvrFHHk6FRrqfOUaq/6MLj5qZFjdw08qpYvqmZKHKyq7FhxY08LViwWy7IcK42NpTpw8uQEW92ahymCIVecJc7uoJH75o4nMj2XxUT5whSxuw1NYvp1/gYw9b0g35eCrPwA6/9Rob0AAAA=[0m[Pipeline] }
+[8mha:////4A8bVhNFQPzdcyrWO7e8HoeXJesq6GVoeTtvvXR/2TrwAAAAox+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMKRQFSIitZKwwtMYowT6y7YF5KKF/E1/kBEJCq22plmXm8sU8SRo1ONpdZTqrzqQu+mpwaO7TXwoBq+qIopcbCqtEPJtT3NWLJYzMtyLDRWlqrAyZMTrHVjHqYIhlxxlji5g0bu6zueyPRUFhPlC2PE5tbXienX+RvA2HWCfLsXZLsP+ENVAr0AAAA=[0m[Pipeline] // node
+[8mha:////4A17l17gNEOVbduICWL63aFFBZiDGVXmlgjiOXs0RkDoAAAAox+LCAAAAAAAAP9tjbEOgjAURS8YB1dHP6IkDC7GybVh8Qsq1Fpo3sP2IUx+kb/mP0gkcfJO95zlvN5Yp4gjR6daS52nVHvVh8HNT40cu2vgUbV8UTVT4mBVZceKG3tasGKxWJblWGlsLNWBkycn2OrWPEwRDLniLHF2B43cN3c8kem5LCbKF6aI3W1oEtOv8zeAqe8FebkXZOUHvgnyMr0AAAA=[0m[Pipeline] End of Pipeline
+Finished: SUCCESS

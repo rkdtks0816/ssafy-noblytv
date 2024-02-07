@@ -1,4 +1,4 @@
-from conversation.functions_resources import getOldID, sendData, sendMode, getGender, returnData, speak, getAudio, classify
+from conversation.functions_resources import getOldID, sendData, sendMode, getGender, returnData, speak, getAudio, classify, getAnswer
 from operator import itemgetter
 import pymysql
 import datetime
@@ -91,12 +91,13 @@ while True:
             sendMode("schedule")
             sendData("mute")
 
-            prompt = f"{gender}, {schedule[0]['name']} 하셨어요?"
-            sendData(prompt)
-            speak(prompt)
+            prompt = f"{gender}는 지금 {schedule[0]['name']}를 해야 한다. {gender}에게 일정을 진행 했는지 물어보아라."
+            res = getAnswer(prompt)
+            sendData(res)
+            speak(res)
 
             resp = getAudio()
-            res = classify(prompt, resp)
+            res = classify(res, resp)
             print(res)
 
             if "yes" in res.lower():
@@ -110,3 +111,4 @@ while True:
                 speak("5분 뒤에 다시 알려 드릴께요.")
                 schedule[0]["time"] = add_five_min(schedule[0]["time"])
             sendData("muteoff")
+            sendData("stop")

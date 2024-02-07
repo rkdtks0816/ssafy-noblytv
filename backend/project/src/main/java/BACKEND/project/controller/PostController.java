@@ -64,4 +64,14 @@ public class PostController {
         }
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<String> deletePost(@PathVariable("postId") Long postId) {
+        boolean isDeleted = postService.deletePost(postId);
+        if (isDeleted) {
+            return new ResponseEntity<>("게시물이 성공적으로 삭제되었습니다.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("게시물 삭제에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

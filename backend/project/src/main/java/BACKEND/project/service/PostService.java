@@ -152,6 +152,14 @@ public class PostService {
         return convertToDtoList(posts);
     }
 
+    public boolean deletePost(Long postId) {
+        if (postRepository.existsById(postId)) {
+            postRepository.deleteById(postId);
+            return true;
+        }
+        return false;
+    }
+
     private PostDto converToDto(Post post) {
         PostDto postDto = new PostDto();
         postDto.setId(post.getId());

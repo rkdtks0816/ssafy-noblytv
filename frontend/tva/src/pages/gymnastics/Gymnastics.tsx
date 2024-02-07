@@ -44,7 +44,7 @@ function Gymnastics() {
     <div>
       <YouTube
         // videoId="m0tnbnuPiRw"
-        videoId="py1klx71M5E" // 테스트용 30초 짜리 영상
+        videoId="WbVAticwz1Q" // 테스트용 15초 짜리 영상
         opts={playerOptions}
         onReady={handleReady}
         onEnd={handleEnd}

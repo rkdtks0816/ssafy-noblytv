@@ -18,7 +18,7 @@ function BgVideo({ currentMode }: BgVideoProps) {
     if (currentMode === 'news') {
       setVideoSrc('src/assets/news_closing.mp4');
     } else if (currentMode === 'commercial') {
-      setVideoSrc('src/assets/advertisement_2.mp4');
+      setVideoSrc('src/assets/commercial.mp4');
     } else if (currentMode === 'main') {
       setVideoSrc('src/assets/news.mp4');
     }

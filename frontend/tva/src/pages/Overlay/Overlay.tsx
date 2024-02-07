@@ -9,8 +9,15 @@ function Overlay() {
   const socket = useSocket('http://i10c103.p.ssafy.io:9000');
   const [activeModal, setActiveModal] = useState<number | null>(null);
   const [currentMode, setCurrentMode] = useState('');
-
+  // const [isMuted, setIsmuted] = useState<boolean>(false);
   useEffect(() => {
+    // if (activeModal) {
+    //   setTimeout(() => {
+    //     setIsmuted(true);
+    //   }, 3000);
+    // } else if (activeModal === null) {
+    //   setIsmuted(false);
+    // }
     if (socket) {
       console.log(socket);
       socket.on('mode', mode => {
@@ -52,11 +59,9 @@ function Overlay() {
     };
   }, [activeModal, currentMode, socket]);
 
-  const isMuted = activeModal !== null;
-
   return (
     <>
-      <BgVideo muted={isMuted} currentMode={currentMode} />
+      <BgVideo currentMode={currentMode} />
       <div>
         {activeModal === 1 && <GymnasticsModal />}
         {activeModal === 2 && <QuizModal />}

@@ -38,15 +38,15 @@ public class Post {
     @Column
     private boolean isViewed;
 
-    public Post(OldUserInfo oldUserInfo, String videoUrl) {
-        this.oldUserInfo = oldUserInfo;
-        this.videoPath = videoPath;
-        this.postedAt = LocalDateTime.now();
-    }
+//    public Post(OldUserInfo oldUserInfo, String videoUrl) {
+//        this.oldUserInfo = oldUserInfo;
+//        this.videoPath = videoPath;
+//        this.postedAt = LocalDateTime.now();
+//    }
 
-    public Post(FamilyUserInfo familyUserInfo, String videoUrl) {
-        this.familyUserInfo = familyUserInfo;
-        this.videoPath = videoPath;
-        this.postedAt = LocalDateTime.now();
-    }
+//    public Post(FamilyUserInfo familyUserInfo, String videoUrl) {
+//        this.familyUserInfo = familyUserInfo;
+//        this.videoPath = videoPath;
+//        this.postedAt = LocalDateTime.now();
+//    }
 }

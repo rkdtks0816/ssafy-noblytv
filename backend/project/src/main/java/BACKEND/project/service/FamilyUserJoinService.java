@@ -144,6 +144,7 @@ public class FamilyUserJoinService {
         dto.setUsername(familyUserInfo.getUsername());
         dto.setBirth(familyUserInfo.getBirth());
         dto.setLunarSolar(familyUserInfo.getLunarSolar());
+        dto.setPosts(familyUserInfo.getPosts());
 
         if (familyUserInfo.getLastVisitedId() != null) {
             dto.setLastVisitedId(familyUserInfo.getLastVisitedId());

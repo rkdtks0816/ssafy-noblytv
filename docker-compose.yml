@@ -9,6 +9,7 @@ services:
       - "8888:8080"
     networks:
       - snet
+
   sweb:
     build: 
       context: ./frontend/app/
@@ -19,13 +20,13 @@ services:
       - snet
 
   nginx-file-server:
-  image: nginx
-  volumes:
-    - ./videos:/usr/share/nginx/html:ro
-  ports:
-    - "8001:80"
-  networks:
-    - snet
+    image: nginx
+    volumes:
+      - ./videos:/usr/share/nginx/html:ro
+    ports:
+      - "8001:80"
+    networks:
+      - snet
 
 networks:
   snet:

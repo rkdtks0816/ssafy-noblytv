@@ -1,21 +1,20 @@
 import { useState, useRef, useEffect } from 'react';
 import YouTube, { YouTubeProps } from 'react-youtube';
-import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 import VideoModal from '../../components/ChildModal/StreamingModal';
 
 function Gymnastics() {
   const socket = io('http://i10c103.p.ssafy.io:9000');
 
-  const navigate = useNavigate();
   const youtubePlayerRef = useRef<unknown>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
 
+  // 스트리밍 영상 9초 지연 후 등장하도록 추가
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowModal(true);
-    }, 10000);
+    }, 9000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -28,8 +27,6 @@ function Gymnastics() {
   const handleEnd: YouTubeProps['onEnd'] = () => {
     socket.emit('message', 'stop');
     console.log('unmount component');
-    socket.disconnect();
-    navigate('/R1');
   };
 
   const playerOptions = {

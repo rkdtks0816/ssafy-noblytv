@@ -31,7 +31,7 @@ function VideoModal() {
           setIsFullScreen(false);
           timer = setTimeout(() => {
             setIsActive(false);
-          }, 10000);
+          }, 7000);
         }
       });
     }

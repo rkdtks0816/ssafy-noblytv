@@ -19,7 +19,7 @@ function QuizModal() {
         if (data === '다음에 같이 퀴즈 놀이 해요.' || data === 'stop') {
           setTimeout(() => {
             setIsActive(false);
-          }, 10000);
+          }, 7000);
         }
       });
     }

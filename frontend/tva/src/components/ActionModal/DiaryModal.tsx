@@ -19,7 +19,7 @@ function DiaryModal() {
         if (data === 'stop') {
           setTimeout(() => {
             setIsActive(false);
-          }, 10000);
+          }, 7000);
         }
       });
     }

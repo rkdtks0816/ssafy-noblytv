@@ -17,7 +17,7 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - snet
+      - noblynet
 
   noblyfileserver:
     build:
@@ -28,7 +28,7 @@ services:
     ports:
       - "8880:80"
     networks:
-      - snet
+      - noblynet
 
 networks:
-  snet:
+  noblynet:

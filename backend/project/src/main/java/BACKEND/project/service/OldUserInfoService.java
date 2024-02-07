@@ -3,9 +3,7 @@ package BACKEND.project.service;
 import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.domain.Medication;
 import BACKEND.project.domain.OldUserInfo;
-import BACKEND.project.dto.FamilyRelationResponseDto;
-import BACKEND.project.dto.OldUserInfoDto;
-import BACKEND.project.dto.OldUserInfoResponseDto;
+import BACKEND.project.dto.*;
 import BACKEND.project.repository.FamilyRelationRepository;
 import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.repository.MedicationRepository;
@@ -48,39 +46,64 @@ public class OldUserInfoService {
         return oldUserInfo;
     }
 
+    private Medication convertToEntity(MedicationDto medicationDto, OldUserInfo oldUserInfo) {
+        Medication medication = new Medication();
+        medication.setOldUser(oldUserInfo);
+        medication.setMedicine(medicationDto.getMedicine());
+        medication.setMedicationTime(medicationDto.getMedicationTime());
+        return medication;
+    }
+
+    private MedicationDto convertToDto(Medication medication) {
+        MedicationDto medicationDto = new MedicationDto();
+        medicationDto.setMedicine(medication.getMedicine());
+        medicationDto.setMedicationTime(medication.getMedicationTime());
+        return medicationDto;
+    }
+
     @Transactional
-    public OldUserInfoDto updateOldUserInfo(String userId, OldUserInfoDto oldUserInfoDto) {
+    public OldUserUpdateDto updateOldUserInfo(String userId, OldUserUpdateDto oldUserUpdateDto) {
 
         OldUserInfo oldUserInfo = checkUserOrFamily(userId);
 
-        if (oldUserInfoDto.getUsername() != null) {
-            oldUserInfo.setUsername(oldUserInfoDto.getUsername());
+        if (oldUserUpdateDto.getUsername() != null) {
+            oldUserInfo.setUsername(oldUserUpdateDto.getUsername());
         }
-        if (oldUserInfoDto.getBirth() != null) {
-            oldUserInfo.setBirth(oldUserInfoDto.getBirth());
+        if (oldUserUpdateDto.getBirth() != null) {
+            oldUserInfo.setBirth(oldUserUpdateDto.getBirth());
         }
-        if (oldUserInfoDto.getLunarSolar() != null) {
-            oldUserInfo.setLunarSolar(oldUserInfoDto.getLunarSolar());
+        if (oldUserUpdateDto.getLunarSolar() != null) {
+            oldUserInfo.setLunarSolar(oldUserUpdateDto.getLunarSolar());
         }
-        if (oldUserInfoDto.getGender() != null) {
-            oldUserInfo.setGender(oldUserInfoDto.getGender());
+        if (oldUserUpdateDto.getGender() != null) {
+            oldUserInfo.setGender(oldUserUpdateDto.getGender());
         }
         // 약물 정보 업데이트
-        if (oldUserInfoDto.getMedications() != null) {
-            List<Medication> medications = oldUserInfoDto.getMedications();
+        if (oldUserUpdateDto.getMedications() != null) {
+            List<MedicationDto> medicationDtos = oldUserUpdateDto.getMedications();
+
+            // MedicationDto를 Medication으로 변환
+            List<Medication> medications = medicationDtos.stream()
+                    .map(medicationDto -> convertToEntity(medicationDto, oldUserInfo))
+                    .collect(Collectors.toList());
+
+            // OldUserInfo의 medications 필드 업데이트
             oldUserInfo.getMedications().clear();
             oldUserInfo.getMedications().addAll(medications);
 
             // 약물 정보 저장
             for (Medication medication : medications) {
-                medication.setOldUser(oldUserInfo);
                 medicationRepository.save(medication);
             }
         }
+        // 약물 정보를 MedicationDto로 변환
+        List<MedicationDto> medicationDtos = oldUserInfo.getMedications().stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
 
         oldUserRepository.save(oldUserInfo);
 
-        return new OldUserInfoDto(oldUserInfo.getUserId(), oldUserInfo.getUsername(), oldUserInfo.getBirth(), oldUserInfo.getLunarSolar(), oldUserInfo.getGender(), oldUserInfo.getMedications());
+        return new OldUserUpdateDto(oldUserInfo.getUserId(), oldUserInfo.getUsername(), oldUserInfo.getBirth(), oldUserInfo.getLunarSolar(), oldUserInfo.getGender(), medicationDtos);
     }
 
     @Transactional

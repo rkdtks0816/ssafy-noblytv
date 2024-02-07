@@ -1,5 +1,6 @@
 package BACKEND.project.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -21,7 +22,7 @@ public class FamilyRelation {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "olduser_id")
-    @JsonIgnore
+    @JsonBackReference(value = "oldUserInfoBackRef")
     private OldUserInfo oldUserInfo;
 
     @ToString.Exclude

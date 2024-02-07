@@ -29,12 +29,3 @@ services:
 
 networks:
   snet:
-
-# 다음은 docker-compose down 명령을 사용할 때 이미지도 함께 삭제되도록 추가된 부분입니다.
-volumes:
-  cleanup:
-    external: true
-
-  scripts:
-    driver: local
-    name: "${PWD}/scripts"

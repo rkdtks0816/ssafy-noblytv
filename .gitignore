@@ -24,5 +24,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-jenkins/jenkins/caches
-jenkins/jenkins/workspace
+jenkins/jenkins

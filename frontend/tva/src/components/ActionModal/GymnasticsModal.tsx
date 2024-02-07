@@ -40,7 +40,12 @@ function GymnasticsModal() {
   };
   // 'mute' 또는 'muteoff'일 경우 빈 문자열을, 그렇지 않으면 gymContents 값을 그대로 사용
   const displayContent =
-    gymContents !== 'mute' && gymContents !== 'muteoff' ? gymContents : '';
+    gymContents !== 'mute' &&
+    gymContents !== 'muteoff' &&
+    gymContents !== 'start' &&
+    gymContents !== 'stop'
+      ? gymContents
+      : '';
 
   return (
     <>

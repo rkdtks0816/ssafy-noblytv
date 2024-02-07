@@ -3,7 +3,6 @@ import VideoModal from './components/ActionModal/VideoModal';
 import StreamingModal from './components/ChildModal/StreamingModal';
 import Diary from './pages/Diary/Diary';
 import Overlay from './pages/Overlay/Overlay';
-import OverlayR1 from './pages/Overlay/OverlayR1';
 import Quiz from './pages/Quiz/Quiz';
 import QuizStart from './pages/Quiz/QuizStart';
 import SignInTV from './pages/SignInTV/SignInTV';
@@ -13,8 +12,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/1" element={<Overlay />} />
-        <Route path="/" element={<OverlayR1 />} />
+        <Route path="/" element={<Overlay />} />
         <Route path="/sign-in" element={<SignInTV />} />
         {/* gymnastics */}
         <Route path="/gymnastics" element={<Gymnastics />} />

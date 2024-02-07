@@ -35,7 +35,12 @@ function QuizModal() {
 
   // 'mute' 또는 'muteoff'일 경우 빈 문자열을, 그렇지 않으면 quizContents 값을 그대로 사용
   const displayContent =
-    quizContents !== 'mute' && quizContents !== 'muteoff' ? quizContents : '';
+    quizContents !== 'mute' &&
+    quizContents !== 'muteoff' &&
+    quizContents !== 'start' &&
+    quizContents !== 'stop'
+      ? quizContents
+      : '';
 
   return (
     <ChildModal

@@ -41,10 +41,6 @@ interface UserInfoGetOldInfoType {
     userId: string;
     username: string;
   };
-  oldUserInfo: {
-    userId: string;
-    username: string;
-  };
 }
 
 interface UserInfoType {
@@ -53,7 +49,6 @@ interface UserInfoType {
   lunarSolar: string;
   birth: string;
   familyRelations: UserInfoGetOldInfoType[];
-  lastVisitedId?: string;
   lastVisitedId?: string;
   userType: string;
 }
@@ -116,8 +111,6 @@ export type {
   DiaryResType,
   UserInfoType,
   GymnasticsType,
-  GymnasticsResType,
-  OldUserInfoType,
   GymnasticsResType,
   OldUserInfoType,
 };

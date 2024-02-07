@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const DropDownSelectS = styled.div`
   position: absolute;
   right: 0px;
-  top: 0px;
+  top: -10px;
   text-align: end;
   font-weight: 900;
   font-size: 30px;

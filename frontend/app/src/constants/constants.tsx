@@ -11,15 +11,13 @@ const PATH_SIGN_UP_NAME_ID: string = `${PATH_SIGN_UP}/name-id`;
 const PATH_SIGN_UP_PASSWORD: string = `${PATH_SIGN_UP}/password`;
 const PATH_SIGN_UP_BIRTH: string = `${PATH_SIGN_UP}/birth`;
 const PATH_SENIOR_CONNECT: string = '/senior-connect';
+const PATH_SENIOR_UNIQUE_CODE: string = `/senior_unique-code`;
 const PATH_SENIOR_SIGN_UP: string = '/senior-sign-up';
 const PATH_SENIOR_SIGN_UP_NAME_GENDER: string = `${PATH_SENIOR_SIGN_UP}/name-gender`;
 const PATH_SENIOR_SIGN_UP_BIRTH: string = `${PATH_SENIOR_SIGN_UP}/birth`;
-const PATH_SENIOR_SIGN_UP_UNIQUE_CODE: string = `${PATH_SENIOR_SIGN_UP}/unique-code`;
 const PATH_CONNECT_TV: string = '/connect-tv';
 const PATH_SELECT_SENIOR: string = '/select-senior';
-const PATH_COMMUNITY: string = '/community';
-const PATH_DATETIME: string = '/datetime';
-const PATH_GYMNASTICS: string = '/gymnastics';
+const PATH_MAIN: string = '/';
 // API
 const API_FAMILY: string = `/users/family`;
 const API_FAMILY_SIGN_UP: string = `${API_FAMILY}/signup`;
@@ -51,12 +49,10 @@ export {
   PATH_SENIOR_CONNECT,
   PATH_SENIOR_SIGN_UP_NAME_GENDER,
   PATH_SENIOR_SIGN_UP_BIRTH,
-  PATH_SENIOR_SIGN_UP_UNIQUE_CODE,
+  PATH_SENIOR_UNIQUE_CODE,
   PATH_CONNECT_TV,
   PATH_SELECT_SENIOR,
-  PATH_COMMUNITY,
-  PATH_DATETIME,
-  PATH_GYMNASTICS,
+  PATH_MAIN,
   // API
   API_FAMILY,
   API_FAMILY_SIGN_UP,

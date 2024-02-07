@@ -6,7 +6,7 @@ import {
   API_PORT,
   API_FAMILY_SIGN_IN,
   PATH_SENIOR_CONNECT,
-  PATH_COMMUNITY,
+  PATH_MAIN,
 } from '../constants/constants';
 import { SignInType, SignInResType } from '../types/api_types';
 import getUserInfo from './getUserInfo';
@@ -51,7 +51,7 @@ async function postSignIn({
               Cookies.set('oldUsername', oldUserInfoData.username, {
                 expires: 7,
               });
-              navigate(PATH_COMMUNITY);
+              navigate(PATH_MAIN);
             },
           }).catch(error => console.error('Axios error:', error));
         }

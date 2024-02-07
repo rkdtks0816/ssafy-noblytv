@@ -8,15 +8,14 @@ import {
   GymnasticsHeaderS,
   GymnasticsTitleS,
   GymnasticsVideoS,
-  GymnasticsVideoS,
-} from './GymnasticsCardStyle';
+} from './GymnasticsStyle';
 import { GymnasticsResType } from '../../types/api_types';
 import getOldUserInfo from '../../utils/getOldUserInfo';
 import GymnasticsKeyword from './GymnasticsKeyword';
-import DropDown from '../DropDown/DropDown';
+import DropDown from '../../components/DropDown/DropDown';
 import { API_GYMNASTICS, API_PORT, BASE_URL } from '../../constants/constants';
 
-function GymnasticsCard() {
+function Gymnastics() {
   const [gymnastics, setGymnastics] = useState<GymnasticsResType[]>([]);
   const [selectedId, setSelectedId] = useState<number>();
   const [selectedKeyword, setSelectedKeyword] = useState<string>('');
@@ -49,11 +48,30 @@ function GymnasticsCard() {
     getOldUserInfoFunc();
   }, []);
 
-  useEffect(() => {
+  const onClickKeyword = ({
+    value,
+    gymnastic,
+  }: {
+    value: string;
+    gymnastic: GymnasticsResType;
+  }) => {
+    setSelectedKeyword(value);
+    setSelectedId(gymnastic.id);
+    setSelectedDay(gymnastic.day);
+
     axios
       .put(
-        `${BASE_URL}:${API_PORT}${API_GYMNASTICS}/${selectedId}?id=${selectedId}&newKeyword=${selectedKeyword}&newDay=${selectedDay}`,
-        { headers: { 'Content-Type': 'application' } },
+        `${BASE_URL}:${API_PORT}${API_GYMNASTICS}/${selectedId}`,
+        {
+          id: selectedId,
+          newKeyword: selectedKeyword,
+          newDay: selectedDay,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
       )
       .then(() => {
         getOldUserInfoFunc();
@@ -61,7 +79,7 @@ function GymnasticsCard() {
       .catch(error => {
         console.error(error);
       });
-  }, [selectedId, selectedKeyword, selectedDay]);
+  };
 
   return (
     <GymnasticsBoxS>
@@ -73,9 +91,7 @@ function GymnasticsCard() {
               initValue={gymnastic.keyword}
               options={GymnasticsKeyword}
               setSelected={value => {
-                setSelectedKeyword(value);
-                setSelectedId(gymnastic.id);
-                setSelectedDay(gymnastic.day);
+                onClickKeyword({ value, gymnastic });
               }}
             />
           </GymnasticsHeaderS>
@@ -83,14 +99,14 @@ function GymnasticsCard() {
             <YouTube
               videoId={gymnastic.videoId}
               opts={playerOptions}
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '345px', height: '197px' }}
             />
+            <GymnasticsTitleS>{gymnastic.title}</GymnasticsTitleS>
           </GymnasticsVideoS>
-          <GymnasticsTitleS>{gymnastic.title}</GymnasticsTitleS>
         </GymnasticsCardS>
       ))}
     </GymnasticsBoxS>
   );
 }
 
-export default GymnasticsCard;
+export default Gymnastics;

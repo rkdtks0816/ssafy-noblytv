@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 
-const CommunityCardBoxS = styled.div`
+const CommunityBoxS = styled.div`
   position: fixed;
   top: 90px;
   left: 0px;
+  margin: 0 auto;
+  width: 390px;
+
   max-height: calc(100vh - 180px);
   overflow: hidden;
   overflow-y: auto;
@@ -22,7 +25,7 @@ const CommunityCardBoxS = styled.div`
   scrollbar-color: transparent transparent;
 `;
 
-const CommunityCardCardS = styled.div`
+const CommunityCardS = styled.div`
   width: 100vw;
   margin-top: 10px;
   display: flex;
@@ -31,7 +34,7 @@ const CommunityCardCardS = styled.div`
   flex-direction: column;
 `;
 
-const CommunityCardHeaderS = styled.div`
+const CommunityHeaderS = styled.div`
   width: 350px;
 
   display: flex;
@@ -39,7 +42,7 @@ const CommunityCardHeaderS = styled.div`
   align-items: center;
 `;
 
-const CommunityCardWriterS = styled.div`
+const CommunityWriterS = styled.div`
   font-weight: 900;
   font-size: 30px;
 
@@ -47,7 +50,7 @@ const CommunityCardWriterS = styled.div`
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
-const CommunityCardVideoS = styled.video`
+const CommunityVideoS = styled.video`
   margin-top: 10px;
   width: 350px;
 
@@ -56,9 +59,9 @@ const CommunityCardVideoS = styled.video`
   align-items: flex-end;
 `;
 export {
-  CommunityCardBoxS,
-  CommunityCardCardS,
-  CommunityCardHeaderS,
-  CommunityCardWriterS,
-  CommunityCardVideoS,
+  CommunityBoxS,
+  CommunityCardS,
+  CommunityHeaderS,
+  CommunityWriterS,
+  CommunityVideoS,
 };

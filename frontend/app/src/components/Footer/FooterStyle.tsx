@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const FooterBgS = styled.div`
@@ -16,18 +14,14 @@ export const FooterBgS = styled.div`
   justify-content: space-around; /* 가로 가운데 정렬 */
 `;
 
-export const FooterIconS = styled(Link)<{ $footerIconType: string }>`
+export const FooterIconS = styled.div<{ $footerIconType: string }>`
   width: 40px;
   height: 40px;
 
-  background: url(${props => `/src/assets/icon_${props.$footerIconType}.png`});
+  background: url(${props => `/src/assets/icon${props.$footerIconType}.png`});
   background-size: cover;
   background-repeat: no-repeat;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
 
   text-decoration: none;
-
-  &:hover {
-    background: url(${props => `/src/assets/hover_icon_${props.$footerIconType}.png`});
-  }
 `;

@@ -37,6 +37,7 @@ function Overlay() {
             break;
           case 'main':
             setCurrentMode('main');
+            setActiveModal(null);
             // console.log('현재 모드', currentMode);
             break;
           default:
@@ -49,7 +50,7 @@ function Overlay() {
     return () => {
       if (socket) socket.off('mode');
     };
-  }, [activeModal, currentMode, socket]);
+  }, [socket]);
 
   return (
     <>

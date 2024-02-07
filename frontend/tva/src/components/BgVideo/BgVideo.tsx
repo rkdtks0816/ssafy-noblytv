@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Socket } from 'socket.io-client';
 import BgVideoS from './BgVideoStyle';
 import useSocket from '../../hooks/useSocket';
@@ -10,6 +10,7 @@ interface BgVideoProps {
 function BgVideo({ currentMode }: BgVideoProps) {
   const [videoSrc, setVideoSrc] = useState('src/assets/news.mp4');
   const [isMuted, setIsmuted] = useState<boolean>(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const socket: Socket | null = useSocket('http://i10c103.p.ssafy.io:9000');
 
@@ -27,9 +28,9 @@ function BgVideo({ currentMode }: BgVideoProps) {
     if (socket) {
       socket.on('message', (data: string) => {
         if (data === 'mute') {
-          setIsmuted(false);
-        } else if (data === 'muteoff') {
           setIsmuted(true);
+        } else if (data === 'muteoff') {
+          setIsmuted(false);
         }
       });
     }
@@ -41,7 +42,7 @@ function BgVideo({ currentMode }: BgVideoProps) {
 
   return (
     <div>
-      <BgVideoS key={videoSrc} controls autoPlay muted={isMuted} loop>
+      <BgVideoS controls autoPlay muted={isMuted} loop ref={videoRef}>
         <source src={videoSrc} type="video/mp4" />
       </BgVideoS>
     </div>

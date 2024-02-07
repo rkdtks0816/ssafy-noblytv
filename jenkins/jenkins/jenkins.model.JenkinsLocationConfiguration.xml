@@ -1,0 +1,4 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<jenkins.model.JenkinsLocationConfiguration>
+  <jenkinsUrl>http://i10c103.p.ssafy.io:8088/</jenkinsUrl>
+</jenkins.model.JenkinsLocationConfiguration>

@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import BackBtnStyle from '../../components/BackBtn/BackBtnStyle';
 import BgImgStyle from '../../components/BgImg/BgImgStyle';
 import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
@@ -14,20 +17,27 @@ import {
   API_FAMILY,
   API_PORT,
   BASE_URL,
+  API_FAMILY,
+  API_PORT,
+  BASE_URL,
   PATH_COMMUNITY,
   PATH_SENIOR_SIGN_UP_NAME_GENDER,
   PATH_SIGN_IN,
 } from '../../constants/constants';
 import manageAuthToken from '../../utils/manageAuthToken';
 import getUserInfo from '../../utils/getUserInfo';
-import getOldUserInfo from '../../utils/getOldUserInfo';
 
 function SeniorConnect() {
   const navigate = useNavigate();
   const grantType = Cookies.get('grantType');
   const accessToken = Cookies.get('accessToken');
   const userId = Cookies.get('userId');
+  const grantType = Cookies.get('grantType');
+  const accessToken = Cookies.get('accessToken');
+  const userId = Cookies.get('userId');
 
+  const [oldUserId, setOldUserId] = useState('');
+  const [oldUserIds, setOldUserIds] = useState<string[]>([]);
   const [oldUserId, setOldUserId] = useState('');
   const [oldUserIds, setOldUserIds] = useState<string[]>([]);
   const [modalContents, setModalContents] = useState<React.ReactNode>('');
@@ -48,7 +58,18 @@ function SeniorConnect() {
     }).catch((error: Error) => console.error('Axios error:', error));
   }, []);
 
+  useEffect(() => {
+    getUserInfo({
+      successFunc: userInfoData => {
+        setOldUserIds(
+          userInfoData.familyRelations.map(item => item.oldUserInfo.userId),
+        );
+      },
+    }).catch((error: Error) => console.error('Axios error:', error));
+  }, []);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setOldUserId(event.target.value);
     setOldUserId(event.target.value);
   };
 
@@ -72,14 +93,7 @@ function SeniorConnect() {
       )
       .then(() => {
         Cookies.set('oldUserId', oldUserId, { expires: 7 });
-        getOldUserInfo({
-          successFunc: oldUserInfoData => {
-            Cookies.set('oldUsername', oldUserInfoData.username, {
-              expires: 7,
-            });
-            navigate(PATH_COMMUNITY);
-          },
-        }).catch(error => console.error('Axios error:', error));
+        navigate(PATH_COMMUNITY);
       })
       .catch(err => console.error('Axios error:', err));
   };

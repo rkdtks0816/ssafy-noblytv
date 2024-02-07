@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jenkins
+    ports:
+      - "8088:8080"
+      - "50000:50000"
+    volumes:
+      - ./jenkins:/var/jenkins_home
+      - /usr/bin/docker:/usr/bin/docker
+      - /var/run/docker.sock:/var/run/docker.sock
+
+# 추가: 이미지를 제거할 때 사용할 네트워크 이름 설정
+networks:
+  default:
+    external:
+      name: jenkins_default

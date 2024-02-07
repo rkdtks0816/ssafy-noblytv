@@ -1,0 +1,37 @@
+Manifest-Version: 1.0
+Created-By: Maven Archiver 3.6.0
+Build-Jdk-Spec: 11
+Specification-Title: GitLab Plugin
+Specification-Version: 1.8
+Implementation-Title: GitLab Plugin
+Implementation-Version: 1.8.0
+Group-Id: org.jenkins-ci.plugins
+Artifact-Id: gitlab-plugin
+Short-Name: gitlab-plugin
+Long-Name: GitLab Plugin
+Url: https://github.com/jenkinsci/gitlab-plugin
+Compatible-Since-Version: 1.4.0
+Plugin-Version: 1.8.0
+Hudson-Version: 2.401.3
+Jenkins-Version: 2.401.3
+Plugin-Dependencies: caffeine-api:3.1.8-133.v17b_1ff2e0599,javax-activat
+ ion-api:1.2.0-6,jaxb:2.3.9-1,jersey2-api:2.41-133.va_03323b_a_1396,joda
+ -time-api:2.12.5-5.v5495a_235fedf,workflow-job:1326.ve643e00e9220,workf
+ low-step-api:639.v6eca_cd8c04a_a_,apache-httpcomponents-client-4-api:4.
+ 5.14-208.v438351942757,credentials:1311.vcf0a_900b_37c2,display-url-api
+ :2.200.vb_9327d658781,git-client:4.6.0,git:5.2.1,jackson2-api:2.15.3-37
+ 2.v309620682326,matrix-project:822.v01b_8c85d16d2,plain-credentials:143
+ .v1b_df8b_d3b_e48;resolution:=optional,scm-api:676.v886669a_199a_a_,ssh
+ -credentials:308.ve4497b_ccd8f4;resolution:=optional
+Plugin-Developers: Marky Jackson:markyjackson-taulia:marky.r.jackson@gma
+ il.com
+Plugin-License-Name: GPL v2.0 License
+Plugin-License-Url: http://www.gnu.org/licenses/old-licenses/gpl-2.0-sta
+ ndalone.html
+Plugin-ScmConnection: scm:git:https://github.com/jenkinsci/gitlab-plugin
+ .git
+Plugin-ScmTag: gitlab-plugin-1.8.0
+Plugin-ScmUrl: https://github.com/jenkinsci/gitlab-plugin
+Plugin-GitHash: 1d6ee7d9405055177947f5b13539ccc957b1ff17
+Implementation-Build: 1d6ee7d9405055177947f5b13539ccc957b1ff17
+

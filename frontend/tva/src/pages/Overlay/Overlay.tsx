@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react';
-import DiaryModal from '../../components/ActionModal/DiaryModal';
-import GymnasticsModal from '../../components/ActionModal/GymnasticsModal';
-import QuizModal from '../../components/ActionModal/QuizModal';
-import BgVideo from '../../components/BgVideo/BgVideo';
+import { useEffect, useState, useMemo } from 'react';
 import useSocket from '../../hooks/useSocket';
+import ModalSwitcherComponent from '../../components/ActionModal/ModalSwitcher';
+import BgVideoComponent from '../../components/BgVideo/BgVideoComponent';
 
 function Overlay() {
   const socket = useSocket('http://i10c103.p.ssafy.io:9000');
@@ -38,6 +36,7 @@ function Overlay() {
             break;
           case 'main':
             setCurrentMode('main');
+            setActiveModal(null);
             // console.log('현재 모드', currentMode);
             break;
           default:
@@ -50,25 +49,22 @@ function Overlay() {
     return () => {
       if (socket) socket.off('mode');
     };
-  }, [activeModal, currentMode, socket]);
+  }, [socket]);
 
-  const isMuted = activeModal !== null;
+  const bgVideoComponent = useMemo(
+    () => <BgVideoComponent currentMode={currentMode} />,
+    [currentMode],
+  );
+
+  const modalSwitcherComponent = useMemo(
+    () => <ModalSwitcherComponent activeModal={activeModal} />,
+    [activeModal],
+  );
 
   return (
     <>
-      <BgVideo muted={isMuted} currentMode={currentMode} />
-      <div>
-        {activeModal === 1 && <GymnasticsModal />}
-        {activeModal === 2 && <QuizModal />}
-        {activeModal === 3 && <DiaryModal />}
-      </div>
-      {/* 테스트용 버튼
-      <button type="button" onClick={() => setCurrentMode('news')}>
-        뉴스 모드 설정
-      </button>
-      <button type="button" onClick={() => setCurrentMode('commercial')}>
-        커머셜 모드 설정
-      </button> */}
+      {bgVideoComponent}
+      {modalSwitcherComponent}
     </>
   );
 }

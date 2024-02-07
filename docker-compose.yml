@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  noblyapi:
+    build:
+      context: ./backend/project
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - noblynet
+
+  noblyweb:
+    build:
+      context: ./frontend/app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - noblynet
+
+  noblyfileserver:
+    build:
+      context: ./fileserver
+      dockerfile: Dockerfile
+    volumes:
+      - /home/ubuntu/nobly/fileserver/videos:/usr/share/nginx/html
+    ports:
+      - "8880:80"
+    networks:
+      - noblynet
+
+networks:
+  noblynet:

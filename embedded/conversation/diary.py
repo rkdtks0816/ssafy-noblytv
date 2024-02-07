@@ -2,6 +2,7 @@ from functions_resources import chat, speak, summarize, getGender, getAnswer, di
 
 gender = getGender()
 
+sendData("mute")
 # 일기 유도
 system_instruction = f"지금은 저녁이다. {gender}는 매일 일기를 쓴다. {gender}에게 지금 일기를 쓰라고 하고 싶은데, 뭐라고 해야 할 지 1줄 이내로 알려줘라."
 res = getAnswer(system_instruction)
@@ -34,7 +35,9 @@ while True:
     sendData(res)
     speak(res)
 
+sendData("muteoff")
 sendData("stop")
+
 # diary summarization
 summarizedDiary = summarize(diary)
 

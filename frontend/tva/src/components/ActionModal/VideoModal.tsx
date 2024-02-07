@@ -31,7 +31,7 @@ function VideoModal() {
           setIsFullScreen(false);
           timer = setTimeout(() => {
             setIsActive(false);
-          }, 10000);
+          }, 7000);
         }
       });
     }
@@ -46,16 +46,23 @@ function VideoModal() {
     setIsActive(!isActive);
   };
 
+  // 'mute' 또는 'muteoff'일 경우 빈 문자열을, 그렇지 않으면 videoContents 값을 그대로 사용
+  const displayContent =
+    videoContents !== 'mute' &&
+    videoContents !== 'muteoff' &&
+    videoContents !== 'start' &&
+    videoContents !== 'stop'
+      ? videoContents
+      : '';
+
   return (
     <ChildModal
       title="영상"
-      content={videoContents}
+      content={displayContent}
       isActive={isActive}
       onToggle={toggleModal}
       isFullScreen={isFullScreen || false} // 기본값 false 설정
-    >
-      {/* 추가적인 UI 요소 */}
-    </ChildModal>
+    />
   );
 }
 

@@ -1,31 +1,37 @@
 import { useState, useEffect } from 'react';
 import YouTube from 'react-youtube';
+import axios from 'axios';
 import {
   GymnasticsBoxS,
   GymnasticsCardS,
   GymnasticsDayS,
   GymnasticsHeaderS,
-  GymnasticsKeywordS,
   GymnasticsTitleS,
+  GymnasticsVideoS,
   GymnasticsVideoS,
 } from './GymnasticsCardStyle';
 import { GymnasticsResType } from '../../types/api_types';
 import getOldUserInfo from '../../utils/getOldUserInfo';
 import GymnasticsKeyword from './GymnasticsKeyword';
+import DropDown from '../DropDown/DropDown';
+import { API_GYMNASTICS, API_PORT, BASE_URL } from '../../constants/constants';
 
 function GymnasticsCard() {
   const [gymnastics, setGymnastics] = useState<GymnasticsResType[]>([]);
+  const [selectedId, setSelectedId] = useState<number>();
   const [selectedKeyword, setSelectedKeyword] = useState<string>('');
+  const [selectedDay, setSelectedDay] = useState<string>('');
   const playerOptions = {
     width: '100%',
     height: '100%',
     playerVars: {
-      autoplay: 1,
+      autoplay: 0,
       controls: 0,
       modestbranding: 1,
     },
   };
-  useEffect(() => {
+
+  const getOldUserInfoFunc = () => {
     getOldUserInfo({
       successFunc: oldUserInfoData => {
         const dayOrder = ['월', '화', '수', '목', '금', '토', '일'];
@@ -37,11 +43,25 @@ function GymnasticsCard() {
         setGymnastics(sortedArray);
       },
     }).catch(error => console.error('Axios error:', error));
+  };
+
+  useEffect(() => {
+    getOldUserInfoFunc();
   }, []);
 
-  const handleKeywordChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedKeyword(event.target.value);
-  };
+  useEffect(() => {
+    axios
+      .put(
+        `${BASE_URL}:${API_PORT}${API_GYMNASTICS}/${selectedId}?id=${selectedId}&newKeyword=${selectedKeyword}&newDay=${selectedDay}`,
+        { headers: { 'Content-Type': 'application' } },
+      )
+      .then(() => {
+        getOldUserInfoFunc();
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, [selectedId, selectedKeyword, selectedDay]);
 
   return (
     <GymnasticsBoxS>
@@ -49,20 +69,15 @@ function GymnasticsCard() {
         <GymnasticsCardS key={gymnastic.day}>
           <GymnasticsHeaderS>
             <GymnasticsDayS>{gymnastic.day}요일</GymnasticsDayS>
-            <GymnasticsKeywordS
-              value={selectedKeyword}
-              onChange={handleKeywordChange}
-            >
-              <option value={gymnastic.keyword} disabled>
-                키워드 선택
-              </option>
-              {/* 가능한 키워드 배열이 있다고 가정합니다. */}
-              {GymnasticsKeyword.map(keyword => (
-                <option key={keyword} value={keyword}>
-                  {keyword}
-                </option>
-              ))}
-            </GymnasticsKeywordS>
+            <DropDown
+              initValue={gymnastic.keyword}
+              options={GymnasticsKeyword}
+              setSelected={value => {
+                setSelectedKeyword(value);
+                setSelectedId(gymnastic.id);
+                setSelectedDay(gymnastic.day);
+              }}
+            />
           </GymnasticsHeaderS>
           <GymnasticsVideoS>
             <YouTube

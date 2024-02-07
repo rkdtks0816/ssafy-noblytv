@@ -53,12 +53,13 @@ const ChildModalVideoBG = styled.div`
   top: 5vh;
   width: 12vw;
   height: 30vh;
-  min-height: 20vh; /* 최소 높이 설정 */
+  min-height: 20vh;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   flex-direction: column;
+  transform: scaleX(-1);
 `;
 
 const ChildModalVideo = styled.video`

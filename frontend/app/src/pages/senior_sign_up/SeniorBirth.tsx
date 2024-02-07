@@ -13,6 +13,7 @@ import { seniorSignUpInit } from '../../constants/type_init';
 import { SeniorSignUpType } from '../../types/api_types';
 import {
   API_GYMNASTICS,
+  API_GYMNASTICS,
   API_PORT,
   API_SENIOR_SIGN_UP,
   BASE_URL,
@@ -21,7 +22,6 @@ import {
   PATH_SENIOR_SIGN_UP_UNIQUE_CODE,
 } from '../../constants/constants';
 import gymnasticsInitKeywords from './gymnasticsInitKeywords';
-import getOldUserInfo from '../../utils/getOldUserInfo';
 
 function SeniorBirth() {
   // useNavigate 훅을 사용하여 애플리케이션 내에서 라우팅을 제어합니다.
@@ -93,14 +93,6 @@ function SeniorBirth() {
         console.log('Axios success:', response);
         navigate(PATH_SENIOR_SIGN_UP_UNIQUE_CODE);
         Cookies.set('oldUserId', response.data.userId, { expires: 7 });
-        getOldUserInfo({
-          successFunc: oldUserInfoData => {
-            Cookies.set('oldUsername', oldUserInfoData.username, {
-              expires: 7,
-            });
-            navigate(PATH_COMMUNITY);
-          },
-        }).catch(error => console.error('Axios error:', error));
         gymnasticsInit(response.data.userId);
       })
       .catch(error => {

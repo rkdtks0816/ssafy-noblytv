@@ -4,7 +4,6 @@ import BACKEND.project.domain.FamilyRelation;
 import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.domain.Post;
-import BACKEND.project.dto.FamilyRelationDto;
 import BACKEND.project.dto.FamilyUserInfoDto;
 import BACKEND.project.dto.PostDto;
 import BACKEND.project.repository.FamilyRelationRepository;
@@ -18,9 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PostService {
@@ -43,8 +40,8 @@ public class PostService {
 
     public String saveVideo(MultipartFile file, Long userId) throws IOException {
         // 파일 저장 로직
-        //String dirPath = "/home/ubuntu/song/front/frontend/app/src/assets/family_" + userId;
-        String dirPath = "C:/Users/spets/OneDrive/바탕 화면/S10P12C103/frontend/app/src/assets/family_" + userId;
+        String dirPath = "/home/ubuntu/nobly/fileserver/videos/family_" + userId;
+        //String dirPath = "C:/Users/spets/OneDrive/바탕 화면/S10P12C103/frontend/app/src/assets/family_" + userId;
         File directory = new File(dirPath);
         if (!directory.exists()) {
             boolean result = directory.mkdirs();
@@ -100,31 +97,23 @@ public class PostService {
         familyUserInfo.getPosts().add(post);
     }
 
-    public List<PostDto> getPostsByOldUserId(Long oldUserId) {
-        Optional<OldUserInfo> optionalOldUserInfo = oldUserRepository.findById(oldUserId);
+    public List<Post> getPostsByOldUserInfoId(Long oldUserInfoId) {
+        Optional<OldUserInfo> optionalOldUserInfo = oldUserRepository.findById(oldUserInfoId);
         if (optionalOldUserInfo.isPresent()) {
             OldUserInfo oldUserInfo = optionalOldUserInfo.get();
+
+            List<FamilyRelation> familyRelations = oldUserInfo.getFamilyRelations();
             List<Post> posts = new ArrayList<>();
 
-            // FamilyRelation을 통해 FamilyUser를 찾음
-            List<FamilyRelation> relations = familyRelationRepository.findByOldUserInfo(oldUserInfo);
-            for (FamilyRelation relation : relations) {
-                    posts.addAll(relation.getFamilyUserInfo().getPosts());
+            for (FamilyRelation familyRelation : familyRelations) {
+                FamilyUserInfo familyUserInfo = familyRelation.getFamilyUserInfo();
+                List<Post> userPosts = familyUserInfo.getPosts();
+                posts.addAll(userPosts);
             }
-            
-            // PostDto로 변환하여 반환
-            List<PostDto> postDtos = new ArrayList<>();
-            for (Post post : posts) {
-                PostDto postDto = new PostDto();
-                postDto.setId(post.getId());
-                postDto.setVideoPath(post.getVideoPath());
-                postDto.setViewed(post.isViewed());
-            }
-            return postDtos;
+
+            return posts;
         } else {
-            throw new EntityNotFoundException("해당 노인유저를 찾을 수 없습니다.");
+            throw new EntityNotFoundException("해당 OldUserInfo를 찾을 수 없습니다. ID: " + oldUserInfoId);
         }
-
-
     }
 }

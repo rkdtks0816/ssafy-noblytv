@@ -7,10 +7,9 @@ pipeline {
                 script {
                     // 이전 실행에서 사용된 컨테이너 및 네트워크 정리
                     sh "docker-compose down --volumes"
-                    sh "docker rmi nobly-nginx-file-server nobly-sweb nobly-sapi"
 
                     // 새로운 푸시에 대한 스크립트 실행
-                    sh "docker-compose up -d"
+                    sh "docker-compose up --build -d"
                 }
             }
         }

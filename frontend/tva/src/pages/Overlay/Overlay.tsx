@@ -26,6 +26,15 @@ function Overlay() {
             setActiveModal(3);
             // console.log('activeModal', activeModal);
             break;
+          case 'schedule':
+            setActiveModal(4);
+            // console.log('activeModal', activeModal);
+            break;
+          case 'FamilyViedos':
+            setActiveModal(5);
+            // console.log('activeModal', activeModal);
+            break;
+
           case 'news':
             setCurrentMode('news');
             // console.log('현재 모드', currentMode);

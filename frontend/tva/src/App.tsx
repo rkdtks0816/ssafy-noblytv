@@ -1,5 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import VideoModal from './components/ActionModal/VideoModal';
+import VideoModal from './components/ActionModal/FamilyVideoModal';
 import StreamingModal from './components/ChildModal/StreamingModal';
 import Diary from './pages/Diary/Diary';
 import Overlay from './pages/Overlay/Overlay';

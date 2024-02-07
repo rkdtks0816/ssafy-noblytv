@@ -18,6 +18,15 @@ services:
     networks:
       - snet
 
+  nginx-file-server:
+  image: nginx
+  volumes:
+    - ./videos:/usr/share/nginx/html:ro
+  ports:
+    - "8001:80"
+  networks:
+    - snet
+
 networks:
   snet:
 

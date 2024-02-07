@@ -3,6 +3,7 @@ import {
   SeniorSignUpType,
   TvSignInType,
   SignInType,
+  UserInfoType,
 } from '../types/api_types';
 
 const signUpInit: SignUpType = {
@@ -29,4 +30,14 @@ const signInInit: SignInType = {
   password: '',
 };
 
-export { signUpInit, seniorSignUpInit, tvSignInInit, signInInit };
+const userInfoInit: UserInfoType = {
+  userId: '',
+  username: '',
+  lunarSolar: '',
+  birth: '',
+  familyRelations: [],
+  lastVisitedId: '',
+  userType: '',
+};
+
+export { signUpInit, seniorSignUpInit, tvSignInInit, signInInit, userInfoInit };

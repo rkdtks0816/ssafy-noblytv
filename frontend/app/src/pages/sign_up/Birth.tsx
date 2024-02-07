@@ -14,10 +14,9 @@ import {
   BASE_URL,
   API_PORT,
   API_FAMILY_SIGN_UP,
-  PATH_SENIOR_CONNECT,
   PATH_SIGN_UP_PASSWORD,
 } from '../../constants/constants';
-import apiSignIn from '../../utils/apiSignIn';
+import postSignIn from '../../utils/postSignIn';
 
 function Birthday() {
   const navigate = useNavigate();
@@ -66,12 +65,12 @@ function Birthday() {
         // axios 성공 시 실행되는 부분
         console.log('Axios success:', response);
 
-        // 여기에서 apiSignIn 호출
-        apiSignIn({
+        // 여기에서 postSignIn 호출
+        postSignIn({
           signInData: { userId: userInfo.userId, password: userInfo.password },
-          successFunc: () => navigate(PATH_SENIOR_CONNECT),
+          navigate,
         }).catch(error => {
-          console.error('apiSignIn error:', error);
+          console.error('postSignIn error:', error);
         });
       })
       .catch(error => {

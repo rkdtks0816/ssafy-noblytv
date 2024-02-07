@@ -1,6 +1,6 @@
 const BASE_URL: string = 'http://i10c103.p.ssafy.io';
-const BASE_PORT: string = '3001';
-const API_PORT: string = '8088';
+const BASE_PORT: string = '3000';
+const API_PORT: string = '8080';
 const YOUTUBE_API_URL: string =
   'https://www.googleapis.com/youtube/v3/videos?part=snippet';
 const YOUTUBE_API_KEY: string = 'AIzaSyCC7MzMBiSro7FIgef-CWcSwf17Hh0mZX4';

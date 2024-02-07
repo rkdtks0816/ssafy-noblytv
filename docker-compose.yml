@@ -22,7 +22,8 @@ services:
   nginx-file-server:
     image: nginx
     volumes:
-      - ./videos:/usr/share/nginx/html
+      - ./fileserver/videos:/usr/share/nginx/html
+      - ./fileserver/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "8880:80"
     networks:

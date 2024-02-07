@@ -47,9 +47,7 @@ function ScheduleModal() {
       content={displayContent}
       isActive={isActive}
       onToggle={toggleModal}
-    >
-      {/* 추가적인 UI 요소 */}
-    </ChildModal>
+    />
   );
 }
 

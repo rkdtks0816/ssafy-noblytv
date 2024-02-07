@@ -262,6 +262,9 @@ def returnQuizAnswer(id, ans):
     db.commit()
 
 #######################################################################
+def getOldID():
+    return old_user_id    
+
 def getFamilyId():
     global family
     family = []
@@ -302,14 +305,27 @@ def nextVideo():
     
 #######################################################################
 def saveVideo():
-    os.system(f'scp -i "./I10C103T.pem" {result_path} ubuntu@i10c103.p.ssafy.io:~/song/front/frontend/app/src/assets/old_{old_user_id}')
-    query = "insert into `post` (is_viewed, posted_at, video_path, family_user_id, old_user_id) values (%s, %s, %s, %s, %s)"
+    os.system(f'scp -i "./I10C103T.pem" {result_path} ubuntu@i10c103.p.ssafy.io:/home/ubuntu/nobly/fileserver/videos/old_{old_user_id}')
     time = datetime.datetime.now()
     nowTime = str(time).split()[0]
-    value = (True, time, f"/old_{old_user_id}/{nowTime}_summary.mp4", None, old_user_id)
+    cnt = 0
+    id = ""
 
-    cur.execute(query, value)
-    db.commit()
+    cur.execute("SELECT * FROM `post` WHERE video_path = %s", f"/old_{old_user_id}/{nowTime}_summary.mp4")
+    for data in cur:
+        cnt += 1
+        id = data.get("id")
+
+    if cnt == 0:
+        query = "insert into `post` (is_viewed, posted_at, video_path, family_user_id, old_user_id) values (%s, %s, %s, %s, %s)"
+        value = (True, time, f"/old_{old_user_id}/{nowTime}_summary.mp4", None, old_user_id)
+
+        cur.execute(query, value)
+        db.commit()
+    else:
+        cur.execute("UPDATE `post` SET `posted_at` = %s WHERE `id` = %s", (time, id))
+        db.commit()
+
 
 # #######################################################################################################
 # import pyaudio

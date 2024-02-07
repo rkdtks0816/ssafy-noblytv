@@ -2,6 +2,7 @@ from functions_resources import speak, getGender, getAnswer, getAudio, getQuiz, 
 
 gender = getGender()
 
+sendData("mute")
 # 퀴즈 유도
 system_instruction = f"{gender}는 TV를 본지 2시간이 넘었다. {gender}에게 지금 퀴즈를 풀라고 하고 싶은데, 뭐라고 해야 할 지 1줄 이내로 알려줘라."
 res = getAnswer(system_instruction)
@@ -63,4 +64,5 @@ elif "no" in res.lower():
     speak("다음에 같이 퀴즈 놀이 해요.")
 
 sendData("stop")
+sendData("muteoff")
 

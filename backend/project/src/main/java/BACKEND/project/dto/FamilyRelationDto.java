@@ -8,4 +8,7 @@ import lombok.Data;
 public class FamilyRelationDto {
 
     private OldUserInfoDto oldUserInfo;
+
+    private FamilyUserInfoDto familyUserInfo;
+
 }

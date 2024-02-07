@@ -1,6 +1,7 @@
 package BACKEND.project.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Entity
 public class Post {
@@ -18,11 +20,13 @@ public class Post {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "old_user_name")
+    @JoinColumn(name = "old_user_id")
+    @JsonBackReference
     private OldUserInfo oldUserInfo;
 
     @ManyToOne
-    @JoinColumn(name = "family_user_name")
+    @JoinColumn(name = "family_user_id")
+    @JsonBackReference
     private FamilyUserInfo familyUserInfo;
 
     @Column(nullable = false)
@@ -34,15 +38,15 @@ public class Post {
     @Column
     private boolean isViewed;
 
-    public Post(OldUserInfo oldUserInfo, String videoUrl) {
-        this.oldUserInfo = oldUserInfo;
-        this.videoPath = videoPath;
-        this.postedAt = LocalDateTime.now();
-    }
+//    public Post(OldUserInfo oldUserInfo, String videoUrl) {
+//        this.oldUserInfo = oldUserInfo;
+//        this.videoPath = videoPath;
+//        this.postedAt = LocalDateTime.now();
+//    }
 
-    public Post(FamilyUserInfo familyUserInfo, String videoUrl) {
-        this.familyUserInfo = familyUserInfo;
-        this.videoPath = videoPath;
-        this.postedAt = LocalDateTime.now();
-    }
+//    public Post(FamilyUserInfo familyUserInfo, String videoUrl) {
+//        this.familyUserInfo = familyUserInfo;
+//        this.videoPath = videoPath;
+//        this.postedAt = LocalDateTime.now();
+//    }
 }

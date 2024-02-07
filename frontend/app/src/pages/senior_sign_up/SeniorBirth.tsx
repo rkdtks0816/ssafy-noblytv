@@ -13,9 +13,11 @@ import { seniorSignUpInit } from '../../constants/type_init';
 import { SeniorSignUpType } from '../../types/api_types';
 import {
   API_GYMNASTICS,
+  API_GYMNASTICS,
   API_PORT,
   API_SENIOR_SIGN_UP,
   BASE_URL,
+  PATH_COMMUNITY,
   PATH_SENIOR_SIGN_UP_NAME_GENDER,
   PATH_SENIOR_SIGN_UP_UNIQUE_CODE,
 } from '../../constants/constants';

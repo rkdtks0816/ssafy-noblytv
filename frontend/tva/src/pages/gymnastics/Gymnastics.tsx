@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import YouTube, { YouTubeProps } from 'react-youtube';
 import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
@@ -10,6 +10,15 @@ function Gymnastics() {
   const navigate = useNavigate();
   const youtubePlayerRef = useRef<unknown>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowModal(true);
+    }, 10000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleReady: YouTubeProps['onReady'] = event => {
     youtubePlayerRef.current = event.target;
@@ -43,7 +52,7 @@ function Gymnastics() {
         onEnd={handleEnd}
         style={{ width: '100vw', height: '100vh' }}
       />
-      <VideoModal />
+      {showModal && <VideoModal />}
     </div>
   );
 }

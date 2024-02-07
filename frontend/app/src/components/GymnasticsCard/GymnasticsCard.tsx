@@ -8,6 +8,7 @@ import {
   GymnasticsHeaderS,
   GymnasticsTitleS,
   GymnasticsVideoS,
+  GymnasticsVideoS,
 } from './GymnasticsCardStyle';
 import { GymnasticsResType } from '../../types/api_types';
 import getOldUserInfo from '../../utils/getOldUserInfo';

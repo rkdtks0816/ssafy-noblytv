@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import BackBtnStyle from '../../components/BackBtn/BackBtnStyle';
 import BgImgStyle from '../../components/BgImg/BgImgStyle';
 import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
@@ -11,6 +14,9 @@ import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import AddSeniorS from './SeniorConnectStyle';
 import Modal from '../../components/Modal/Modal';
 import {
+  API_FAMILY,
+  API_PORT,
+  BASE_URL,
   API_FAMILY,
   API_PORT,
   BASE_URL,
@@ -26,7 +32,12 @@ function SeniorConnect() {
   const grantType = Cookies.get('grantType');
   const accessToken = Cookies.get('accessToken');
   const userId = Cookies.get('userId');
+  const grantType = Cookies.get('grantType');
+  const accessToken = Cookies.get('accessToken');
+  const userId = Cookies.get('userId');
 
+  const [oldUserId, setOldUserId] = useState('');
+  const [oldUserIds, setOldUserIds] = useState<string[]>([]);
   const [oldUserId, setOldUserId] = useState('');
   const [oldUserIds, setOldUserIds] = useState<string[]>([]);
   const [modalContents, setModalContents] = useState<React.ReactNode>('');
@@ -47,7 +58,18 @@ function SeniorConnect() {
     }).catch((error: Error) => console.error('Axios error:', error));
   }, []);
 
+  useEffect(() => {
+    getUserInfo({
+      successFunc: userInfoData => {
+        setOldUserIds(
+          userInfoData.familyRelations.map(item => item.oldUserInfo.userId),
+        );
+      },
+    }).catch((error: Error) => console.error('Axios error:', error));
+  }, []);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setOldUserId(event.target.value);
     setOldUserId(event.target.value);
   };
 

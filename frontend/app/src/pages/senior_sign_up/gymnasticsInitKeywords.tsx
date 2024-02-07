@@ -28,6 +28,7 @@ const gymnasticsInitKeywords: GymnasticsType[] = [
   {
     day: '토',
     keyword: '스트레스 해소',
+    keyword: '스트레스 해소',
   },
 ];
 

@@ -24,7 +24,7 @@ services:
       context: ./fileserver
       dockerfile: Dockerfile
     volumes:
-      - /home/ubuntu/song/jenkins/fileserver/videos:/usr/share/nginx/html
+      - /home/ubuntu/nobly/fileserver/videos:/usr/share/nginx/html
     ports:
       - "8880:80"
     networks:

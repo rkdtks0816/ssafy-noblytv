@@ -1,64 +1,60 @@
 package BACKEND.project.controller;
 
-import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.domain.Post;
-import BACKEND.project.service.FamilyUserJoinService;
-import BACKEND.project.service.OldUserInfoService;
-import BACKEND.project.service.OldUserJoinService;
+import BACKEND.project.dto.FamilyUserInfoDto;
+import BACKEND.project.dto.PostDto;
 import BACKEND.project.service.PostService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/posts")
-@RequiredArgsConstructor
 public class PostController {
 
-    private final PostService postService;
 
-    private final OldUserJoinService oldUserJoinService;
+    @Autowired
+    PostService postService;
 
-    private final FamilyUserJoinService familyUserJoinService;
+    @PostMapping("/family")
+    public ResponseEntity<?> uploadVideo(@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId) {
+        try {
+            // 파일 저장
+            String filePath = postService.saveVideo(file, userId);
 
-    // 생성
-    @PostMapping
-    public ResponseEntity<Post> create(@RequestBody Post post) {
-        return ResponseEntity.ok(postService.save(post));
-    }
+            // DB에 동영상 정보 저장
+            FamilyUserInfoDto familyUserInfoDto = postService.findById(userId);
+            PostDto postDto = new PostDto();
+            postDto.setVideoPath(filePath);
+            postDto.setPostedAt(LocalDateTime.now());
+            postDto.setFamilyUserInfo(familyUserInfoDto);
+            postDto.setViewed(false); // 처음 업로드시에는 아직 보지 않음으로 설정
 
-    // 단일조회
-    @GetMapping("/{id}")
-    public ResponseEntity<Post> read(@PathVariable Long id) {
-        return ResponseEntity.ok(postService.findById(id));
-    }
+            postService.savePost(postDto);
 
-    // 전체조회
-    @GetMapping
-    public ResponseEntity<List<Post>> readAll() {
-        return ResponseEntity.ok(postService.findAll());
-    }
-
-    // 수정
-    @PutMapping("/{id}")
-    public ResponseEntity<Post> update(@PathVariable Long id, @RequestBody Post newPost) {
-        Post post = postService.findById(id);
-        if (post == null) {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>("업로드 성공!", HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>("파일 저장 실패:" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            return new ResponseEntity<>("업로드 실패:" + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        post.setVideoPath(newPost.getVideoPath());
-        return ResponseEntity.ok(postService.save(post));
     }
 
-    // 삭제
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        postService.delete(id);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/family/{oldUserId}")
+    public ResponseEntity<?> getFamilyUserPosts(@PathVariable("oldUserId") Long oldUserId) {
+        try {
+            // OldUser의 id와 FamilyRelation 관계인 FamilyUser가 작성한 게시글 조회
+            List<PostDto> familyUserPosts = postService.getPostsByOldUserId(oldUserId);
+            return new ResponseEntity<>(familyUserPosts, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("게시글 조회 실패:" + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

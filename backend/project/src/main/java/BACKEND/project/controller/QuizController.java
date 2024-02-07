@@ -31,4 +31,17 @@ public class QuizController {
     public QuizDto getQuiz(@PathVariable("id") Long id) {
         return quizService.getQuiz(id);
     }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "퀴즈 수정")
+    public QuizDto updateQuiz(@PathVariable("id") Long id, @Validated @RequestBody QuizDto quizDto) {
+        return quizService.updateQuiz(id, quizDto);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "퀴즈 삭제")
+    public ResponseEntity<?> deleteQuiz(@PathVariable("id") Long id) {
+        quizService.deleteQuiz(id);
+        return ResponseEntity.noContent().build();
+    }
 }

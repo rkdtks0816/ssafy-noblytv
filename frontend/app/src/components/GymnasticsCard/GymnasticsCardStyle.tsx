@@ -48,7 +48,8 @@ const GymnasticsDayS = styled.div`
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
-const GymnasticsVideoS = styled.div`
+const GymnasticsVideoS = styled.select`
+  width: 100px
   width: 350px;
   height: 197px;
   margin-top: 10px;
@@ -60,12 +61,9 @@ const GymnasticsVideoS = styled.div`
   font-weight: 400;
   font-size: 30px;
 
+  border: none;
   color: #666666;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 `;
 
 const GymnasticsTitleS = styled.div`

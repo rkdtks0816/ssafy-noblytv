@@ -11,5 +11,3 @@ const BgVideoStyle = styled.video`
 `;
 
 export default BgVideoStyle;
-
-

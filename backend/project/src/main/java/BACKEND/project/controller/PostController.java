@@ -37,7 +37,7 @@ public class PostController {
             // DB에 동영상 정보 저장
             FamilyUserInfoDto familyUserInfoDto = postService.findById(userId);
             PostDto postDto = new PostDto();
-            postDto.setVideoPath(dbsavePath);
+            postDto.setVideoPath(dbsavePath); // dbsavePath를 viceoPath로 설정
             postDto.setPostedAt(LocalDateTime.now());
             postDto.setFamilyUserInfo(familyUserInfoDto);
             postDto.setViewed(false); // 처음 업로드시에는 아직 보지 않음으로 설정

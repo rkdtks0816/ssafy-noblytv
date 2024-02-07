@@ -51,10 +51,11 @@ public class PostService {
                 throw new IOException("Failed to create directory " + serverPath);
             }
         }
-        String filePath = dbsavePath + "/" + file.getOriginalFilename();
-        File dest = new File(filePath, file.getOriginalFilename());
+        String fileName = file.getOriginalFilename();
+        String filePath = dbsavePath + "/" + fileName;
+        File dest = new File(filePath);
         file.transferTo(dest);
-        return dbsavePath;
+        return dbsavePath + "/" + fileName;
     }
 
 

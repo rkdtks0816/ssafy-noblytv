@@ -30,7 +30,7 @@ function Overlay() {
             setActiveModal(4);
             // console.log('activeModal', activeModal);
             break;
-          case 'FamilyViedos':
+          case 'FamilyVideos':
             setActiveModal(5);
             // console.log('activeModal', activeModal);
             break;

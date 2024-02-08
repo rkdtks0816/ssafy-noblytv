@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import useSocket from '../../hooks/useSocket';
 import ChildModal from '../ChildModal/ChildModal';
+import { BASE_URL, FILE_SEVER_PORT } from '../../constants/constants';
 
 function FamilyVideoModal() {
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -10,19 +11,20 @@ function FamilyVideoModal() {
 
   const socket: Socket | null = useSocket('http://i10c103.p.ssafy.io:9000');
 
+  const isVideoPath = (path: string): boolean =>
+    /^(\/[\w\s-]+)+\.(mp4)$/.test(path);
+
   useEffect(() => {
     let timer: string | number | NodeJS.Timeout | undefined;
     if (socket) {
       socket.on('message', (data: string) => {
-        // 소켓통신에서 처음 데이터 수신했을 때 모달창 등장시키기
         console.log('Video data received:', data);
         setFamilyVideos(data);
         setIsActive(true);
-        // 영상을 확인하겠다고 했을 때 처리
-        if (data === 'yes') {
-          setIsFullScreen(true);
 
-          // BE에서 영상데이터 정보 가져오기
+        if (isVideoPath(data)) {
+          // 비디오 경로가 확인되었을 때 전체 화면 모드로 전환
+          setIsFullScreen(true);
         } else if (
           data === 'stop' ||
           data === 'no' ||
@@ -46,22 +48,32 @@ function FamilyVideoModal() {
     setIsActive(!isActive);
   };
 
-  // 'mute' 또는 'muteoff'일 경우 빈 문자열을, 그렇지 않으면 videoContents 값을 그대로 사용
-  const displayContent =
-    familyVideos !== 'mute' &&
-    familyVideos !== 'muteoff' &&
-    familyVideos !== 'start' &&
-    familyVideos !== 'stop'
-      ? familyVideos
-      : '';
+  const displayContent = (() => {
+    if (['mute', 'muteoff', 'start', 'stop'].includes(familyVideos)) {
+      return '';
+    }
+    if (isVideoPath(familyVideos)) {
+      return (
+        // eslint-disable-next-line jsx-a11y/media-has-caption
+        <video controls autoPlay>
+          <source
+            src={`${BASE_URL}:${FILE_SEVER_PORT}${familyVideos}`}
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+      );
+    }
+    return familyVideos;
+  })();
 
   return (
     <ChildModal
-      title="영상"
+      title="가족 영상"
       content={displayContent}
       isActive={isActive}
       onToggle={toggleModal}
-      isFullScreen={isFullScreen || false} // 기본값 false 설정
+      isFullScreen={isFullScreen} // 직접 변경된 부분
     />
   );
 }

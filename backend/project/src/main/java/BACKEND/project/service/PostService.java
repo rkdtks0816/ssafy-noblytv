@@ -37,13 +37,12 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-
     public String saveVideo(MultipartFile file, Long userId) throws IOException {
         // 파일 저장 로직
         String dirPath = "/home/ubuntu/nobly/fileserver/videos";
         String dbsavePath = "/family_" + userId;
         String serverPath = dirPath + dbsavePath;
-        //String dirPath = "C:/Users/spets/OneDrive/바탕 화면/S10P12C103/frontend/app/src/assets/family_" + userId;
+
         File directory = new File(serverPath);
         if (!directory.exists()) {
             boolean result = directory.mkdirs();
@@ -51,16 +50,18 @@ public class PostService {
                 throw new IOException("Failed to create directory " + serverPath);
             }
         }
+
         // 저장할 파일 경로 설정
         String fileName = file.getOriginalFilename();
         String filePath = serverPath + "/" + fileName;
         File dest = new File(filePath);
+
         // 파일 저장
         file.transferTo(dest);
+
         // dbsavePath 반환
         return dbsavePath + "/" + fileName;
     }
-
 
     public FamilyUserInfoDto findById(Long userId) {
         Optional<FamilyUserInfo> optionalFamilyUserInfo = familyUserRepository.findById(userId);
@@ -121,5 +122,56 @@ public class PostService {
         } else {
             throw new EntityNotFoundException("해당 OldUserInfo를 찾을 수 없습니다. ID: " + oldUserInfoId);
         }
+    }
+
+    public List<PostDto> getPostsByLastVistedId(Long familyUserId) {
+        //FamilyUser 조회
+        FamilyUserInfo familyUserInfo = familyUserRepository.findById(familyUserId).orElse(null);
+        if (familyUserInfo == null) {
+            return null;
+        }
+
+        // FamilyUser의 lastVisitedId 조회
+        String oldUserId = familyUserInfo.getLastVisitedId();
+
+        // OldUserInfo에서 OldUserId와 같은 OldUser 조회
+        OldUserInfo oldUserInfo = oldUserRepository.findByUserId(oldUserId).orElse(null);
+        if (oldUserInfo == null) {
+            return null;
+        }
+
+        // OldUser의 Long 타입 id를 저장
+        Long oldUserUniqueId = oldUserInfo.getId();
+
+        // id로 작성된 Post 전체 조회
+        List<Post> posts = postRepository.findByOldUserInfoId(oldUserUniqueId);
+
+        //PostDto로 변환하여 반환
+        return convertToDtoList(posts);
+    }
+
+    public boolean deletePost(Long postId) {
+        if (postRepository.existsById(postId)) {
+            postRepository.deleteById(postId);
+            return true;
+        }
+        return false;
+    }
+
+    private PostDto converToDto(Post post) {
+        PostDto postDto = new PostDto();
+        postDto.setId(post.getId());
+        postDto.setVideoPath(post.getVideoPath());
+        postDto.setPostedAt(post.getPostedAt());
+
+        return postDto;
+    }
+
+    private List<PostDto> convertToDtoList(List<Post> posts) {
+        List<PostDto> postDtoList = new ArrayList<>();
+        for (Post post : posts) {
+            postDtoList.add(converToDto(post));
+        }
+        return postDtoList;
     }
 }

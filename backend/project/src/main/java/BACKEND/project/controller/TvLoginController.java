@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/tv")
@@ -20,6 +23,13 @@ public class TvLoginController {
     @Operation(summary = "가족 유저 ID로 노인 유저 목록 가져오기")
     public ResponseEntity<?> getOldUsers(@PathVariable("familyUserId") String familyUserId) {
         return ResponseEntity.ok().body(oldUserLoginService.getOldUsersByFamilyUserId(familyUserId));
+    }
+
+    @GetMapping("/{tvCode}")
+    @Operation(summary = "해당 tvCode가 등록된 노인 유저 목록 가져오기")
+    public ResponseEntity<List<Map<String, Object>>> getUsersByTvCode(@PathVariable("tvCode") String tvCode) {
+        List<Map<String, Object>> users = oldUserLoginService.findUserByTvCode(tvCode);
+        return ResponseEntity.ok(users);
     }
 
     @PostMapping("/login")

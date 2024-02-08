@@ -1,11 +1,11 @@
 package BACKEND.project.controller;
 
-import BACKEND.project.domain.FamilyUserInfo;
-import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.domain.Post;
 import BACKEND.project.dto.FamilyUserInfoDto;
 import BACKEND.project.dto.PostDto;
 import BACKEND.project.service.PostService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +18,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/posts")
+@Tag(name = "영상 커뮤니티 API")
 public class PostController {
-
-
 
     private final PostService postService;
     @Autowired
@@ -29,6 +28,7 @@ public class PostController {
     }
 
     @PostMapping("/family")
+    @Operation(summary = "가족 게시글 등록")
     public ResponseEntity<?> uploadVideo(@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId) {
         try {
             // 파일 저장
@@ -52,9 +52,31 @@ public class PostController {
         }
     }
 
-    @GetMapping("/{oldUserId}")
+    @GetMapping("familypostsearch/{oldUserId}")
+    @Operation(summary = "가족이 올린 게시물 조회")
     public ResponseEntity<List<Post>> getPostsByOldUserInfoId(@PathVariable("oldUserId") Long oldUserId) {
         List<Post> posts = postService.getPostsByOldUserInfoId(oldUserId);
         return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    @GetMapping("oldpostsearch/{familyUserId}")
+    @Operation(summary = "노인 회원이 올린 게시물 조회")
+    public ResponseEntity<List<PostDto>> getPostByLastVisitedId(@PathVariable("familyUserId") Long familyUserId) {
+        List<PostDto> posts = postService.getPostsByLastVistedId(familyUserId);
+        if (posts == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{postId}")
+    @Operation(summary = "게시물 삭제")
+    public ResponseEntity<String> deletePost(@PathVariable("postId") Long postId) {
+        boolean isDeleted = postService.deletePost(postId);
+        if (isDeleted) {
+            return new ResponseEntity<>("게시물이 성공적으로 삭제되었습니다.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("게시물 삭제에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

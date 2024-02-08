@@ -1,6 +1,6 @@
 package BACKEND.project.dto;
 
-import BACKEND.project.domain.FamilyUserInfo;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@JsonInclude(JsonInclude.Include.NON_NULL)
+
 public class PostDto {
 
     private Long id;

@@ -12,9 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -34,6 +32,18 @@ public class OldUserLoginService {
         // FamilyUserInfoDto를 이용하여 OldUserInfoDto의 리스트를 반환
         return familyUserInfoDto.getFamilyRelations().stream()
                 .map(FamilyRelationDto::getOldUserInfo)
+                .collect(Collectors.toList());
+    }
+
+    public List<Map<String, Object>> findUserByTvCode(String tvCode) {
+        List<OldUserInfo> users = oldUserRepository.findByTvCode(tvCode);
+        return users.stream()
+                .map(user -> {
+                    Map<String, Object> resultMap = new HashMap<>();
+                    resultMap.put("userId", user.getUserId());
+                    resultMap.put("username", user.getUsername());
+                    return resultMap;
+                })
                 .collect(Collectors.toList());
     }
 

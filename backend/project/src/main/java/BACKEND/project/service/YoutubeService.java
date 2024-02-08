@@ -15,6 +15,7 @@ import java.util.Random;
 
 @Service
 public class YoutubeService {
+
    @Value("${youtube.apikey}")
     private String apiKey;
 
@@ -46,7 +47,7 @@ public class YoutubeService {
 
         if (searchResultList != null && searchResultList.size() > 0) {
 
-            // 검색 결과 중 램던으로 하나 가져오기
+            // 검색 결과 중 램덤으로 하나 가져오기
             Random random = new Random();
             int randomIndex = random.nextInt(searchResultList.size());
 

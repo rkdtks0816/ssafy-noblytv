@@ -1,32 +1,12 @@
 import styled from 'styled-components';
 
 const GymnasticsBoxS = styled.div`
-  position: fixed;
-  top: 90px;
-  left: 0px;
+  width: 90%;
+  max-width: 350px;
   margin: 0 auto;
-  width: 390px;
-
-  max-height: calc(100vh - 180px);
-  overflow: hidden;
-  overflow-y: auto;
-
-  /* Chrome, Safari, Edge 스크롤 바 숨기기 */
-  &::-webkit-scrollbar {
-    width: 0px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: transparent;
-  }
-
-  /* Firefox 스크롤 바 숨기기 */
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
 `;
 
 const GymnasticsCardS = styled.div`
-  width: 100vw;
   margin-top: 15px;
   display: flex;
   justify-content: center;
@@ -36,7 +16,7 @@ const GymnasticsCardS = styled.div`
 
 const GymnasticsHeaderS = styled.div`
   position: relative;
-  width: 350px;
+  width: 100%;
 
   display: flex;
   justify-content: space-between;
@@ -45,14 +25,15 @@ const GymnasticsHeaderS = styled.div`
 
 const GymnasticsDayS = styled.div`
   font-weight: 900;
-  font-size: 20px;
+  font-size: 1em;
 
   color: #666666;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const GymnasticsVideoS = styled.div`
-  width: 345px;
+  width: 100%;
+  height: 100%;
   margin-top: 10px;
   border-radius: 10px;
   padding: 15px;
@@ -60,17 +41,16 @@ const GymnasticsVideoS = styled.div`
   background: #f1dcaa;
 
   font-weight: 400;
-  font-size: 30px;
+  font-size: 1.5em;
   color: #666666;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const GymnasticsTitleS = styled.div`
   margin-top: 15px;
-  width: 345px;
 
   font-weight: 400;
-  font-size: 20px;
+  font-size: 0.7em;
 
   color: #666666;
 

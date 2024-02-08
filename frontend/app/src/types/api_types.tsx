@@ -60,13 +60,6 @@ interface DiaryResType {
   summary: string;
 }
 
-interface DiaryResType {
-  id: number;
-  date: string;
-  text: string;
-  summary: string;
-}
-
 interface GymnasticsType {
   day: string;
   keyword: string;
@@ -78,17 +71,6 @@ interface GymnasticsResType {
   keyword: string;
   title: string;
   videoId: string;
-}
-
-interface OldUserInfoType {
-  userId: string;
-  username: string;
-  lunarSolar: string;
-  birth: string;
-  diaries: DiaryResType[];
-  quizResults: string[];
-  gymnastics: GymnasticsResType[];
-  userType: string;
 }
 
 interface OldUserInfoType {

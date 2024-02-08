@@ -6,8 +6,11 @@ import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
 import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
-import StatusMsg from '../../components/StatusMsg/StatusMsg';
-import { PATH_MAIN, PATH_SELECT_SENIOR } from '../../constants/constants';
+import {
+  PATH_CONNECT_TV,
+  PATH_MAIN,
+  PATH_SELECT_SENIOR,
+} from '../../constants/constants';
 
 function ConnectTv() {
   const navigate = useNavigate();
@@ -22,15 +25,16 @@ function ConnectTv() {
     // 'UniqueCode' 파라미터 값이 존재하면 상태 변수 uniqueCode를 업데이트
     if (uniqueCodeFromUrl) {
       setUniqueCode(uniqueCodeFromUrl);
+      navigate(PATH_SELECT_SENIOR, { state: uniqueCode });
     }
-  }, [location]); // location 객체가 변경될 때마다 이 useEffect 훅을 실행
+  }, [location, navigate, uniqueCode]); // location 객체가 변경될 때마다 이 useEffect 훅을 실행
 
   const handleBackBtn = () => {
     navigate(PATH_MAIN);
   };
 
   const handleSubmit = () => {
-    navigate(PATH_SELECT_SENIOR);
+    navigate(PATH_SELECT_SENIOR, { state: { redirect: PATH_CONNECT_TV } });
   };
 
   return (
@@ -44,10 +48,6 @@ function ConnectTv() {
             placeholder="TV 고유코드를 입력하세요."
             style={{ marginTop: '70px' }}
             onChange={e => setUniqueCode(e.target.value)}
-          />
-          <StatusMsg
-            statusMsgType="error"
-            statusMsgContents="TV고유코드가 일치하지 않습니다."
           />
         </FlexBoxStyle>
         <FlexBoxStyle>

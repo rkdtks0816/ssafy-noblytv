@@ -1,7 +1,6 @@
 import {
   ModalBgS,
   ModalBoxS,
-  ModalTitleS,
   ModalContentsS,
   ModalButtonS,
 } from './ModalStyle';
@@ -15,7 +14,6 @@ function Modal({ modalContents, onClickBtn }: ModalProps) {
     <div>
       <ModalBgS onClick={handleBtnClick}>
         <ModalBoxS>
-          <ModalTitleS>경고</ModalTitleS>
           <ModalContentsS>{modalContents}</ModalContentsS>
           <ModalButtonS onClick={handleBtnClick}> 확인</ModalButtonS>
         </ModalBoxS>

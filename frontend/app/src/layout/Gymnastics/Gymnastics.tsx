@@ -96,11 +96,7 @@ function Gymnastics() {
             />
           </GymnasticsHeaderS>
           <GymnasticsVideoS>
-            <YouTube
-              videoId={gymnastic.videoId}
-              opts={playerOptions}
-              style={{ width: '345px', height: '197px' }}
-            />
+            <YouTube videoId={gymnastic.videoId} opts={playerOptions} />
             <GymnasticsTitleS>{gymnastic.title}</GymnasticsTitleS>
           </GymnasticsVideoS>
         </GymnasticsCardS>

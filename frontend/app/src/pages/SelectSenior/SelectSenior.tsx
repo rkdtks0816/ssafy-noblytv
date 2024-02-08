@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BackBtnStyle from '../../components/BackBtn/BackBtnStyle';
 import BgImgStyle from '../../components/BgImg/BgImgStyle';
 import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
@@ -8,10 +8,13 @@ import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
 import ListBox from '../../components/ListBox/ListBox';
 import SeniorDump from './SeniorDump';
+import { PATH_MAIN } from '../../constants/constants';
 
 function SelectSenior() {
+  const location = useLocation();
   const navigate = useNavigate();
 
+  const [redirect, setRedirect] = useState<string>('/');
   const [showList, setShowList] = useState<string[]>([]);
   const [checkedName, setCheckedName] = useState<string>('');
   const [checkedid, setcheckedid] = useState<string>('');
@@ -19,9 +22,16 @@ function SelectSenior() {
   const oldUserNames: string[] = SeniorDump.map(senior => senior.oldUserName);
 
   useEffect(() => {
+    if (location.state && typeof location.state === 'object') {
+      setRedirect(location.state.rediecte as string);
+    } else {
+      setRedirect(PATH_MAIN);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
     setShowList(oldUserNames);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [oldUserNames]);
 
   const findOldUserId = () => {
     // checkedName에 해당하는 oldUserId 찾기
@@ -44,7 +54,7 @@ function SelectSenior() {
   };
 
   const handleBackBtn = () => {
-    navigate('/cummunity');
+    navigate(redirect);
   };
 
   const handleSubmit = () => {

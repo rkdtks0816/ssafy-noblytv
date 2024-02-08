@@ -14,33 +14,25 @@ const ModalBgS = styled.div`
 `;
 
 const ModalBoxS = styled.div`
-  width: 330px;
+  width: 80vw;
+  max-width: 330px;
 
   background: #ffffff;
   border-radius: 10px;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
 `;
 
-const ModalTitleS = styled.div`
-  color: #ff1f1f;
-  font-weight: 900;
-  font-size: 30px;
-  padding-left: 20px;
-  line-height: 2;
-`;
-
 const ModalContentsS = styled.div`
   color: #666666;
   font-weight: 600;
-  font-size: 25px;
-  padding-left: 20px;
-  line-height: 1.5;
+  font-size: 1.3em;
+  padding: 20px;
   white-space: pre-line;
 `;
 
 const ModalButtonS = styled.div`
-  width: 60px;
-  height: 40px;
+  width: 50px;
+  height: 30px;
   margin: 0px 10px 10px auto;
   background: #eac164;
   border-radius: 10px;
@@ -48,9 +40,9 @@ const ModalButtonS = styled.div`
   text-align: center;
   color: #666666;
   font-weight: 900;
-  font-size: 20px;
-  line-height: 2;
+  font-size: 1em;
+  line-height: 1.9;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
 `;
 
-export { ModalBgS, ModalBoxS, ModalTitleS, ModalContentsS, ModalButtonS };
+export { ModalBgS, ModalBoxS, ModalContentsS, ModalButtonS };

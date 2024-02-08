@@ -1,32 +1,12 @@
 import styled from 'styled-components';
 
 const CommunityBoxS = styled.div`
-  position: fixed;
-  top: 90px;
-  left: 0px;
+  max-width: 350px;
   margin: 0 auto;
-  width: 390px;
-
-  max-height: calc(100vh - 180px);
-  overflow: hidden;
-  overflow-y: auto;
-
-  /* Chrome, Safari, Edge 스크롤 바 숨기기 */
-  &::-webkit-scrollbar {
-    width: 0px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: transparent;
-  }
-
-  /* Firefox 스크롤 바 숨기기 */
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
 `;
 
 const CommunityCardS = styled.div`
-  width: 100vw;
+  width: 100%;
   margin-top: 10px;
   display: flex;
   justify-content: center;
@@ -35,8 +15,7 @@ const CommunityCardS = styled.div`
 `;
 
 const CommunityHeaderS = styled.div`
-  width: 350px;
-
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -44,7 +23,7 @@ const CommunityHeaderS = styled.div`
 
 const CommunityWriterS = styled.div`
   font-weight: 900;
-  font-size: 30px;
+  font-size: 1.5em;
 
   color: #666666;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -52,16 +31,38 @@ const CommunityWriterS = styled.div`
 
 const CommunityVideoS = styled.video`
   margin-top: 10px;
-  width: 350px;
+  width: 100%;
 
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+
+  border-radius: 10px;
 `;
+
+const CommunityAddBtnS = styled.div`
+  position: fixed;
+  right: 20px;
+  bottom: 110px;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+
+  background: url('/src/assets/icon_add.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  text-decoration: none;
+  cursor: pointer;
+`;
+
 export {
   CommunityBoxS,
   CommunityCardS,
   CommunityHeaderS,
   CommunityWriterS,
   CommunityVideoS,
+  CommunityAddBtnS,
 };

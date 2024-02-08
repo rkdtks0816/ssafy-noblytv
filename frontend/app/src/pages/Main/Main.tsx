@@ -10,11 +10,16 @@ import Community from '../../layout/Community/Community';
 import Datetime from '../../layout/Datetime/Datetime';
 import Gymnastics from '../../layout/Gymnastics/Gymnastics';
 import My from '../../layout/My/My';
+import MainBoxS from './MainStyle';
+import { OldUserInfoType } from '../../types/api_types';
+import { oldUserInfoInit } from '../../constants/type_init';
 
 function Main() {
   const navigate = useNavigate();
 
   const [nowMenu, setNowMenu] = useState<string>('Community');
+  const [oldUserInfo, setOldUserInfo] =
+    useState<OldUserInfoType>(oldUserInfoInit);
 
   useEffect(() => {
     manageAuthToken({
@@ -28,6 +33,7 @@ function Main() {
         Cookies.set('oldUsername', oldUserInfoData.username, {
           expires: 7,
         });
+        setOldUserInfo(oldUserInfoData);
       },
     }).catch(error => console.error('Axios error:', error));
   }, []);
@@ -35,10 +41,14 @@ function Main() {
   return (
     <div>
       <Header />
-      {nowMenu === 'Community' && <Community />}
-      {nowMenu === 'Datetime' && <Datetime />}
-      {nowMenu === 'Gymnastics' && <Gymnastics />}
-      {nowMenu === 'My' && <My />}
+      <MainBoxS>
+        {nowMenu === 'Community' && <Community />}
+        {nowMenu === 'Datetime' && (
+          <Datetime diaryContents={oldUserInfo.diaries} />
+        )}
+        {nowMenu === 'Gymnastics' && <Gymnastics />}
+        {nowMenu === 'My' && <My />}
+      </MainBoxS>
       <Footer setNowMenu={setNowMenu} />
     </div>
   );

@@ -4,6 +4,7 @@ import {
   TvSignInType,
   SignInType,
   UserInfoType,
+  OldUserInfoType,
 } from '../types/api_types';
 
 const signUpInit: SignUpType = {
@@ -40,4 +41,21 @@ const userInfoInit: UserInfoType = {
   userType: '',
 };
 
-export { signUpInit, seniorSignUpInit, tvSignInInit, signInInit, userInfoInit };
+const oldUserInfoInit: OldUserInfoType = {
+  userId: '',
+  username: '',
+  lunarSolar: '',
+  birth: '',
+  diaries: [],
+  quizResults: [],
+  gymnastics: [],
+  userType: '',
+};
+export {
+  signUpInit,
+  seniorSignUpInit,
+  tvSignInInit,
+  signInInit,
+  userInfoInit,
+  oldUserInfoInit,
+};

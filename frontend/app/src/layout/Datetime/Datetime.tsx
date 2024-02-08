@@ -1,8 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-
+import { useState } from 'react';
 import {
   DateTimeInputS,
   DateTimeTitleS,
@@ -17,45 +13,15 @@ import {
 } from './DatetimeStyle';
 import { DiaryResType } from '../../types/api_types';
 import Modal from '../../components/Modal/Modal';
-import {
-  API_PORT,
-  BASE_URL,
-  API_DIARY_VIEW,
-  PATH_SIGN_IN,
-} from '../../constants/constants';
-import manageAuthToken from '../../utils/manageAuthToken';
 
-function Datetime() {
-  const grantType = Cookies.get('grantType');
-  const accessToken = Cookies.get('accessToken');
-  const navigate = useNavigate();
+function Datetime({ diaryContents }: { diaryContents: DiaryResType[] }) {
   // 현재 날짜를 얻어오는 함수
   const getCurrentDate = (): string => new Date().toISOString().split('T')[0];
 
   // 초기값 상태를 현재 날짜로 설정
   const [nowDate, setNowDate] = useState<string>('');
   const [btnType, setBtnType] = useState<string>('calendar');
-  const [diaryContents, setdiaryContents] = useState<DiaryResType[]>([]);
   const [modalContents, setModalContents] = useState<React.ReactNode>('');
-
-  useEffect(() => {
-    manageAuthToken({
-      handleNavigate: () => navigate(PATH_SIGN_IN),
-    });
-  }, [navigate]);
-
-  useEffect(() => {
-    axios
-      .get<DiaryResType[]>(`${BASE_URL}:${API_PORT}${API_DIARY_VIEW}`, {
-        headers: { Authorization: `${grantType} ${accessToken}` },
-      })
-      .then(response => {
-        setdiaryContents(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }, [grantType, accessToken]);
 
   const handleDatetimeHeader = () => {
     if (btnType === 'calendar') {
@@ -73,14 +39,16 @@ function Datetime() {
 
   const handleDateDiary = () =>
     diaryContents
-      .filter(diaryContent => (nowDate ? diaryContent.date === nowDate : true))
+      .filter(diaryContent =>
+        nowDate ? diaryContent.date.slice(0, 10) === nowDate : true,
+      )
       .map(diaryContent => (
         <DateTimeDiaryListBoxLiBoxS
           key={diaryContent.summary}
           onClick={() => detailDiary(diaryContent)}
         >
           <DateTimeDiaryListBoxLiDateS>
-            {diaryContent.date}
+            {diaryContent.date.slice(0, 10)}
           </DateTimeDiaryListBoxLiDateS>
           <DateTimeDiaryListBoxLiContentsS>
             {diaryContent.summary}

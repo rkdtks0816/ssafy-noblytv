@@ -4,12 +4,6 @@ const DropDownSelectS = styled.div`
   position: absolute;
   right: 0px;
   top: -10px;
-  text-align: end;
-  font-weight: 900;
-  font-size: 30px;
-
-  color: #5ab8c0;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   background: #ffffff;
   border-radius: 10px;
@@ -35,11 +29,14 @@ const DropDownSelectS = styled.div`
 
 const DropDownOptionS = styled.div`
   font-weight: 900;
-  font-size: 30px;
+  font-size: 1.5em;
+  text-align: end;
 
   border: none;
   color: #5ab8c0;
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  cursor: pointer;
 `;
 
 export { DropDownSelectS, DropDownOptionS };

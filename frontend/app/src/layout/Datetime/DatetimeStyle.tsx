@@ -1,38 +1,35 @@
 import styled from 'styled-components';
 
 const DateTimeBoxS = styled.div`
-  position: fixed;
-  top: 90px;
-  left: 0px;
   margin: 0 auto;
-  width: 390px;
+  max-width: 390px;
 `;
 
 const DateTimeHearderS = styled.div`
-  position: fixed;
-  top: 90px;
-  left: 0;
+  position: relative;
+  top: 0px;
+  left: 0px;
+
   width: 100%;
-  height: 50px;
+  height: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   color: #666666;
   font-weight: 900;
-  font-size: 32px;
-  line-height: 2;
+  font-size: 1.5em;
 `;
 
 const DateTimeInputS = styled.input`
-  width: calc(100% - 70px);
   border: none;
 
   color: #666666;
   font-weight: 900;
-  font-size: 30px;
+  font-size: 1.3em;
   text-align: center;
-  line-height: 2;
+
+  background-color: #ffffff;
 
   &:focus {
     outline: none;
@@ -54,8 +51,8 @@ const DateTimeBtnS = styled.div<{ $dateTimeBtnType: string }>`
 `;
 
 const DateTimeDiaryListBoxS = styled.div`
-  position: fixed;
-  top: 140px;
+  position: relative;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -77,7 +74,8 @@ const DateTimeDiaryListBoxS = styled.div`
 `;
 
 const DateTimeDiaryListBoxUlS = styled.div`
-  width: 350px;
+  width: 90vw;
+  max-width: 350px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -97,16 +95,15 @@ const DateTimeDiaryListBoxLiBoxS = styled.div`
 const DateTimeDiaryListBoxLiDateS = styled.div`
   color: #666666;
   font-weight: 500;
-  font-size: 2vh;
-  line-height: 1.5;
+  font-size: 1em;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
 `;
 
 const DateTimeDiaryListBoxLiContentsS = styled.div`
+  margin-top: 10px;
   color: #666666;
   font-weight: 300;
-  font-size: 3.5vh;
-  line-height: 1.5;
+  font-size: 1.5em;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
 `;
 

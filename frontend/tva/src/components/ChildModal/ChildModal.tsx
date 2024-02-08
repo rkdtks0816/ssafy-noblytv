@@ -1,39 +1,33 @@
+import React, { forwardRef } from 'react';
 import { ChildModalProps } from '../../types/property';
 import {
   ChildModalBg,
   ChildModalContent,
   ChildModalImg,
-  ChildModalTitle,
 } from './ChildModalStyles';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function ChildModal({
-  title,
-  content,
-  isActive,
-  isFullScreen,
-}: ChildModalProps) {
-  const getRightStyle = () => {
-    if (isFullScreen) return '0';
-    return isActive ? '3vw' : '-100%';
-  };
+const ChildModal = forwardRef<HTMLDivElement, ChildModalProps>(
+  ({ content, isActive, isFullScreen }, ref) => {
+    const getRightStyle = () => {
+      if (isFullScreen) return '0';
+      return isActive ? '3vw' : '-100%';
+    };
 
-  return (
-    <div>
-      {/* <button type="button" onClick={onToggle}>
-        Open Modal
-      </button> */}
-      <ChildModalBg
-        isFullScreen={isFullScreen}
-        style={{
-          right: getRightStyle(),
-        }}
-      >
-        <ChildModalTitle>{title}</ChildModalTitle>
-        <ChildModalContent>{content}</ChildModalContent>
-        <ChildModalImg />
-      </ChildModalBg>
-    </div>
-  );
-}
+    return (
+      <div ref={ref}>
+        {' '}
+        <ChildModalBg
+          isFullScreen={isFullScreen}
+          style={{
+            right: getRightStyle(),
+          }}
+        >
+          <ChildModalContent>{content}</ChildModalContent>
+          <ChildModalImg />
+        </ChildModalBg>
+      </div>
+    );
+  },
+);
+
 export default ChildModal;

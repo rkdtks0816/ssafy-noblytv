@@ -37,7 +37,6 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-
     public String saveVideo(MultipartFile file, Long userId) throws IOException {
         // 파일 저장 로직
         String dirPath = "/home/ubuntu/nobly/fileserver/videos";
@@ -63,7 +62,6 @@ public class PostService {
         // dbsavePath 반환
         return dbsavePath + "/" + fileName;
     }
-
 
     public FamilyUserInfoDto findById(Long userId) {
         Optional<FamilyUserInfo> optionalFamilyUserInfo = familyUserRepository.findById(userId);

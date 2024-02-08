@@ -4,11 +4,11 @@ const ChildModalBg = styled.div<{ isFullScreen?: boolean }>`
   position: fixed;
   right: ${props => (props.isFullScreen ? '0' : '-100vw')};
   /* transition: right 2s ease-out; */
-  transition: all 2s ease-out;
+  transition: all 1500ms ease-out;
   bottom: ${props => (props.isFullScreen ? '0' : '5vh')};
   width: ${props => (props.isFullScreen ? '100vw' : '22vw')};
   height: ${props => (props.isFullScreen ? '100vh' : '60vh')};
-  min-height: 20vh; /* 최소 높이 설정 */
+  min-height: 20vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,7 +45,7 @@ const ChildModalImg = styled.div`
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
   width: 100%;
   height: 100%;
-  border-radius: 5vw; /* 이미지도 부모와 같은 경계 반경을 가짐 */
+  border-radius: 5vw;
 `;
 const ChildModalVideoBG = styled.div`
   position: fixed;

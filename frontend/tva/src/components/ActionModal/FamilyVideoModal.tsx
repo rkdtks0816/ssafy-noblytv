@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Socket } from 'socket.io-client';
 import useSocket from '../../hooks/useSocket';
-import ChildModal from '../ChildModal/ChildModal';
+import ExpandModal from '../ChildModal/ExpandModal';
 import { BASE_URL, FILE_SEVER_PORT } from '../../constants/constants';
 
 function FamilyVideoModal() {
@@ -9,8 +9,7 @@ function FamilyVideoModal() {
   const [familyVideos, setFamilyVideos] = useState<string>('');
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [videoReadyToShow, setVideoReadyToShow] = useState(false); // 비디오 표시 준비 상태
-  const modalRef = useRef<HTMLDivElement>(null); // 모달창 참조
-
+  const modalRef = useRef<HTMLDivElement>(null);
   const socket: Socket | null = useSocket('http://i10c103.p.ssafy.io:9000');
 
   const isVideoPath = (path: string): boolean =>
@@ -23,7 +22,7 @@ function FamilyVideoModal() {
         console.log('Video data received:', data);
         setFamilyVideos(data);
         setIsActive(true);
-        setVideoReadyToShow(false); // 초기에는 비디오를 표시하지 않음
+        setVideoReadyToShow(false);
 
         if (isVideoPath(data)) {
           setIsFullScreen(true);
@@ -79,6 +78,11 @@ function FamilyVideoModal() {
         <video
           controls
           autoPlay
+          onEnded={() => {
+            if (socket) {
+              socket.emit('message', 'stop');
+            }
+          }}
           style={{
             width: isFullScreen ? '100dvw' : 'auto',
             height: isFullScreen ? '100dvh' : 'auto',
@@ -98,12 +102,12 @@ function FamilyVideoModal() {
   })();
 
   return (
-    <ChildModal
-      ref={modalRef} // ChildModal 컴포넌트에 ref 전달 필요 (수정 필요)
+    <ExpandModal
+      ref={modalRef}
       content={displayContent}
       isActive={isActive}
       onToggle={toggleModal}
-      isFullScreen={isFullScreen} // 직접 변경된 부분
+      isFullScreen={isFullScreen}
     />
   );
 }

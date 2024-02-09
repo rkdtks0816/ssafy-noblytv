@@ -33,7 +33,7 @@ function Gymnastics() {
     width: '100%',
     height: '100%',
     playerVars: {
-      autoplay: 1,
+      // autoplay: 1,
       controls: 0,
       modestbranding: 1,
       mute: !isPlaying,

@@ -10,6 +10,7 @@ const ChildModalBg = styled.div<{ isFullScreen?: boolean }>`
   height: ${props => (props.isFullScreen ? '100vh' : '60vh')};
   min-height: 20vh;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -78,6 +79,26 @@ const ChildModalVideo = styled.video`
   z-index: 100;
 `;
 
+const SlideInMessage = styled.div<{ isVisible: boolean }>`
+  position: fixed;
+  left: ${props => (props.isVisible ? '0' : '-100%')};
+  top: 50%;
+  transform: translateY(-50%);
+  transition: left 0.5s ease-out;
+  width: 22vw;
+  height: auto;
+  padding: 2vh 2vw;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5vw;
+  color: #222222;
+  z-index: 100;
+`;
+
 export {
   ChildModalBg,
   ChildModalTitle,
@@ -86,4 +107,5 @@ export {
   ChildModalImg,
   ChildModalVideoBG,
   ChildModalVideo,
+  SlideInMessage,
 };

@@ -1,55 +1,54 @@
+// src/components/ChildModal/ExpandModal.tsx
 import { forwardRef } from 'react';
-import { ChildModalProps } from '../../types/property';
 import {
   ChildModalBg,
-  ChildModalContent,
   ChildModalDynamicContent,
+  SlideInMessage,
   ChildModalImg,
 } from './ChildModalStyles';
 
-const isVideoPath = (path: string): boolean =>
-  /^(\/[\w\s-]+)+\.(mp4)$/.test(path);
+interface ExpandModalProps {
+  content: string;
+  isActive: boolean;
+  isFullScreen: boolean;
+  message: string;
+}
 
-const ExpandModal = forwardRef<HTMLDivElement, ChildModalProps>(
-  ({ content, isActive, isFullScreen }, ref) => {
-    const getRightStyle = () => {
-      if (isFullScreen) return '0';
-      return isActive ? '3vw' : '-100%';
-    };
-
-    return (
-      <div ref={ref}>
-        <ChildModalBg
-          isFullScreen={isFullScreen}
-          style={{
-            right: getRightStyle(),
-          }}
-        >
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
-            {isVideoPath(content) ? (
-              // 비디오 경로일 경우 <video> 태그를 사용하여 재생
-              <ChildModalDynamicContent>
-                {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-                <video
-                  controls
-                  autoPlay
-                  style={{ maxWidth: '100%', maxHeight: '100%' }}
-                >
-                  <source src={content as string} type="video/mp4" />
-                </video>
-              </ChildModalDynamicContent>
-            ) : (
-              // 문자열일 경우 기존의 ChildModalContent와 ChildModalImg를 사용.
-              <div>
-                <ChildModalContent>{content}</ChildModalContent>
-                <ChildModalImg />
-              </div>
-            )}
+// 비디오 또는 메시지를 조건부로 표시
+const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
+  ({ content, isActive, isFullScreen, message }, ref) => (
+    // isActive 상태에 따라 모달 표시
+    <div ref={ref} style={{ display: isActive ? 'block' : 'none' }}>
+      <ChildModalBg isFullScreen={isFullScreen}>
+        {/* 전체화면 모드일 때 */}
+        {isFullScreen && (
+          <div style={{ display: 'flex', width: '100%', height: '100%' }}>
+            <ChildModalDynamicContent style={{ flex: 1 }}>
+              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+              <video
+                controls
+                autoPlay
+                style={{ width: '100%', height: 'auto' }}
+              >
+                <source src={content} type="video/mp4" />
+              </video>
+            </ChildModalDynamicContent>
+            <SlideInMessage isVisible={message !== ''} style={{ flex: 1 }}>
+              {message}
+              <ChildModalImg />
+            </SlideInMessage>
           </div>
-        </ChildModalBg>
-      </div>
-    );
-  },
+        )}
+        {/* 모달창 모드일 때 */}
+        {!isFullScreen && (
+          <SlideInMessage isVisible={message !== ''}>
+            {message}
+            <ChildModalImg />
+          </SlideInMessage>
+        )}
+      </ChildModalBg>
+    </div>
+  ),
 );
 
 export default ExpandModal;

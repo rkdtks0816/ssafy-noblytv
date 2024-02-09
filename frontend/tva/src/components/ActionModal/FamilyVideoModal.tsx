@@ -6,111 +6,68 @@ import { BASE_URL, FILE_SEVER_PORT } from '../../constants/constants';
 
 function FamilyVideoModal() {
   const [isActive, setIsActive] = useState<boolean>(false);
-  const [familyVideos, setFamilyVideos] = useState<string>('');
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const [videoReadyToShow, setVideoReadyToShow] = useState<boolean>(false); // 비디오 표시 준비 상태
+  const [videoPath, setVideoPath] = useState<string>('');
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>('');
+
   const modalRef = useRef<HTMLDivElement>(null);
   const socket: Socket | null = useSocket('http://i10c103.p.ssafy.io:9000');
-
-  // 수신받은 문자열이 비디오 경로인지 확인
-  const isVideoPath = (path: string): boolean =>
-    /^(\/[\w\s-]+)+\.(mp4)$/.test(path);
 
   useEffect(() => {
     if (socket) {
       socket.on('message', (data: string) => {
-        console.log('Video data received:', data);
-        setFamilyVideos(data);
-        setIsActive(true);
-        setVideoReadyToShow(false);
-
-        if (isVideoPath(data)) {
-          setIsFullScreen(true);
-        } else if (
-          data === 'stop' ||
-          data === 'no' ||
-          data === '나중에 또 봐요!'
-        ) {
+        if (data === 'stop') {
           setIsFullScreen(false);
-          setTimeout(() => {
-            setIsActive(false);
-          }, 7000);
+          setIsActive(true);
+          setMessage('');
+        } else if (/^(\/[\w\s-]+)+\.(mp4)$/.test(data)) {
+          setVideoPath(data);
+          setIsFullScreen(true);
+          setIsActive(true); // 모달을 활성화 상태로 유지
+          setMessage(''); // 비디오 재생 시 메시지 초기화
+        } else {
+          setMessage(data);
+          setIsActive(true); // 메시지 수신 시 모달 활성화
         }
       });
     }
     return () => {
-      socket?.off('message');
+      if (socket) {
+        socket.off('message');
+      }
     };
   }, [socket]);
 
-  // 모달창이 풀스크린으로 전환이 끝났을 때 가족 영상 재생
   useEffect(() => {
-    const handleTransitionEnd = () => {
-      if (isFullScreen) {
-        setVideoReadyToShow(true);
-      }
-    };
+    // 비디오 재생이 끝났을 때 호출
+    function handleVideoEnd() {
+      socket?.emit('message', 'stop');
+      setIsActive(true); // ExpandModal 활성화
+    }
+
     const modalElement = modalRef.current;
-    if (modalElement) {
-      modalElement.addEventListener('transitionend', handleTransitionEnd);
+    // modalElement가 존재하고, 현재 전체 화면 모드인 경우에만 실행
+    if (modalElement && isFullScreen) {
+      // 모달 내의 비디오 엘리먼트를 선택.
+      const videoElement = modalElement.querySelector('video');
+      // 비디오 재생이 끝났을 때 handleVideoEnd 함수를 호출
+      videoElement?.addEventListener('ended', handleVideoEnd);
     }
+
     return () => {
-      modalElement?.removeEventListener('transitionend', handleTransitionEnd);
+      modalElement
+        ?.querySelector('video')
+        ?.removeEventListener('ended', handleVideoEnd);
     };
-  }, [isFullScreen]);
-
-  const toggleModal = () => {
-    setIsActive(!isActive);
-  };
-
-  const displayContent = (() => {
-    // 비디오가 재생 준비 상태가 아니면 아무것도 표시하지 않음
-    if (!videoReadyToShow) return '';
-
-    // 특정 명령어(음소거, 음소거 해제, 시작, 정지)에 해당하는 경우 비디오 대신 빈 문자열을 반환
-    if (['mute', 'muteoff', 'start', 'stop'].includes(familyVideos)) {
-      return '';
-    }
-
-    // 받은 문자열이 비디오 경로 패턴과 일치하는 경우 비디오 플레이어를 생성하여 반환
-    if (isVideoPath(familyVideos)) {
-      return (
-        // eslint-disable-next-line jsx-a11y/media-has-caption
-        <video
-          controls
-          autoPlay
-          onEnded={() => {
-            // 비디오 재생이 끝나면 소켓을 통해 'stop' 전송
-            if (socket) {
-              socket.emit('message', 'stop');
-            }
-          }}
-          style={{
-            width: isFullScreen ? '100dvw' : 'auto',
-            height: isFullScreen ? '100dvh' : 'auto',
-            objectFit: 'contain',
-            maxHeight: '100dvh',
-            maxWidth: '100dvw',
-          }}
-        >
-          <source
-            src={`${BASE_URL}:${FILE_SEVER_PORT}${familyVideos}`} // 비디오 파일의 경로
-            type="video/mp4"
-          />
-        </video>
-      );
-    }
-    // 위 조건에 해당하지 않는 경우, familyVideos의 문자열 그대로 반환
-    return familyVideos;
-  })();
+  }, [isFullScreen, socket]);
 
   return (
     <ExpandModal
       ref={modalRef}
-      content={displayContent}
+      content={`${BASE_URL}:${FILE_SEVER_PORT}${videoPath}`}
       isActive={isActive}
-      onToggle={toggleModal}
       isFullScreen={isFullScreen}
+      message={message}
     />
   );
 }

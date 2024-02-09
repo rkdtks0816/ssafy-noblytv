@@ -10,7 +10,7 @@ function Gymnastics() {
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  // 스트리밍 영상 9초 지연 후 등장하도록 추가
+  // 체조 스트리밍 영상 9초 지연 후 등장하도록 추가
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowModal(true);

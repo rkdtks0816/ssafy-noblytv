@@ -19,11 +19,11 @@ function GymnasticsModal() {
 
         if (data === '체조 시작 할께요!') {
           console.log('Gymnastic message:', data);
-          setIsActive(false);
-          setIsPlaying(true);
+          setIsActive(false); // 모달창 숨기기
+          setIsPlaying(true); // 체조 영상 활성화
         } else if (data === 'stop') {
-          setIsActive(false);
-          setIsPlaying(false);
+          setIsActive(false); // 모달창 숨기기
+          setIsPlaying(false); // 체조 영상 비활성화
         }
       });
     }
@@ -38,7 +38,7 @@ function GymnasticsModal() {
   const toggleModal = () => {
     setIsActive(!isActive);
   };
-  // 'mute' 또는 'muteoff'일 경우 빈 문자열을, 그렇지 않으면 gymContents 값을 그대로 사용
+  // 빈 문자열을 출력하는 수신 메시지 설정
   const displayContent =
     gymContents !== 'mute' &&
     gymContents !== 'muteoff' &&

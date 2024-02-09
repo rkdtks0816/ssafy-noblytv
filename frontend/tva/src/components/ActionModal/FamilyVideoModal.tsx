@@ -8,15 +8,15 @@ function FamilyVideoModal() {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [familyVideos, setFamilyVideos] = useState<string>('');
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const [videoReadyToShow, setVideoReadyToShow] = useState(false); // 비디오 표시 준비 상태
+  const [videoReadyToShow, setVideoReadyToShow] = useState<boolean>(false); // 비디오 표시 준비 상태
   const modalRef = useRef<HTMLDivElement>(null);
   const socket: Socket | null = useSocket('http://i10c103.p.ssafy.io:9000');
 
+  // 수신받은 문자열이 비디오 경로인지 확인
   const isVideoPath = (path: string): boolean =>
     /^(\/[\w\s-]+)+\.(mp4)$/.test(path);
 
   useEffect(() => {
-    let timer: string | number | NodeJS.Timeout | undefined;
     if (socket) {
       socket.on('message', (data: string) => {
         console.log('Video data received:', data);
@@ -32,31 +32,28 @@ function FamilyVideoModal() {
           data === '나중에 또 봐요!'
         ) {
           setIsFullScreen(false);
-          timer = setTimeout(() => {
+          setTimeout(() => {
             setIsActive(false);
           }, 7000);
         }
       });
     }
-
     return () => {
       socket?.off('message');
-      if (timer) clearTimeout(timer);
     };
   }, [socket]);
 
+  // 모달창이 풀스크린으로 전환이 끝났을 때 가족 영상 재생
   useEffect(() => {
     const handleTransitionEnd = () => {
       if (isFullScreen) {
         setVideoReadyToShow(true);
       }
     };
-
     const modalElement = modalRef.current;
     if (modalElement) {
       modalElement.addEventListener('transitionend', handleTransitionEnd);
     }
-
     return () => {
       modalElement?.removeEventListener('transitionend', handleTransitionEnd);
     };
@@ -68,7 +65,6 @@ function FamilyVideoModal() {
 
   const displayContent = (() => {
     if (!videoReadyToShow) return ''; // 비디오 표시 준비가 되지 않았으면 빈 내용 반환
-
     if (['mute', 'muteoff', 'start', 'stop'].includes(familyVideos)) {
       return '';
     }

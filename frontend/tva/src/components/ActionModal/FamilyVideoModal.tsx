@@ -64,10 +64,15 @@ function FamilyVideoModal() {
   };
 
   const displayContent = (() => {
-    if (!videoReadyToShow) return ''; // 비디오 표시 준비가 되지 않았으면 빈 내용 반환
+    // 비디오가 재생 준비 상태가 아니면 아무것도 표시하지 않음
+    if (!videoReadyToShow) return '';
+
+    // 특정 명령어(음소거, 음소거 해제, 시작, 정지)에 해당하는 경우 비디오 대신 빈 문자열을 반환
     if (['mute', 'muteoff', 'start', 'stop'].includes(familyVideos)) {
       return '';
     }
+
+    // 받은 문자열이 비디오 경로 패턴과 일치하는 경우 비디오 플레이어를 생성하여 반환
     if (isVideoPath(familyVideos)) {
       return (
         // eslint-disable-next-line jsx-a11y/media-has-caption
@@ -75,6 +80,7 @@ function FamilyVideoModal() {
           controls
           autoPlay
           onEnded={() => {
+            // 비디오 재생이 끝나면 소켓을 통해 'stop' 전송
             if (socket) {
               socket.emit('message', 'stop');
             }
@@ -88,12 +94,13 @@ function FamilyVideoModal() {
           }}
         >
           <source
-            src={`${BASE_URL}:${FILE_SEVER_PORT}${familyVideos}`}
+            src={`${BASE_URL}:${FILE_SEVER_PORT}${familyVideos}`} // 비디오 파일의 경로
             type="video/mp4"
           />
         </video>
       );
     }
+    // 위 조건에 해당하지 않는 경우, familyVideos의 문자열 그대로 반환
     return familyVideos;
   })();
 

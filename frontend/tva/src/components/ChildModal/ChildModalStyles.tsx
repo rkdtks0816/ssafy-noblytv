@@ -37,6 +37,15 @@ const ChildModalContent = styled.div`
   font-size: 2vw;
 `;
 
+const ChildModalDynamicContent = styled.div`
+  margin: 1vh auto;
+  font-size: 2vw;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const ChildModalImg = styled.div`
   background: url('src/assets/child.png');
   background-size: contain;
@@ -73,6 +82,7 @@ export {
   ChildModalBg,
   ChildModalTitle,
   ChildModalContent,
+  ChildModalDynamicContent,
   ChildModalImg,
   ChildModalVideoBG,
   ChildModalVideo,

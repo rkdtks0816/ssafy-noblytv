@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import YouTube, { YouTubeProps } from 'react-youtube';
 import io from 'socket.io-client';
 import VideoModal from '../../components/ChildModal/StreamingModal';
+import { BASE_URL, SOCKET_PORT } from '../../constants/constants';
 
 function Gymnastics() {
-  const socket = io('http://i10c103.p.ssafy.io:9000');
+  const socket = io(`${BASE_URL}:${SOCKET_PORT}`);
 
   const youtubePlayerRef = useRef<unknown>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);

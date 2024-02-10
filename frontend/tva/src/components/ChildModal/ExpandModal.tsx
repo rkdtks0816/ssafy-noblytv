@@ -3,8 +3,8 @@ import { forwardRef } from 'react';
 import {
   ChildModalBg,
   ChildModalDynamicContent,
-  ChildModalImg,
   SlideInMessage,
+  ChildModalImg,
 } from './ChildModalStyles';
 
 interface ExpandModalProps {

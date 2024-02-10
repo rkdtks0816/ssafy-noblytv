@@ -1,9 +1,9 @@
 import React from 'react';
 import DiaryModal from './DiaryModal';
-import FamilyVideoModal from './FamilyVideoModal';
 import GymnasticsModal from './GymnasticsModal';
 import QuizModal from './QuizModal';
 import ScheduleModal from './ScheduleModal';
+import FamilyVideoModal from './FamilyVideoModal';
 
 interface ModalSwitcherComponentProps {
   activeModal: number | null;

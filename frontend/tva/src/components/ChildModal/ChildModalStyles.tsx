@@ -101,11 +101,11 @@ const SlideInMessage = styled.div<{ isVisible: boolean }>`
 
 export {
   ChildModalBg,
+  ChildModalTitle,
   ChildModalContent,
   ChildModalDynamicContent,
   ChildModalImg,
-  ChildModalTitle,
-  ChildModalVideo,
   ChildModalVideoBG,
+  ChildModalVideo,
   SlideInMessage,
 };

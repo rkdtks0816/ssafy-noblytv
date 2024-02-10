@@ -8,7 +8,7 @@ import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
 import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
-import AddSeniorS from './SeniorConnectStyle';
+import AddSeniorS from '../../components/AddSenior/AddSeniorS';
 import Modal from '../../components/Modal/Modal';
 import {
   API_FAMILY,
@@ -36,16 +36,6 @@ function SeniorConnect() {
       handleNavigate: () => navigate(PATH_SIGN_IN),
     });
   }, [navigate]);
-
-  useEffect(() => {
-    getUserInfo({
-      successFunc: userInfoData => {
-        setOldUserIds(
-          userInfoData.familyRelations.map(item => item.oldUserInfo.userId),
-        );
-      },
-    }).catch((error: Error) => console.error('Axios error:', error));
-  }, []);
 
   useEffect(() => {
     getUserInfo({

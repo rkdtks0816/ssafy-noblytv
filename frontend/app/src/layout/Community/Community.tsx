@@ -47,6 +47,30 @@ function Community() {
           <source src="/src/assets/2024-02-02_summary.mp4" type="video/mp4" />
         </CommunityVideoS>
       </CommunityCardS>
+      <CommunityCardS>
+        <CommunityHeaderS>
+          <CommunityWriterS>{oldUsername}</CommunityWriterS>
+        </CommunityHeaderS>
+        <CommunityVideoS controls>
+          <source src="/src/assets/2024-02-01_summary.mp4" type="video/mp4" />
+        </CommunityVideoS>
+      </CommunityCardS>
+      <CommunityCardS>
+        <CommunityHeaderS>
+          <CommunityWriterS>{oldUsername}</CommunityWriterS>
+        </CommunityHeaderS>
+        <CommunityVideoS controls>
+          <source src="/src/assets/2024-02-01_summary.mp4" type="video/mp4" />
+        </CommunityVideoS>
+      </CommunityCardS>
+      <CommunityCardS>
+        <CommunityHeaderS>
+          <CommunityWriterS>{oldUsername}</CommunityWriterS>
+        </CommunityHeaderS>
+        <CommunityVideoS controls>
+          <source src="/src/assets/2024-02-01_summary.mp4" type="video/mp4" />
+        </CommunityVideoS>
+      </CommunityCardS>
       <CommunityAddBtnS onClick={handleButtonClick}>
         <input
           type="file"

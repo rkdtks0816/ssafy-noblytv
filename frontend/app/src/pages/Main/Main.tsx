@@ -13,11 +13,14 @@ import My from '../../layout/My/My';
 import MainBoxS from './MainStyle';
 import { OldUserInfoType } from '../../types/api_types';
 import { oldUserInfoInit } from '../../constants/type_init';
+import useMenuStore from '../../store/menu';
+import useReloadStore from '../../store/useReloadStore';
 
 function Main() {
+  const { reload, setReload } = useReloadStore();
+  const nowMenu = useMenuStore(state => state.nowMenu);
   const navigate = useNavigate();
 
-  const [nowMenu, setNowMenu] = useState<string>('Community');
   const [oldUserInfo, setOldUserInfo] =
     useState<OldUserInfoType>(oldUserInfoInit);
 
@@ -28,15 +31,18 @@ function Main() {
   }, [navigate]);
 
   useEffect(() => {
-    getOldUserInfo({
-      successFunc: oldUserInfoData => {
-        Cookies.set('oldUsername', oldUserInfoData.username, {
-          expires: 7,
-        });
-        setOldUserInfo(oldUserInfoData);
-      },
-    }).catch(error => console.error('Axios error:', error));
-  }, []);
+    if (reload) {
+      setReload(false);
+      getOldUserInfo({
+        successFunc: oldUserInfoData => {
+          Cookies.set('oldUsername', oldUserInfoData.username, {
+            expires: 7,
+          });
+          setOldUserInfo(oldUserInfoData);
+        },
+      }).catch(error => console.error('Axios error:', error));
+    }
+  }, [reload, setReload]);
 
   return (
     <div>
@@ -46,10 +52,12 @@ function Main() {
         {nowMenu === 'Datetime' && (
           <Datetime diaryContents={oldUserInfo.diaries} />
         )}
-        {nowMenu === 'Gymnastics' && <Gymnastics />}
+        {nowMenu === 'Gymnastics' && (
+          <Gymnastics gymnasticsData={oldUserInfo.gymnastics} />
+        )}
         {nowMenu === 'My' && <My />}
       </MainBoxS>
-      <Footer setNowMenu={setNowMenu} />
+      <Footer />
     </div>
   );
 }

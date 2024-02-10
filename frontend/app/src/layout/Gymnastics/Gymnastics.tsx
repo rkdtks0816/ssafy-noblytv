@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import YouTube from 'react-youtube';
 import axios from 'axios';
 import {
   GymnasticsBoxS,
@@ -8,45 +7,40 @@ import {
   GymnasticsHeaderS,
   GymnasticsTitleS,
   GymnasticsVideoS,
+  GymnasticsYoutubeS,
 } from './GymnasticsStyle';
 import { GymnasticsResType } from '../../types/api_types';
-import getOldUserInfo from '../../utils/getOldUserInfo';
 import GymnasticsKeyword from './GymnasticsKeyword';
 import DropDown from '../../components/DropDown/DropDown';
 import { API_GYMNASTICS, API_PORT, BASE_URL } from '../../constants/constants';
+import useReloadStore from '../../store/useReloadStore';
 
-function Gymnastics() {
+function Gymnastics({
+  gymnasticsData,
+}: {
+  gymnasticsData: GymnasticsResType[];
+}) {
+  const setReload = useReloadStore(state => state.setReload);
   const [gymnastics, setGymnastics] = useState<GymnasticsResType[]>([]);
-  const [selectedId, setSelectedId] = useState<number>();
-  const [selectedKeyword, setSelectedKeyword] = useState<string>('');
-  const [selectedDay, setSelectedDay] = useState<string>('');
   const playerOptions = {
     width: '100%',
     height: '100%',
     playerVars: {
       autoplay: 0,
-      controls: 0,
+      controls: 1,
       modestbranding: 1,
     },
   };
 
-  const getOldUserInfoFunc = () => {
-    getOldUserInfo({
-      successFunc: oldUserInfoData => {
-        const dayOrder = ['월', '화', '수', '목', '금', '토', '일'];
-
-        // 배열을 day 속성을 기준으로 정렬
-        const sortedArray = oldUserInfoData.gymnastics.sort(
-          (a, b) => dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day),
-        );
-        setGymnastics(sortedArray);
-      },
-    }).catch(error => console.error('Axios error:', error));
-  };
-
   useEffect(() => {
-    getOldUserInfoFunc();
-  }, []);
+    const dayOrder = ['월', '화', '수', '목', '금', '토', '일'];
+
+    // 배열을 day 속성을 기준으로 정렬
+    const sortedArray = gymnasticsData.sort(
+      (a, b) => dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day),
+    );
+    setGymnastics(sortedArray);
+  }, [gymnasticsData]);
 
   const onClickKeyword = ({
     value,
@@ -55,18 +49,9 @@ function Gymnastics() {
     value: string;
     gymnastic: GymnasticsResType;
   }) => {
-    setSelectedKeyword(value);
-    setSelectedId(gymnastic.id);
-    setSelectedDay(gymnastic.day);
-
     axios
       .put(
-        `${BASE_URL}:${API_PORT}${API_GYMNASTICS}/${selectedId}`,
-        {
-          id: selectedId,
-          newKeyword: selectedKeyword,
-          newDay: selectedDay,
-        },
+        `${BASE_URL}:${API_PORT}${API_GYMNASTICS}/${gymnastic.id}?newKeyword=${value}&newDay=${gymnastic.day}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -74,7 +59,7 @@ function Gymnastics() {
         },
       )
       .then(() => {
-        getOldUserInfoFunc();
+        setReload(true);
       })
       .catch(error => {
         console.error(error);
@@ -96,7 +81,10 @@ function Gymnastics() {
             />
           </GymnasticsHeaderS>
           <GymnasticsVideoS>
-            <YouTube videoId={gymnastic.videoId} opts={playerOptions} />
+            <GymnasticsYoutubeS
+              videoId={gymnastic.videoId}
+              opts={playerOptions}
+            />
             <GymnasticsTitleS>{gymnastic.title}</GymnasticsTitleS>
           </GymnasticsVideoS>
         </GymnasticsCardS>

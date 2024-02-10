@@ -91,6 +91,7 @@ export type {
   SignInType,
   SignInResType,
   DiaryResType,
+  UserInfoGetOldInfoType,
   UserInfoType,
   GymnasticsType,
   GymnasticsResType,

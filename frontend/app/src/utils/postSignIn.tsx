@@ -10,7 +10,6 @@ import {
 } from '../constants/constants';
 import { SignInType, SignInResType } from '../types/api_types';
 import getUserInfo from './getUserInfo';
-import getOldUserInfo from './getOldUserInfo';
 
 interface PostSignInProps {
   signInData: SignInType;
@@ -46,14 +45,7 @@ async function postSignIn({
           navigate(PATH_SENIOR_CONNECT);
         } else {
           Cookies.set('oldUserId', userInfoData.lastVisitedId, { expires: 7 });
-          getOldUserInfo({
-            successFunc: oldUserInfoData => {
-              Cookies.set('oldUsername', oldUserInfoData.username, {
-                expires: 7,
-              });
-              navigate(PATH_MAIN);
-            },
-          }).catch(error => console.error('Axios error:', error));
+          navigate(PATH_MAIN);
         }
       },
     });

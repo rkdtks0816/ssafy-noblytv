@@ -1,14 +1,32 @@
 import styled from 'styled-components';
 
+const DropDownBoxS = styled.div`
+  position: relative;
+  width: 50%;
+  max-width: 200px;
+`;
+
+const DropDownSelectedS = styled.div`
+  font-weight: 900;
+  font-size: 1.5em;
+  text-align: end;
+
+  border: none;
+  color: #5ab8c0;
+
+  cursor: pointer;
+`;
+
 const DropDownSelectS = styled.div`
   position: absolute;
-  right: 0px;
-  top: -10px;
+  right: -10px;
+  top: 40px;
 
   background: #ffffff;
   border-radius: 10px;
   padding: 0 10px;
 
+  width: 100%;
   max-height: 200px;
   overflow: hidden;
   overflow-y: auto;
@@ -25,6 +43,8 @@ const DropDownSelectS = styled.div`
   /* Firefox 스크롤 바 숨기기 */
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
+
+  filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
 `;
 
 const DropDownOptionS = styled.div`
@@ -34,9 +54,8 @@ const DropDownOptionS = styled.div`
 
   border: none;
   color: #5ab8c0;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   cursor: pointer;
 `;
 
-export { DropDownSelectS, DropDownOptionS };
+export { DropDownBoxS, DropDownSelectedS, DropDownSelectS, DropDownOptionS };

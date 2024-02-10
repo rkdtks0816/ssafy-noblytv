@@ -1,12 +1,12 @@
 import QRCode from 'qrcode.react';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  SignInBgS,
   LeftBoxS,
   RightBoxS,
-  SignInBoxTitleS,
+  SignInBgS,
   SignInBoxContentsS,
   SignInBoxSubContentsS,
+  SignInBoxTitleS,
 } from './SignInTVStyle';
 
 function SignInTV() {

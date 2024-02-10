@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
+import { BASE_URL, SOCKET_PORT } from '../../constants/constants';
 import useSocket from '../../hooks/useSocket';
 import ChildModal from '../ChildModal/ChildModal';
 
@@ -7,7 +8,7 @@ function ScheduleModal() {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [schedule, setSchedule] = useState<string>('');
 
-  const socket: Socket | null = useSocket('http://i10c103.p.ssafy.io:9000');
+  const socket: Socket | null = useSocket(`${BASE_URL}:${SOCKET_PORT}`);
 
   useEffect(() => {
     if (socket) {

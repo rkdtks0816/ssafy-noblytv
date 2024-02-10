@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { ChildModalProps } from '../../types/property';
 import {
   ChildModalBg,

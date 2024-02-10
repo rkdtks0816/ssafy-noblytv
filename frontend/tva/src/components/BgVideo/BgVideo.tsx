@@ -1,7 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Socket } from 'socket.io-client';
-import BgVideoS from './BgVideoStyle';
+import { BASE_URL, SOCKET_PORT } from '../../constants/constants';
 import useSocket from '../../hooks/useSocket';
+import BgVideoS from './BgVideoStyle';
 
 interface BgVideoProps {
   currentMode: string;
@@ -12,7 +13,7 @@ function BgVideo({ currentMode }: BgVideoProps) {
   const [isMuted, setIsmuted] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const socket: Socket | null = useSocket('http://i10c103.p.ssafy.io:9000');
+  const socket: Socket | null = useSocket(`${BASE_URL}:${SOCKET_PORT}`);
 
   useEffect(() => {
     if (currentMode === 'news') {

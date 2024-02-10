@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Socket } from 'socket.io-client';
 import ModalSwitcherComponent from '../../components/ActionModal/ModalSwitcher';
 import BgVideoComponent from '../../components/BgVideo/BgVideoComponent';
+import { BASE_URL, SOCKET_PORT } from '../../constants/constants';
 import useSocket from '../../hooks/useSocket';
 
 function Overlay() {
-  const socket = useSocket('http://i10c103.p.ssafy.io:9000');
+  const socket: Socket | null = useSocket(`${BASE_URL}:${SOCKET_PORT}`);
   const [activeModal, setActiveModal] = useState<number | null>(null);
   const [currentMode, setCurrentMode] = useState('');
 

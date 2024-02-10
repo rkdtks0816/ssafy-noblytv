@@ -1,8 +1,12 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Socket } from 'socket.io-client';
+import {
+  BASE_URL,
+  FILE_SEVER_PORT,
+  SOCKET_PORT,
+} from '../../constants/constants';
 import useSocket from '../../hooks/useSocket';
 import ExpandModal from '../ChildModal/ExpandModal';
-import { BASE_URL, FILE_SEVER_PORT } from '../../constants/constants';
 
 function FamilyVideoModal() {
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -11,7 +15,7 @@ function FamilyVideoModal() {
   const [message, setMessage] = useState<string>('');
 
   const modalRef = useRef<HTMLDivElement>(null);
-  const socket: Socket | null = useSocket('http://i10c103.p.ssafy.io:9000');
+  const socket: Socket | null = useSocket(`${BASE_URL}:${SOCKET_PORT}`);
 
   useEffect(() => {
     if (socket) {

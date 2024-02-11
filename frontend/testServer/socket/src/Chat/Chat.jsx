@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 
 const socket = io("http://localhost:9000");
@@ -45,9 +45,9 @@ const ChatComponent = () => {
       <button onClick={sendMessage}>보내기</button>
       <div>
         <h2>받은 메시지:</h2>
-        {receivedMessages.map((msg, index) => (
-          <p key={index}>{msg}</p>
-        ))}
+        {receivedMessages.length > 0 && (
+          <p>{receivedMessages[receivedMessages.length - 1]}</p>
+        )}
       </div>
     </div>
   );

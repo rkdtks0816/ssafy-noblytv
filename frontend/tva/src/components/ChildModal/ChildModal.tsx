@@ -15,7 +15,6 @@ const ChildModal = forwardRef<HTMLDivElement, ChildModalProps>(
 
     return (
       <div ref={ref}>
-        {' '}
         <ChildModalBg
           isFullScreen={isFullScreen}
           style={{

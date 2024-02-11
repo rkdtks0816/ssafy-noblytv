@@ -19,11 +19,11 @@ io.on("connection", (socket) => {
   });
 
   socket.on("message", (message) => {
-    io.emit("message", message);
+    socket.broadcast.emit("message", message);
   });
 
   socket.on("mode", (mode) => {
-    io.emit("mode", mode);
+    socket.broadcast.emit("mode", mode);
   });
 });
 

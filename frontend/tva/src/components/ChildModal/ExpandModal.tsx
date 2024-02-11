@@ -13,18 +13,17 @@ interface ExpandModalProps {
   isFullScreen: boolean;
   message: string;
 }
-
+// forwardRef를 사용하여 하위 컴포넌트로 ref 전달
 const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
   ({ content, isActive, isFullScreen, message }, ref) => {
-    // isActive에 따른 스타일 동적 적용
     let rightValue;
 
     if (isFullScreen) {
-      rightValue = '0vw';
+      rightValue = '0vw'; // 전체 화면일 경우
     } else if (isActive) {
-      rightValue = '3vw';
+      rightValue = '3vw'; // 활성화되었지만 전체 화면이 아닐 경우
     } else {
-      rightValue = '-100%';
+      rightValue = '-100%'; // 비활성화 상태일 경우
     }
 
     const dynamicStyle = {
@@ -36,6 +35,7 @@ const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
         <ChildModalBg isFullScreen={isFullScreen} isActive={isActive}>
           {isFullScreen && (
             <div style={{ display: 'flex', width: '100%', height: '100%' }}>
+              {/* 전체 화면일 때 비디오와 메시지 박스를 표시 */}
               <ChildModalDynamicContent style={{ flex: 1 }}>
                 {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
                 <video
@@ -46,14 +46,17 @@ const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
                   <source src={content} type="video/mp4" />
                 </video>
               </ChildModalDynamicContent>
-              <MessageBox isVisible={message !== ''} style={{ flex: 1 }}>
-                {message}
-              </MessageBox>
-              <ChildModalImg />
+              {message !== '' && (
+                <div style={{ flex: 1 }}>
+                  <MessageBox isVisible>{message}</MessageBox>
+                  <ChildModalImg />
+                </div>
+              )}
             </div>
           )}
           {!isFullScreen && (
             <>
+              {/* 전체 화면이 아닐 때 */}
               <MessageBox isVisible={message !== ''}>{message}</MessageBox>
               <ChildModalImg />
             </>

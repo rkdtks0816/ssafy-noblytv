@@ -26,21 +26,35 @@ const ChatComponent = () => {
     setMode("");
   };
 
+  const handleKeyPressMessage = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
+  const handleKeyPressMode = (e) => {
+    if (e.key === "Enter") {
+      sendMode();
+    }
+  };
+
   return (
     <div>
       <input
         type="text"
         value={mode}
         onChange={(e) => setMode(e.target.value)}
-        placeholder="모드 입력..."
+        onKeyPress={handleKeyPressMode}
+        placeholder="mode"
       />
       <button onClick={sendMode}>보내기</button>
-
+      <br />
       <input
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder="메시지 입력..."
+        onKeyPress={handleKeyPressMessage}
+        placeholder="message"
       />
       <button onClick={sendMessage}>보내기</button>
       <div>

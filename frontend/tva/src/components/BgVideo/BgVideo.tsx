@@ -18,12 +18,22 @@ function BgVideo({ currentMode }: BgVideoProps) {
   useEffect(() => {
     if (currentMode === 'news') {
       setVideoSrc('src/assets/news_closing.mp4');
+      console.log(currentMode);
+      console.log(videoSrc);
     } else if (currentMode === 'commercial') {
       setVideoSrc('src/assets/commercial.mp4');
+      console.log(currentMode);
+      console.log(videoSrc);
     } else if (currentMode === 'main') {
       setVideoSrc('src/assets/news.mp4');
     }
-  }, [currentMode]);
+  }, [currentMode, videoSrc]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.load(); // videoSrc가 변경될 때 비디오를 다시 로드합니다.
+    }
+  }, [videoSrc]); // videoSrc가 변경될 때마다 실행
 
   useEffect(() => {
     if (socket) {

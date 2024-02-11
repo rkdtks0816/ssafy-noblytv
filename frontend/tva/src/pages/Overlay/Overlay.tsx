@@ -14,7 +14,7 @@ function Overlay() {
     if (socket) {
       console.log(socket);
       socket.on('mode', mode => {
-        // console.log('socket connect', mode);
+        console.log('socket connect', mode);
         switch (mode) {
           case 'gymnastic':
             setActiveModal(1);
@@ -22,7 +22,7 @@ function Overlay() {
             break;
           case 'quiz':
             setActiveModal(2);
-            // console.log('activeModal', activeModal);
+            console.log('activeModal', activeModal);
             break;
           case 'diary':
             setActiveModal(3);
@@ -39,7 +39,7 @@ function Overlay() {
 
           case 'news':
             setCurrentMode('news');
-            // console.log('현재 모드', currentMode);
+            console.log('현재 모드', currentMode);
             break;
           case 'commercial':
             setCurrentMode('commercial');
@@ -60,7 +60,7 @@ function Overlay() {
     return () => {
       if (socket) socket.off('mode');
     };
-  }, [socket]);
+  }, [activeModal, currentMode, socket]);
 
   // useMemo를 사용해서 currentMode가 바뀔때만 BgVideoComponent 계산해서 랜더링
   // 뉴스, 엔딩, 광고 모드 일 때 선택적으로 변경

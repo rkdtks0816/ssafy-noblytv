@@ -1,7 +1,7 @@
-import { useEffect, useState, useMemo } from 'react';
-import useSocket from '../../hooks/useSocket';
+import { useEffect, useMemo, useState } from 'react';
 import ModalSwitcherComponent from '../../components/ActionModal/ModalSwitcher';
 import BgVideoComponent from '../../components/BgVideo/BgVideoComponent';
+import useSocket from '../../hooks/useSocket';
 
 function Overlay() {
   const socket = useSocket('http://i10c103.p.ssafy.io:9000');
@@ -60,11 +60,15 @@ function Overlay() {
     };
   }, [socket]);
 
+  // useMemo를 사용해서 currentMode가 바뀔때만 BgVideoComponent 계산해서 랜더링
+  // 뉴스, 엔딩, 광고 모드 일 때 선택적으로 변경
   const bgVideoComponent = useMemo(
     () => <BgVideoComponent currentMode={currentMode} />,
     [currentMode],
   );
 
+  // useMemo를 사용해서 activeModal 바뀔때만 modalSwitcherComponent 계산해서 랜더링
+  // 체조, 퀴즈, 다이어리, 일정, 가족영상 일 때 선택적으로 변경
   const modalSwitcherComponent = useMemo(
     () => <ModalSwitcherComponent activeModal={activeModal} />,
     [activeModal],

@@ -5,8 +5,11 @@ interface BgVideoComponentProps {
   currentMode: string;
 }
 
-const BgVideoComponent: React.FC<BgVideoComponentProps> = React.memo(
-  ({ currentMode }) => <BgVideo currentMode={currentMode} />,
-);
+function BgVideoComponent({ currentMode }: BgVideoComponentProps) {
+  return <BgVideo currentMode={currentMode} />;
+}
 
-export default BgVideoComponent;
+// 컴포넌트를 React.memo로 감싼 후 export
+const MemoizedBgVideoComponent = React.memo(BgVideoComponent);
+
+export default MemoizedBgVideoComponent;

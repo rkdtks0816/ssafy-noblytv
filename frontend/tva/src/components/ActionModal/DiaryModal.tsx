@@ -18,7 +18,7 @@ function DiaryModal() {
 
         if (data === 'stop') {
           setTimeout(() => {
-            setIsActive(false);
+            setIsActive(false); // 7초 후 모달 숨기기
           }, 7000);
         }
       });
@@ -32,7 +32,7 @@ function DiaryModal() {
   const toggleModal = () => {
     setIsActive(!isActive);
   };
-  // 'mute' 또는 'muteoff'일 경우 빈 문자열을, 그렇지 않으면 diaryContents 값을 그대로 사용
+  // 빈 문자열을 출력하는 수신 메시지 설정
   const displayContent =
     diaryContents !== 'mute' &&
     diaryContents !== 'muteoff' &&
@@ -47,9 +47,7 @@ function DiaryModal() {
       content={displayContent}
       isActive={isActive}
       onToggle={toggleModal}
-    >
-      {/* 추가적인 UI 요소 */}
-    </ChildModal>
+    />
   );
 }
 

@@ -104,18 +104,35 @@ public class PostService {
         familyUserInfo.getPosts().add(post);
     }
 
-    public List<Post> getPostsByOldUserInfoId(Long oldUserInfoId) {
+    public List<Post> getPostByOldUSerId(Long oldUSerId) {
+        OldUserInfo oldUser = oldUserRepository.findById(oldUSerId)
+                .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 회원입니다."));
+
+        return postRepository.findByOldUserInfoId(oldUser.getId());
+    }
+
+
+
+    public List<PostDto> getPostsByOldUserInfoId(Long oldUserInfoId) {
         Optional<OldUserInfo> optionalOldUserInfo = oldUserRepository.findById(oldUserInfoId);
         if (optionalOldUserInfo.isPresent()) {
             OldUserInfo oldUserInfo = optionalOldUserInfo.get();
 
             List<FamilyRelation> familyRelations = oldUserInfo.getFamilyRelations();
-            List<Post> posts = new ArrayList<>();
+            List<PostDto> posts = new ArrayList<>();
 
             for (FamilyRelation familyRelation : familyRelations) {
                 FamilyUserInfo familyUserInfo = familyRelation.getFamilyUserInfo();
                 List<Post> userPosts = familyUserInfo.getPosts();
-                posts.addAll(userPosts);
+                for (Post post : userPosts) {
+                    PostDto postDto = new PostDto();
+                    // Post에서 필요한 필드 값을 PostDto에 설정
+                    postDto.setId(post.getId());
+                    postDto.setVideoPath(post.getVideoPath());
+                    postDto.setViewed(post.isViewed());
+                    postDto.setUsername(familyUserInfo.getUsername());
+                    posts.add(postDto);
+                }
             }
 
             return posts;

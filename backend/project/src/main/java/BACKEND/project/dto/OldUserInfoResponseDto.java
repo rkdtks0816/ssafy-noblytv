@@ -38,4 +38,8 @@ public class OldUserInfoResponseDto {
     private List<Schedule> schedules;
 
     private OldUserInfo.UserType userType;
+
+    private List<Post> posts;
+
+    private List<PostDto> familyposts;
 }

@@ -48,7 +48,7 @@ function Overlay() {
           case 'main':
             setCurrentMode('main');
             setActiveModal(null);
-            // console.log('현재 모드', currentMode);
+            // console.log('현재 모드', currentMode;
             break;
           default:
             setActiveModal(null);

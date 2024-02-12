@@ -42,8 +42,9 @@ const ChildModalTitle = styled.div`
 `;
 
 const ChildModalContent = styled.div`
-  margin: 1vh auto;
-  font-size: 2vw;
+  margin: 5vh 3vw;
+  font-size: 3vw;
+  text-align: center;
 `;
 
 const ChildModalDynamicContent = styled.div`
@@ -88,8 +89,10 @@ const ChildModalVideo = styled.video`
 `;
 
 const MessageBox = styled.div<{ isVisible: boolean }>`
-  margin: 1vh auto;
+  margin: 5vh auto;
   font-size: 2vw;
+  text-align: center;
+  justify-content: center;
 `;
 
 export {

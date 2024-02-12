@@ -1,7 +1,9 @@
 import { ChildModalVideoBG } from './ChildModalStyles';
 
 function StreamingModal() {
-  const streamUrl = 'http://192.168.100.245:5000/video_feed';
+  const streamUrl = 'http://192.168.0.36:5000/video_feed';
+
+  // const streamUrl = 'http://192.168.100.245:5000/video_feed';
 
   return (
     <ChildModalVideoBG>

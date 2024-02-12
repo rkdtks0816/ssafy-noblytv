@@ -12,12 +12,10 @@ interface ExpandModalProps {
   isActive: boolean;
   isFullScreen: boolean;
   message: string;
-  // eslint-disable-next-line react/require-default-props
-  onAnimationEnd?: () => void; // 새로운 prop 타입 추가
 }
 
 const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
-  ({ content, isActive, isFullScreen, message, onAnimationEnd }, ref) => {
+  ({ content, isActive, isFullScreen, message }, ref) => {
     let rightValue;
 
     if (isFullScreen) {
@@ -33,7 +31,7 @@ const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
     };
 
     return (
-      <div ref={ref} style={dynamicStyle} onTransitionEnd={onAnimationEnd}>
+      <div ref={ref} style={dynamicStyle}>
         <ChildModalBg isFullScreen={isFullScreen} isActive={isActive}>
           {isFullScreen && (
             <div style={{ display: 'flex', width: '100%', height: '100%' }}>

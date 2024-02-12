@@ -1,5 +1,5 @@
-// const BASE_URL: string = 'http://i10c103.p.ssafy.io';
-const BASE_URL: string = 'http://localhost';
+const BASE_URL: string = 'http://i10c103.p.ssafy.io';
+// const BASE_URL: string = 'http://localhost';
 const BASE_PORT: string = '3000';
 const API_PORT: string = '8080';
 const FILE_SEVER_PORT: string = '8880';

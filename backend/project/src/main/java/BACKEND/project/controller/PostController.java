@@ -54,8 +54,8 @@ public class PostController {
 
     @GetMapping("familypostsearch/{oldUserId}")
     @Operation(summary = "가족이 올린 게시물 조회")
-    public ResponseEntity<List<Post>> getPostsByOldUserInfoId(@PathVariable("oldUserId") Long oldUserId) {
-        List<Post> posts = postService.getPostsByOldUserInfoId(oldUserId);
+    public ResponseEntity<List<PostDto>> getPostsByOldUserInfoId(@PathVariable("oldUserId") Long oldUserId) {
+        List<PostDto> posts = postService.getPostsByOldUserInfoId(oldUserId);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 

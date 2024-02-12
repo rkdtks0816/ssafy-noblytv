@@ -17,6 +17,8 @@ const ChildModalBg = styled.div<{ isFullScreen?: boolean; isActive?: boolean }>`
   width: ${props => (props.isFullScreen ? '100vw' : '22vw')};
   height: ${props => (props.isFullScreen ? '100vh' : '60vh')};
   min-height: 20vh;
+  height: auto;
+  max-height: 80vh;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -45,6 +47,7 @@ const ChildModalContent = styled.div`
   margin: 5vh 3vw;
   font-size: 3vw;
   text-align: center;
+  overflow: auto;
 `;
 
 const ChildModalDynamicContent = styled.div`

@@ -96,6 +96,8 @@ const MessageBox = styled.div<{ isVisible: boolean }>`
   font-size: 2vw;
   text-align: center;
   justify-content: center;
+  white-space: normal;
+  word-break: break-word;
 `;
 
 export {

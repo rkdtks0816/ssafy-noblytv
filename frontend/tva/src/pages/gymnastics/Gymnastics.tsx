@@ -22,7 +22,7 @@ function Gymnastics() {
 
   const handleReady: YouTubeProps['onReady'] = event => {
     youtubePlayerRef.current = event.target;
-    setIsPlaying(false);
+    setIsPlaying(true);
   };
 
   const handleEnd: YouTubeProps['onEnd'] = () => {

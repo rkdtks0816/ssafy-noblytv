@@ -69,7 +69,10 @@ try:
         distance = check_time * 34300 / 2
         result = ("%.1f" % distance)
         print(result)
-        sendData(result)
+        try:
+            sendData(result)
+        except:
+            print("Error sending data")
         time.sleep(1)
 
 except KeyboardInterrupt:

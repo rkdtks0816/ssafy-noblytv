@@ -6,7 +6,6 @@ import pymysql
 import datetime
 import socketio
 import time
-import sys
 import urllib.request
 
 old_user_id = "1"
@@ -136,17 +135,6 @@ def speak(text ,lang="ko", speed=False):
     speak:
     change text to speech (TTS)
     '''
-    # try:
-    #     response = client.audio.speech.create(
-    #     model="tts-1-hd",
-    #     voice="nova",
-    #     input=f"{text}"
-    #     )
-    #     response.stream_to_file("speech.mp3")
-    #     os.system("mpg321 ./speech.mp3")
-    # except:
-    #     print("No text to speak")
-
     data = "speaker=ngaram&volume=-3&speed=0&pitch=0&format=mp3&text=" + text
     url = "https://naveropenapi.apigw.ntruss.com/tts-premium/v1/tts"
     request = urllib.request.Request(url)
@@ -155,7 +143,6 @@ def speak(text ,lang="ko", speed=False):
     response = urllib.request.urlopen(request, data=data.encode('utf-8'))
     rescode = response.getcode()
     if(rescode==200):
-        print("TTS mp3 저장")
         response_body = response.read()
         with open('speech.mp3', 'wb') as f:
             f.write(response_body)
@@ -264,7 +251,7 @@ def getAudio():
             ans = r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS, language="ko")
             print(ans)
         except Exception:
-            ans = "End of Conversation"
+            ans = ""
             # speak("대화를 종료합니다.")
 
     return ans

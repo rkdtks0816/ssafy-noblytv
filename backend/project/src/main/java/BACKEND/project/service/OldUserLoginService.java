@@ -1,10 +1,11 @@
 package BACKEND.project.service;
 
+import BACKEND.project.domain.Diary;
 import BACKEND.project.domain.OldUserInfo;
-import BACKEND.project.dto.FamilyRelationDto;
-import BACKEND.project.dto.FamilyUserInfoDto;
-import BACKEND.project.dto.OldUserInfoDto;
+import BACKEND.project.domain.TvCode;
+import BACKEND.project.dto.*;
 import BACKEND.project.repository.OldUserRepository;
+import BACKEND.project.repository.TvCodeRepository;
 import BACKEND.project.util.JwtToken;
 import BACKEND.project.util.JwtTokenProvider;
 import jakarta.transaction.Transactional;
@@ -24,6 +25,7 @@ public class OldUserLoginService {
     private final OldUserRepository oldUserRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final FamilyUserJoinService familyUserJoinService;
+    private final TvCodeRepository tvCodeRepository;
 
     public List<OldUserInfoDto> getOldUsersByFamilyUserId(String familyUserId) {
         // 가족 유저 ID를 이용하여 FamilyUserInfoDto 가져옴
@@ -33,6 +35,19 @@ public class OldUserLoginService {
         return familyUserInfoDto.getFamilyRelations().stream()
                 .map(FamilyRelationDto::getOldUserInfo)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public TvCode saveTvCode(TvCodeDto tvCodeDto) {
+        TvCode tvCode = new TvCode();
+        tvCode.setTvCode(tvCodeDto.getTvCode());
+
+        return tvCodeRepository.save(tvCode);
+    }
+
+    @Transactional
+    public boolean isTvCodeDuplicated(String tvCode) {
+        return tvCodeRepository.findByTvCode(tvCode).isPresent();
     }
 
     public List<Map<String, Object>> findUserByTvCode(String tvCode) {
@@ -56,6 +71,9 @@ public class OldUserLoginService {
         if (oldUserInfo.getTvCode() == null || !oldUserInfo.getTvCode().equals(tvCode)) {
             oldUserInfo.setTvCode(tvCode);
         }
+
+        Optional<TvCode> optionalTvCode = tvCodeRepository.findByTvCode(tvCode);
+        optionalTvCode.ifPresent(tvCodeRepository::delete);
 
         oldUserRepository.save(oldUserInfo);
 

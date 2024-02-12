@@ -1,11 +1,17 @@
 package BACKEND.project.controller;
 
+import BACKEND.project.domain.Diary;
+import BACKEND.project.domain.TvCode;
+import BACKEND.project.dto.DiaryDto;
+import BACKEND.project.dto.TvCodeDto;
 import BACKEND.project.dto.TvLoginDto;
 import BACKEND.project.service.OldUserLoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,11 +31,18 @@ public class TvLoginController {
         return ResponseEntity.ok().body(oldUserLoginService.getOldUsersByFamilyUserId(familyUserId));
     }
 
+    @PostMapping("/create")
+    @Operation(summary = "TV Code 생성")
+    public ResponseEntity<TvCode> createTvCode(@Validated @RequestBody TvCodeDto tvCodeDto) {
+        TvCode newTvCode = oldUserLoginService.saveTvCode(tvCodeDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newTvCode);
+    }
+
     @GetMapping("/{tvCode}")
-    @Operation(summary = "해당 tvCode가 등록된 노인 유저 목록 가져오기")
-    public ResponseEntity<List<Map<String, Object>>> getUsersByTvCode(@PathVariable("tvCode") String tvCode) {
-        List<Map<String, Object>> users = oldUserLoginService.findUserByTvCode(tvCode);
-        return ResponseEntity.ok(users);
+    @Operation(summary = "TvCode 존재 여부 확인")
+    public ResponseEntity<?> checkTvCodeDuplication(@PathVariable("tvCode") String tvCode) {
+        boolean isDuplicated = oldUserLoginService.isTvCodeDuplicated(tvCode);
+        return ResponseEntity.ok().body(isDuplicated);
     }
 
     @PostMapping("/login")

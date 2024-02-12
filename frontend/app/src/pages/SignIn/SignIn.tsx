@@ -5,15 +5,23 @@ import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
 import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import { FindIdPwBtnS, LogoImgS, SignUpBtnS } from './SignInStyle';
-import { PATH_SIGN_UP_NAME_ID } from '../../constants/constants';
+import { PATH_COMMUNITY, PATH_SIGN_UP } from '../../constants/constants';
 import { SignInType } from '../../types/api_types';
 import { signInInit } from '../../constants/type_init';
 import Modal from '../../components/Modal/Modal';
-import postSignIn from '../../utils/postSignIn';
+import useModalContentsStore from '../../store/useModalContents';
+import PostSignIn from '../../utils/PostSignIn';
+import useRedirectStore from '../../store/useRedirectStore';
+import useUserStore from '../../store/useUserStore';
+import useMenuStore from '../../store/useMenuStore';
 
 function SignIn() {
   const navigate = useNavigate();
-  const [modalContents, setModalContents] = useState<React.ReactNode>('');
+  const { modalContents, setModalContents } = useModalContentsStore();
+  const { redirectPath } = useRedirectStore();
+  const { setGrantType, setAccessToken, setRefreshToken, setUserId } =
+    useUserStore();
+  const { setNowMenu } = useMenuStore();
   const [signInData, setsignInData] = useState<SignInType>(signInInit);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,19 +33,19 @@ function SignIn() {
   };
 
   const handleLogin = () => {
-    postSignIn({
+    PostSignIn({
       signInData,
-      navigate,
-      errorFunc: () => {
-        setModalContents(
-          <div>
-            아이디와 비밀번호를 <br />
-            로그인하여 주세요.
-          </div>,
-        );
+      successFunc: response => {
+        navigate(redirectPath);
+        setGrantType(response.data.grantType);
+        setAccessToken(response.data.accessToken);
+        setRefreshToken(response.data.refreshToken);
+        setUserId(signInData.userId);
+        setNowMenu(PATH_COMMUNITY);
       },
-    }).catch(error => {
-      console.error(error);
+      errorFunc: () => {
+        setModalContents('아이디/비밀번호를 확인해주세요.');
+      },
     });
   };
 
@@ -67,11 +75,9 @@ function SignIn() {
           </LargeBtnStyle>
           <FindIdPwBtnS to="/find-id-pw">아이디/비밀번호 찾기</FindIdPwBtnS>
         </FlexBoxStyle>
-        <SignUpBtnS to={PATH_SIGN_UP_NAME_ID}>처음이신가요?</SignUpBtnS>
+        <SignUpBtnS to={PATH_SIGN_UP}>처음이신가요?</SignUpBtnS>
       </BgImgStyle>
-      {modalContents && (
-        <Modal modalContents={modalContents} onClickBtn={setModalContents} />
-      )}
+      {modalContents && <Modal />}
     </div>
   );
 }

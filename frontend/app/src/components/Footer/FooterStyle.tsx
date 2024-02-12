@@ -6,13 +6,12 @@ const FooterBgS = styled.div`
   left: 0;
   display: flex;
   width: 100vw;
-  height: 80px;
-  padding-top: 15px;
-  background: url('/src/assets/bg_footer.png');
-  background-size: cover;
-  background-repeat: no-repeat;
+  height: 65px;
+  padding-top: 13px;
+  background: #ffffff;
   align-items: flex-start; /* 세로 가운데 정렬 */
   justify-content: space-around; /* 가로 가운데 정렬 */
+  box-shadow: 0px -1px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const FooterIconS = styled.div<{ $footerIconType: string }>`
@@ -32,8 +31,8 @@ const FooterIconS = styled.div<{ $footerIconType: string }>`
 
 const FooterClickableAreaS = styled.div`
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 
   border-radius: 30%;
 

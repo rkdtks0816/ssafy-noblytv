@@ -1,19 +1,25 @@
-import Cookies from 'js-cookie';
 import {
   HeaderBgS,
   SeniorNameS,
   SeniorTitleS,
   NoticeIconS,
 } from './HeaderStyle';
+import useOldUserStore from '../../store/useOldUserStore';
 
-function Header() {
-  const oldUsername = Cookies.get('oldUsername');
+function Header({
+  setIsOnSelectSenior,
+}: {
+  setIsOnSelectSenior: (isOnSelectSenior: boolean) => void;
+}) {
+  const { oldUsername } = useOldUserStore();
   return (
     <div>
       <HeaderBgS>
-        <SeniorNameS to="/select-senior">{oldUsername}</SeniorNameS>
+        <SeniorNameS onClick={() => setIsOnSelectSenior(true)}>
+          {oldUsername}
+        </SeniorNameS>
         <SeniorTitleS>어르신</SeniorTitleS>
-        <NoticeIconS to="/alarm" />
+        <NoticeIconS />
       </HeaderBgS>
     </div>
   );

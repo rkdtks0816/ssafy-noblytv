@@ -15,8 +15,6 @@ const BgImgStyle = styled.div`
   background: url('/src/assets/bg_img.png');
   background-size: cover;
   background-repeat: no-repeat;
-
-  z-index: -1;
 `;
 
 export default BgImgStyle;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const ListBoxS = styled.div`
   margin-top: 10px;
   max-height: 45vh;
+  width: 100vw;
   overflow: hidden;
   overflow-y: auto;
 
@@ -21,8 +22,9 @@ const ListBoxS = styled.div`
 `;
 
 const ListBoxUlS = styled.div`
-  width: 290px;
-  padding: 0 10px 10px 10px;
+  width: 70%;
+  max-width: 300px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -30,11 +32,10 @@ const ListBoxUlS = styled.div`
 `;
 
 const ListBoxLiS = styled.div`
-  width: 270px;
-  height: 50px;
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-top: 5px;
+  width: 100%;
+  height: 30px;
+  padding: 10px;
+  margin-bottom: 5px;
 
   display: flex;
   align-items: center;
@@ -46,14 +47,13 @@ const ListBoxLiS = styled.div`
 
   color: #888888;
   font-weight: 600;
-  font-size: 17px;
-  line-height: 1.5;
+  font-size: 1em;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
 `;
 
 const CheckIconS = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 15px;
+  height: 15px;
 
   background: url('/src/assets/icon_success.png');
   background-repeat: no-repeat;

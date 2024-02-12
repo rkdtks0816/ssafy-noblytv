@@ -1,91 +1,119 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState, useCallback } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import BackBtnStyle from '../../components/BackBtn/BackBtnStyle';
 import BgImgStyle from '../../components/BgImg/BgImgStyle';
 import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
 import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
-import AddSeniorS from './SeniorConnectStyle';
+import AddSeniorS from '../../components/AddSenior/AddSeniorS';
 import Modal from '../../components/Modal/Modal';
 import {
   API_FAMILY,
   API_PORT,
   BASE_URL,
   PATH_MAIN,
-  PATH_SENIOR_SIGN_UP_NAME_GENDER,
+  PATH_SENIOR_CONNECT,
+  PATH_SENIOR_SIGN_UP,
   PATH_SIGN_IN,
 } from '../../constants/constants';
-import manageAuthToken from '../../utils/manageAuthToken';
-import getUserInfo from '../../utils/getUserInfo';
+import Loading from '../../components/Loading/Loading';
+import useUserStore from '../../store/useUserStore';
+import GetUserInfo from '../../utils/GetUserInfo';
+import useRedirectStore from '../../store/useRedirectStore';
+import useOldUserStore from '../../store/useOldUserStore';
+import GetOldUserInfo from '../../utils/GetOldUserInfo';
 
 function SeniorConnect() {
   const navigate = useNavigate();
-  const grantType = Cookies.get('grantType');
-  const accessToken = Cookies.get('accessToken');
-  const userId = Cookies.get('userId');
-
-  const [oldUserId, setOldUserId] = useState('');
-  const [oldUserIds, setOldUserIds] = useState<string[]>([]);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const uniqueCode = queryParams.get('uniqueCode');
+  const { grantType, accessToken, userId } = useUserStore();
+  const { redirectPath, setRedirectPath } = useRedirectStore();
+  const { setOldUserId } = useOldUserStore();
+  const [oldUserUniqueCode, setOldUserUniqueCode] = useState('');
   const [modalContents, setModalContents] = useState<React.ReactNode>('');
-  // 로그인 확인
-  useEffect(() => {
-    manageAuthToken({
-      handleNavigate: () => navigate(PATH_SIGN_IN),
-    });
-  }, [navigate]);
-
-  useEffect(() => {
-    getUserInfo({
-      successFunc: userInfoData => {
-        setOldUserIds(
-          userInfoData.familyRelations.map(item => item.oldUserInfo.userId),
-        );
-      },
-    }).catch((error: Error) => console.error('Axios error:', error));
-  }, []);
-
-  useEffect(() => {
-    getUserInfo({
-      successFunc: userInfoData => {
-        setOldUserIds(
-          userInfoData.familyRelations.map(item => item.oldUserInfo.userId),
-        );
-      },
-    }).catch((error: Error) => console.error('Axios error:', error));
-  }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setOldUserId(event.target.value);
-    setOldUserId(event.target.value);
+    setOldUserUniqueCode(event.target.value);
   };
 
   const handleBackBtn = () => {
     navigate(PATH_MAIN);
   };
 
-  const handleSubmit = () => {
-    setOldUserIds([...oldUserIds, oldUserId]);
-    console.log(oldUserId);
-    axios
-      .put(
-        `${BASE_URL}:${API_PORT}${API_FAMILY}/${userId}/oldUsers`,
-        oldUserIds,
-        {
-          headers: {
-            Authorization: `${grantType} ${accessToken}`,
-            'Content-Type': 'application/json',
-          },
+  const handleSubmit = useCallback(() => {
+    if (!oldUserUniqueCode) {
+      setModalContents('고유코드를 입력해주세요.');
+    } else {
+      GetUserInfo({
+        grantType,
+        accessToken,
+        userId,
+        successFunc: userInfoData => {
+          const oldUserIds = userInfoData.familyRelations.map(
+            item => item.oldUserInfo.userId,
+          );
+          axios
+            .put(
+              `${BASE_URL}:${API_PORT}${API_FAMILY}/${userId}/oldUsers`,
+              [...oldUserIds, oldUserUniqueCode],
+              {
+                headers: {
+                  Authorization: `${grantType} ${accessToken}`,
+                  'Content-Type': 'application/json',
+                },
+              },
+            )
+            .then(() => {
+              setOldUserId(oldUserUniqueCode);
+              GetOldUserInfo({
+                grantType,
+                accessToken,
+                oldUserId: oldUserUniqueCode,
+                successFunc: () => {},
+              });
+              navigate(redirectPath);
+            })
+            .catch(() => setModalContents('고유코드를 확인해주세요.'));
         },
-      )
-      .then(() => {
-        Cookies.set('oldUserId', oldUserId, { expires: 7 });
-        navigate(PATH_MAIN);
-      })
-      .catch(err => console.error('Axios error:', err));
-  };
+      });
+    }
+  }, [
+    oldUserUniqueCode,
+    grantType,
+    accessToken,
+    userId,
+    setOldUserId,
+    navigate,
+    redirectPath,
+  ]);
+
+  useEffect(() => {
+    if (accessToken === '') {
+      if (uniqueCode) {
+        setRedirectPath(`${PATH_SENIOR_CONNECT}?uniqueCode=${uniqueCode}`);
+      }
+      navigate(PATH_SIGN_IN);
+    } else if (uniqueCode) {
+      if (redirectPath.includes(PATH_SENIOR_CONNECT)) {
+        setRedirectPath(PATH_MAIN);
+      }
+      const decodedUniqueCode = decodeURIComponent(uniqueCode);
+      setOldUserUniqueCode(decodedUniqueCode);
+      setRedirectPath(PATH_MAIN);
+      handleSubmit();
+    }
+  }, [
+    accessToken,
+    handleSubmit,
+    navigate,
+    redirectPath,
+    setRedirectPath,
+    uniqueCode,
+  ]);
 
   return (
     <div>
@@ -106,14 +134,13 @@ function SeniorConnect() {
           >
             완료
           </LargeBtnStyle>
-          <AddSeniorS to={PATH_SENIOR_SIGN_UP_NAME_GENDER}>
+          <AddSeniorS to={PATH_SENIOR_SIGN_UP}>
             어르신을 등록하고 싶어요!
           </AddSeniorS>
         </FlexBoxStyle>
       </BgImgStyle>
-      {modalContents && (
-        <Modal modalContents={modalContents} onClickBtn={setModalContents} />
-      )}
+      {modalContents && <Modal />}
+      {uniqueCode && <Loading />}
     </div>
   );
 }

@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 
 const ToggleBtnBoxS = styled.div`
+  width: 75vw;
+  max-width: 300px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-left: auto;
-  margin-top: 70px;
+  margin: 70px auto 0 auto;
 `;
 
 const ToggleBtnS = styled.div<{ $toggleBtnType: string; $isSelected: boolean }>`
-  width: 150px;
-  height: 50px;
+  width: 50%;
+  max-width: 150px;
+  height: 30px;
+  padding: 10px;
 
   cursor: pointer;
 
@@ -21,10 +24,7 @@ const ToggleBtnS = styled.div<{ $toggleBtnType: string; $isSelected: boolean }>`
   color: #888888;
   text-align: center;
   font-weight: 900;
-  font-size: 25px;
-  line-height: 2;
-
-  border: none;
+  font-size: 1.5em;
 
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
 `;

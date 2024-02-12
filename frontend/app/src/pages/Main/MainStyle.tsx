@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const MainBoxS = styled.div`
   position: fixed;
-  top: 90px;
+  top: 80px;
   left: 0px;
   width: 100vw;
 

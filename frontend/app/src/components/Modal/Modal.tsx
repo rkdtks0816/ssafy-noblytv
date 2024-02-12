@@ -1,14 +1,15 @@
+import useModalContentsStore from '../../store/useModalContents';
 import {
   ModalBgS,
   ModalBoxS,
   ModalContentsS,
   ModalButtonS,
 } from './ModalStyle';
-import ModalProps from './ModalType';
 
-function Modal({ modalContents, onClickBtn }: ModalProps) {
+function Modal() {
+  const { modalContents, setModalContents } = useModalContentsStore();
   const handleBtnClick = () => {
-    onClickBtn('');
+    setModalContents('');
   };
   return (
     <div>

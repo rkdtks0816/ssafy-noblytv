@@ -12,10 +12,12 @@ interface ExpandModalProps {
   isActive: boolean;
   isFullScreen: boolean;
   message: string;
+  // eslint-disable-next-line react/require-default-props
+  onAnimationEnd?: () => void; // 새로운 prop 타입 추가
 }
-// forwardRef를 사용하여 하위 컴포넌트로 ref 전달
+
 const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
-  ({ content, isActive, isFullScreen, message }, ref) => {
+  ({ content, isActive, isFullScreen, message, onAnimationEnd }, ref) => {
     let rightValue;
 
     if (isFullScreen) {
@@ -31,7 +33,7 @@ const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
     };
 
     return (
-      <div ref={ref} style={dynamicStyle}>
+      <div ref={ref} style={dynamicStyle} onTransitionEnd={onAnimationEnd}>
         <ChildModalBg isFullScreen={isFullScreen} isActive={isActive}>
           {isFullScreen && (
             <div style={{ display: 'flex', width: '100%', height: '100%' }}>
@@ -41,7 +43,11 @@ const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
                 <video
                   controls
                   autoPlay
-                  style={{ width: '100%', height: 'auto' }}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                  }}
                 >
                   <source src={content} type="video/mp4" />
                 </video>

@@ -13,7 +13,7 @@ interface ExpandModalProps {
   isFullScreen: boolean;
   message: string;
 }
-// forwardRef를 사용하여 하위 컴포넌트로 ref 전달
+
 const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
   ({ content, isActive, isFullScreen, message }, ref) => {
     let rightValue;
@@ -41,7 +41,11 @@ const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
                 <video
                   controls
                   autoPlay
-                  style={{ width: '100%', height: 'auto' }}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                  }}
                 >
                   <source src={content} type="video/mp4" />
                 </video>

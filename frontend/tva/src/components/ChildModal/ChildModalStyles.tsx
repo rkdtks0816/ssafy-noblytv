@@ -17,6 +17,8 @@ const ChildModalBg = styled.div<{ isFullScreen?: boolean; isActive?: boolean }>`
   width: ${props => (props.isFullScreen ? '100vw' : '22vw')};
   height: ${props => (props.isFullScreen ? '100vh' : '60vh')};
   min-height: 20vh;
+  height: auto;
+  max-height: 80vh;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -42,8 +44,10 @@ const ChildModalTitle = styled.div`
 `;
 
 const ChildModalContent = styled.div`
-  margin: 1vh auto;
-  font-size: 2vw;
+  margin: 5vh 3vw;
+  font-size: 3vw;
+  text-align: center;
+  overflow: auto;
 `;
 
 const ChildModalDynamicContent = styled.div`
@@ -88,8 +92,12 @@ const ChildModalVideo = styled.video`
 `;
 
 const MessageBox = styled.div<{ isVisible: boolean }>`
-  margin: 1vh auto;
+  margin: 5vh auto;
   font-size: 2vw;
+  text-align: center;
+  justify-content: center;
+  white-space: normal;
+  word-break: break-word;
 `;
 
 export {

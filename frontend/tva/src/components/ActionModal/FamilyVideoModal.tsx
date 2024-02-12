@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import {
   BASE_URL,
-  // FILE_SEVER_PORT,
+  FILE_SEVER_PORT,
   SOCKET_PORT,
 } from '../../constants/constants';
 import useSocket from '../../hooks/useSocket';
@@ -21,8 +21,6 @@ function FamilyVideoModal() {
     if (socket) {
       socket.on('message', (data: string) => {
         if (data === 'stop') {
-          setIsFullScreen(false);
-          setIsActive(true);
           setMessage('');
         } else if (/^(\/[\w\s-]+)+\.(mp4)$/.test(data)) {
           console.log(data);
@@ -30,6 +28,11 @@ function FamilyVideoModal() {
           setIsFullScreen(true);
           setIsActive(true); // 모달을 활성화 상태로 유지
           setMessage(''); // 비디오 재생 시 메시지 초기화
+        } else if (data === '나중에 또 봐요!') {
+          setIsFullScreen(false);
+          setTimeout(() => {
+            setIsActive(false);
+          }, 7000);
         } else {
           console.log(data);
           setMessage(data);
@@ -48,6 +51,7 @@ function FamilyVideoModal() {
     // 비디오 재생이 끝났을 때 호출
     function handleVideoEnd() {
       socket?.emit('message', 'stop');
+      console.log(socket);
       setIsActive(true); // ExpandModal 활성화
     }
 
@@ -70,8 +74,8 @@ function FamilyVideoModal() {
   return (
     <ExpandModal
       ref={modalRef}
-      // content={`${BASE_URL}:${FILE_SEVER_PORT}${videoPath}`}
-      content={`${videoPath}`}
+      content={`${BASE_URL}:${FILE_SEVER_PORT}${videoPath}`}
+      // content={`${videoPath}`}
       isActive={isActive}
       isFullScreen={isFullScreen}
       message={message}

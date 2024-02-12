@@ -51,10 +51,10 @@ const SignInBoxSubContentsS = styled.div`
 `;
 
 export {
-  SignInBgS,
   LeftBoxS,
   RightBoxS,
-  SignInBoxTitleS,
+  SignInBgS,
   SignInBoxContentsS,
   SignInBoxSubContentsS,
+  SignInBoxTitleS,
 };

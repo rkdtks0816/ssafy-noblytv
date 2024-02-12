@@ -3,8 +3,8 @@ import { forwardRef } from 'react';
 import {
   ChildModalBg,
   ChildModalDynamicContent,
-  SlideInMessage,
   ChildModalImg,
+  MessageBox,
 } from './ChildModalStyles';
 
 interface ExpandModalProps {
@@ -13,42 +13,58 @@ interface ExpandModalProps {
   isFullScreen: boolean;
   message: string;
 }
-
-// 비디오 또는 메시지를 조건부로 표시
+// forwardRef를 사용하여 하위 컴포넌트로 ref 전달
 const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
-  ({ content, isActive, isFullScreen, message }, ref) => (
-    // isActive 상태에 따라 모달 표시
-    <div ref={ref} style={{ display: isActive ? 'block' : 'none' }}>
-      <ChildModalBg isFullScreen={isFullScreen}>
-        {/* 전체화면 모드일 때 */}
-        {isFullScreen && (
-          <div style={{ display: 'flex', width: '100%', height: '100%' }}>
-            <ChildModalDynamicContent style={{ flex: 1 }}>
-              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-              <video
-                controls
-                autoPlay
-                style={{ width: '100%', height: 'auto' }}
-              >
-                <source src={content} type="video/mp4" />
-              </video>
-            </ChildModalDynamicContent>
-            <SlideInMessage isVisible={message !== ''} style={{ flex: 1 }}>
-              {message}
+  ({ content, isActive, isFullScreen, message }, ref) => {
+    let rightValue;
+
+    if (isFullScreen) {
+      rightValue = '0vw'; // 전체 화면일 경우
+    } else if (isActive) {
+      rightValue = '3vw'; // 활성화되었지만 전체 화면이 아닐 경우
+    } else {
+      rightValue = '-100%'; // 비활성화 상태일 경우
+    }
+
+    const dynamicStyle = {
+      right: rightValue,
+    };
+
+    return (
+      <div ref={ref} style={dynamicStyle}>
+        <ChildModalBg isFullScreen={isFullScreen} isActive={isActive}>
+          {isFullScreen && (
+            <div style={{ display: 'flex', width: '100%', height: '100%' }}>
+              {/* 전체 화면일 때 비디오와 메시지 박스를 표시 */}
+              <ChildModalDynamicContent style={{ flex: 1 }}>
+                {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                <video
+                  controls
+                  autoPlay
+                  style={{ width: '100%', height: 'auto' }}
+                >
+                  <source src={content} type="video/mp4" />
+                </video>
+              </ChildModalDynamicContent>
+              {message !== '' && (
+                <div style={{ flex: 1 }}>
+                  <MessageBox isVisible>{message}</MessageBox>
+                  <ChildModalImg />
+                </div>
+              )}
+            </div>
+          )}
+          {!isFullScreen && (
+            <>
+              {/* 전체 화면이 아닐 때 */}
+              <MessageBox isVisible={message !== ''}>{message}</MessageBox>
               <ChildModalImg />
-            </SlideInMessage>
-          </div>
-        )}
-        {/* 모달창 모드일 때 */}
-        {!isFullScreen && (
-          <SlideInMessage isVisible={message !== ''}>
-            {message}
-            <ChildModalImg />
-          </SlideInMessage>
-        )}
-      </ChildModalBg>
-    </div>
-  ),
+            </>
+          )}
+        </ChildModalBg>
+      </div>
+    );
+  },
 );
 
 export default ExpandModal;

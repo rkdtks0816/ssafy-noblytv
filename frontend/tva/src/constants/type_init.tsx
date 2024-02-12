@@ -1,8 +1,8 @@
 import {
-  SignUpType,
   SeniorSignUpType,
-  TvSignInType,
   SignInType,
+  SignUpType,
+  TvSignInType,
   UserInfoType,
 } from '../types/api_types';
 
@@ -40,4 +40,4 @@ const userInfoInit: UserInfoType = {
   userType: '',
 };
 
-export { signUpInit, seniorSignUpInit, tvSignInInit, signInInit, userInfoInit };
+export { seniorSignUpInit, signInInit, signUpInit, tvSignInInit, userInfoInit };

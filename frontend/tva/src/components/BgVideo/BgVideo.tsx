@@ -1,7 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Socket } from 'socket.io-client';
-import BgVideoS from './BgVideoStyle';
+import { BASE_URL, SOCKET_PORT } from '../../constants/constants';
 import useSocket from '../../hooks/useSocket';
+import BgVideoS from './BgVideoStyle';
 
 interface BgVideoProps {
   currentMode: string;
@@ -12,17 +13,27 @@ function BgVideo({ currentMode }: BgVideoProps) {
   const [isMuted, setIsmuted] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const socket: Socket | null = useSocket('http://i10c103.p.ssafy.io:9000');
+  const socket: Socket | null = useSocket(`${BASE_URL}:${SOCKET_PORT}`);
 
   useEffect(() => {
     if (currentMode === 'news') {
       setVideoSrc('src/assets/news_closing.mp4');
+      console.log(currentMode);
+      console.log(videoSrc);
     } else if (currentMode === 'commercial') {
       setVideoSrc('src/assets/commercial.mp4');
+      console.log(currentMode);
+      console.log(videoSrc);
     } else if (currentMode === 'main') {
       setVideoSrc('src/assets/news.mp4');
     }
-  }, [currentMode]);
+  }, [currentMode, videoSrc]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.load(); // videoSrc가 변경될 때 비디오를 다시 로드합니다.
+    }
+  }, [videoSrc]); // videoSrc가 변경될 때마다 실행
 
   useEffect(() => {
     if (socket) {

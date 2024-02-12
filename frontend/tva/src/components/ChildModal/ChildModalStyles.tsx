@@ -1,8 +1,16 @@
 import styled from 'styled-components';
 
-const ChildModalBg = styled.div<{ isFullScreen?: boolean }>`
+const ChildModalBg = styled.div<{ isFullScreen?: boolean; isActive?: boolean }>`
   position: fixed;
-  right: ${props => (props.isFullScreen ? '0' : '-100vw')};
+  right: ${props => {
+    if (props.isActive && props.isFullScreen) {
+      return '0';
+    }
+    if (props.isActive) {
+      return '3vw';
+    }
+    return '-100vw';
+  }};
   /* transition: right 2s ease-out; */
   transition: all 1500ms ease-out;
   bottom: ${props => (props.isFullScreen ? '0' : '5vh')};
@@ -79,33 +87,18 @@ const ChildModalVideo = styled.video`
   z-index: 100;
 `;
 
-const SlideInMessage = styled.div<{ isVisible: boolean }>`
-  position: fixed;
-  left: ${props => (props.isVisible ? '0' : '-100%')};
-  top: 50%;
-  transform: translateY(-50%);
-  transition: left 0.5s ease-out;
-  width: 22vw;
-  height: auto;
-  padding: 2vh 2vw;
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5vw;
-  color: #222222;
-  z-index: 100;
+const MessageBox = styled.div<{ isVisible: boolean }>`
+  margin: 1vh auto;
+  font-size: 2vw;
 `;
 
 export {
   ChildModalBg,
-  ChildModalTitle,
   ChildModalContent,
   ChildModalDynamicContent,
   ChildModalImg,
-  ChildModalVideoBG,
+  ChildModalTitle,
   ChildModalVideo,
-  SlideInMessage,
+  ChildModalVideoBG,
+  MessageBox,
 };

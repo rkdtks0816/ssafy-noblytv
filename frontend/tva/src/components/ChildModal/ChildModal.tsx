@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { ChildModalProps } from '../../types/property';
 import {
   ChildModalBg,
@@ -15,7 +15,6 @@ const ChildModal = forwardRef<HTMLDivElement, ChildModalProps>(
 
     return (
       <div ref={ref}>
-        {' '}
         <ChildModalBg
           isFullScreen={isFullScreen}
           style={{

@@ -16,6 +16,9 @@ speak(res)
 audio = getAudio()
 res = classify(res, audio)
 print(res)
+
+res = "yes"
+
 if "yes" in res.lower():
     # FE로 시작 신호 보내기
     sendData("start")

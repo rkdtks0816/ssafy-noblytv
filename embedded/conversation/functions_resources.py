@@ -96,7 +96,7 @@ def chat(text):
         return "stop"
 
     messages = msg
-    res = client.chat.completions.create(model="gpt-3.5-turbo", messages = messages + [user_turn])
+    res = client.chat.completions.create(model="gpt-3.5-turbo-0125", messages = messages + [user_turn])
     response_text = res.choices[0].message.content
     assistant_turn = {"role": "assistant","content": response_text}
 
@@ -157,7 +157,7 @@ def summarize(text):
     for m in msg:
         messages.append(m)
     messages.append({"role": "system", "content": system_instruction})
-    res = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
+    res = client.chat.completions.create(model="gpt-3.5-turbo-0125", messages=messages)
     summary = res.choices[0].message.content
     return summary
 
@@ -186,7 +186,7 @@ def getAnswer(text):
     get answer from openAI
     '''
     messages=[{"role": "system", "content": persona}, {"role": "user", "content": text}]
-    res = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages).choices[0].message.content
+    res = client.chat.completions.create(model="gpt-3.5-turbo-0125", messages=messages).choices[0].message.content
     return res
 
 #######################################################################
@@ -247,7 +247,7 @@ def getAudio():
             print(ans)
         except Exception:
             ans = "End of Conversation"
-            speak("대화를 종료합니다.")
+            # speak("대화를 종료합니다.")
 
     return ans
 

@@ -1,4 +1,4 @@
-import useMenuStore from '../../store/menu';
+import useMenuStore from '../../store/useMenuStore';
 import { FooterBgS, FooterIconS, FooterClickableAreaS } from './FooterStyle';
 
 function Footer() {

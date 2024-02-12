@@ -35,7 +35,7 @@ const ListBoxLiS = styled.div`
   width: 100%;
   height: 30px;
   padding: 10px;
-  margin-top: 5px;
+  margin-bottom: 5px;
 
   display: flex;
   align-items: center;

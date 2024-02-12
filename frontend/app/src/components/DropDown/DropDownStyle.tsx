@@ -4,6 +4,7 @@ const DropDownBoxS = styled.div`
   position: relative;
   width: 50%;
   max-width: 200px;
+  z-index: 1000;
 `;
 
 const DropDownSelectedS = styled.div`
@@ -20,7 +21,7 @@ const DropDownSelectedS = styled.div`
 const DropDownSelectS = styled.div`
   position: absolute;
   right: -10px;
-  top: 40px;
+  top: 35px;
 
   background: #ffffff;
   border-radius: 10px;

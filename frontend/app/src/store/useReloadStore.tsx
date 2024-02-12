@@ -6,7 +6,7 @@ interface ReloadStoreState {
 }
 
 const useReloadStore = create<ReloadStoreState>(set => ({
-  reload: true,
+  reload: false,
   setReload: trigger => set({ reload: trigger }),
 }));
 

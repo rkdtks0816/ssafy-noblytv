@@ -1,28 +1,20 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import {
   PATH_SIGN_IN,
-  PATH_SIGN_UP_BIRTH,
-  PATH_SIGN_UP_NAME_ID,
-  PATH_SIGN_UP_PASSWORD,
   PATH_SENIOR_CONNECT,
-  PATH_SENIOR_SIGN_UP_NAME_GENDER,
-  PATH_SENIOR_SIGN_UP_BIRTH,
   PATH_SENIOR_UNIQUE_CODE,
   PATH_CONNECT_TV,
-  PATH_SELECT_SENIOR,
   PATH_MAIN,
+  PATH_SIGN_UP,
+  PATH_SENIOR_SIGN_UP,
 } from './constants/constants';
 import SignIn from './pages/SignIn/SignIn';
-import Birthday from './pages/sign_up/Birth';
-import NameId from './pages/sign_up/NameId';
-import Password from './pages/sign_up/Password';
+import SignUp from './pages/SignUp/SignUp';
 import SeniorConnect from './pages/SeniorConnect/SeniorConnect';
 import ConnectTv from './pages/ConnectTv/ConnectTv';
-import SelectSenior from './pages/SelectSenior/SelectSenior';
-import SeniorNameGender from './pages/senior_sign_up/SeniorNameGender';
-import SeniorBirth from './pages/senior_sign_up/SeniorBirth';
 import SeniorUniqueCode from './pages/SeniorUniqueCode.tsx/SeniorUniqueCode';
 import Main from './pages/Main/Main';
+import SeniorSignUp from './pages/SeniorSignUp/SeniorSignUp';
 // App 컴포넌트 내에서 라우터 설정
 function App() {
   return (
@@ -30,25 +22,18 @@ function App() {
       <Routes>
         {/* SignIn */}
         <Route path={PATH_SIGN_IN} element={<SignIn />} />
-        {/* sign_up */}
-        <Route path={PATH_SIGN_UP_NAME_ID} element={<NameId />} />
-        <Route path={PATH_SIGN_UP_PASSWORD} element={<Password />} />
-        <Route path={PATH_SIGN_UP_BIRTH} element={<Birthday />} />
+        {/* SignUp */}
+        <Route path={PATH_SIGN_UP} element={<SignUp />} />
         {/* SeniorConnect */}
         <Route path={PATH_SENIOR_CONNECT} element={<SeniorConnect />} />
-        {/* senior_sign_up */}
-        <Route
-          path={PATH_SENIOR_SIGN_UP_NAME_GENDER}
-          element={<SeniorNameGender />}
-        />
-        <Route path={PATH_SENIOR_SIGN_UP_BIRTH} element={<SeniorBirth />} />
+        {/* SeniorSignUp */}
+        <Route path={PATH_SENIOR_SIGN_UP} element={<SeniorSignUp />} />
+        {/* SeniorUniqueCode */}
         <Route path={PATH_SENIOR_UNIQUE_CODE} element={<SeniorUniqueCode />} />
-        {/* SelectSenior */}
-        <Route path={PATH_SELECT_SENIOR} element={<SelectSenior />} />
-        {/* ConnectTv */}
-        <Route path={PATH_CONNECT_TV} element={<ConnectTv />} />
         {/* Main */}
         <Route path={PATH_MAIN} element={<Main />} />
+        {/* ConnectTv */}
+        <Route path={PATH_CONNECT_TV} element={<ConnectTv />} />
       </Routes>
     </Router>
   );

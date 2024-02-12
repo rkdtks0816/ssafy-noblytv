@@ -73,6 +73,17 @@ interface GymnasticsResType {
   videoId: string;
 }
 
+interface PostsResType {
+  videoPath: string;
+  postedAt: string;
+}
+
+interface FamilyPostsResType {
+  username: string;
+  videoPath: string;
+  postedAt: string;
+}
+
 interface OldUserInfoType {
   userId: string;
   username: string;
@@ -81,6 +92,8 @@ interface OldUserInfoType {
   diaries: DiaryResType[];
   quizResults: string[];
   gymnastics: GymnasticsResType[];
+  posts: PostsResType[];
+  familyposts: FamilyPostsResType[];
   userType: string;
 }
 
@@ -95,5 +108,7 @@ export type {
   UserInfoType,
   GymnasticsType,
   GymnasticsResType,
+  PostsResType,
+  FamilyPostsResType,
   OldUserInfoType,
 };

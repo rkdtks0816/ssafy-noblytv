@@ -22,7 +22,7 @@ speak(res)
 
 while True:
     ans = getAudio()
-    if ans == "End of Conversation" :
+    if ans == "" :
         break
 
     print(ans)

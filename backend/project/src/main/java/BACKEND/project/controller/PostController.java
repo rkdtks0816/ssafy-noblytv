@@ -6,6 +6,7 @@ import BACKEND.project.dto.PostDto;
 import BACKEND.project.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +34,12 @@ public class PostController {
         try {
             // 파일 저장
             String dbsavePath = postService.saveVideo(file, userId);
+            System.out.println("Video Path: " + dbsavePath);
 
             // DB에 동영상 정보 저장
             FamilyUserInfoDto familyUserInfoDto = postService.findById(userId);
+            familyUserInfoDto.getPosts().size(); // FamilyUserInfo 컬렉션 초기화
+
             PostDto postDto = new PostDto();
             postDto.setVideoPath(dbsavePath); // dbsavePath를 viceoPath로 설정
             postDto.setPostedAt(LocalDateTime.now());
@@ -47,8 +51,12 @@ public class PostController {
             return new ResponseEntity<>("업로드 성공!", HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>("파일 저장 실패:" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             return new ResponseEntity<>("업로드 실패:" + e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>("업로드 실패:" + e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>("업로드 실패:" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -39,5 +39,7 @@ public class OldUserInfoResponseDto {
 
     private OldUserInfo.UserType userType;
 
-    private List<PostDto> posts;
+    private List<Post> posts;
+
+    private List<PostDto> familyposts;
 }

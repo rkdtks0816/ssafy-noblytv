@@ -139,6 +139,7 @@ public class OldUserInfoService {
         oldUserInfoResponseDto.setGymnastics(oldUserInfo.getGymnastics());
         oldUserInfoResponseDto.setSchedules(oldUserInfo.getSchedules());
         oldUserInfoResponseDto.setUserType(oldUserInfo.getUserType());
+        oldUserInfoResponseDto.setPosts(oldUserInfo.getPosts());
 
         // FamilyRelation 객체를 FamilyRelationResponseDto 객체로 변환
         List<FamilyRelationResponseDto> familyRelationResponseDtos = oldUserInfo.getFamilyRelations().stream().map(fr -> {
@@ -151,11 +152,11 @@ public class OldUserInfoService {
 
         oldUserInfoResponseDto.setFamilyRelations(familyRelationResponseDtos);
 
-        // OldUser가 작성한 게시물 추가
-        List<PostDto> oldUserPosts = postService.getPostByOldUSerId(oldUserInfo.getId());
-        oldUserInfoResponseDto.setPosts(oldUserPosts);
+//        FamilyUser가 작성한 게시물 추가
+        List<PostDto> familyPosts = postService.getPostsByOldUserInfoId(oldUserInfo.getId());
+        oldUserInfoResponseDto.setFamilyposts(familyPosts);
 
-        // FamilyUser가 작성한 게시물 추가
+
 
         return oldUserInfoResponseDto;
     }

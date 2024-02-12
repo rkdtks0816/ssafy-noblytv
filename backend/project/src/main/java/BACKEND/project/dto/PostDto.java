@@ -27,6 +27,8 @@ public class PostDto {
 
     private boolean isViewed;
 
+    private String username;
+
     public FamilyUserInfoDto getFamilyUserInfo() {
         return familyUserInfo;
     }

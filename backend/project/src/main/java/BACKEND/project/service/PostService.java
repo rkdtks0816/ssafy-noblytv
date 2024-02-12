@@ -104,11 +104,11 @@ public class PostService {
         familyUserInfo.getPosts().add(post);
     }
 
-    public List<PostDto> getPostByOldUSerId(Long oldUSerId) {
+    public List<Post> getPostByOldUSerId(Long oldUSerId) {
         OldUserInfo oldUser = oldUserRepository.findById(oldUSerId)
                 .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 회원입니다."));
 
-        return postRepository.findByOldUserId(oldUser);
+        return postRepository.findByOldUserInfoId(oldUser.getId());
     }
 
 
@@ -130,7 +130,7 @@ public class PostService {
                     postDto.setId(post.getId());
                     postDto.setVideoPath(post.getVideoPath());
                     postDto.setViewed(post.isViewed());
-                    // 필요한 필드들을 추가로 설정
+                    postDto.setUsername(familyUserInfo.getUsername());
                     posts.add(postDto);
                 }
             }

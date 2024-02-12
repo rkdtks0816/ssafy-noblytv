@@ -247,12 +247,14 @@ def getAudio():
         ans = ""
 
         GOOGLE_CLOUD_SPEECH_CREDENTIALS = r"""./ssafy-stt-3b72dd53f9e1.json"""
+        # ans = r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS, language="ko")
         try:
             ans = r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS, language="ko")
-            print(ans)
         except Exception:
             ans = ""
             # speak("대화를 종료합니다.")
+    
+    print(ans)
 
     return ans
 

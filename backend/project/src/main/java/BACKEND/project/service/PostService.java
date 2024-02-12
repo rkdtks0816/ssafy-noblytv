@@ -130,6 +130,7 @@ public class PostService {
                     postDto.setId(post.getId());
                     postDto.setVideoPath(post.getVideoPath());
                     postDto.setViewed(post.isViewed());
+                    postDto.setPostedAt(post.getPostedAt());
                     postDto.setUsername(familyUserInfo.getUsername());
                     posts.add(postDto);
                 }

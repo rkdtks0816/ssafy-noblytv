@@ -11,6 +11,7 @@ import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.repository.OldUserRepository;
 import BACKEND.project.repository.PostRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,6 +41,7 @@ public class PostService {
     public String saveVideo(MultipartFile file, Long userId) throws IOException {
         // 파일 저장 로직
         String dirPath = "/home/ubuntu/nobly/fileserver/videos";
+        //String dirPath = "C:/Users/spets/OneDrive/바탕 화면/S10P12C103/fileserver/videos";
         String dbsavePath = "/family_" + userId;
         String serverPath = dirPath + dbsavePath;
 
@@ -54,6 +56,8 @@ public class PostService {
         // 저장할 파일 경로 설정
         String fileName = file.getOriginalFilename();
         String filePath = serverPath + "/" + fileName;
+        System.out.println("File Path: " + filePath); // 파일 경로 출력
+
         File dest = new File(filePath);
 
         // 파일 저장
@@ -67,6 +71,9 @@ public class PostService {
         Optional<FamilyUserInfo> optionalFamilyUserInfo = familyUserRepository.findById(userId);
         if (optionalFamilyUserInfo.isPresent()) {
             FamilyUserInfo familyUserInfo = optionalFamilyUserInfo.get();
+
+            Hibernate.initialize(familyUserInfo.getPosts()); // posts 컬렉션 초기화
+
             FamilyUserInfoDto dto = new FamilyUserInfoDto();
             dto.setId(familyUserInfo.getId());
             dto.setUserId(familyUserInfo.getUserId());
@@ -75,6 +82,7 @@ public class PostService {
             dto.setBirth(familyUserInfo.getBirth());
             dto.setLunarSolar(familyUserInfo.getLunarSolar());
             dto.setLastVisitedId(familyUserInfo.getLastVisitedId());
+            dto.setPosts(familyUserInfo.getPosts()); // 초기화된 posts 컬렉션 설정
 
             return dto;
         } else {
@@ -93,15 +101,15 @@ public class PostService {
             throw new IllegalArgumentException("해당 유저가 존재하지 않습니다.");
         }
         FamilyUserInfo familyUserInfo = familyUserRepository.getById(userId);
-        post.setFamilyUserInfo(familyUserInfo);
 
+        familyUserInfo.getPosts().add(post); // 컬렉션 변경 전에 초기화
+
+        post.setFamilyUserInfo(familyUserInfo);
         post.setVideoPath(postDto.getVideoPath());
         post.setPostedAt(postDto.getPostedAt());
         post.setViewed(postDto.isViewed());
 
         postRepository.save(post);
-
-        familyUserInfo.getPosts().add(post);
     }
 
     public List<Post> getPostByOldUSerId(Long oldUSerId) {

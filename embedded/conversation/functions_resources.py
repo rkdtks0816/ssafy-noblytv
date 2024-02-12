@@ -6,6 +6,8 @@ import pymysql
 import datetime
 import socketio
 import time
+import sys
+import urllib.request
 
 old_user_id = "1"
 nowD = ""
@@ -134,16 +136,32 @@ def speak(text ,lang="ko", speed=False):
     speak:
     change text to speech (TTS)
     '''
-    try:
-        response = client.audio.speech.create(
-        model="tts-1-hd",
-        voice="nova",
-        input=f"{text}"
-        )
-        response.stream_to_file("speech.mp3")
+    # try:
+    #     response = client.audio.speech.create(
+    #     model="tts-1-hd",
+    #     voice="nova",
+    #     input=f"{text}"
+    #     )
+    #     response.stream_to_file("speech.mp3")
+    #     os.system("mpg321 ./speech.mp3")
+    # except:
+    #     print("No text to speak")
+
+    data = "speaker=ngaram&volume=-3&speed=0&pitch=0&format=mp3&text=" + text
+    url = "https://naveropenapi.apigw.ntruss.com/tts-premium/v1/tts"
+    request = urllib.request.Request(url)
+    request.add_header("X-NCP-APIGW-API-KEY-ID",client_id)
+    request.add_header("X-NCP-APIGW-API-KEY",client_secret)
+    response = urllib.request.urlopen(request, data=data.encode('utf-8'))
+    rescode = response.getcode()
+    if(rescode==200):
+        print("TTS mp3 저장")
+        response_body = response.read()
+        with open('speech.mp3', 'wb') as f:
+            f.write(response_body)
         os.system("mpg321 ./speech.mp3")
-    except:
-        print("No text to speak")
+    else:
+        print("Error Code:" + rescode)
 
 #######################################################################
 # summarize diary
@@ -354,6 +372,10 @@ load_dotenv()
 client = OpenAI(
     api_key = os.getenv('OPENAI_API_KEY')
 )
+
+# get clova key
+client_id = "psrxlffupp"
+client_secret = os.getenv('CLOVA_CLIENT_SECRET')
 
 # connect to DB
 db = pymysql.connect(host = 'i10c103.p.ssafy.io',

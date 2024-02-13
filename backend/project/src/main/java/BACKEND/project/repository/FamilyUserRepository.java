@@ -11,4 +11,6 @@ public interface FamilyUserRepository extends JpaRepository<FamilyUserInfo, Long
     Optional<FamilyUserInfo> findByUserId(String userId);
 
     Optional<FamilyUserInfo> findById(Long id);
+
+    FamilyUserInfo getByUserId(String userId);
 }

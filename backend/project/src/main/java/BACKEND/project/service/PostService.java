@@ -38,10 +38,10 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public String saveVideo(MultipartFile file, Long userId) throws IOException {
+    public String saveVideo(MultipartFile file, String userId) throws IOException {
         // 파일 저장 로직
         String dirPath = File.separator + "app" + File.separator + "videos";
-//        gString dirPath = "C:" + File.separator + "Users" + File.separator + "SSAFY" + File.separator + "Desktop" + File.separator + "S10P12C103"
+//        String dirPath = "C:" + File.separator + "Users" + File.separator + "SSAFY" + File.separator + "Desktop" + File.separator + "S10P12C103"
 //            + File.separator + "fileserver" + File.separator + "videos";
         String dbsavePath = File.separator + "family_" + userId;
         String serverPath = dirPath + dbsavePath;
@@ -68,8 +68,8 @@ public class PostService {
         return dbsavePath + File.separator + fileName;
     }
 
-    public FamilyUserInfoDto findById(Long userId) {
-        Optional<FamilyUserInfo> optionalFamilyUserInfo = familyUserRepository.findById(userId);
+    public FamilyUserInfoDto findById(String userId) {
+        Optional<FamilyUserInfo> optionalFamilyUserInfo = familyUserRepository.findByUserId(userId);
         if (optionalFamilyUserInfo.isPresent()) {
             FamilyUserInfo familyUserInfo = optionalFamilyUserInfo.get();
 
@@ -97,11 +97,11 @@ public class PostService {
         }
         Post post = new Post();
 
-        Long userId = postDto.getFamilyUserInfo().getId();
+        String userId = postDto.getFamilyUserInfo().getUserId();
         if (userId == null) {
             throw new IllegalArgumentException("해당 유저가 존재하지 않습니다.");
         }
-        FamilyUserInfo familyUserInfo = familyUserRepository.getById(userId);
+        FamilyUserInfo familyUserInfo = familyUserRepository.getByUserId(userId);
 
         familyUserInfo.getPosts().add(post); // 컬렉션 변경 전에 초기화
 

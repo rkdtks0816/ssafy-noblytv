@@ -16,9 +16,9 @@ const ChildModalBg = styled.div<{ isFullScreen?: boolean; isActive?: boolean }>`
   bottom: ${props => (props.isFullScreen ? '0' : '5vh')};
   width: ${props => (props.isFullScreen ? '100vw' : '22vw')};
   height: ${props => (props.isFullScreen ? '100vh' : '60vh')};
-  min-height: 20vh;
+  min-height: 50%;
   height: auto;
-  max-height: 80vh;
+  max-height: 90vh;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -44,10 +44,10 @@ const ChildModalTitle = styled.div`
 `;
 
 const ChildModalContent = styled.div`
-  margin: 5vh 3vw;
-  font-size: 3vw;
+  margin: 3vh 2vw;
+  font-size: 2vw;
   text-align: center;
-  overflow: auto;
+  overflow: hidden;
 `;
 
 const ChildModalDynamicContent = styled.div`
@@ -65,6 +65,8 @@ const ChildModalImg = styled.div`
   background-repeat: no-repeat;
   background-position: center; /* 중앙 정렬 */
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
+  min-height: 20vh; /* 최소 높이 추가 */
+  min-width: 20vw; /* 최소 너비 추가 */
   width: 100%;
   height: 100%;
   border-radius: 5vw;

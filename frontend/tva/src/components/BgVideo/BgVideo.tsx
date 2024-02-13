@@ -53,7 +53,7 @@ function BgVideo({ currentMode }: BgVideoProps) {
 
   return (
     <div>
-      <BgVideoS autoPlay muted={isMuted} loop ref={videoRef}>
+      <BgVideoS controls autoPlay muted={isMuted} loop ref={videoRef}>
         <source src={videoSrc} type="video/mp4" />
       </BgVideoS>
     </div>

@@ -14,9 +14,9 @@ public class Quiz {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String problem;
 
-    @Column
+    @Column(nullable = false)
     private String answer;
 }

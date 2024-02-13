@@ -40,8 +40,7 @@ public class PostService {
 
     public String saveVideo(MultipartFile file, Long userId) throws IOException {
         // 파일 저장 로직
-        String dirPath = File.separator + "home" + File.separator + "ubuntu"
-            + File.separator +"nobly" +File.separator + "fileserver" + File.separator + "videos";
+        String dirPath = File.separator + "app" + File.separator + "videos";
 //        gString dirPath = "C:" + File.separator + "Users" + File.separator + "SSAFY" + File.separator + "Desktop" + File.separator + "S10P12C103"
 //            + File.separator + "fileserver" + File.separator + "videos";
         String dbsavePath = File.separator + "family_" + userId;

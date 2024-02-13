@@ -18,6 +18,8 @@ services:
       context: ./frontend/app
       dockerfile: Dockerfile
     image: noblywebimg
+    volumes:
+      - /home/ubuntu/nobly/fileserver/videos:/app/videos
     ports:
       - "3000:3000"
     networks:

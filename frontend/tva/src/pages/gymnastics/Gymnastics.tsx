@@ -15,7 +15,7 @@ function Gymnastics() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowModal(true);
-    }, 9000);
+    }, 10000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -44,8 +44,8 @@ function Gymnastics() {
   return (
     <div>
       <YouTube
-        // videoId="m0tnbnuPiRw"
-        videoId="WbVAticwz1Q" // 테스트용 15초 짜리 영상
+        videoId="m0tnbnuPiRw"
+        // videoId="WbVAticwz1Q" // 테스트용 15초 짜리 영상
         opts={playerOptions}
         onReady={handleReady}
         onEnd={handleEnd}

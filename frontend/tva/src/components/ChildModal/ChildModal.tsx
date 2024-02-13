@@ -13,6 +13,9 @@ const ChildModal = forwardRef<HTMLDivElement, ChildModalProps>(
       return isActive ? '3vw' : '-100%';
     };
 
+    const displayContent =
+      content.length > 140 ? `${content.substring(0, 140)}...` : content;
+
     return (
       <div ref={ref}>
         <ChildModalBg
@@ -21,7 +24,7 @@ const ChildModal = forwardRef<HTMLDivElement, ChildModalProps>(
             right: getRightStyle(),
           }}
         >
-          <ChildModalContent>{content}</ChildModalContent>
+          <ChildModalContent>{displayContent}</ChildModalContent>
           <ChildModalImg />
         </ChildModalBg>
       </div>

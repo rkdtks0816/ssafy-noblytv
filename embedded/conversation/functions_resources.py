@@ -7,12 +7,21 @@ import datetime
 import socketio
 import time
 import urllib.request
+import Jetson.GPIO as GPIO
 
 old_user_id = "1"
 nowD = ""
 family = []
 nowtime = str(datetime.datetime.now()).split()[0]
 result_path = f"./videoSummarization/videos/{nowtime}_summary.mp4"
+
+LED_1 = 31
+LED_2 = 33
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD) 
+GPIO.setup(LED_1, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(LED_2, GPIO.OUT, initial=GPIO.LOW)
 
 #######################################################################
 # ALSA warning handdler
@@ -241,8 +250,12 @@ def getAudio():
         with sr.Microphone(12) as source:
             r.adjust_for_ambient_noise(source, duration=1)  # Adjust for ambient
             print("Say something!")
+            GPIO.output(LED_1, GPIO.HIGH) 
+            GPIO.output(LED_2, GPIO.HIGH) 
             audio=r.listen(source)
-        print("Runnnnnn")
+            GPIO.output(LED_1, GPIO.LOW) 
+            GPIO.output(LED_2, GPIO.LOW) 
+            print("Runnnnnn")
 
         ans = ""
 
@@ -255,6 +268,7 @@ def getAudio():
             # speak("대화를 종료합니다.")
     
     print(ans)
+    
 
     return ans
 

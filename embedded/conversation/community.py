@@ -2,6 +2,8 @@ from functions_resources import speak, getGender, getAnswer, getAudio, sendData,
 
 gender = getGender()
 
+sendData("mute")
+
 # 커뮤니티 확인 묻기
 system_instruction = f"{gender}의 가족이 커뮤니티에 영상을 올렸다. {gender}에게 가족들이 올린 영상을 볼 것이냐고 묻고 싶은데, 뭐라고 해야 할 지 1줄 이내로 알려줘라."
 res = getAnswer(system_instruction)
@@ -52,3 +54,6 @@ if "yes" in res.lower():
 else:
     sendData("no")
     speak("다음에 영상을 보여드릴께요.")
+
+sendData("muteoff")
+sendData("stop")

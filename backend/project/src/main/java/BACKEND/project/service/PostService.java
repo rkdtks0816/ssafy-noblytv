@@ -40,9 +40,11 @@ public class PostService {
 
     public String saveVideo(MultipartFile file, Long userId) throws IOException {
         // 파일 저장 로직
-        String dirPath = "/home/ubuntu/nobly/fileserver/videos";
-        //String dirPath = "C:/Users/spets/OneDrive/바탕 화면/S10P12C103/fileserver/videos";
-        String dbsavePath = "/family_" + userId;
+        String dirPath = File.separator + "home" + File.separator + "ubuntu"
+            + File.separator +"nobly" +File.separator + "fileserver" + File.separator + "videos";
+//        gString dirPath = "C:" + File.separator + "Users" + File.separator + "SSAFY" + File.separator + "Desktop" + File.separator + "S10P12C103"
+//            + File.separator + "fileserver" + File.separator + "videos";
+        String dbsavePath = File.separator + "family_" + userId;
         String serverPath = dirPath + dbsavePath;
 
         File directory = new File(serverPath);
@@ -55,7 +57,7 @@ public class PostService {
 
         // 저장할 파일 경로 설정
         String fileName = file.getOriginalFilename();
-        String filePath = serverPath + "/" + fileName;
+        String filePath = serverPath + File.separator + fileName;
         System.out.println("File Path: " + filePath); // 파일 경로 출력
 
         File dest = new File(filePath);
@@ -64,7 +66,7 @@ public class PostService {
         file.transferTo(dest);
 
         // dbsavePath 반환
-        return dbsavePath + "/" + fileName;
+        return dbsavePath + File.separator + fileName;
     }
 
     public FamilyUserInfoDto findById(Long userId) {

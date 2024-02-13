@@ -21,10 +21,18 @@ function GymnasticsModal() {
         if (data === '체조 시작 할께요!') {
           console.log('Gymnastic message:', data);
           setIsActive(false); // 모달창 숨기기
-          setIsPlaying(true); // 체조 영상 활성화
+          setTimeout(() => {
+            setIsPlaying(true); // 체조 영상 활성화
+          }, 2000);
         } else if (data === 'stop') {
-          setIsActive(false); // 모달창 숨기기
-          setIsPlaying(false); // 체조 영상 비활성화
+          setIsActive(true);
+          setGymContents('체조를 끝내셨어요!');
+          setTimeout(() => {
+            setIsActive(false);
+            setTimeout(() => {
+              setIsPlaying(false);
+            }, 500);
+          }, 3000);
         }
       });
     }

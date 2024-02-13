@@ -28,6 +28,6 @@ public class QuizResult {
     @JsonBackReference
     private OldUserInfo user;
 
-    @Column
+    @Column(nullable = false)
     private boolean isCorrect;
 }

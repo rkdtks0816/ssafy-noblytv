@@ -14,7 +14,9 @@ const ChildModal = forwardRef<HTMLDivElement, ChildModalProps>(
     };
 
     const displayContent =
-      content.length > 140 ? `${content.substring(0, 140)}...` : content;
+      typeof content === 'string' && content.length > 140
+        ? `${content.substring(0, 140)}...`
+        : content;
 
     return (
       <div ref={ref}>

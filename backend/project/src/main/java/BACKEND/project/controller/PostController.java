@@ -30,7 +30,7 @@ public class PostController {
 
     @PostMapping("/family")
     @Operation(summary = "가족 게시글 등록")
-    public ResponseEntity<?> uploadVideo(@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId) {
+    public ResponseEntity<?> uploadVideo(@RequestParam("file") MultipartFile file, @RequestParam("userId") String userId) {
         try {
             // 파일 저장
             String dbsavePath = postService.saveVideo(file, userId);

@@ -16,5 +16,7 @@ RUN ./gradlew clean bootJar
 # JAR 파일을 /app 디렉토리로 복사
 RUN cp build/libs/*.jar /app/app.jar
 
+RUN mkdir /app/videos
+
 # Spring Boot 애플리케이션 실행을 위한 명령 설정
 ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "/app/app.jar"]

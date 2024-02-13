@@ -61,6 +61,7 @@ import { useEffect, useRef, useState } from 'react';
 import io from 'socket.io-client';
 import VideoModal from '../../components/ChildModal/StreamingModal';
 import { BASE_URL, SOCKET_PORT } from '../../constants/constants';
+import GymnasticsContainer from './GymnasticsStyle';
 
 function Gymnastics() {
   const socket = io(`${BASE_URL}:${SOCKET_PORT}`);
@@ -88,30 +89,32 @@ function Gymnastics() {
   }, [socket, videoRef]);
 
   return (
-    <div
-      style={{
-        width: '100vw',
-        height: '100vh',
-        margin: 0,
-        padding: 0,
-        backgroundColor: 'black',
-        overflow: 'hidden',
-      }}
-    >
-      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      <video
-        ref={videoRef}
-        width="100%"
-        height="100%"
-        autoPlay
-        muted={!isPlaying}
-        style={{ width: '100vw', height: '100vh' }}
-        onCanPlay={() => setIsPlaying(true)}
+    <GymnasticsContainer>
+      <div
+        style={{
+          width: '100vw',
+          height: '100vh',
+          margin: 0,
+          padding: 0,
+          backgroundColor: 'black',
+          overflow: 'hidden',
+        }}
       >
-        <source src="src/assets/gymnastic_sample.mp4" type="video/mp4" />
-      </video>
-      {showModal && <VideoModal />}
-    </div>
+        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+        <video
+          ref={videoRef}
+          width="100%"
+          height="100%"
+          autoPlay
+          muted={!isPlaying}
+          style={{ width: '100vw', height: '100vh' }}
+          onCanPlay={() => setIsPlaying(true)}
+        >
+          <source src="src/assets/gymnastic_sample.mp4" type="video/mp4" />
+        </video>
+        {showModal && <VideoModal />}
+      </div>
+    </GymnasticsContainer>
   );
 }
 

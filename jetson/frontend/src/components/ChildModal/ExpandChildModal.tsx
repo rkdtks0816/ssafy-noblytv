@@ -47,11 +47,16 @@ const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
       }
 
       if (currentVideo) {
+        // 기존에 등록된 'ended' 이벤트 리스너 제거
+        currentVideo.removeEventListener('ended', handleVideoEnd);
+
         // 'ended' 이벤트에 핸들러가 실행되도록 등록
         currentVideo.addEventListener('ended', handleVideoEnd);
 
         return () => {
-          currentVideo.removeEventListener('ended', handleVideoEnd);
+          if (currentVideo) {
+            currentVideo.removeEventListener('ended', handleVideoEnd);
+          }
         };
       }
     }, [socket, content]);

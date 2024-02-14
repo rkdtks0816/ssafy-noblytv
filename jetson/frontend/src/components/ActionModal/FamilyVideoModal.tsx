@@ -57,6 +57,7 @@ function FamilyVideoModal() {
     message !== 'muteoff' &&
     message !== 'start' &&
     message !== 'end' &&
+    message !== 'yes' &&
     message !== 'stop'
       ? message
       : '';

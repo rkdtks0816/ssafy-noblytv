@@ -1,3 +1,5 @@
+// src/components/ChildModal/ExpandModalSty.tsx
+
 import styled from 'styled-components';
 
 const ChildModalBg = styled.div<{ isFullScreen?: boolean; isActive?: boolean }>`
@@ -14,11 +16,12 @@ const ChildModalBg = styled.div<{ isFullScreen?: boolean; isActive?: boolean }>`
   /* transition: right 2s ease-out; */
   transition: all 1500ms ease-out;
   bottom: ${props => (props.isFullScreen ? '0' : '5vh')};
+  top: ${props => (props.isFullScreen ? '0' : 'auto')};
   width: ${props => (props.isFullScreen ? '100vw' : '22vw')};
   height: ${props => (props.isFullScreen ? '100vh' : '60vh')};
   min-height: 50%;
   height: auto;
-  max-height: 90vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -27,7 +30,8 @@ const ChildModalBg = styled.div<{ isFullScreen?: boolean; isActive?: boolean }>`
 
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0px 0px 5vw 0.1vw #444444;
-  backdrop-filter: blur(125px);
+  backdrop-filter: ${props =>
+    props.isFullScreen ? 'blur(500px)' : 'blur(125px)'};
 
   border-radius: ${props => (props.isFullScreen ? '0' : '5vw')};
 
@@ -54,9 +58,11 @@ const ChildModalDynamicContent = styled.div`
   margin: 1vh auto;
   font-size: 2vw;
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1;
 `;
 
 const ChildModalImg = styled.div`

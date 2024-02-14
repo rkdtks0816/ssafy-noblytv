@@ -26,13 +26,8 @@ function GymnasticsModal() {
           }, 2000);
         } else if (data === 'stop') {
           setIsActive(true);
-          setGymContents('체조를 끝내셨어요!');
-          setTimeout(() => {
-            setIsActive(false);
-            setTimeout(() => {
-              setIsPlaying(false);
-            }, 500);
-          }, 3000);
+          setIsActive(false);
+          setIsPlaying(false);
         }
       });
     }

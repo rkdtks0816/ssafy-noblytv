@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   noblyapi:
@@ -17,7 +17,7 @@ services:
   noblyweb:
     container_name: noblyweb
     build:
-      context: ./frontend/app
+      context: ./frontend
       dockerfile: Dockerfile
     image: noblywebimg
     ports:

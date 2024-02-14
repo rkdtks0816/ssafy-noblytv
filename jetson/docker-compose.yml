@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  noblytv:
+    container_name: noblytv
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: noblytvimg
+    ports:
+      - "3010:3010"
+    networks:
+      - noblynet
+
+networks:
+  noblynet:

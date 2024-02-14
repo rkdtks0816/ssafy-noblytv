@@ -5,11 +5,7 @@ import BgImgStyle from '../../../components/BgImg/BgImgStyle';
 import FlexBoxStyle from '../../../components/FlexBox/FlexBoxStyle';
 import LargeBtnStyle from '../../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../../components/MenuTitle/MenuTitleStyle';
-import {
-  PATH_CONNECT_TV,
-  PATH_MY_MAIN,
-  PATH_SELECT_SENIOR,
-} from '../../../constants/constants';
+import { PATH_MY_MAIN, PATH_SELECT_SENIOR } from '../../../constants/constants';
 import {
   NoticesListBoxS,
   NoticesListUlS,

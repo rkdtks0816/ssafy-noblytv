@@ -1,5 +1,5 @@
 // src/components/ChildModal/ExpandModal.tsx
-import { forwardRef } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 import {
   ChildModalBg,
   ChildModalDynamicContent,
@@ -30,21 +30,62 @@ const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
       right: rightValue,
     };
 
+    const fullScreenStyle = isFullScreen
+      ? {
+          position: 'fixed' as const,
+          top: 0 as const,
+          left: 0 as const,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 1000 as const,
+        }
+      : {};
+
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+      console.log(message);
+      console.log(content);
+      if (videoRef.current) {
+        videoRef.current.load();
+        videoRef.current
+          .play()
+          .catch(error => console.error('Video play failed', error));
+      }
+    }, [message, content]);
+
     return (
-      <div ref={ref} style={dynamicStyle}>
+      <div ref={ref} style={{ ...dynamicStyle, ...fullScreenStyle }}>
         <ChildModalBg isFullScreen={isFullScreen} isActive={isActive}>
           {isFullScreen && (
-            <div style={{ display: 'flex', width: '100%', height: '100%' }}>
-              {/* 전체 화면일 때 비디오와 메시지 박스를 표시 */}
-              <ChildModalDynamicContent style={{ flex: 1 }}>
+            <div
+              style={{
+                display: 'flex',
+                width: '100%',
+                height: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              {/* 비디오를 감싸는 컨테이너에 flex, center 정렬을 적용하여 비디오가 중앙에 위치 */}
+              <ChildModalDynamicContent
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
                 {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
                 <video
                   controls
                   autoPlay
                   style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain',
+                    width: isFullScreen ? '100%' : 'auto',
+                    height: isFullScreen ? '100%' : 'auto',
+                    maxWidth: '100%', // 최대 너비 제한
+                    maxHeight: '100%', // 최대 높이 제한
+                    objectFit: 'contain', // 비디오 비율 유지
                   }}
                 >
                   <source src={content} type="video/mp4" />
@@ -57,7 +98,7 @@ const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
                 </div>
               )}
             </div>
-          )}
+          )}{' '}
           {!isFullScreen && (
             <>
               {/* 전체 화면이 아닐 때 */}

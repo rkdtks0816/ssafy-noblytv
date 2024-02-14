@@ -22,30 +22,40 @@ function FamilyVideoModal() {
       socket.on('message', (data: string) => {
         if (data === 'stop') {
           setMessage('');
-        } else if (/^(\/[\w\s-]+)+\.(mp4)$/.test(data)) {
-          console.log(data);
+        } else if (/^(\/[^/]+)+\.mp4$/.test(data)) {
+          setMessage(''); // 비디오 재생 시 메시지 초기화
           setVideoPath(data);
+          console.log(data);
           setIsFullScreen(true);
           setIsActive(true); // 모달을 활성화 상태로 유지
-          setMessage(''); // 비디오 재생 시 메시지 초기화
         } else if (data === '나중에 또 봐요!') {
+          setMessage(data);
           setIsFullScreen(false);
           setTimeout(() => {
             setIsActive(false);
-          }, 7000);
+          }, 5000);
         } else {
-          console.log(data);
           setMessage(data);
+          console.log(data);
           setIsActive(true); // 메시지 수신 시 모달 활성화
         }
       });
     }
+
     return () => {
       if (socket) {
         socket.off('message');
       }
     };
   }, [isFullScreen, socket]);
+  // 빈 문자열을 출력하는 수신 메시지 설정
+  const displayMessage =
+    message !== 'mute' &&
+    message !== 'muteoff' &&
+    message !== 'start' &&
+    message !== 'stop'
+      ? message
+      : '';
 
   useEffect(() => {
     // 비디오 재생이 끝났을 때 호출
@@ -75,10 +85,9 @@ function FamilyVideoModal() {
     <ExpandModal
       ref={modalRef}
       content={`${BASE_URL}:${FILE_SEVER_PORT}${videoPath}`}
-      // content={`${videoPath}`}
       isActive={isActive}
       isFullScreen={isFullScreen}
-      message={message}
+      message={displayMessage}
     />
   );
 }

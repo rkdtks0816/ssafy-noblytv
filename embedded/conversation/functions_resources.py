@@ -7,12 +7,23 @@ import datetime
 import socketio
 import time
 import urllib.request
+import Jetson.GPIO as GPIO
 
 old_user_id = "1"
 nowD = ""
 family = []
 nowtime = str(datetime.datetime.now()).split()[0]
+
+video_path = f"./videoSummarization/videos/{nowtime}.mp4"
 result_path = f"./videoSummarization/videos/{nowtime}_summary.mp4"
+
+LED_1 = 31
+LED_2 = 33
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD) 
+GPIO.setup(LED_1, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(LED_2, GPIO.OUT, initial=GPIO.LOW)
 
 #######################################################################
 # ALSA warning handdler
@@ -80,6 +91,32 @@ def sendMode(text):
 @sio.event
 def sendType(text):
     sio.emit('mode_type', text)
+
+@sio.event
+def sendVideo():
+    os.system(f'ssh -i "./I10C103T.pem" ubuntu@i10c103.p.ssafy.io "mkdir -p /home/ubuntu/embedded/videos/old_{old_user_id}"')
+    os.system(f'scp -i "./I10C103T.pem" {video_path} ubuntu@i10c103.p.ssafy.io:/home/ubuntu/embedded/videos/old_{old_user_id}')
+
+    try:
+        if not sio.connected:
+            print("Socket is disconnected, attempting to reconnect...")
+            sio.connect(server_url)
+            time.sleep(1)  # 재연결 후에 서버가 연결을 처리할 시간을 줍니다.
+            if sio.connected:
+                print("Reconnected successfully.")
+            else:
+                print("Failed to reconnect.")
+                return  # 재연결에 실패한 경우, 함수를 빠져나갑니다.
+            
+        sio.emit('oldID', f'{old_user_id}')
+        print("oldID: ", f'{old_user_id}')
+        time.sleep(0.5)  # 메시지를 전송한 후 충분한 처리 시간을 보장합니다.
+        sio.emit('video', "Sent video")
+        print("Sent video: Sent video")
+        time.sleep(0.5)  # 메시지를 전송한 후 충분한 처리 시간을 보장합니다.
+        
+    except Exception as e:
+        print(f"An error occurred while sending data: {e}")
 
 def returnData():
     return nowD
@@ -204,6 +241,11 @@ def classify(question, answer):
     - yes
     - no
 
+    <example>
+    if user said "좋아", then return "yes"
+    if user said "싫어", then return "no"
+    </example>
+
     User: {answer}
     Intent:
     """
@@ -241,8 +283,13 @@ def getAudio():
         with sr.Microphone(12) as source:
             r.adjust_for_ambient_noise(source, duration=1)  # Adjust for ambient
             print("Say something!")
-            audio=r.listen(source)
-        print("Runnnnnn")
+            GPIO.output(LED_1, GPIO.HIGH) 
+            GPIO.output(LED_2, GPIO.HIGH) 
+            # timeout: 10, pharse_time_limit: 10
+            audio=r.listen(source, 10, 30)
+            GPIO.output(LED_1, GPIO.LOW) 
+            GPIO.output(LED_2, GPIO.LOW) 
+            print("Runnnnnn")
 
         ans = ""
 
@@ -252,10 +299,10 @@ def getAudio():
             ans = r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS, language="ko")
         except Exception:
             ans = ""
-            # speak("대화를 종료합니다.")
+            print("no input")
     
     print(ans)
-
+    
     return ans
 
 #######################################################################

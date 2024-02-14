@@ -1,5 +1,6 @@
-from videoSummarization.main import summarize_video
-from conversation.functions_resources import speak, getGender, getAnswer, getAudio, sendData, saveVideo, classify
+# from videoSummarization.main import summarize_video
+# from conversation.functions_resources import speak, getGender, getAnswer, getAudio, sendData, saveVideo, classify
+from conversation.functions_resources import speak, getGender, getAnswer, getAudio, sendData, classify, sendVideo
 import subprocess
 
 gender = getGender()
@@ -39,9 +40,10 @@ if "yes" in res.lower():
     sendData("muteoff")
     sendData("stop")
     # 체조 영상 하이라이트 추출
-    summarize_video()
+    # summarize_video()
 
-    saveVideo()
+    # saveVideo()
+    sendVideo()
 
 else:
     sendData("조금 있다가 꼭 체조 하셔야 해요!")

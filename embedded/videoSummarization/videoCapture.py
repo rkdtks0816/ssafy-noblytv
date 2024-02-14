@@ -43,7 +43,7 @@ def gen():
 
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 
-    out = cv2.VideoWriter(filename, fourcc, 20.0, (width, height))
+    out = cv2.VideoWriter(filename, fourcc, 30.0, (width, height))
 
     while True:
         ret, frame = cap.read()
@@ -55,10 +55,10 @@ def gen():
         if isFinished:
             break
 
-        _, buffer = cv2.imencode('.jpg', frame)
-        frame_bytes = buffer.tobytes()
+        _, buffer = cv2.imencode('.jpeg', frame)
         yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
+               b'Content-Type: image/jpeg\r\n\r\n' + buffer.tobytes() + b'\r\n')
+        
         out.write(frame)
 
     out.release()
@@ -80,5 +80,5 @@ if __name__ == '__main__':
     thread = threading.Thread(target=gen)
     thread.start()
 
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000)
     sio.wait()

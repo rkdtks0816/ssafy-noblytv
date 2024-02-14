@@ -38,13 +38,15 @@ const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
     useEffect(() => {
       // 비디오 재생 종료 이벤트 핸들러 정의
       const currentVideo = videoRef.current;
-      if (currentVideo) {
-        const handleVideoEnd = () => {
-          if (socket) {
-            socket.emit('message', 'end');
-          }
-        };
 
+      // 비디오 종료시 소켓 통신 이벤트 정의
+      function handleVideoEnd() {
+        if (socket) {
+          socket.emit('message', 'end');
+        }
+      }
+
+      if (currentVideo) {
         // 'ended' 이벤트에 핸들러가 실행되도록 등록
         currentVideo.addEventListener('ended', handleVideoEnd);
 
@@ -52,7 +54,7 @@ const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
           currentVideo.removeEventListener('ended', handleVideoEnd);
         };
       }
-    }, [socket]);
+    }, [socket, content]);
 
     return (
       <ChildModalBg isFullScreen={isFullScreen} isActive={isActive}>

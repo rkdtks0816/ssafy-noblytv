@@ -74,7 +74,7 @@ function Gymnastics() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowModal(true);
-    }, 8000);
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, []);

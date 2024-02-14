@@ -1,3 +1,4 @@
+// src/components/ActionModal/FamilyVideoModal.tsx
 import { useEffect, useRef, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import {
@@ -21,7 +22,11 @@ function FamilyVideoModal() {
     if (socket) {
       socket.on('message', (data: string) => {
         if (data === 'stop') {
-          setMessage('');
+          setMessage(data);
+          setIsFullScreen(false);
+          setTimeout(() => {
+            setIsActive(false);
+          }, 5000);
         } else if (/^(\/[^/]+)+\.mp4$/.test(data)) {
           setMessage(''); // 비디오 재생 시 메시지 초기화
           setVideoPath(data);
@@ -57,29 +62,29 @@ function FamilyVideoModal() {
       ? message
       : '';
 
-  useEffect(() => {
-    // 비디오 재생이 끝났을 때 호출
-    function handleVideoEnd() {
-      socket?.emit('message', 'stop');
-      console.log(socket);
-      setIsActive(true); // ExpandModal 활성화
-    }
+  // useEffect(() => {
+  //   // 비디오 재생이 끝났을 때 호출
+  //   function handleVideoEnd() {
+  //     socket?.emit('message', 'stop');
+  //     console.log(socket);
+  //     setIsActive(true); // ExpandModal 활성화
+  //   }
 
-    const modalElement = modalRef.current;
-    // modalElement가 존재하고, 현재 전체 화면 모드인 경우에만 실행
-    if (modalElement && isFullScreen) {
-      // 모달 내의 비디오 엘리먼트를 선택.
-      const videoElement = modalElement.querySelector('video');
-      // 비디오 재생이 끝났을 때 handleVideoEnd 함수를 호출
-      videoElement?.addEventListener('ended', handleVideoEnd);
-    }
+  //   const modalElement = modalRef.current;
+  //   // modalElement가 존재하고, 현재 전체 화면 모드인 경우에만 실행
+  //   if (modalElement && isFullScreen) {
+  //     // 모달 내의 비디오 엘리먼트를 선택.
+  //     const videoElement = modalElement.querySelector('video');
+  //     // 비디오 재생이 끝났을 때 handleVideoEnd 함수를 호출
+  //     videoElement?.addEventListener('ended', handleVideoEnd);
+  //   }
 
-    return () => {
-      modalElement
-        ?.querySelector('video')
-        ?.removeEventListener('ended', handleVideoEnd);
-    };
-  }, [isFullScreen, socket]);
+  //   return () => {
+  //     modalElement
+  //       ?.querySelector('video')
+  //       ?.removeEventListener('ended', handleVideoEnd);
+  //   };
+  // }, [isFullScreen, socket]);
 
   return (
     <ExpandModal

@@ -241,6 +241,11 @@ def classify(question, answer):
     - yes
     - no
 
+    <example>
+    if user said "좋아", then return "yes"
+    if user said "싫어", then return "no"
+    </example>
+
     User: {answer}
     Intent:
     """

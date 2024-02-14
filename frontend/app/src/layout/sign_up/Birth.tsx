@@ -23,6 +23,7 @@ import Modal from '../../components/Modal/Modal';
 import useUserStore from '../../store/useUserStore';
 import useMenuStore from '../../store/useMenuStore';
 import BgImgStyle from '../../components/BgImg/BgImgStyle';
+import { signUpInit } from '../../constants/type_init';
 
 function Birth({
   setNowSignUp,
@@ -84,6 +85,7 @@ function Birth({
               setUserId(signUpInfo.userId);
               setNowMenu(PATH_COMMUNITY);
               navigate(PATH_SENIOR_CONNECT);
+              setSignUpInfo(signUpInit);
               setIsLoding(false);
             },
           });

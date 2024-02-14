@@ -18,6 +18,7 @@ import {
   BASE_URL,
 } from '../../../constants/constants';
 import useReloadStore from '../../../store/useReloadStore';
+import MainMenuTitleStyle from '../../../components/MainMenuTitle/MainMenuTitleStyle';
 
 function Gymnastics({
   gymnasticsData,
@@ -72,6 +73,7 @@ function Gymnastics({
 
   return (
     <GymnasticsBoxS>
+      <MainMenuTitleStyle>체조관리</MainMenuTitleStyle>
       {gymnastics.map(gymnastic => (
         <GymnasticsCardS key={gymnastic.day}>
           <GymnasticsHeaderS>

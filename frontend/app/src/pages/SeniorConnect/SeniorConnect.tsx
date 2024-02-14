@@ -73,9 +73,10 @@ function SeniorConnect() {
                 grantType,
                 accessToken,
                 oldUserId: oldUserUniqueCode,
-                successFunc: () => {},
+                successFunc: () => {
+                  navigate(redirectPath);
+                },
               });
-              navigate(redirectPath);
             })
             .catch(() => setModalContents('고유코드를 확인해주세요.'));
         },

@@ -33,9 +33,9 @@ const GymnasticsVideoS = styled.div`
   height: 100%;
   margin-top: 10px;
   border-radius: 10px;
-  background: #f1dcaa;
+  background: #fce8c3;
   font-weight: 400;
-  font-size: 1.5em;
+  font-size: 1.2em;
   color: #666666;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
 `;

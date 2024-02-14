@@ -49,6 +49,9 @@ const oldUserInfoInit: OldUserInfoType = {
   diaries: [],
   quizResults: [],
   gymnastics: [],
+  schedules: [],
+  posts: [],
+  familyposts: [],
   userType: '',
 };
 export {

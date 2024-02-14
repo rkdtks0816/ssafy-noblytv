@@ -13,10 +13,10 @@ import useOldUserStore from '../../../store/useOldUserStore';
 
 function SelectSenior({
   familyRelations,
-  setIsOnSelectSenior,
+  setSubMenu,
 }: {
   familyRelations: UserInfoGetOldInfoType[];
-  setIsOnSelectSenior: (isOnSelectSenior: boolean) => void;
+  setSubMenu: (subMenu: string) => void;
 }) {
   const { setOldUserId, setOldUsername } = useOldUserStore();
   const [showList, setShowList] = useState<string[]>([]);
@@ -44,7 +44,7 @@ function SelectSenior({
   };
 
   const handleBackBtn = () => {
-    setIsOnSelectSenior(false);
+    setSubMenu('');
   };
 
   const handleSubmit = () => {

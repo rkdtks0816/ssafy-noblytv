@@ -5,21 +5,20 @@ import {
   NoticeIconS,
 } from './HeaderStyle';
 import useOldUserStore from '../../store/useOldUserStore';
+import DropDownIcon from '../DropDownIcon/DropDownIconStyle';
+import { PATH_NOTICES, PATH_SELECT_SENIOR } from '../../constants/constants';
 
-function Header({
-  setIsOnSelectSenior,
-}: {
-  setIsOnSelectSenior: (isOnSelectSenior: boolean) => void;
-}) {
+function Header({ setSubMenu }: { setSubMenu: (subMenu: string) => void }) {
   const { oldUsername } = useOldUserStore();
   return (
     <div>
       <HeaderBgS>
-        <SeniorNameS onClick={() => setIsOnSelectSenior(true)}>
+        <SeniorNameS onClick={() => setSubMenu(PATH_SELECT_SENIOR)}>
           {oldUsername}
         </SeniorNameS>
+        <DropDownIcon />
         <SeniorTitleS>어르신</SeniorTitleS>
-        <NoticeIconS />
+        <NoticeIconS onClick={() => setSubMenu(PATH_NOTICES)} />
       </HeaderBgS>
     </div>
   );

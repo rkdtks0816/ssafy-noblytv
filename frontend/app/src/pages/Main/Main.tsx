@@ -7,6 +7,7 @@ import {
   PATH_DATETIME,
   PATH_GYMNASTICS,
   PATH_MY,
+  PATH_NOTICES,
   PATH_SELECT_SENIOR,
   PATH_SENIOR_CONNECT,
   PATH_SIGN_IN,
@@ -30,6 +31,7 @@ import useOldUserStore from '../../store/useOldUserStore';
 import SelectSenior from '../../layout/main/SelectSenior/SelectSenior';
 import GetOldUserInfo from '../../utils/GetOldUserInfo';
 import Loading from '../../components/Loading/Loading';
+import Notices from '../../layout/main/Notices/Notices';
 
 function Main() {
   const navigate = useNavigate();
@@ -37,7 +39,7 @@ function Main() {
   const { oldUserId, setOldUserId, setOldUsername } = useOldUserStore();
   const { reload, setReload } = useReloadStore();
   const { nowMenu } = useMenuStore();
-  const [isOnSelectSenior, setIsOnSelectSenior] = useState<boolean>(false);
+  const [subMenu, setSubMenu] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [familyRelations, setFamilyRelations] = useState<
     UserInfoGetOldInfoType[]
@@ -64,8 +66,11 @@ function Main() {
             navigate(PATH_SENIOR_CONNECT);
           } else {
             setFamilyRelations(UserInfoData.familyRelations);
-            navigate(PATH_SELECT_SENIOR);
+            setSubMenu(PATH_SELECT_SENIOR);
           }
+          setIsLoading(false);
+        },
+        errorFunc: () => {
           setIsLoading(false);
         },
       });
@@ -100,24 +105,30 @@ function Main() {
 
   return (
     <div>
-      <Header setIsOnSelectSenior={setIsOnSelectSenior} />
+      <Header setSubMenu={setSubMenu} />
+      <Footer />
       <MainBoxS>
-        {nowMenu === PATH_COMMUNITY && <Community postList={postList} />}
+        {nowMenu === PATH_COMMUNITY && (
+          <Community postList={postList} setIsLoading={setIsLoading} />
+        )}
         {nowMenu === PATH_DATETIME && (
-          <Datetime diaryContentsData={oldUserInfo.diaries} />
+          <Datetime
+            schedulesData={oldUserInfo.schedules}
+            diaryContentsData={oldUserInfo.diaries}
+          />
         )}
         {nowMenu === PATH_GYMNASTICS && (
           <Gymnastics gymnasticsData={oldUserInfo.gymnastics} />
         )}
         {nowMenu === PATH_MY && <My />}
       </MainBoxS>
-      <Footer />
-      {isOnSelectSenior && (
+      {subMenu === PATH_SELECT_SENIOR && (
         <SelectSenior
           familyRelations={familyRelations}
-          setIsOnSelectSenior={setIsOnSelectSenior}
+          setSubMenu={setSubMenu}
         />
       )}
+      {subMenu === PATH_NOTICES && <Notices setSubMenu={setSubMenu} />}
       {isLoading && <Loading />}
     </div>
   );

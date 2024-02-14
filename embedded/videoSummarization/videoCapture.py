@@ -59,7 +59,7 @@ def gen():
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + buffer.tobytes() + b'\r\n')
         
-        # out.write(frame)
+        out.write(frame)
 
     out.release()
     cap.release()

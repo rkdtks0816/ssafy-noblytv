@@ -28,7 +28,7 @@ if "yes" in res.lower():
 
         # 영상이 끝날 때 까지 대기
         while True:
-            if returnData() == "stop":
+            if returnData() == "end":
                 break
         
         # 남은 영상이 있을 때

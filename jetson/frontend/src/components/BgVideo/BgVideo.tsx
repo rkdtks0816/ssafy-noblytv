@@ -18,23 +18,21 @@ function BgVideo({ currentMode }: BgVideoProps) {
   useEffect(() => {
     if (currentMode === 'news') {
       setVideoSrc('src/assets/news_closing.mp4');
-      console.log(currentMode);
-      console.log(videoSrc);
     } else if (currentMode === 'commercial') {
       setVideoSrc('src/assets/commercial.mp4');
-      console.log(currentMode);
-      console.log(videoSrc);
     } else if (currentMode === 'main') {
       setVideoSrc('src/assets/news.mp4');
     }
   }, [currentMode, videoSrc]);
 
+  // videoSrc가 변경될 때마다 실행
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.load(); // videoSrc가 변경될 때 비디오를 다시 로드합니다.
+      videoRef.current.load(); // videoSrc가 변경될 때 비디오를 다시 로드
     }
-  }, [videoSrc]); // videoSrc가 변경될 때마다 실행
+  }, [videoSrc]);
 
+  // 소켓을 통해 음소거 상태를 관리
   useEffect(() => {
     if (socket) {
       socket.on('message', (data: string) => {
@@ -53,7 +51,9 @@ function BgVideo({ currentMode }: BgVideoProps) {
 
   return (
     <div>
+      {/* 비디오 컴포넌트 랜더링 */}
       <BgVideoS controls autoPlay muted={isMuted} loop ref={videoRef}>
+        {/* 비디오 소스 설정 */}
         <source src={videoSrc} type="video/mp4" />
       </BgVideoS>
     </div>

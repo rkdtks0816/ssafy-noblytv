@@ -278,3 +278,14 @@
         * 공백 후 주석 내용 시작
         */
         ```
+## 프로젝트 산출물
+  1. 기능 명세서
+  - [기능 명세서](https://www.notion.so/minju98/8e23409ab41f460da94377b842fe4316?v=bf049a1dff9b4514b016a50d506d2f5a)
+  2. 요구 사항 명세서
+  - [요구 사항 명세서](https://www.notion.so/minju98/1598af230a404e8c8f51531f8d981cdb)
+  3. API 명세서
+  - [REST API 연동 규격서](https://www.notion.so/minju98/Rest-API-590a12f831eb43c8882928b6f9f6b144)
+  4. ERD
+  ![ERD](./exec/ERD.png)
+  5. 시스템 아키텍처
+  ![System_Architecture](./exec/System%20Architecture.png)

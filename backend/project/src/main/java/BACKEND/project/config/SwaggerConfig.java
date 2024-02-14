@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Arrays;
 
 @OpenAPIDefinition(
-        info = @Info(title = "API 명세서",
-                description = "노블리 노블리~~",
+        info = @Info(title = "REST API 명세서",
+                description = "노블리 TV",
                 version = "v3"))
 @Configuration
 public class SwaggerConfig {

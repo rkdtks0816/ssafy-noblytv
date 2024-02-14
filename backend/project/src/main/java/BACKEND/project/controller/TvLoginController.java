@@ -1,8 +1,6 @@
 package BACKEND.project.controller;
 
-import BACKEND.project.domain.Diary;
 import BACKEND.project.domain.TvCode;
-import BACKEND.project.dto.DiaryDto;
 import BACKEND.project.dto.TvCodeDto;
 import BACKEND.project.dto.TvLoginDto;
 import BACKEND.project.service.OldUserLoginService;
@@ -13,9 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor

@@ -57,7 +57,6 @@ public class FamilyUserInfo {
     @JsonManagedReference
     private List<Schedule> schedules = new ArrayList<>();
 
-    // 마지막으로 확인한 노인 ID 저장 필드
     private String lastVisitedId;
 
     @Enumerated(EnumType.STRING)

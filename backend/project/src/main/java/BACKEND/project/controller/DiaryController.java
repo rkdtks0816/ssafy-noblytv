@@ -3,7 +3,6 @@ package BACKEND.project.controller;
 import BACKEND.project.domain.Diary;
 import BACKEND.project.dto.DiaryDto;
 import BACKEND.project.service.DiaryService;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

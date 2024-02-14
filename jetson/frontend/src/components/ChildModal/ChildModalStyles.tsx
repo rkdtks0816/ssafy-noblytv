@@ -1,5 +1,3 @@
-// src/components/ChildModal/ExpandModalSty.tsx
-
 import styled from 'styled-components';
 
 const ChildModalBg = styled.div<{ isFullScreen?: boolean; isActive?: boolean }>`
@@ -13,7 +11,6 @@ const ChildModalBg = styled.div<{ isFullScreen?: boolean; isActive?: boolean }>`
     }
     return '-100vw';
   }};
-  /* transition: right 2s ease-out; */
   transition: all 1500ms ease-out;
   bottom: ${props => (props.isFullScreen ? '0' : '5vh')};
   top: ${props => (props.isFullScreen ? '0' : 'auto')};
@@ -27,14 +24,11 @@ const ChildModalBg = styled.div<{ isFullScreen?: boolean; isActive?: boolean }>`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0px 0px 5vw 0.1vw #444444;
   backdrop-filter: ${props =>
     props.isFullScreen ? 'blur(500px)' : 'blur(125px)'};
-
   border-radius: ${props => (props.isFullScreen ? '0' : '5vw')};
-
   font-family: 'BM HANNA_TTF';
   font-style: normal;
   font-weight: 900;
@@ -69,10 +63,10 @@ const ChildModalImg = styled.div`
   background: url('src/assets/child.png');
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: center; /* 중앙 정렬 */
+  background-position: center;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
-  min-height: 20vh; /* 최소 높이 추가 */
-  min-width: 20vw; /* 최소 너비 추가 */
+  min-height: 20vh;
+  min-width: 20vw;
   width: 100%;
   height: 100%;
   border-radius: 5vw;

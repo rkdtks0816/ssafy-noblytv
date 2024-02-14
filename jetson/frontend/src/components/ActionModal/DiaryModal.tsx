@@ -14,12 +14,12 @@ function DiaryModal() {
     if (socket) {
       socket.on('message', (data: string) => {
         console.log('Diary data received:', data);
-        setDiaryContents(data);
+        setDiaryContents(data); // 데이터 수신 시 diaryContents 값 update
         setIsActive(true); // 데이터 수신 시 모달 활성화
 
         if (data === 'stop') {
           setTimeout(() => {
-            setIsActive(false); // 7초 후 모달 숨기기
+            setIsActive(false); // data에 stop 으로 변했을 때 7초 후 모달 숨기기
           }, 7000);
         }
       });
@@ -30,6 +30,7 @@ function DiaryModal() {
     };
   }, [socket]);
 
+  // 모달 활성화 비활성화
   const toggleModal = () => {
     setIsActive(!isActive);
   };

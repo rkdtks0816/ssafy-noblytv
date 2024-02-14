@@ -8,7 +8,10 @@ import lombok.Data;
 public class QuizRelationDto {
 
     private Long id;
+
     private Long quizId;
+
     private Long userId;
+
     private boolean isCorrect;
 }

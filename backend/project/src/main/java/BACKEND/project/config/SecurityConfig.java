@@ -67,14 +67,12 @@ public class SecurityConfig {
         config.addAllowedHeader("*");
 
         // 기본적으로 브라우저에서 인증 관련 정보들을 요청 헤더에 담지 않음
-        // 이 설정을 통해서 브라우저에서 인증 관련 정보들을 요청 헤더에 담을 수 있도록 해줍니다.
+        // 이 설정을 통해서 브라우저에서 인증 관련 정보들을 요청 헤더에 담을 수 있도록 함.
         config.setAllowCredentials(true);
 
-        // allowCredentials 를 true로 하였을 때,
-        // allowedOrigin의 값이 * (즉, 모두 허용)이 설정될 수 없도록 검증합니다.
         config.validateAllowCredentials();
 
-        // 어떤 경로에 이 설정을 적용할 지 명시합니다. (여기서는 전체 경로)
+        // 어떤 경로에 이 설정을 적용할 지 명시
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
 

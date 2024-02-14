@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 public class FamilyRelationResponseDto {
 
     private Long id;
+
     private String userId;
+
     private String username;
 }

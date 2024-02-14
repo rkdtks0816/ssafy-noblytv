@@ -11,6 +11,8 @@ import java.time.LocalTime;
 public class ScheduleDto {
 
     private String schedule;
+
     private LocalDateTime scheduleDay;
+
     private LocalTime scheduleTime;
 }

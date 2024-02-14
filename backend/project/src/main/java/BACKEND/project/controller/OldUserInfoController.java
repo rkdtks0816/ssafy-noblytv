@@ -1,6 +1,5 @@
 package BACKEND.project.controller;
 
-import BACKEND.project.dto.OldUserInfoDto;
 import BACKEND.project.dto.OldUserInfoResponseDto;
 import BACKEND.project.dto.OldUserUpdateDto;
 import BACKEND.project.service.OldUserInfoService;

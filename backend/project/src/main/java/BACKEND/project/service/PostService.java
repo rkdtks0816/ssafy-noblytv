@@ -6,13 +6,12 @@ import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.domain.Post;
 import BACKEND.project.dto.FamilyUserInfoDto;
 import BACKEND.project.dto.PostDto;
-import BACKEND.project.repository.FamilyRelationRepository;
 import BACKEND.project.repository.FamilyUserRepository;
 import BACKEND.project.repository.OldUserRepository;
 import BACKEND.project.repository.PostRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,22 +20,12 @@ import java.io.IOException;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class PostService {
 
-    private final FamilyRelationRepository familyRelationRepository;
     private final FamilyUserRepository familyUserRepository;
     private final OldUserRepository oldUserRepository;
     private final PostRepository postRepository;
-
-    @Autowired
-    public PostService(FamilyRelationRepository familyRelationRepository, FamilyUserRepository familyUserRepository,
-                                  OldUserRepository oldUserRepository, PostRepository postRepository) {
-
-        this.familyRelationRepository = familyRelationRepository;
-        this.familyUserRepository = familyUserRepository;
-        this.oldUserRepository = oldUserRepository;
-        this.postRepository = postRepository;
-    }
 
     public String saveVideo(MultipartFile file, String userId) throws IOException {
         // 파일 저장 로직
@@ -119,8 +108,6 @@ public class PostService {
 
         return postRepository.findByOldUserInfoId(oldUser.getId());
     }
-
-
 
     public List<PostDto> getPostsByOldUserInfoId(Long oldUserInfoId) {
         Optional<OldUserInfo> optionalOldUserInfo = oldUserRepository.findById(oldUserInfoId);

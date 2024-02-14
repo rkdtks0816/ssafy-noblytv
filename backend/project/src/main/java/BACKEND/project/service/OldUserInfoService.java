@@ -3,7 +3,6 @@ package BACKEND.project.service;
 import BACKEND.project.domain.FamilyUserInfo;
 import BACKEND.project.domain.Medication;
 import BACKEND.project.domain.OldUserInfo;
-import BACKEND.project.domain.Post;
 import BACKEND.project.dto.*;
 import BACKEND.project.repository.FamilyRelationRepository;
 import BACKEND.project.repository.FamilyUserRepository;
@@ -155,8 +154,6 @@ public class OldUserInfoService {
 //        FamilyUser가 작성한 게시물 추가
         List<PostDto> familyPosts = postService.getPostsByOldUserInfoId(oldUserInfo.getId());
         oldUserInfoResponseDto.setFamilyposts(familyPosts);
-
-
 
         return oldUserInfoResponseDto;
     }

@@ -1,6 +1,5 @@
 package BACKEND.project.controller;
 
-import BACKEND.project.domain.Post;
 import BACKEND.project.dto.FamilyUserInfoDto;
 import BACKEND.project.dto.PostDto;
 import BACKEND.project.service.PostService;
@@ -23,6 +22,7 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+
     @Autowired
     public PostController(PostService postService) {
         this.postService = postService;

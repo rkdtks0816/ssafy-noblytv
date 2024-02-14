@@ -1,6 +1,5 @@
 package BACKEND.project.service;
 
-import BACKEND.project.domain.Diary;
 import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.domain.TvCode;
 import BACKEND.project.dto.*;

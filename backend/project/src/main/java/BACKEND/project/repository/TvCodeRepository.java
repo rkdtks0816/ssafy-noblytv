@@ -1,6 +1,5 @@
 package BACKEND.project.repository;
 
-import BACKEND.project.domain.OldUserInfo;
 import BACKEND.project.domain.TvCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

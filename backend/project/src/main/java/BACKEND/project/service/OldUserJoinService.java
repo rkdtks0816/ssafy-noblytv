@@ -55,6 +55,7 @@ public class OldUserJoinService {
         return medication;
     }
 
+    // 매일 자정이 되면 true로 설정되어있는 isRead 필드를 false로 reset
     @Scheduled(cron = "0 0 0 * * ?")
     @Transactional
     public void resetIsRead() {

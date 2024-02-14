@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class TvLoginDto {
 
     private String tvCode;
+
     private String userId;
 }

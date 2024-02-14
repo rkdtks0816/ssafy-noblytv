@@ -6,11 +6,7 @@ import FlexBoxStyle from '../../components/FlexBox/FlexBoxStyle';
 import InputBoxStyle from '../../components/InputBox/InputBoxStyle';
 import LargeBtnStyle from '../../components/LargeBtn/LargeBtnStyle';
 import MenuTitleStyle from '../../components/MenuTitle/MenuTitleStyle';
-import {
-  PATH_CONNECT_TV,
-  PATH_MAIN,
-  PATH_SELECT_SENIOR,
-} from '../../constants/constants';
+import { PATH_MAIN, PATH_SELECT_SENIOR } from '../../constants/constants';
 
 function ConnectTv() {
   const navigate = useNavigate();
@@ -34,7 +30,7 @@ function ConnectTv() {
   };
 
   const handleSubmit = () => {
-    navigate(PATH_SELECT_SENIOR, { state: { redirect: PATH_CONNECT_TV } });
+    navigate(PATH_MAIN);
   };
 
   return (

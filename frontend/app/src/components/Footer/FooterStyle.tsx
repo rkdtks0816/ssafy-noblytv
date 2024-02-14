@@ -6,8 +6,8 @@ const FooterBgS = styled.div`
   left: 0;
   display: flex;
   width: 100vw;
-  height: 65px;
-  padding-top: 13px;
+  height: 73px;
+  padding-top: 7px;
   background: #ffffff;
   align-items: flex-start; /* 세로 가운데 정렬 */
   justify-content: space-around; /* 가로 가운데 정렬 */
@@ -31,8 +31,8 @@ const FooterIconS = styled.div<{ $footerIconType: string }>`
 
 const FooterClickableAreaS = styled.div`
   position: relative;
-  width: 30px;
-  height: 30px;
+  width: 42px;
+  height: 42px;
 
   border-radius: 30%;
 

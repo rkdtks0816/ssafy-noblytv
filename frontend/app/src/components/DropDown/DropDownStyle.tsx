@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const DropDownBoxS = styled.div`
   position: relative;
+  display: block;
   width: 50%;
   max-width: 200px;
   z-index: 1000;
@@ -9,7 +10,7 @@ const DropDownBoxS = styled.div`
 
 const DropDownSelectedS = styled.div`
   font-weight: 900;
-  font-size: 1.5em;
+  font-size: 1.3em;
   text-align: end;
 
   border: none;
@@ -21,7 +22,7 @@ const DropDownSelectedS = styled.div`
 const DropDownSelectS = styled.div`
   position: absolute;
   right: -10px;
-  top: 35px;
+  top: 30px;
 
   background: #ffffff;
   border-radius: 10px;
@@ -50,7 +51,7 @@ const DropDownSelectS = styled.div`
 
 const DropDownOptionS = styled.div`
   font-weight: 900;
-  font-size: 1.5em;
+  font-size: 1.3em;
   text-align: end;
 
   border: none;

@@ -84,6 +84,13 @@ interface FamilyPostsResType {
   postedAt: string;
 }
 
+interface SchedulesResType {
+  registeredTime: string;
+  schedule: string;
+  scheduleDay: string;
+  scheduleTime: string;
+}
+
 interface OldUserInfoType {
   userId: string;
   username: string;
@@ -92,6 +99,7 @@ interface OldUserInfoType {
   diaries: DiaryResType[];
   quizResults: string[];
   gymnastics: GymnasticsResType[];
+  schedules: SchedulesResType[];
   posts: PostsResType[];
   familyposts: FamilyPostsResType[];
   userType: string;
@@ -108,6 +116,7 @@ export type {
   UserInfoType,
   GymnasticsType,
   GymnasticsResType,
+  SchedulesResType,
   PostsResType,
   FamilyPostsResType,
   OldUserInfoType,

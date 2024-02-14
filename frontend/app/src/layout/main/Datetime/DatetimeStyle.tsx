@@ -2,7 +2,11 @@ import styled from 'styled-components';
 
 const DateTimeBoxS = styled.div`
   margin: 0 auto;
+  width: 100%;
   max-width: 390px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const DateTimeHearderS = styled.div`
@@ -12,14 +16,14 @@ const DateTimeHearderS = styled.div`
 
   width: 100%;
   height: 30px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   color: #666666;
   font-weight: 900;
-  font-size: 1.5em;
+  font-size: 1.2em;
 `;
 
 const DateTimeInputS = styled.input`
@@ -27,7 +31,7 @@ const DateTimeInputS = styled.input`
 
   color: #666666;
   font-weight: 900;
-  font-size: 1.3em;
+  font-size: 1.2em;
   text-align: center;
 
   background-color: #ffffff;
@@ -42,8 +46,8 @@ const DateTimeTitleS = styled.div`
 `;
 
 const DateTimeBtnS = styled.div<{ $dateTimeBtnType: string }>`
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   margin-right: 20px;
 
   background: url(${props => `/src/assets/icon_${props.$dateTimeBtnType}.png`});
@@ -51,12 +55,62 @@ const DateTimeBtnS = styled.div<{ $dateTimeBtnType: string }>`
   background-repeat: no-repeat;
 `;
 
-const DateTimeDiaryListBoxS = styled.div`
-  position: relative;
-  top: 0;
-  left: 0;
+const DateTimeScheduleBoxS = styled.div`
+  position: absolute;
+  top: 40px;
   width: 100%;
-  height: 100%;
+  height: 30%;
+  background: #ffffff;
+  filter: drop-shadow(0px 0px 4px #dce7f5);
+  overflow: hidden;
+  overflow-y: auto;
+
+  /* Chrome, Safari, Edge 스크롤 바 숨기기 */
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  /* Firefox 스크롤 바 숨기기 */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+`;
+
+const DateTimeScheduleListBoxUlS = styled.div`
+  width: 90%;
+  max-width: 350px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+`;
+
+const DateTimeScheduleListBoxLiBoxS = styled.div`
+  margin: 10px;
+`;
+
+const DateTimeScheduleListBoxLiDateS = styled.div`
+  color: #666666;
+  font-weight: 500;
+  font-size: 1em;
+`;
+
+const DateTimeScheduleListBoxLiContentsS = styled.div`
+  margin-top: 3px;
+  color: #666666;
+  font-weight: 300;
+  font-size: 1.2em;
+`;
+
+const DateTimeDiaryListBoxS = styled.div`
+  position: absolute;
+  top: calc(30% + 45px);
+  width: 100%;
+  height: 60%;
   overflow: hidden;
   overflow-y: auto;
 
@@ -75,8 +129,7 @@ const DateTimeDiaryListBoxS = styled.div`
 `;
 
 const DateTimeDiaryListBoxUlS = styled.div`
-  width: 90vw;
-  max-width: 350px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -85,26 +138,27 @@ const DateTimeDiaryListBoxUlS = styled.div`
 `;
 
 const DateTimeDiaryListBoxLiBoxS = styled.div`
-  width: 100%;
-  margin-bottom: 20px;
+  width: 90%;
+  max-width: 330px;
+  margin: 10px 0;
   border-radius: 10px;
   padding: 10px;
 
-  background: #f1dcaa;
-  filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
+  background: #ffffff;
+  filter: drop-shadow(0px 0px 4px #fce8c3);
 `;
 
 const DateTimeDiaryListBoxLiDateS = styled.div`
   color: #666666;
   font-weight: 500;
-  font-size: 1em;
+  font-size: 0.7em;
 `;
 
 const DateTimeDiaryListBoxLiContentsS = styled.div`
   margin-top: 10px;
   color: #666666;
   font-weight: 300;
-  font-size: 1.5em;
+  font-size: 1.2em;
 `;
 
 export {
@@ -113,6 +167,11 @@ export {
   DateTimeTitleS,
   DateTimeInputS,
   DateTimeBtnS,
+  DateTimeScheduleBoxS,
+  DateTimeScheduleListBoxUlS,
+  DateTimeScheduleListBoxLiBoxS,
+  DateTimeScheduleListBoxLiDateS,
+  DateTimeScheduleListBoxLiContentsS,
   DateTimeDiaryListBoxS,
   DateTimeDiaryListBoxUlS,
   DateTimeDiaryListBoxLiBoxS,

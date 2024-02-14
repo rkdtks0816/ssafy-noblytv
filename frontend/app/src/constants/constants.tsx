@@ -15,11 +15,14 @@ const PATH_SENIOR_SIGN_UP_NAME_GENDER: string = 'SeniorNameGender';
 const PATH_SENIOR_SIGN_UP_BIRTH: string = 'SeniorBirth';
 const PATH_CONNECT_TV: string = '/connect-tv';
 const PATH_SELECT_SENIOR: string = 'SelectSenior';
+const PATH_NOTICES: string = 'Notices';
 const PATH_MAIN: string = '/';
 const PATH_COMMUNITY: string = 'Community';
 const PATH_DATETIME: string = 'Datetime';
 const PATH_GYMNASTICS: string = 'Gymnastics';
 const PATH_MY: string = 'My';
+const PATH_MY_MAIN: string = 'MyMain';
+const PATH_SETTING_TV: string = 'SettingTv';
 const PATH_LOADING: string = 'Loading';
 // API
 const API_FAMILY: string = `/users/family`;
@@ -34,9 +37,8 @@ const API_SENIOR_DELECT: string = `${API_SENIOR}/delete`;
 const API_TV: string = `/tv`;
 const API_TV_OLD_USERS: string = `${API_TV}/old-users`;
 const API_TV_SIGNIN: string = `${API_TV}/login`;
-const API_DIARY: string = `/diary`;
-const API_DIARY_VIEW: string = `${API_DIARY}/view`;
 const API_GYMNASTICS: string = `/gymnastics`;
+const API_POSTS: string = `/posts/family`;
 
 export {
   BASE_URL,
@@ -56,11 +58,14 @@ export {
   PATH_SENIOR_UNIQUE_CODE,
   PATH_CONNECT_TV,
   PATH_SELECT_SENIOR,
+  PATH_NOTICES,
   PATH_MAIN,
   PATH_COMMUNITY,
   PATH_DATETIME,
   PATH_GYMNASTICS,
   PATH_MY,
+  PATH_MY_MAIN,
+  PATH_SETTING_TV,
   PATH_LOADING,
   // API
   API_FAMILY,
@@ -74,6 +79,6 @@ export {
   API_SENIOR_DELECT,
   API_TV_OLD_USERS,
   API_TV_SIGNIN,
-  API_DIARY_VIEW,
   API_GYMNASTICS,
+  API_POSTS,
 };

@@ -3,18 +3,39 @@ import styled from 'styled-components';
 const CommunityBoxS = styled.div`
   width: 100%;
   margin: 0 auto;
+  position: relative;
+  top: 0px;
+  left: 0px;
+
+  max-height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+
+  /* Chrome, Safari, Edge 스크롤 바 숨기기 */
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  /* Firefox 스크롤 바 숨기기 */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
 `;
 
 const CommunityCardS = styled.div`
   width: 100%;
+  max-width: 500px;
   padding: 20px 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   background-color: #ffffff;
-  border-bottom: 3px solid #88888830;
-  margin-bottom: 10px;
+  border-bottom: 1px solid #88888830;
+  margin: 0 auto 10px auto;
 `;
 
 const CommunityHeaderS = styled.div`
@@ -28,19 +49,17 @@ const CommunityHeaderS = styled.div`
 const CommunityWriterS = styled.div`
   margin-left: 10px;
   font-weight: 900;
-  font-size: 1.5em;
+  font-size: 1em;
   color: #666666;
 `;
 
 const CommunityVideoS = styled.video`
-  width: 95%;
-  max-width: 370px;
+  width: 100%;
+  max-width: 500px;
 
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-
-  border-radius: 10px;
 `;
 
 const CommunityAddBtnS = styled.div`

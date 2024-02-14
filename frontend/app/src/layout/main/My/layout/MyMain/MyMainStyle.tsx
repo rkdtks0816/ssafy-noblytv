@@ -8,12 +8,12 @@ const MyBoxS = styled.div`
 
 const MyCardS = styled.div`
   width: 100%;
-  border-bottom: 3px solid #888888;
+  border-bottom: 1px solid #888888;
   margin-bottom: 20px;
   padding: 10px 0;
 
-  font-weight: 900;
-  font-size: 1.5em;
+  font-weight: 500;
+  font-size: 1.2em;
   color: #666666;
 `;
 

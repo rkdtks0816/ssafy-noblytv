@@ -23,33 +23,35 @@ const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
     const videoRef = useRef<HTMLVideoElement>(null);
     const socket: Socket | null = useSocket(`${BASE_URL}:${SOCKET_PORT}`);
 
+    useEffect(() => {
+      // 새 content로 비디오 소스 업데이트
+      const currentVideo = videoRef.current;
+      if (currentVideo) {
+        currentVideo.load(); // 새 소스로 비디오 로드
+        currentVideo
+          .play()
+          .catch(error => console.error('Video play failed', error)); // 자동 재생 정책으로 인한 에러 처리
+      }
+    }, [content]); // content가 변경될 때마다 실행
+
     // eslint-disable-next-line consistent-return
     useEffect(() => {
+      // 비디오 재생 종료 이벤트 핸들러
       const currentVideo = videoRef.current;
-
-      console.log(message);
-      console.log(content);
       if (currentVideo) {
         const handleVideoEnd = () => {
-          currentVideo.pause();
           if (socket) {
-            socket.emit('message', 'stop');
+            socket.emit('message', 'end');
           }
         };
 
         currentVideo.addEventListener('ended', handleVideoEnd);
 
-        // 비디오를 로드하고 재생합니다.
-        currentVideo.load();
-        currentVideo
-          .play()
-          .catch(error => console.error('Video play failed', error));
-
         return () => {
           currentVideo.removeEventListener('ended', handleVideoEnd);
         };
       }
-    }, [message, content, socket]);
+    }, [socket]);
 
     return (
       <ChildModalBg isFullScreen={isFullScreen} isActive={isActive}>

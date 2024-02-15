@@ -22,14 +22,12 @@ def on_disconnect():
 
 @sio.on('oldID')
 def on_data_from_server(data):
-    print(f"recived old ID : {data}")
     global old_user_id
 
     old_user_id = int(data)
 
 @sio.on('video')
 def on_data_from_server(data):
-    print(f"recived video : {data}")
     if data == "Sent video":
         summarize_video(old_user_id)
         update_DB()

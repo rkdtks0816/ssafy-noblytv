@@ -14,7 +14,7 @@ import {
 
 function SignInTV() {
   const Url = 'http://i10c103.p.ssafy.io:5173/connect-tv';
-  const [UniqueCode, setUniqueCode] = useState('D98DF-KQ8V');
+  const [UniqueCode, setUniqueCode] = useState('D9DF-KQ8V');
   const QrValue = `${Url}?UniqueCode=${encodeURIComponent(UniqueCode)}`;
   const socket: Socket | null = useSocket(`${BASE_URL}:${SOCKET_PORT}`);
 

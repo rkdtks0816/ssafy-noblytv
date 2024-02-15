@@ -7,7 +7,7 @@ var target = new Date();
 var exist = false;
 var detectability;
 
-//
+// Detect to watch TV over time
 function detectOverTime() {
   now = new Date();
   target = `${now.getYear()}-${now.getMonth()}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
@@ -23,29 +23,28 @@ function detectOverTime() {
   );
   detectability = detecteds / (nones + detecteds);
 
-  console.log(detectability);
-
   if (
     dates.includes(target) &&
     watchtime / 1000 >= 10 &&
     detectability >= 0.9
   ) {
-    console.log("hi");
     socket.emit("mode", "news");
     started = now;
     detections = [];
-    console.log("detections : ", detections);
   }
 }
 
-function getDetections(){
+// Return detection value
+function getDetections() {
   return detections;
 }
 
-function isExist(){
+// Return exist value
+function isExist() {
   return exist;
 }
 
-function setExist(val){
+// Set exist as value
+function setExist(val) {
   exist = val;
 }

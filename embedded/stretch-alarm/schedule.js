@@ -1,4 +1,4 @@
-// Broadcast schedule
+/*--- Broadcast schedule ---*/
 const schedule = [
   new Date("2024-02-14 11:35"),
   new Date("2024-02-14 02:30"),

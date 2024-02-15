@@ -12,7 +12,7 @@ const StatusMsgImgS = styled.div<{ $iconType?: string }>`
   width: 15px;
   height: 15px;
 
-  background: url(${props => `/src/assets/icon_${props.$iconType}.png`});
+  background: url(${props => `/icon/icon_${props.$iconType}.png`});
   background-size: cover;
   background-repeat: no-repeat;
 `;

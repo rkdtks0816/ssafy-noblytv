@@ -6,7 +6,7 @@ const LogoImgS = styled.div`
   width: 200px;
   height: 200px;
 
-  background: url('/src/assets/logo.png');
+  background: url('/logo/logo.png');
   background-size: cover;
   background-repeat: no-repeat;
 `;

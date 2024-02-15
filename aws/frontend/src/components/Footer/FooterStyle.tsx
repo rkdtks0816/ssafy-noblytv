@@ -21,7 +21,7 @@ const FooterIconS = styled.div<{ $footerIconType: string }>`
   width: 100%;
   height: 100%;
 
-  background: url(${props => `/src/assets/icon${props.$footerIconType}.png`});
+  background: url(${props => `/icon/icon${props.$footerIconType}.png`});
   background-size: cover;
   background-repeat: no-repeat;
 

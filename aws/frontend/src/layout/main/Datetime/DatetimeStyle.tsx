@@ -50,7 +50,7 @@ const DateTimeBtnS = styled.div<{ $dateTimeBtnType: string }>`
   height: 20px;
   margin-right: 20px;
 
-  background: url(${props => `/src/assets/icon_${props.$dateTimeBtnType}.png`});
+  background: url(${props => `/icon/icon_${props.$dateTimeBtnType}.png`});
   background-size: cover;
   background-repeat: no-repeat;
 `;

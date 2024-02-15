@@ -55,7 +55,7 @@ const CheckIconS = styled.div`
   width: 15px;
   height: 15px;
 
-  background: url('/src/assets/icon_success.png');
+  background: url('/icon/icon_success.png');
   background-repeat: no-repeat;
   background-size: cover;
 `;

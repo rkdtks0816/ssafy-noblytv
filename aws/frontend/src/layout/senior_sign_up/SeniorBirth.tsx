@@ -11,6 +11,7 @@ import {
   API_PORT,
   API_SENIOR_SIGN_UP,
   BASE_URL,
+  PATH_SENIOR_CONNECT,
   PATH_SENIOR_SIGN_UP_NAME_GENDER,
   PATH_SENIOR_UNIQUE_CODE,
 } from '../../constants/constants';
@@ -86,7 +87,10 @@ function SeniorBirth({
           },
         )
         .then(response => {
-          navigate(PATH_SENIOR_UNIQUE_CODE);
+          navigate(
+            `${PATH_SENIOR_CONNECT}?uniqueCode=${encodeURIComponent(response.data.userId)}`,
+            { state: PATH_SENIOR_UNIQUE_CODE },
+          );
           setOldUserId(response.data.userId);
           gymnasticsInit(response.data.userId);
         })

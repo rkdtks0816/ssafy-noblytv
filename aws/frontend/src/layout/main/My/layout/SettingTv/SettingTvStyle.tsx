@@ -38,7 +38,7 @@ const SettingTvArrowS = styled.div`
   width: 12px;
   height: 12px;
   margin: 0 15px 0 5px;
-  background: url('/src/assets/icon_right_arrow.png');
+  background: url('/icon/icon_right_arrow.png');
   background-size: cover;
   background-repeat: no-repeat;
 `;

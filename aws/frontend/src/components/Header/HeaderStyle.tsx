@@ -20,6 +20,8 @@ const SeniorNameS = styled.div`
 
   color: #000000;
   text-decoration: none;
+
+  cursor: pointer;
 `;
 
 const SeniorTitleS = styled.div`
@@ -36,11 +38,13 @@ const NoticeIconS = styled.div`
   height: 19px;
   margin: auto 20px 17px auto;
 
-  background-image: url('/src/assets/icon_notice.png');
+  background-image: url('/icon/icon_notice.png');
   background-size: cover;
   background-repeat: no-repeat;
 
   text-decoration: none;
+
+  cursor: pointer;
 `;
 
 export { HeaderBgS, SeniorNameS, SeniorTitleS, NoticeIconS };

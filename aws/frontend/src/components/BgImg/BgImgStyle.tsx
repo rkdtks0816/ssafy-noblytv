@@ -12,7 +12,7 @@ const BgImgStyle = styled.div`
   justify-content: space-between;
   flex-direction: column;
 
-  background: url('/src/assets/bg_img.png');
+  background: url('/background_img/bg_img.png');
   background-size: cover;
   background-repeat: no-repeat;
 `;

@@ -10,8 +10,8 @@ import {
 } from './SignInTVStyle';
 
 function SignInTV() {
-  // const Url = 'http://i10c103.p.ssafy.io:5173/connect-tv';
-  const Url = 'http://192.168.100.72:5173/connect-tv';
+  const Url = 'http://i10c103.p.ssafy.io:5173/connect-tv';
+  // const Url = 'http://192.168.100.72:5173/connect-tv';
   const UniqueCode = '3NK1 - 0WSE3';
   const QrValue = `${Url}?UniqueCode=${encodeURIComponent(UniqueCode)}`;
 

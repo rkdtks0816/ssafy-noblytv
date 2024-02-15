@@ -51,6 +51,7 @@ public class SecurityConfig {
 
         // 사전에 약속된 출처를 명시
         config.addAllowedOrigin("http://192.168.100.72:3000");
+        config.addAllowedOrigin("http://i10c103.p.ssafy.io");
         config.addAllowedOrigin("http://i10c103.p.ssafy.io:3000");
         config.addAllowedOrigin("http://i10c103.p.ssafy.io:3001");
         config.addAllowedOrigin("http://i10c103.p.ssafy.io:3010");

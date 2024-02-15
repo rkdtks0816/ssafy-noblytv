@@ -2,6 +2,7 @@ const BASE_URL: string = 'http://i10c103.p.ssafy.io';
 const BASE_PORT: string = '3001';
 const API_PORT: string = '8080';
 const FILE_SEVER_PORT: string = '8880';
+const SOCKET_PORT: string = '9000';
 // PATHS
 const PATH_SIGN_IN: string = '/sign-in';
 const PATH_SIGN_UP: string = '/sign-up';
@@ -45,6 +46,7 @@ export {
   BASE_PORT,
   API_PORT,
   FILE_SEVER_PORT,
+  SOCKET_PORT,
   // PATH
   PATH_SIGN_IN,
   PATH_SIGN_UP,

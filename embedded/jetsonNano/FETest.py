@@ -6,6 +6,7 @@ prompt="""1. mode
 5. ('mode', 'gymnastic')
 6. ('message', 'start)
 7. ('message','stop')
+8. ('message','post up')
 0. quit
 """
 
@@ -29,6 +30,8 @@ while True:
             sendData("start")
         elif mode == 7:
             sendData("stop")
+        elif mode == 8:
+            sendData("post up")
         elif mode == 0:
             break 
         else:

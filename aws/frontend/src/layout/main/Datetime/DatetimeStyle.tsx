@@ -59,9 +59,11 @@ const DateTimeScheduleBoxS = styled.div`
   position: absolute;
   top: 40px;
   width: 100%;
+  max-width: 400px;
   height: 30%;
   background: #ffffff;
-  filter: drop-shadow(0px 0px 4px #dce7f5);
+  border-top: 2px solid #5ab8c0;
+  border-bottom: 2px solid #5ab8c0;
   overflow: hidden;
   overflow-y: auto;
 
@@ -81,7 +83,7 @@ const DateTimeScheduleBoxS = styled.div`
 
 const DateTimeScheduleListBoxUlS = styled.div`
   width: 90%;
-  max-width: 350px;
+  max-width: 400px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -139,13 +141,13 @@ const DateTimeDiaryListBoxUlS = styled.div`
 
 const DateTimeDiaryListBoxLiBoxS = styled.div`
   width: 90%;
-  max-width: 330px;
+  max-width: 370px;
   margin: 10px 0;
-  border-radius: 10px;
   padding: 10px;
 
   background: #ffffff;
-  filter: drop-shadow(0px 0px 4px #fce8c3);
+  border-top: 2px solid #eac164;
+  border-bottom: 2px solid #eac164;
 `;
 
 const DateTimeDiaryListBoxLiDateS = styled.div`

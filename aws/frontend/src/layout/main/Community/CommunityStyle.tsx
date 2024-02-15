@@ -27,7 +27,7 @@ const CommunityBoxS = styled.div`
 
 const CommunityCardS = styled.div`
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
   padding: 20px 0;
   display: flex;
   justify-content: center;

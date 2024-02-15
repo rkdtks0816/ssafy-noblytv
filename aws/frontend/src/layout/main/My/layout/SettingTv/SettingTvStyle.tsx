@@ -8,7 +8,7 @@ const SettingTvTitleS = styled.div`
 
 const SettingTvListS = styled.div`
   width: 90vw;
-  max-width: 350px;
+  max-width: 400px;
   border-radius: 10px;
   background: #ffffff;
   margin-top: 6px;

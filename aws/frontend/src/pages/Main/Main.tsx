@@ -139,6 +139,18 @@ function Main() {
           setTimeout(() => {
             setPopupContents('');
           }, 3000);
+        } else if (data === 'fall') {
+          alarms.push({
+            alarm: `
+                ⚠ 어르신 낙상이 감지되었어요!`,
+            alarmTime: getCurrentDate(),
+          });
+          setAlarms(alarms);
+          setPopupContents(`
+                ⚠ 어르신 낙상이 감지되었어요!`);
+          setTimeout(() => {
+            setPopupContents('');
+          }, 3000);
         }
       });
     }

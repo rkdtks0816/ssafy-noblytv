@@ -15,6 +15,8 @@ function App() {
   if (socket && !messageSentRef.current) {
     socket.emit('message', 'give me code');
     messageSentRef.current = true;
+    // console.log(socket);
+    console.log(socket.emit('message', 'give me code'));
   }
 
   return (

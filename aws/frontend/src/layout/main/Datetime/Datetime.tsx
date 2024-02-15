@@ -58,6 +58,7 @@ function Datetime({
 
           return dayComparison;
         }
+        return 0;
       }),
     );
 

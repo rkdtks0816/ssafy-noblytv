@@ -25,14 +25,14 @@ const ModalBoxS = styled.div`
 const ModalContentsS = styled.div`
   color: #666666;
   font-weight: 600;
-  font-size: 1.3em;
+  font-size: 1.1em;
   padding: 20px;
   white-space: pre-line;
 `;
 
 const ModalButtonS = styled.div`
-  width: 50px;
-  height: 30px;
+  width: 40px;
+  height: 25px;
   margin: 0px 10px 10px auto;
   background: #eac164;
   border-radius: 10px;
@@ -40,9 +40,10 @@ const ModalButtonS = styled.div`
   text-align: center;
   color: #666666;
   font-weight: 900;
-  font-size: 1em;
+  font-size: 0.8em;
   line-height: 1.9;
   filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
+  cursor: pointer;
 `;
 
 export { ModalBgS, ModalBoxS, ModalContentsS, ModalButtonS };

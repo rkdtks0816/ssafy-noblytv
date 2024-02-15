@@ -21,6 +21,10 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "../../test/frontend/app/Keyword.tsx",
+    "../../test/frontend/app/medicationList.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

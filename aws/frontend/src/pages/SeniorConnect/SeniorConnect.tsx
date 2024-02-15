@@ -24,17 +24,19 @@ import GetUserInfo from '../../utils/GetUserInfo';
 import useRedirectStore from '../../store/useRedirectStore';
 import useOldUserStore from '../../store/useOldUserStore';
 import GetOldUserInfo from '../../utils/GetOldUserInfo';
+import useModalContentsStore from '../../store/useModalContents';
 
 function SeniorConnect() {
   const navigate = useNavigate();
   const location = useLocation();
+  const state = location.state;
   const queryParams = new URLSearchParams(location.search);
   const uniqueCode = queryParams.get('uniqueCode');
   const { grantType, accessToken, userId } = useUserStore();
   const { redirectPath, setRedirectPath } = useRedirectStore();
   const { setOldUserId } = useOldUserStore();
+  const { modalContents, setModalContents } = useModalContentsStore();
   const [oldUserUniqueCode, setOldUserUniqueCode] = useState('');
-  const [modalContents, setModalContents] = useState<React.ReactNode>('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setOldUserUniqueCode(event.target.value);
@@ -74,7 +76,11 @@ function SeniorConnect() {
                 accessToken,
                 oldUserId: oldUserUniqueCode,
                 successFunc: () => {
-                  navigate(redirectPath);
+                  if (state) {
+                    navigate(state);
+                  } else {
+                    navigate(redirectPath);
+                  }
                 },
               });
             })

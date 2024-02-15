@@ -72,7 +72,7 @@ const CommunityAddBtnS = styled.div`
 
   border-radius: 50%;
 
-  background: url('/src/assets/icon_add.png');
+  background: url('/icon/icon_add.png');
   background-size: cover;
   background-repeat: no-repeat;
 

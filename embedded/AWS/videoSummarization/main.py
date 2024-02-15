@@ -18,6 +18,7 @@ def summarize_video(old_user_id):
     time = str(datetime.datetime.now()).split()[0]
 
     video_path = f"./videos/old_{old_user_id}/{time}.mp4"
+    os.system(f"mkdir -p ../nobly/fileserver/videos/old_{old_user_id}")
     result_path = f"../nobly/fileserver/videos/old_{old_user_id}/{time}_summary.mp4"
 
     cap = cv2.VideoCapture(video_path)

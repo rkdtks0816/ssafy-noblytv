@@ -1,15 +1,24 @@
 import time
 import os
-from conversation.functions_resources import sendMode, remainedVideo
+from conversation.functions_resources import sendMode, remainedVideo, returnData, sendData
+from dotenv import load_dotenv
 
 gymnastic_file_path = './gymnastics.py'
 diary_file_path = './conversation/diary.py'
 quiz_file_path = './conversation/quiz.py'
 community_file_path = './conversation/community.py'
 
+# while True:
+#     if returnData() == "give me code":
+#         load_dotenv()
+#         tvCode = os.getenv('TV_CODE')
+#         sendMode(tvCode)
+#         break
+
 sendMode("news")
 time.sleep(5)
 sendMode("commercial")
+time.sleep(2)
 
 # while True:
 #     if returnData() == "chejo" :

@@ -9,7 +9,7 @@ import time
 import urllib.request
 import Jetson.GPIO as GPIO
 
-old_user_id = "1"
+old_user_id = "2"
 nowD = ""
 family = []
 nowtime = str(datetime.datetime.now()).split()[0]
@@ -94,6 +94,10 @@ def sendType(text):
 
 @sio.event
 def sendVideo():
+    sio.emit('oldID', f'{old_user_id}')
+    print("oldID: ", f'{old_user_id}')
+    time.sleep(0.5)  # 메시지를 전송한 후 충분한 처리 시간을 보장합니다.
+
     os.system(f'ssh -i "./I10C103T.pem" ubuntu@i10c103.p.ssafy.io "mkdir -p /home/ubuntu/embedded/videos/old_{old_user_id}"')
     os.system(f'scp -i "./I10C103T.pem" {video_path} ubuntu@i10c103.p.ssafy.io:/home/ubuntu/embedded/videos/old_{old_user_id}')
 
@@ -108,9 +112,6 @@ def sendVideo():
                 print("Failed to reconnect.")
                 return  # 재연결에 실패한 경우, 함수를 빠져나갑니다.
             
-        sio.emit('oldID', f'{old_user_id}')
-        print("oldID: ", f'{old_user_id}')
-        time.sleep(0.5)  # 메시지를 전송한 후 충분한 처리 시간을 보장합니다.
         sio.emit('video', "Sent video")
         print("Sent video: Sent video")
         time.sleep(0.5)  # 메시지를 전송한 후 충분한 처리 시간을 보장합니다.

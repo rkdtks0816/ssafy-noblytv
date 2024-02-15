@@ -1,5 +1,8 @@
 import QRCode from 'qrcode.react';
 import { useEffect, useState } from 'react';
+import { Socket } from 'socket.io-client';
+import { BASE_URL, SOCKET_PORT } from '../../constants/constants';
+import useSocket from '../../hooks/useSocket';
 import {
   LeftBoxS,
   RightBoxS,
@@ -10,11 +13,29 @@ import {
 } from './SignInTVStyle';
 
 function SignInTV() {
-  // const Url = 'http://i10c103.p.ssafy.io:5173/connect-tv';
-  const Url = 'http://192.168.100.72:5173/connect-tv';
-  const UniqueCode = '3NK1 - 0WSE3';
+  const Url = 'http://i10c103.p.ssafy.io:5173/connect-tv';
+  const [UniqueCode, setUniqueCode] = useState('D9DF-KQ8V');
   const QrValue = `${Url}?UniqueCode=${encodeURIComponent(UniqueCode)}`;
+  const socket: Socket | null = useSocket(`${BASE_URL}:${SOCKET_PORT}`);
 
+  useEffect(() => {
+    if (socket) {
+      // 서버로부터 'mode' 이벤트를 수신
+      socket.on('mode', (TVCode: string) => {
+        if (TVCode === 'tv') {
+          // 'tvcode'를 UniqueCode로 설정
+          setUniqueCode(TVCode);
+        }
+      });
+    }
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      if (socket) {
+        socket.off('mode');
+      }
+    };
+  }, [socket]);
   // 반응형 크기를 위한 상태
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 

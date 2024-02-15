@@ -32,7 +32,7 @@ function Notices({ setSubMenu }: { setSubMenu: (subMenu: string) => void }) {
     setNowMenu(PATH_COMMUNITY);
   };
 
-  const deleteAlarm = index => {
+  const deleteAlarm = (index: number) => {
     alarms.splice(index, 1);
     setAlarms(alarms);
   };

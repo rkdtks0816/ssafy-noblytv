@@ -48,7 +48,7 @@ function Main() {
   const { reload, setReload } = useReloadStore();
   const { nowMenu } = useMenuStore();
   const { alarms, setAlarms } = useAlarmsStore();
-  const { popupContents, setPopupContents } = usePopupContents();
+  const { setPopupContents } = usePopupContents();
   const [subMenu, setSubMenu] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [familyRelations, setFamilyRelations] = useState<

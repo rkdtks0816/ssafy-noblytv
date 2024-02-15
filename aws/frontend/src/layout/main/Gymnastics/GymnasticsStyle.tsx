@@ -2,13 +2,34 @@ import styled from 'styled-components';
 import YouTube from 'react-youtube';
 
 const GymnasticsBoxS = styled.div`
-  width: 90%;
-  max-width: 350px;
+  width: 100%;
   margin: 0 auto;
+  position: relative;
+  top: 0px;
+  left: 0px;
+
+  max-height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+
+  /* Chrome, Safari, Edge 스크롤 바 숨기기 */
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  /* Firefox 스크롤 바 숨기기 */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
 `;
 
 const GymnasticsCardS = styled.div`
-  margin-bottom: 20px;
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto 20px auto;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const MyBoxS = styled.div`
   width: 90%;
-  max-width: 350px;
+  max-width: 400px;
   margin: 0 auto;
 `;
 

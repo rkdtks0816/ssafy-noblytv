@@ -43,6 +43,8 @@ const ExpandModal = forwardRef<HTMLDivElement, ExpandModalProps>(
       function handleVideoEnd() {
         if (socket) {
           socket.emit('message', 'end');
+          socket.emit('message', '');
+          console.log('socket', socket);
         }
       }
 

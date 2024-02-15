@@ -105,6 +105,11 @@ interface OldUserInfoType {
   userType: string;
 }
 
+interface AlarmType {
+  alarm: string;
+  alarmTime: string;
+}
+
 export type {
   SignUpType,
   SeniorSignUpType,
@@ -120,4 +125,5 @@ export type {
   PostsResType,
   FamilyPostsResType,
   OldUserInfoType,
+  AlarmType,
 };

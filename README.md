@@ -285,6 +285,8 @@
   - [요구 사항 명세서](https://www.notion.so/minju98/1598af230a404e8c8f51531f8d981cdb)
   3. API 명세서
   - [REST API 연동 규격서](https://www.notion.so/minju98/Rest-API-590a12f831eb43c8882928b6f9f6b144)
+  - Swagger를 통해서도 API 명세서 정리
+  ![Swagger](./exec/Swagger.PNG)
   4. ERD
   ![ERD](./exec/ERD.png)
   5. 시스템 아키텍처

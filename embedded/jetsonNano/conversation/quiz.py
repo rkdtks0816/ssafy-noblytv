@@ -23,7 +23,20 @@ if "yes" in res.lower():
         sendData(quiz)
         speak(quiz)
         res = getAudio()
-        system_instruction = f"{quiz} 위 질문의 정답은 {ans}이다. user는 질문을 듣고 {res}라고 대답했다. {gender}가 맞았는지 틀렸는지 알려주고, 짧은 반응을 해라."
+        system_instruction = f"""{quiz} 위 질문의 정답은 {ans}이다. user는 질문을 듣고 {res}라고 대답했다. {gender}가 맞았는지 틀렸는지 알려주고, 짧은 반응을 해라.
+        
+        <example 1>
+        "ㄱㄹㄱ는 무슨 동물일까?" 위 질문의 정답은 "기러기"이다. user는 질문을 듣고 "기러기"라고 대답했다. {gender}가 맞았는지 틀렸는지 알려주고, 짧은 반응을 해라.
+        you: 기러기 맞아요! 정답이에요! {gender}는 정말 대단하세요!
+        </example 1>
+
+        <example 2>
+        "ㅂㅇㄹ는 무슨 동물일까?" 위 질문의 정답은 "병아리"이다. user는 질문을 듣고 "독수리"라고 대답했다. {gender}가 맞았는지 틀렸는지 알려주고, 짧은 반응을 해라.
+        you: 틀렸어요. 다시 한 번 생각해 보세요. 정답은 병아리에요.
+        </example 2>
+
+        you:
+        """
         res = getAnswer(system_instruction)
         sendData(res)
         speak(res)

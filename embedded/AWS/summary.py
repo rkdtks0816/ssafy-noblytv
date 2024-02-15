@@ -4,7 +4,7 @@ import datetime
 import pymysql
 import time
 
-old_user_id = 1
+old_user_id = 13
 
 ########################################################
 # socket io

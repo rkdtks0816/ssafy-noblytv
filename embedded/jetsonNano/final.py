@@ -15,6 +15,7 @@ community_file_path = './conversation/community.py'
 #         sendMode(tvCode)
 #         break
 
+time.sleep(10)
 sendMode("news")
 time.sleep(5)
 sendMode("commercial")
@@ -27,17 +28,23 @@ os.system(f'python3 {gymnastic_file_path}')
         # break
 
 ################################################################
+sendMode("main")
+time.sleep(5)
 sendMode("news")
 time.sleep(5)
 sendMode("commercial")
-time.sleep(2)
+time.sleep(1)
 ################################################################
 
 sendMode('quiz')
-time.sleep(2)
+time.sleep(1)
 os.system(f'python3 {quiz_file_path}')
 
+
 ################################################################
+sendMode("main")
+time.sleep(5)
+
 sendMode("news")
 time.sleep(5)
 sendMode("commercial")

@@ -9,7 +9,7 @@ import time
 import urllib.request
 import Jetson.GPIO as GPIO
 
-old_user_id = "2"
+old_user_id = "13"
 nowD = ""
 family = []
 nowtime = str(datetime.datetime.now()).split()[0]
@@ -59,7 +59,7 @@ def on_disconnect():
 @sio.on('message')
 def on_data_from_server(data):
     global nowD
-
+    
     print('Data from server:', data)
     nowD = data
 

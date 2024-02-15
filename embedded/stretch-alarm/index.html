@@ -1,9 +1,11 @@
 <html>
   <head>
+    <!-- CDN -->
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
 
+    <!-- modules -->
     <script src="./schedule.js"></script>
     <script src="./socket.js"></script>
     <script src="./detection.js"></script>
@@ -53,7 +55,7 @@
         webcam.update();
         await predict();
 
-        // Detect watching TV over time
+        // Detect to watch TV over time
         detectOverTime();
 
         window.requestAnimationFrame(loop);
@@ -121,8 +123,6 @@
 
   <body>
     <div>Pose Detection</div>
-
-    <button type="button" onclick="init()">Start</button>
     <div><canvas id="canvas"></canvas></div>
     <div id="label-container"></div>
   </body>

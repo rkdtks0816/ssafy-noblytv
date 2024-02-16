@@ -8,12 +8,12 @@ diary_file_path = './conversation/diary.py'
 quiz_file_path = './conversation/quiz.py'
 community_file_path = './conversation/community.py'
 
-# while True:
-#     if returnData() == "give me code":
-#         load_dotenv()
-#         tvCode = os.getenv('TV_CODE')
-#         sendMode(tvCode)
-#         break
+while True:
+    if returnData() == "give me code":
+        load_dotenv()
+        tvCode = os.getenv('TV_CODE')
+        sendMode(tvCode)
+        break
 
 time.sleep(10)
 sendMode("news")
@@ -21,11 +21,11 @@ time.sleep(5)
 sendMode("commercial")
 time.sleep(2)
 
-# while True:
-#     if returnData() == "chejo" :
-sendMode('gymnastic')
-os.system(f'python3 {gymnastic_file_path}')
-        # break
+while True:
+    if returnData() == "chejo" :
+        sendMode('gymnastic')
+        os.system(f'python3 {gymnastic_file_path}')
+        break
 
 ################################################################
 sendMode("main")

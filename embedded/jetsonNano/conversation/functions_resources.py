@@ -152,6 +152,12 @@ def continueChat(text):
     Choose one of the following intents:
     - no: don't want to continue conversation
     - yes: other situations
+    
+    <example>
+    if user said "대화 그만 할래", then return "no"
+    if user said "너랑 말 안해", then return "no"
+    if user said "너랑 얘기하는 것이 참 좋아", then return "yes"
+    </example>
 
     User: {text}
     Intent:
@@ -287,7 +293,10 @@ def getAudio():
             GPIO.output(LED_1, GPIO.HIGH) 
             GPIO.output(LED_2, GPIO.HIGH) 
             # timeout: 10, pharse_time_limit: 10
-            audio=r.listen(source, 10, 30)
+            try:
+                audio=r.listen(source, 10, 30)
+            except:
+                audio = None
             GPIO.output(LED_1, GPIO.LOW) 
             GPIO.output(LED_2, GPIO.LOW) 
             print("Runnnnnn")

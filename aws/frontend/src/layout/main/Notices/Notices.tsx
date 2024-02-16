@@ -45,11 +45,8 @@ function Notices({ setSubMenu }: { setSubMenu: (subMenu: string) => void }) {
         <NoticesListBoxS>
           <NoticesListUlS>
             {alarms.map((alarm, index) => (
-              <NoticesListLiS
-                key={alarm.alarmTime}
-                onClick={() => handleAlarmClick()}
-              >
-                <div>
+              <NoticesListLiS key={alarm.alarmTime}>
+                <div onClick={() => handleAlarmClick()}>
                   <NoticesListLiDateS>{alarm.alarmTime}</NoticesListLiDateS>
                   <NoticesListLiContentsS>{alarm.alarm}</NoticesListLiContentsS>
                 </div>

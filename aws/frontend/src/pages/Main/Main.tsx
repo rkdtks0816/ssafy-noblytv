@@ -14,6 +14,9 @@ import {
   PATH_SENIOR_CONNECT,
   PATH_SIGN_IN,
   SOCKET_PORT,
+  TEXT_DIARY_UP,
+  TEXT_FALL,
+  TEXT_POST_UP,
 } from '../../constants/constants';
 import Community from '../../layout/main/Community/Community';
 import Datetime from '../../layout/main/Datetime/Datetime';
@@ -39,6 +42,7 @@ import useAlarmsStore from '../../store/useAlarmsStore';
 import useSocket from '../../hooks/useSocket';
 import usePopupContents from '../../store/usePopupContents';
 import Popup from '../../components/Popup/Popup';
+import useRedirectStore from '../../store/useRedirectStore';
 
 function Main() {
   const navigate = useNavigate();
@@ -49,6 +53,7 @@ function Main() {
   const { nowMenu } = useMenuStore();
   const { alarms, setAlarms } = useAlarmsStore();
   const { setPopupContents } = usePopupContents();
+  const { setRedirectPath } = useRedirectStore();
   const [subMenu, setSubMenu] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [familyRelations, setFamilyRelations] = useState<
@@ -128,26 +133,35 @@ function Main() {
     if (socket) {
       socket.on('message', (data: string) => {
         if (data === 'post up') {
+          setRedirectPath(PATH_COMMUNITY);
           alarms.push({
-            alarm: `
-                어르신 체조 영상을 확인하세요!`,
+            alarm: TEXT_POST_UP,
             alarmTime: getCurrentDate(),
           });
           setAlarms(alarms);
-          setPopupContents(`
-                어르신 체조 영상을 확인하세요!`);
+          setPopupContents(TEXT_POST_UP);
           setTimeout(() => {
             setPopupContents('');
           }, 3000);
         } else if (data === 'fall') {
+          setRedirectPath(nowMenu);
           alarms.push({
-            alarm: `
-                ⚠ 어르신 낙상이 감지되었어요!`,
+            alarm: TEXT_FALL,
             alarmTime: getCurrentDate(),
           });
           setAlarms(alarms);
-          setPopupContents(`
-                ⚠ 어르신 낙상이 감지되었어요!`);
+          setPopupContents(TEXT_FALL);
+          setTimeout(() => {
+            setPopupContents('');
+          }, 3000);
+        } else if (data === 'diary up') {
+          setRedirectPath(PATH_DATETIME);
+          alarms.push({
+            alarm: TEXT_DIARY_UP,
+            alarmTime: getCurrentDate(),
+          });
+          setAlarms(alarms);
+          setPopupContents(TEXT_DIARY_UP);
           setTimeout(() => {
             setPopupContents('');
           }, 3000);

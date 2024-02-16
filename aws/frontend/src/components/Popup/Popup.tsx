@@ -1,18 +1,19 @@
-import { PATH_COMMUNITY } from '../../constants/constants';
 import useMenuStore from '../../store/useMenuStore';
 import usePopupContentsStore from '../../store/usePopupContents';
+import useRedirectStore from '../../store/useRedirectStore';
 import { PopupBoxS, PopupContentsS, PopupTitleS } from './PopupStyle';
 
 function Popup() {
   const { popupContents, setPopupContents } = usePopupContentsStore();
   const { setNowMenu } = useMenuStore();
+  const { redirectPath } = useRedirectStore();
   const handleBtnClick = () => {
-    setNowMenu(PATH_COMMUNITY);
+    setNowMenu(redirectPath);
     setPopupContents('');
   };
   return (
     <PopupBoxS $isPopup={popupContents} onClick={handleBtnClick}>
-      <PopupTitleS>게시글 알림</PopupTitleS>
+      <PopupTitleS>알림</PopupTitleS>
       <PopupContentsS>{popupContents}</PopupContentsS>
     </PopupBoxS>
   );

@@ -16,6 +16,7 @@ function App() {
     socket.emit('message', 'give me code');
     messageSentRef.current = true;
     // console.log(socket);
+    socket.emit('message', 'connected');
     console.log(socket.emit('message', 'give me code'));
   }
 

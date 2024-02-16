@@ -115,21 +115,22 @@
 
 #### 메인화면
 
-![app_main](./exec/app/app_main.png)
-
 - 메인화면에서 가족, 어르신이 올린 영상을 확인 할 수 있습니다.
+
+![app_main](./exec/app/app_main.png)
 
 #### 일기 및 일정
 
-![app_diary and schedule](./exec/app/app_diary%20and%20schedule.png)
+- 일기 및 일정에서 어르신이 음성일기가 텍스트로 요약정리되어 화면에 보여줍니다.
+- 일정을 등록하면 어르신께서 사용중인 노블리TV로 전달되어 해당 시간에 TV에서 알림을 띄웁니다.
 
-- 일기 및 일정에서 어르신이 음성일기가 텍스트로 요약정리되어 화면에 보여줍니다. - 일정을 등록하면 어르신께서 사용중인 노블리TV로 전달되어 해당 시간에 TV에서 알림을 띄웁니다.
+![app_diary and schedule](./exec/app/app_diary%20and%20schedule.png)
 
 #### 체조 관리
 
-![app_gymnastic manage](./exec/app/app_gymnastic%20manage.png)
-
 - 체조 영상을 선택하여 등록하면 어르신께서 사용중인 노블리TV로 전달되어 체조 영상을 띄웁니다.
+
+![app_gymnastic manage](./exec/app/app_gymnastic%20manage.png)
 
 <hr />
 

@@ -1,0 +1,14 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+}
+
+/* CSS로 우클릭 비활성화 */
+img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-select: none; /* 일부 브라우저를 위한 대체 속성 */
+  -moz-user-select: none; /* Firefox를 위한 대체 속성 */
+  -ms-user-select: none; /* Internet Explorer를 위한 대체 속성 */
+  -webkit-touch-callout: none;
+}

@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  noblyapi:
+    container_name: noblyapi
+    build:
+      context: ./backend/project
+      dockerfile: Dockerfile
+    image: noblyapiimg
+    volumes:
+      - /home/ubuntu/nobly/fileserver/videos:/app/videos
+    ports:
+      - "8080:8080"
+    networks:
+      - noblynet
+
+  noblyweb:
+    container_name: noblyweb
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: noblywebimg
+    ports:
+      - "80:80"
+    networks:
+      - noblynet
+
+  noblyfileserver:
+    container_name: noblyfileserver
+    build:
+      context: ./fileserver
+      dockerfile: Dockerfile
+    image: noblyfileserverimg
+    volumes:
+      - /home/ubuntu/nobly/fileserver/videos:/usr/share/nginx/html
+    ports:
+      - "8880:80"
+    networks:
+      - noblynet
+
+networks:
+  noblynet:

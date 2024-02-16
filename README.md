@@ -116,30 +116,22 @@
 #### 메인화면
 
 - 메인화면에서 가족, 어르신이 올린 영상을 확인 할 수 있습니다.
-  ![app_main](./exec/app/app_main.png)
+
+![app_main](./exec/app/app_main.png)
 
 #### 일기 및 일정
 
 - 일기 및 일정에서 어르신이 음성일기가 텍스트로 요약정리되어 화면에 보여줍니다.
 - 일정을 등록하면 어르신께서 사용중인 노블리TV로 전달되어 해당 시간에 TV에서 알림을 띄웁니다.
-  ![app_diary and schedule](./exec/app/app_diary%20and%20schedule.png)
+
+![app_diary and schedule](./exec/app/app_diary%20and%20schedule.png)
 
 #### 체조 관리
 
 - 체조 영상을 선택하여 등록하면 어르신께서 사용중인 노블리TV로 전달되어 체조 영상을 띄웁니다.
-  ![app_gymnastic manage](./exec/app/app_gymnastic%20manage.png)
 
-### 2. TVA
+![app_gymnastic manage](./exec/app/app_gymnastic%20manage.png)
 
-#### 체조 진행시 화면
-
-- 가족들이 설정한 체조 영상이 화면에 띄웁니다.
-- 화면 좌측 상단에 실제 체조를 하고있는 모습이 촬영되어 실시간으로 송출됩니다.
-  ![TVA_gymnastic](./exec/TVA/TVA_gymnastic.png)
-
-#### 노블리TV와 상호 커뮤니케이션
- - TV 시청 중일 때 화면 좌측에 창이 보이고, 등록된 손주 사진과 함께 음성과 텍스트가 출력됩니다.
-  ![TVA_modal example](./exec/TVA/TVA_modal%20example.png)
 <hr />
 
 ## [기능 명세서](https://www.notion.so/minju98/8e23409ab41f460da94377b842fe4316?v=bf049a1dff9b4514b016a50d506d2f5a)

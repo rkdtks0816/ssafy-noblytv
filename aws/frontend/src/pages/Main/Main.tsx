@@ -169,7 +169,7 @@ function Main() {
       });
     }
     return () => {
-      socket?.off('message');
+      socket?.off('alarm');
     };
   }, [socket]);
 

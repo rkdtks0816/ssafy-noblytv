@@ -56,6 +56,7 @@
 ## 사용 기술 스택
 
 #### 1. FE
+
 - node.js 20.10.0
 - Vite 5.0.11
 - React 18.2.0
@@ -84,7 +85,7 @@
 - Python 3.8.10
 - Socket io 4.7.4
 - node.js 20.10.0
-
+- Flask 3.0.2
 
 #### 4. DB
 
@@ -102,11 +103,31 @@
 
 - PoseNet
 - Visual Transformer (ViT)
-- Chat GPT 3.5  terbo
+- Chat GPT 3.5 terbo
 - Chat GPT 4
 - NAVER Clova
 
 ## 서비스 화면
+
+### 1. App
+
+- 가족들이 이용하는 application 입니다.
+
+#### 메인화면
+
+![app_main](./exec/app/app_main.png)
+
+- 메인화면에서 가족, 어르신이 올린 영상을 확인 할 수 있습니다.
+
+#### 일기 및 일정
+
+![app_diary and schedule](./exec/app/app_diary%20and%20schedule.png) - 일기 및 일정에서 어르신이 음성일기가 텍스트로 요약정리되어 화면에 보여줍니다. - 일정을 등록하면 어르신께서 사용중인 노블리TV로 전달되어 해당 시간에 TV에서 알림을 띄웁니다.
+
+#### 체조 관리
+
+![app_gymnastic manage](./exec/app/app_gymnastic%20manage.png) - 체조 영상을 선택하여 등록하면 어르신께서 사용중인 노블리TV로 전달되어 체조 영상을 띄웁니다.
+
+<hr />
 
 ## [기능 명세서](https://www.notion.so/minju98/8e23409ab41f460da94377b842fe4316?v=bf049a1dff9b4514b016a50d506d2f5a)
 

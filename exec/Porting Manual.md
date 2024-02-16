@@ -1,1 +1,0 @@
-# [포팅 메뉴얼 문서 정리](https://www.notion.so/minju98/2e467d7e0c1a4ef382c09f934c436b20)

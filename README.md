@@ -134,6 +134,19 @@
 
 <hr />
 
+### 2. TVA
+
+ #### TV에서 체조 
+
+ - 가족들이 App에서 등록한 체조 영상이 노블리TV로 전달되고, TV에서 체조영상이 출력됩니다.
+ - 카메라를 통해 실시간으로 촬영되는 화면은 TVA 화면 좌측 상단에 위치하여 보여주며, 촬영된 영상은 하이라이트만 추출되어 App으로 전달합니다.
+  ![TVA_gymnastic](./exec/TVA/TVA_gymnastic.png)
+
+#### 노블리TV와 상호 커뮤니케이션
+
+  - 사전에 등록한 손주 사진과 함께 TV 화면의 좌측에 텍스트와 함께 사전에 등록한 손주 사진을 띄웁니다. 이때 텍스트와 동일한 음성이 출력됩니다.
+  ![TVA_modal_communication](./exec/TVA/TVA_modal_communication.png)
+
 ## [기능 명세서](https://www.notion.so/minju98/8e23409ab41f460da94377b842fe4316?v=bf049a1dff9b4514b016a50d506d2f5a)
 
 ## [요구 사항 명세서](https://www.notion.so/minju98/1598af230a404e8c8f51531f8d981cdb)

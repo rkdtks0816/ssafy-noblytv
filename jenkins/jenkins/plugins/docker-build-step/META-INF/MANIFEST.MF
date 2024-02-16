@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Created-By: Maven Archiver 3.6.0
+Build-Jdk-Spec: 11
+Specification-Title: docker-build-step
+Specification-Version: 2.11
+Implementation-Title: docker-build-step
+Implementation-Version: 2.11
+Plugin-Class: org.jenkinsci.plugins.dockerbuildstep.PluginImpl
+Group-Id: org.jenkins-ci.plugins
+Artifact-Id: docker-build-step
+Short-Name: docker-build-step
+Long-Name: docker-build-step
+Url: https://github.com/jenkinsci/docker-build-step-plugin
+Plugin-Version: 2.11
+Hudson-Version: 2.387.3
+Jenkins-Version: 2.387.3
+Plugin-Dependencies: maven-plugin:3.23,credentials:1271.v54b_1c2c6388a_,
+ docker-commons:439.va_3cb_0a_6a_fb_29,docker-java-api:3.3.1-79.v20b_534
+ 27e041,matrix-project:808.v5a_b_5f56d6966
+Plugin-Developers: Vojtech Juranek:vjuranek:
+Plugin-ScmConnection: scm:git:https://github.com/jenkinsci/docker-build-
+ step-plugin.git
+Plugin-ScmTag: docker-build-step-2.11
+Plugin-ScmUrl: https://github.com/jenkinsci/docker-build-step-plugin
+Plugin-GitHash: a85688283c85672361ea34b875fb7870e5591f45
+Implementation-Build: a85688283c85672361ea34b875fb7870e5591f45
+

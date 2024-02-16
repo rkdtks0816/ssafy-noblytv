@@ -35,6 +35,7 @@ prompt = """1. mode
 6. ('message', 'start')
 7. ('message', 'stop')
 8. ('message', 'post up')
+9. ('message', 'fall')
 0. quit
 """
 
@@ -60,9 +61,13 @@ while True:
             sendData("stop")
         elif mode == 8:
             sendData("post up")
+        elif mode == 9:
+            sendData("fall")
+        elif mode == 10:
+            sendData("diary up")
         elif mode == 0:
             break 
-        else:
+        else: 
             print("invalid input")
     except:
         print("invalid input")

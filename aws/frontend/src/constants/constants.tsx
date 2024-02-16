@@ -40,6 +40,10 @@ const API_TV_OLD_USERS: string = `${API_TV}/old-users`;
 const API_TV_SIGNIN: string = `${API_TV}/login`;
 const API_GYMNASTICS: string = `/gymnastics`;
 const API_POSTS: string = `/posts/family`;
+// Text
+const TEXT_POST_UP = '🤸‍♂️어르신 체조 영상을 확인하세요!';
+const TEXT_FALL = '⚠ 어르신 낙상이 감지되었어요!';
+const TEXT_DIARY_UP = '📔어르신 일기를 확인하세요!';
 
 export {
   BASE_URL,
@@ -83,4 +87,8 @@ export {
   API_TV_SIGNIN,
   API_GYMNASTICS,
   API_POSTS,
+  // TEXT
+  TEXT_POST_UP,
+  TEXT_FALL,
+  TEXT_DIARY_UP,
 };

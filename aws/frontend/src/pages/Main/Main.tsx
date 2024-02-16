@@ -131,7 +131,7 @@ function Main() {
 
   useEffect(() => {
     if (socket) {
-      socket.on('message', (data: string) => {
+      socket.on('alarm', (data: string) => {
         if (data === 'post up') {
           setRedirectPath(PATH_COMMUNITY);
           alarms.push({

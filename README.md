@@ -56,7 +56,7 @@
 ## 사용 기술 스택
 
 #### 1. FE
-
+- node.js 20.10.0
 - Vite 5.0.11
 - React 18.2.0
 - Zustand 4.4.7
@@ -81,11 +81,17 @@
   - Architecture: arm64
   - Jetpack: 4.6
   - L4T: 32.6.1
+- Python 3.8.10
+- Socket io 4.7.4
+- node.js 20.10.0
+
 
 #### 4. DB
 
-- MariaDB Server 10.11.6
-- MariaDB JDBC Driver 2.7.4
+- Docker 25.0.1
+- Docker-Compose 1.29.2
+- Jenkins 2.443
+- nginx
 
 #### 5. INFRA
 
@@ -96,6 +102,9 @@
 
 - PoseNet
 - Visual Transformer (ViT)
+- Chat GPT 3.5  terbo
+- Chat GPT 4
+- NAVER Clova
 
 ## 서비스 화면
 
